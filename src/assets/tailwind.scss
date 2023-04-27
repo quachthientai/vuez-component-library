@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './button';
+
 @layer base {
    html{
       margin: 0;

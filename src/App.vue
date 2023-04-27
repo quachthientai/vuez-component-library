@@ -1,8 +1,19 @@
-<script setup>
+<script>
+  import Button from "./components/Button/Button.vue";
+  export default {
+    data() {
+      return {
+        title: "Hello world!"
+      }
+    },
+    components: {
+      Button
+    }
+  }
 </script>
 
 <template>
-  <div class="text-danger-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis culpa vitae dolores eaque, facilis dicta ducimus adipisci provident vero? Inventore?</div>
+  <Button />
 </template>
 
 <style>

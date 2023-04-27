@@ -3,10 +3,12 @@ const colors = require("tailwindcss/colors");
 module.exports =  {
   content: [
     "./index.html",
-    "./src/components/*.{vue,js,ts,jsx,tsx}",
+    "./src/*.{vue,js,ts,jsx,tsx}",
+    "./src/components/**/*.{vue,js,ts,jsx,tsx}"
   ],
   theme: {
     colors:{
+      white: colors.white,
       primary: {
         50: '#F0F9FF',
         100: '#E0F2FE',
@@ -80,7 +82,6 @@ module.exports =  {
         800: '#991B1B',
         900: '#7F1D1D',
       },
-
     },
     extend: {
       textColor:{
