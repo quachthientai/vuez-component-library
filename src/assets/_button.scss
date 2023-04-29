@@ -1,20 +1,57 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.btn-basic {
-   width: 107px;
-   height: 40px;
-   border-radius: 5px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   @apply font-bold;
-   @apply text-center;
-
+//base class
+.btn {
+   @apply font-bold tracking-wide h-[40px] flex justify-center items-center border-2 rounded-[5px] px-[20px] hover:bg-secondary-100 transition duration-100 ease-out hover:ease-in;
    a{
-      line-height: 24px;
-      font-size: 15px;
-      @apply tracking-wide;
+      @apply tracking-wide text-[15px] leading-[24px];
+   }
+}
+
+//variant class
+.btn-primary {
+   @apply bg-primary-400 outline-none border-none hover:bg-primary-600;
+   a{
+      @apply text-white
+   }
+}
+
+.btn-secondary {
+   @apply bg-secondary-400 outline-none border-none hover:bg-secondary-600;
+   a{
+      @apply text-white
+   }
+}
+
+.btn-info {
+   @apply bg-info-400 outline-none border-none hover:bg-info-600;
+   a{
+      @apply text-white
+   }
+}
+
+.btn-warning {
+   @apply bg-warning-400 outline-none border-none hover:bg-warning-600;
+   a{
+      @apply text-white
+   }
+}
+
+.btn-danger {
+   @apply bg-danger-400 outline-none border-none hover:bg-danger-600;
+   a{
+      @apply text-white
+   }
+}
+
+.btn-sm {
+   @apply h-[30px] px-[15px];
+   a{
+      @apply tracking-wide text-[13px] leading-[24px];
+   }
+}
+ 
+.btn-lg {
+   @apply h-[50px] px-[25px];
+   a{
+      @apply tracking-wide text-[17px] leading-[24px];
    }
 }
