@@ -1,5 +1,6 @@
 <script>
   import Button from "@/components/Button/Button.vue";
+  import 'vue-awesome/Icons'
   export default {
     data() {
       return {
@@ -13,8 +14,8 @@
 </script>
 
 <template>
-  <Button isCapitalize="true" btnClass="btn btn-primary btn-lg">Primary</Button>
-  <Button btnClass="btn btn-secondary btn-sm">Primary</Button>
+  <Button :isUppercase="true" btnClass="btn btn-primary">Primary</Button>
+  <Button :isDisabled="true" btnClass="btn btn-secondary btn-sm">Primary</Button>
   <Button btnClass="btn btn-warning">Primary</Button>
   <Button btnClass="btn btn-danger">Primary</Button>
   

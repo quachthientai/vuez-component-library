@@ -1,6 +1,10 @@
-<script >
+<script>
+   import Icon from 'vue-awesome/components/Icon'
    export default {
       name: 'Button',
+      components: {
+         'v-icon': Icon
+      },
       props: {
          text: {
             type: String,
@@ -29,9 +33,19 @@
 </script>
 
 <template>
-   <button class="uppercase" :class="`${btnClass} 
-                   ${isUppercase ? 'uppercase' : ''}`" >
-      <a href="#">
+   <button 
+      :class="`
+      ${btnClass} 
+      ${isUppercase ? 'uppercase' : ''}
+      ${isDisabled ? 'opacity-40 cursor-no-drop' : ''}
+      ${isLoading ? 'pointer-events-none' : ''}`"
+      :disabled="isDisabled"
+   >
+      <a 
+         href="#"
+         class="no-underline"
+         :class="`${isDisabled ? 'cursor-no-drop' : ''}`"
+      >
          <slot />
       </a>
    </button>
