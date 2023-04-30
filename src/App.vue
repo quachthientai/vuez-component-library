@@ -15,7 +15,7 @@
 
 <template>
   <!-- <Button :isUppercase="true" :isLoading="true" btnClass="btn btn-primary" text="primary"></Button> -->
-  <Button icon="fa-solid fa-check fa-spin" btnClass="btn btn-primary" :isLoading="true" text="icon"></Button>
+  <Button btnClass="btn btn-primary" :isLoading="true" text="Loading"></Button>
   <!-- <Button :isDisabled="true" btnClass="btn btn-secondary" text="secondary"></Button>
   <Button btnClass="btn btn-warning" text="warning"></Button>
   <Button btnClass="btn btn-danger" text="danger"></Button> -->
