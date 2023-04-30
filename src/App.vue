@@ -1,6 +1,6 @@
 <script>
-  import Button from "@/components/Button/Button.vue";
-  import 'vue-awesome/Icons'
+  import Button from '../src/components/Button/Button.vue'
+  
   export default {
     data() {
       return {
@@ -14,10 +14,11 @@
 </script>
 
 <template>
-  <Button :isUppercase="true" btnClass="btn btn-primary">Primary</Button>
-  <Button :isDisabled="true" btnClass="btn btn-secondary btn-sm">Primary</Button>
-  <Button btnClass="btn btn-warning">Primary</Button>
-  <Button btnClass="btn btn-danger">Primary</Button>
+  <!-- <Button :isUppercase="true" :isLoading="true" btnClass="btn btn-primary" text="primary"></Button> -->
+  <Button icon="fa-solid fa-check fa-spin" btnClass="btn btn-primary" :isLoading="true" text="icon"></Button>
+  <!-- <Button :isDisabled="true" btnClass="btn btn-secondary" text="secondary"></Button>
+  <Button btnClass="btn btn-warning" text="warning"></Button>
+  <Button btnClass="btn btn-danger" text="danger"></Button> -->
   
 
 </template>

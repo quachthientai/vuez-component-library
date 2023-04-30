@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
-    "@vue-hero-icons/outline": "^1.7.2",
     "autoprefixer": "^10.4.14",
     "pinia": "^2.0.32",
     "postcss": "^8.4.23",

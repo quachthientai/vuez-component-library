@@ -1,18 +1,21 @@
 <script>
-   import Icon from 'vue-awesome/components/Icon'
+
+   // import Icon from '../src/components/Icon/Icon.vue'
+   // import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+   // import { library } from '@fortawesome/fontawesome-svg-core'
+
+   // library.add(faUserSecret);
+
    export default {
       name: 'Button',
-      components: {
-         'v-icon': Icon
-      },
       props: {
          text: {
             type: String,
-            default: ''
-         },
+            default: '' 
+         }, 
          icon: {
-            type: Object,
-            default: null,
+            type: String,
+            default: '',
          },
          isUppercase: {
             type: Boolean,
@@ -25,6 +28,10 @@
          btnClass: {
             type: String, //btn-sm btn-regular btn-large
             default: ''
+         },
+         isLoading: {
+            type: Boolean,
+            default: false
          }
 
       }
@@ -36,7 +43,7 @@
    <button 
       :class="`
       ${btnClass} 
-      ${isUppercase ? 'uppercase' : ''}
+      ${isUppercase ? 'uppercase' : 'capitalize'}
       ${isDisabled ? 'opacity-40 cursor-no-drop' : ''}
       ${isLoading ? 'pointer-events-none' : ''}`"
       :disabled="isDisabled"
@@ -46,8 +53,11 @@
          class="no-underline"
          :class="`${isDisabled ? 'cursor-no-drop' : ''}`"
       >
-         <slot />
+         <span>{{ text }}</span>
+         <i v-if="isLoading" :class="icon"></i>
+         <!-- <font-awesome-icon v-if="isLoading"  icon="fa-solid fa-user-secret" spin/> -->
       </a>
+      <!-- <font-awesome-icon icon='fa-solid fa-user-secret' spin />   -->
    </button>
 </template>
 
