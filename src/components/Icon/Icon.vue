@@ -4,7 +4,7 @@
       name: 'Icon',
       props: {
          iconType:{
-            type: String, //fa fas fad fal fat
+            type: String, 
             default: '',
             required: true
          },
@@ -13,16 +13,19 @@
             default: '',
             required: true 
          }
-
-      }
+      },
+      
    }
 
 </script>
 
 <template>
-   <span>
-
-   </span>
+   <div>
+      <span>
+         <font-awesome-icon class="ml-[0.4rem]" :icon="[this.type,this.name]" size="lg" spin/>
+      </span> 
+   </div>
+   
 </template>
 
 <style lang="scss"></style>
