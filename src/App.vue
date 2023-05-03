@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <Button btnClass="btn btn-sm btn-primary" :isLoading="true" icon="mingcute:loading-3-fill"></Button>
+  <Button btnClass="btn btn-lg btn-primary" :isLoading="true" icon="mingcute:loading-3-fill"></Button>
   
   
 

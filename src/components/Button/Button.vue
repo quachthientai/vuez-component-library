@@ -42,23 +42,28 @@
       },
       watch: {
          btnClass: {
+            handler: function(newBtnClass, oldBtnClass){
+               this.getIconSize(newBtnClass);
+            },
             immediate: true,
-            handler(newBtnClass){
-               debugger;
-               switch(true){
-                  case newBtnClass.includes('btn-sm'):
-                     this.iconSize = 'sm'
-                     break;
-                  case newBtnClass.includes('btn-lg'):
-                     this.iconSize = '2xl'
-                     break;
-                  default:
-                     this.iconSize = 'lg'
+         }
+      },
+      methods: {
+         getIconSize(btnClass){
+            switch(true){
+               case btnClass.includes('btn-sm'):
+                  this.iconSize = 'sm'
                   break;
-               }
+               case btnClass.includes('btn-lg'):
+                  this.iconSize = '2xl'
+                  break;
+               default:
+                  this.iconSize = 'lg'
+                  break;
             }
          }
       },
+      
    }
 
 </script>
@@ -78,7 +83,7 @@
       >  
          <template v-if="isLoading">
             <span  class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class="`text-${this.iconSize}`" class="animate-spin mr-2"/>
+               <Icon icon="mingcute:loading-fill" :class="`text-${this.iconSize}`" class="animate-spin mr-1"/>
                   Loading...
             </span>  
          </template>
