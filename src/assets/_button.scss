@@ -1,6 +1,6 @@
 //base class
 .btn {
-   @apply font-bold tracking-wide h-[40px] flex justify-center items-center border-2 rounded-[5px] px-[20px] hover:bg-secondary-100 transition duration-100 ease-out hover:ease-in;
+   @apply font-bold tracking-wide h-[40px] flex justify-center items-center border-2 rounded-[5px] px-[15px] hover:bg-secondary-100 transition duration-100 ease-out hover:ease-in;
    a{
       @apply tracking-wide text-[15px] leading-[24px];
    }
@@ -43,14 +43,14 @@
 }
 
 .btn-sm {
-   @apply h-[30px] px-[15px];
+   @apply h-[30px] px-[13px];
    a{
       @apply tracking-wide text-[13px] leading-[24px];
    }
 }
  
 .btn-lg {
-   @apply h-[50px] px-[25px];
+   @apply h-[50px] px-[20px];
    a{
       @apply tracking-wide text-[17px] leading-[24px];
    }

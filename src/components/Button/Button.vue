@@ -1,11 +1,12 @@
 <script>
-   import Icon from '../Icon/Icon.vue'
-   import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-   import { library, findIconDefinition } from '@fortawesome/fontawesome-svg-core'
-   library.add(faSpinner);
-   
+   import { Icon } from '@iconify/vue'
    export default {
       name: 'Button',
+      data() {
+         return{
+            iconSize: null
+         }
+      },
       components: {
          Icon
       },
@@ -18,6 +19,10 @@
             type: String,
             default: null,
          },
+         iconPosition: {
+            type: String,
+            default: 'right'
+         },
          isUppercase: {
             type: Boolean,
             default: false
@@ -27,7 +32,7 @@
             default: false 
          }, 
          btnClass: {
-            type: String, // btn-sm btn-regular btn-large
+            type: String, // btn-sm btn-large
             default: ''
          },
          isLoading: {
@@ -35,7 +40,25 @@
             default: false,
          }
       },
-      
+      watch: {
+         btnClass: {
+            immediate: true,
+            handler(newBtnClass){
+               debugger;
+               switch(true){
+                  case newBtnClass.includes('btn-sm'):
+                     this.iconSize = 'sm'
+                     break;
+                  case newBtnClass.includes('btn-lg'):
+                     this.iconSize = '2xl'
+                     break;
+                  default:
+                     this.iconSize = 'lg'
+                  break;
+               }
+            }
+         }
+      },
    }
 
 </script>
@@ -51,14 +74,19 @@
    >
       <a 
          href="#"
-         class="no-underline" 
          :class="`${isDisabled ? 'cursor-no-drop' : 'cursor-pointer'}`"
-      >
-         <span>{{ text }}</span>
-         <Icon></Icon> 
-         <!-- <font-awesome-icon v-if="isLoading" class="ml-[0.4rem]" :icon="['fas', 'spinner']" size="lg" spin/> -->
+      >  
+         <template v-if="isLoading">
+            <span  class="no-underline flex justify-center items-center">
+               <Icon icon="mingcute:loading-fill" :class="`text-${this.iconSize}`" class="animate-spin mr-2"/>
+                  Loading...
+            </span>  
+         </template>
+
+         
+         
       </a>
-      <!-- <font-awesome-icon icon='fa-solid fa-user-secret' spin />   -->
+      
       
    </button>
 </template>
