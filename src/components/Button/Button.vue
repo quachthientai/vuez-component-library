@@ -40,41 +40,44 @@
             default: false,
          }
       },
-      watch: {
-         btnClass: {
-            handler: function(newBtnClass, oldBtnClass){
-               this.getIconSize(newBtnClass);
-            },
-            immediate: true,
+      // watch: {
+      //    btnClass: {
+      //       handler: function(newBtnClass, oldBtnClass){
+      //          this.getIconSize(newBtnClass);
+      //       },
+      //       immediate: true,
+      //    }
+      // },
+      computed: {
+         getIconSize() {
+            return this.btnClass.includes('btn-sm') ? 'text-sm' : this.btnClass.includes('btn-lg') ? 'text-2xl' : 'text-lg'
          }
       },
-      methods: {
-         getIconSize(btnClass){
-            switch(true){
-               case btnClass.includes('btn-sm'):
-                  this.iconSize = 'sm'
-                  break;
-               case btnClass.includes('btn-lg'):
-                  this.iconSize = '2xl'
-                  break;
-               default:
-                  this.iconSize = 'lg'
-                  break;
-            }
-         }
-      },
-      
+      // methods: {
+      //    getIconSize(btnClass){
+      //       switch(true){
+      //          case btnClass.includes('btn-sm'):
+      //             this.iconSize = 'sm'
+      //             break;
+      //          case btnClass.includes('btn-lg'):
+      //             this.iconSize = '2xl'
+      //             break;
+      //          default:
+      //             this.iconSize = 'lg'
+      //             break;
+      //       }
+      //    }
+      // },
    }
-
 </script>
 
 <template>
    <button 
       :class="`
-      ${btnClass} 
-      ${isUppercase ? 'uppercase' : 'capitalize'}
-      ${isDisabled ? 'opacity-50 cursor-no-drop' : 'cursor-pointer'}
-      ${isLoading ? 'pointer-events-none' : ''}`"
+         ${btnClass} 
+         ${isUppercase ? 'uppercase' : 'capitalize'}
+         ${isDisabled ? 'opacity-50 cursor-no-drop' : 'cursor-pointer'}
+         ${isLoading ? 'pointer-events-none' : ''}`"
       :disabled="isDisabled"
    >
       <a 
@@ -83,7 +86,7 @@
       >  
          <template v-if="isLoading">
             <span  class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class="`text-${this.iconSize}`" class="animate-spin mr-1"/>
+               <Icon icon="mingcute:loading-fill" :class=[getIconSize] class="animate-spin mr-1"/>
                   Loading...
             </span>  
          </template>
