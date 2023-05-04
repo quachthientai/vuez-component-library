@@ -8,35 +8,42 @@
 
 //variant class
 .btn-primary {
-   @apply bg-primary-400 outline-none border-none hover:bg-primary-600;
+   @apply bg-primary-500 outline-none border-none hover:bg-primary-600;
+   a{
+      @apply text-white
+   }
+}
+
+.btn-success {
+   @apply bg-success-500 outline-none border-none hover:bg-success-600;
    a{
       @apply text-white
    }
 }
 
 .btn-secondary {
-   @apply bg-secondary-400 outline-none border-none hover:bg-secondary-600;
+   @apply bg-secondary-500 outline-none border-none hover:bg-secondary-600;
    a{
       @apply text-white
    }
 }
 
 .btn-info {
-   @apply bg-info-400 outline-none border-none hover:bg-info-600;
+   @apply bg-info-500 outline-none border-none hover:bg-info-600;
    a{
       @apply text-white
    }
 }
 
 .btn-warning {
-   @apply bg-warning-400 outline-none border-none hover:bg-warning-600;
+   @apply bg-warning-500 outline-none border-none hover:bg-warning-600;
    a{
       @apply text-white
    }
 }
 
 .btn-danger {
-   @apply bg-danger-400 outline-none border-none hover:bg-danger-600;
+   @apply bg-danger-500 outline-none border-none hover:bg-danger-600;
    a{
       @apply text-white
    }

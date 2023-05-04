@@ -2,11 +2,6 @@
    import { Icon } from '@iconify/vue'
    export default {
       name: 'Button',
-      data() {
-         return{
-            iconSize: null
-         }
-      },
       components: {
          Icon
       },
@@ -21,7 +16,7 @@
          },
          iconPosition: {
             type: String,
-            default: 'right'
+            default: null
          },
          isUppercase: {
             type: Boolean,
@@ -32,42 +27,24 @@
             default: false 
          }, 
          btnClass: {
-            type: String, // btn-sm btn-large
+            type: String,
             default: ''
          },
          isLoading: {
             type: Boolean,
             default: false,
-         }
+         },
+
+         
       },
-      // watch: {
-      //    btnClass: {
-      //       handler: function(newBtnClass, oldBtnClass){
-      //          this.getIconSize(newBtnClass);
-      //       },
-      //       immediate: true,
-      //    }
-      // },
       computed: {
-         getIconSize() {
+         computedIconSize: function() {
             return this.btnClass.includes('btn-sm') ? 'text-sm' : this.btnClass.includes('btn-lg') ? 'text-2xl' : 'text-lg'
+         },
+         computedIconPosition: function() {
+            return this.iconPosition === 'right' ? 'order-last ml-1' : 'order-first mr-1'
          }
       },
-      // methods: {
-      //    getIconSize(btnClass){
-      //       switch(true){
-      //          case btnClass.includes('btn-sm'):
-      //             this.iconSize = 'sm'
-      //             break;
-      //          case btnClass.includes('btn-lg'):
-      //             this.iconSize = '2xl'
-      //             break;
-      //          default:
-      //             this.iconSize = 'lg'
-      //             break;
-      //       }
-      //    }
-      // },
    }
 </script>
 
@@ -86,13 +63,17 @@
       >  
          <template v-if="isLoading">
             <span  class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class=[getIconSize] class="animate-spin mr-1"/>
+               <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
                   Loading...
             </span>  
          </template>
 
-         
-         
+         <template v-else>
+            <span class="no-underline flex justify-center items-center">
+               {{ text }}
+               <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
+            </span>
+         </template>
       </a>
       
       
