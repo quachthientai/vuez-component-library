@@ -24,18 +24,16 @@
          },
          isDisabled: {
             type: Boolean,
-            default: false 
+            default: false
          }, 
          btnClass: {
             type: String,
-            default: ''
+            default: '',
          },
          isLoading: {
             type: Boolean,
             default: false,
          },
-
-         
       },
       computed: {
          computedIconSize: function() {
