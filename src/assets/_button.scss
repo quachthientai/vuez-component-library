@@ -1,6 +1,6 @@
 //base class
 .btn {
-   @apply font-bold tracking-wide h-[40px] flex justify-center items-center border-2 rounded-[5px] px-[20px] hover:bg-secondary-100 transition duration-100 ease-out hover:ease-in;
+   @apply font-bold tracking-wide h-[40px] flex justify-center items-center border-2 rounded-[5px] px-[15px] hover:bg-secondary-100 transition duration-100 ease-out hover:ease-in;
    a{
       @apply tracking-wide text-[15px] leading-[24px];
    }
@@ -8,49 +8,98 @@
 
 //variant class
 .btn-primary {
-   @apply bg-primary-400 outline-none border-none hover:bg-primary-600;
+   @apply bg-primary-500 outline-none border-none hover:bg-primary-600;
+   a{
+      @apply text-white;
+   }
+}
+
+.btn-outline-primary {
+   @apply bg-none border-primary-500 border-[2px] hover:bg-primary-100;
+   a{
+      @apply text-primary-500;
+   }
+}
+
+.btn-success {
+   @apply bg-success-500 outline-none border-none hover:bg-success-600;
    a{
       @apply text-white
+   }
+}
+
+.btn-outline-success {
+   @apply bg-none border-success-500 border-[2px] hover:bg-success-100;
+   a{
+      @apply text-success-500;
    }
 }
 
 .btn-secondary {
-   @apply bg-secondary-400 outline-none border-none hover:bg-secondary-600;
+   @apply bg-secondary-500 outline-none border-none hover:bg-secondary-600;
    a{
       @apply text-white
+   }
+}
+
+.btn-outline-secondary {
+   @apply bg-none border-secondary-500 border-[2px] hover:bg-secondary-200;
+   a{
+      @apply text-secondary-500;
    }
 }
 
 .btn-info {
-   @apply bg-info-400 outline-none border-none hover:bg-info-600;
+   @apply bg-info-500 outline-none border-none hover:bg-info-600;
    a{
       @apply text-white
+   }
+}
+
+.btn-outline-info {
+   @apply bg-none border-info-500 border-[2px] hover:bg-info-100;
+   a{
+      @apply text-info-500;
    }
 }
 
 .btn-warning {
-   @apply bg-warning-400 outline-none border-none hover:bg-warning-600;
+   @apply bg-warning-500 outline-none border-none hover:bg-warning-600;
    a{
       @apply text-white
+   }
+}
+
+.btn-outline-warning {
+   @apply bg-none border-warning-500 border-[2px] hover:bg-warning-100;
+   a{
+      @apply text-warning-500;
    }
 }
 
 .btn-danger {
-   @apply bg-danger-400 outline-none border-none hover:bg-danger-600;
+   @apply bg-danger-500 outline-none border-none hover:bg-danger-600;
    a{
       @apply text-white
    }
 }
 
+.btn-outline-danger {
+   @apply bg-none border-danger-500 border-[2px] hover:bg-danger-100;
+   a{
+      @apply text-danger-500;
+   }
+}
+
 .btn-sm {
-   @apply h-[30px] px-[15px];
+   @apply h-[30px] px-[13px];
    a{
       @apply tracking-wide text-[13px] leading-[24px];
    }
 }
  
 .btn-lg {
-   @apply h-[50px] px-[25px];
+   @apply h-[50px] px-[20px];
    a{
       @apply tracking-wide text-[17px] leading-[24px];
    }
