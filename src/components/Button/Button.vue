@@ -1,8 +1,6 @@
 <script>
-   import Icon from '../Icon/Icon.vue'
-   import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-   import { library, findIconDefinition } from '@fortawesome/fontawesome-svg-core'
-   library.add(faSpinner);
+   import { Icon } from '@iconify/vue'
+   
    
    export default {
       name: 'Button',
@@ -14,9 +12,13 @@
             type: String,
             default: ''
          }, 
-         icon: {
+         iconName: {
             type: String,
             default: null,
+         },
+         iconPosition: {
+            type: String,
+            default: 'right'
          },
          isUppercase: {
             type: Boolean,
@@ -27,7 +29,7 @@
             default: false 
          }, 
          btnClass: {
-            type: String, // btn-sm btn-regular btn-large
+            type: String,
             default: ''
          },
          isLoading: {
@@ -55,7 +57,7 @@
          :class="`${isDisabled ? 'cursor-no-drop' : 'cursor-pointer'}`"
       >
          <span>{{ text }}</span>
-         <Icon></Icon> 
+         <Icon v-if="isLoading" class="animate-spin" :icon="iconName"></Icon> 
          <!-- <font-awesome-icon v-if="isLoading" class="ml-[0.4rem]" :icon="['fas', 'spinner']" size="lg" spin/> -->
       </a>
       <!-- <font-awesome-icon icon='fa-solid fa-user-secret' spin />   -->
