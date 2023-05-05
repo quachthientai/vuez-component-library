@@ -1,5 +1,9 @@
 <script>
-   import { Icon } from '@iconify/vue'
+   import Icon from '../Icon/Icon.vue'
+   import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+   import { library, findIconDefinition } from '@fortawesome/fontawesome-svg-core'
+   library.add(faSpinner);
+   
    export default {
       name: 'Button',
       components: {
@@ -10,13 +14,9 @@
             type: String,
             default: ''
          }, 
-         icon: {
+         iconName: {
             type: String,
             default: null,
-         },
-         iconPosition: {
-            type: String,
-            default: null
          },
          isUppercase: {
             type: Boolean,
@@ -58,20 +58,10 @@
       <a 
          href="#"
          :class="`${isDisabled ? 'cursor-no-drop' : 'cursor-pointer'}`"
-      >  
-         <template v-if="isLoading">
-            <span  class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
-                  Loading...
-            </span>  
-         </template>
-
-         <template v-else>
-            <span class="no-underline flex justify-center items-center">
-               {{ text }}
-               <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
-            </span>
-         </template>
+      >
+         <span>{{ text }}</span>
+         <Icon></Icon> 
+         <!-- <font-awesome-icon v-if="isLoading" class="ml-[0.4rem]" :icon="['fas', 'spinner']" size="lg" spin/> -->
       </a>
       
       
