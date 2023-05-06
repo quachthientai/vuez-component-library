@@ -1,24 +1,27 @@
+$variants: "primary", "secondary", "info", "warning", "danger", "success";
 //base class
 .btn {
-   @apply font-bold tracking-wide  flex justify-center items-center border-2 rounded-[5px] px-[15px] py-[8px] hover:bg-secondary-100 transition duration-100 ease-out hover:ease-in;
+   @apply font-bold tracking-wide  flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px] py-[8px] hover:bg-secondary-100 transition duration-100 ease-out hover:ease-in;
    a{
       @apply tracking-wide text-[15px] leading-[24px];
    }
 
    &.btn-sm {
-      @apply py-[3px] px-[13px];
+      @apply h-[30px] py-[3px] px-[13px];
       a{
          @apply tracking-wide text-[13px] leading-[24px];
       }
    }
     
    &.btn-lg {
-      @apply py-[13px] px-[20px];
+      @apply h-[50px] py-[13px] px-[20px];
       a{
          @apply tracking-wide text-[17px] leading-[24px];
       }
    }
 }
+
+
 
 //variant class
 .btn-primary {
@@ -105,20 +108,35 @@
    }
 }
 
-
-
 .btn-icon-circle {
-   @apply p-[11px] mr-0 rounded-full;
+   @apply p-[12px] rounded-full;
    a > span > svg {
       @apply m-0;
    }
+   @each $variant in $variants {
+      &.btn-#{$variant}{
+         &.btn-sm{
+            @apply p-[9px];
+         }
 
-   &.btn-sm{
-      @apply p-[8px];
+         &.btn-lg{
+            @apply p-[14px];
+         }
+      }
    }
 
-   &.btn-lg{
-      @apply p-[13px];
+   @each $variant in $variants {
+      &.btn-outline-#{$variant}{
+         @apply p-[10px];
+
+         &.btn-sm{
+            @apply p-[7px];
+         }
+
+         &.btn-lg{
+            @apply p-[12px];
+         }
+      }
    }
 }
 
