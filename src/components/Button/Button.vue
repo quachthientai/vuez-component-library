@@ -8,7 +8,7 @@
       props: {
          text: {
             type: String,
-            default: ''
+            default: null
          }, 
          icon: {
             type: String,
@@ -28,7 +28,7 @@
          }, 
          btnClass: {
             type: String,
-            default: '',
+            default: ''
          },
          isLoading: {
             type: Boolean,
@@ -49,17 +49,17 @@
 <template>
    <button 
       :class="`
-         ${btnClass} 
+         ${btnClass}
          ${isUppercase ? 'uppercase' : 'capitalize'}
          ${isDisabled ? 'opacity-50 cursor-no-drop' : 'cursor-pointer'}
-         ${isLoading ? 'pointer-events-none' : ''}`"
+         ${isLoading && !btnClass.includes('btn-icon-rounded') ? 'pointer-events-none' : ''}`"
       :disabled="isDisabled"
    >
       <a 
          href="#"
          :class="`${isDisabled ? 'cursor-no-drop' : 'cursor-pointer'}`"
       >  
-         <template v-if="isLoading">
+         <template v-if="isLoading && !btnClass.includes('btn-icon-rounded')">
             <span  class="no-underline flex justify-center items-center">
                <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
                   Loading...
@@ -68,7 +68,7 @@
 
          <template v-else>
             <span class="no-underline flex justify-center items-center">
-               {{ text }}
+               <span v-if="!btnClass.includes('btn-icon-rounded')">{{ text }}</span>
                <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
             </span>
          </template>
