@@ -24,89 +24,110 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
 
 
 //variant class
-.btn-primary {
-   @apply bg-primary-500 outline-none border-none hover:bg-primary-600;
-   a{
-      @apply text-white;
+@layer utilities {
+   @each $variant in $variants {
+      .btn-#{$variant}{
+         @apply bg-#{$variant}-500 outline-none border-none hover:bg-#{$variant}-600;
+         a{
+            @apply text-white;
+         }
+      }
+   }
+
+   @each $variant in $variants {
+      .btn-outline-#{$variant}{
+         @apply bg-none border-#{$variant}-500 border-[2px] hover:bg-#{$variant}-100;
+         a{
+            @apply text-#{$variant}-500;
+         }
+      }
    }
 }
 
-.btn-outline-primary {
-   @apply bg-none border-primary-500 border-[2px] hover:bg-primary-100;
-   a{
-      @apply text-primary-500;
-   }
-}
 
-.btn-success {
-   @apply bg-success-500 outline-none border-none hover:bg-success-600;
-   a{
-      @apply text-white
-   }
-}
+// .btn-primary {
+//    @apply bg-primary-500 outline-none border-none hover:bg-primary-600;
+//    a{
+//       @apply text-white;
+//    }
+// }
 
-.btn-outline-success {
-   @apply bg-none border-success-500 border-[2px] hover:bg-success-100;
-   a{
-      @apply text-success-500;
-   }
-}
+// .btn-outline-primary {
+//    @apply bg-none border-primary-500 border-[2px] hover:bg-primary-100;
+//    a{
+//       @apply text-primary-500;
+//    }
+// }
 
-.btn-secondary {
-   @apply bg-secondary-500 outline-none border-none hover:bg-secondary-600;
-   a{
-      @apply text-white
-   }
-}
+// .btn-success {
+//    @apply bg-success-500 outline-none border-none hover:bg-success-600;
+//    a{
+//       @apply text-white
+//    }
+// }
 
-.btn-outline-secondary {
-   @apply bg-none border-secondary-500 border-[2px] hover:bg-secondary-200;
-   a{
-      @apply text-secondary-500;
-   }
-}
+// .btn-outline-success {
+//    @apply bg-none border-success-500 border-[2px] hover:bg-success-100;
+//    a{
+//       @apply text-success-500;
+//    }
+// }
 
-.btn-info {
-   @apply bg-info-500 outline-none border-none hover:bg-info-600;
-   a{
-      @apply text-white
-   }
-}
+// .btn-secondary {
+//    @apply bg-secondary-500 outline-none border-none hover:bg-secondary-600;
+//    a{
+//       @apply text-white
+//    }
+// }
 
-.btn-outline-info {
-   @apply bg-none border-info-500 border-[2px] hover:bg-info-100;
-   a{
-      @apply text-info-500;
-   }
-}
+// .btn-outline-secondary {
+//    @apply bg-none border-secondary-500 border-[2px] hover:bg-secondary-200;
+//    a{
+//       @apply text-secondary-500;
+//    }
+// }
 
-.btn-warning {
-   @apply bg-warning-500 outline-none border-none hover:bg-warning-600;
-   a{
-      @apply text-white
-   }
-}
+// .btn-info {
+//    @apply bg-info-500 outline-none border-none hover:bg-info-600;
+//    a{
+//       @apply text-white
+//    }
+// }
 
-.btn-outline-warning {
-   @apply bg-none border-warning-500 border-[2px] hover:bg-warning-100;
-   a{
-      @apply text-warning-500;
-   }
-}
+// .btn-outline-info {
+//    @apply bg-none border-info-500 border-[2px] hover:bg-info-100;
+//    a{
+//       @apply text-info-500;
+//    }
+// }
 
-.btn-danger {
-   @apply bg-danger-500 outline-none border-none hover:bg-danger-600;
-   a{
-      @apply text-white
-   }
-}
+// .btn-warning {
+//    @apply bg-warning-500 outline-none border-none hover:bg-warning-600;
+//    a{
+//       @apply text-white
+//    }
+// }
 
-.btn-outline-danger {
-   @apply bg-none border-danger-500 border-[2px] hover:bg-danger-100;
-   a{
-      @apply text-danger-500;
-   }
-}
+// .btn-outline-warning {
+//    @apply bg-none border-warning-500 border-[2px] hover:bg-warning-100;
+//    a{
+//       @apply text-warning-500;
+//    }
+// }
+
+// .btn-danger {
+//    @apply bg-danger-500 outline-none border-none hover:bg-danger-600;
+//    a{
+//       @apply text-white
+//    }
+// }
+
+// .btn-outline-danger {
+//    @apply bg-none border-danger-500 border-[2px] hover:bg-danger-100;
+//    a{
+//       @apply text-danger-500;
+//    }
+// }
 
 .btn-icon-circle {
    @apply p-[12px] rounded-full;

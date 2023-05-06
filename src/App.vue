@@ -126,9 +126,37 @@
     <Button btnClass="btn btn-sm btn-info" class="mr-2" text="Small" icon="ph:envelope-bold"></Button>
     <Button btnClass="btn btn-info" class="mr-2" text="regular" icon="ph:envelope-bold"></Button>
     <Button btnClass="btn btn-lg btn-info" text="large" class="mr-2" icon="ph:envelope-bold"></Button>
-    
+  </div>
+
+  <div class="flex justify-start mt-2">
+    <Button btnClass="btn btn-sm rounded btn-info" class="mr-2" text="Small" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn rounded btn-info" class="mr-2" text="regular" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn rounded btn-lg btn-info" text="large" class="mr-2" icon="ph:envelope-bold"></Button>
+  </div>
+
+  <div class="flex justify-start mt-2">
+    <Button btnClass="btn btn-sm btn-outline-info" class="mr-2" text="Small" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn btn-outline-info" class="mr-2" text="regular" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn btn-lg btn-outline-info" text="large" class="mr-2" icon="ph:envelope-bold"></Button>
+  </div>
+
+  <div class="flex justify-start mt-2">
+    <Button btnClass="btn btn-sm rounded btn-outline-info" class="mr-2" text="Small" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn rounded btn-outline-info" class="mr-2" text="regular" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn rounded btn-lg btn-outline-info" text="large" class="mr-2" icon="ph:envelope-bold"></Button>
   </div>
   
+  <div class="flex justify-start mt-2">
+    <Button btnClass="btn btn-icon-circle btn-sm btn-outline-info" class="mr-2" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn btn-icon-circle btn-outline-info" class="mr-2" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn btn-icon-circle btn-lg btn-outline-info" class="mr-2" icon="ph:envelope-bold"></Button>
+  </div>
+
+  <div class="flex justify-start mt-2">
+    <Button btnClass="btn btn-icon-circle btn-sm btn-info" class="mr-2" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn btn-icon-circle btn-info" class="mr-2" icon="ph:envelope-bold"></Button>
+    <Button btnClass="btn btn-icon-circle btn-lg btn-info" class="mr-2" icon="ph:envelope-bold"></Button>
+  </div>
   
 
   
