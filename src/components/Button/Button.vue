@@ -58,13 +58,13 @@
       :class="`
          ${btnClass}
          ${isUppercase ? 'uppercase' : 'capitalize'}
-         ${isDisabled ? 'opacity-50 cursor-no-drop' : 'cursor-pointer'}
+         ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
          ${isLoading && !btnClass.includes('btn-icon-circle') ? 'pointer-events-none' : ''}`"
       :disabled="isDisabled"
    >
       <a
          :href="link"
-         :class="`${isDisabled ? 'cursor-no-drop' : 'cursor-pointer'}`"
+         :class="`${isDisabled ? 'cursor-no-drop' : ''}`"
       >  
          <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
             <span  class="no-underline flex justify-center items-center">
