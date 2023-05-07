@@ -25,10 +25,12 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
 @layer utilities {
    @each $variant in $variants {
       .btn-#{$variant}{
-         @apply outline-none border-none bg-#{$variant}-500 ;
+         @apply outline-none border-none bg-#{$variant}-500;
+
          &:not([disabled]):hover {
             @apply bg-#{$variant}-600;
          }
+
          a{
             @apply text-white;
          }
@@ -38,6 +40,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
    @each $variant in $variants {
       .btn-outline-#{$variant}{
          @apply bg-none border-[2px] border-#{$variant}-500;
+
          &:not([disabled]):hover{
             @if $variant == 'secondary' {
                @apply hover:bg-#{$variant}-200;
@@ -45,6 +48,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
                @apply hover:bg-#{$variant}-100;
             }
          }
+
          a{
             @apply text-#{$variant}-500;
          }

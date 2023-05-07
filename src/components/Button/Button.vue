@@ -50,6 +50,10 @@
             return 'm-0';
          }
       },
+      beforeCreate() {
+         console.log('ss')
+      }
+      
    }
 </script>
 
@@ -68,7 +72,7 @@
       >  
          <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
             <span  class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
+               <!-- <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/> -->
                   Loading...
             </span>  
          </template>
@@ -78,7 +82,7 @@
                <span v-if="!btnClass.includes('btn-icon-circle')">
                   {{ text }}
                </span>
-               <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
+               <!-- <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] /> -->
             </span>
          </template>
       </a>
