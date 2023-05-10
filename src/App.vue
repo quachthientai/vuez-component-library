@@ -1,7 +1,9 @@
 <script>
+  import HomeView from '@/views/HomeView.vue'
+  import ButtonView from '@/views/ButtonView.vue'
   import Button from '@/components/Button/Button.vue'
-  import ButtonView from './views/ButtonView.vue'
   import {RouterLink, RouterView} from 'vue-router'
+
   export default {
     data() {
       return {
@@ -10,17 +12,20 @@
     },
     components: {
       Button,
-      ButtonView
+      ButtonView,
+      HomeView
     }
   }
 </script>
 
 <template>
-  <nav>
-    <Button btnClass="btn btn-primary" icon="mdi:gesture-tap-button" text="Button View"></Button>
-    <RouterLink to="/" >Button </RouterLink>
-    
-  </nav>
+  <div>
+    <Button btnClass="btn btn-primary" text="Button View"></Button>
+    <RouterLink to="/home">Home</RouterLink>
+    <RouterLink to="/contact">Contact</RouterLink>
+    <RouterLink to="/button">Contact</RouterLink>
+    <!-- <RouterLink to="/button">Button</RouterLink> -->
+  </div>
   <RouterView />
   
 </template>

@@ -1,15 +1,28 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import ButtonView from '../views/ButtonView.vue'
+
+const routes = [
+   {
+      path: '/home',
+      name: 'home',
+      component: () => import('@/views/HomeView.vue')
+   },
+   {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('@/views/ContactView.vue')
+   },
+   {
+      path: '/button',
+      name: 'button',
+      component: () => import('@/views/ButtonView.vue')
+   }
+]
 
 const router = createRouter({
    history: createWebHashHistory(),
-   routes: [
-      {
-         path: '/',
-         name: 'button',
-         component: ButtonView
-      }
-   ],
+   routes: routes,
+   
 })
+
 
 export default router

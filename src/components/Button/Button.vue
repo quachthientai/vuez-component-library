@@ -1,5 +1,6 @@
 <script>
    import { Icon } from '@iconify/vue'
+   import { RouterLink } from 'vue-router';
    export default {
       name: 'Button',
       components: {
@@ -9,7 +10,11 @@
          text: {
             type: String,
             default: null
-         }, 
+         },
+         routeLink: {
+            type: String,
+            default: ''
+         },
          icon: {
             type: String,
             default: null,
@@ -28,13 +33,14 @@
          }, 
          btnClass: {
             type: String,
-            default: ''
+            default: '',
+            required: true
          },
          isLoading: {
             type: Boolean,
             default: false,
          },
-         link: {
+         externalLink: {
             type: String,
             default: null
          }
@@ -54,37 +60,38 @@
 </script>
 
 <template>
-   <button 
-      :class="`
-         ${btnClass}
-         ${isUppercase ? 'uppercase' : 'capitalize'}
-         ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
-         ${isLoading && !btnClass.includes('btn-icon-circle') ? 'pointer-events-none' : ''}`"
-      :disabled="isDisabled"
-   >
-      <a
-         :href="link"
-         :class="`${isDisabled ? 'cursor-no-drop' : ''}`"
-      >  
-         <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
-            <span  class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
+   <router-link :to="{path: routeLink}">
+      <button 
+         :class="`
+            ${btnClass}
+            ${isUppercase ? 'uppercase' : 'capitalize'}
+            ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
+            ${isLoading && !btnClass.includes('btn-icon-circle') ? 'pointer-events-none' : ''}`"
+         :disabled="isDisabled"
+      >
+         <a
+            :href="externalLink"
+            :class="`${isDisabled ? 'cursor-no-drop' : ''}`"
+         >  
+            <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
+               <span class="no-underline flex justify-center items-center">
+                  <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
                   Loading...
-            </span>  
-         </template>
+               </span>  
+            </template>
 
-         <template v-else>
-            <span class="no-underline flex justify-center items-center">
-               <span v-if="!btnClass.includes('btn-icon-circle')">
-                  {{ text }}
+            <template v-else>
+               <span class="no-underline flex justify-center items-center">
+                  <span v-if="!btnClass.includes('btn-icon-circle')">
+                     {{ text }}
+                  </span>
+                  <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
                </span>
-               <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
-            </span>
-         </template>
-      </a>
-      
-      
-   </button>
+            </template>
+         </a>
+      </button>
+   </router-link>
+   
 </template>
 
 <style lang="scss"></style>
