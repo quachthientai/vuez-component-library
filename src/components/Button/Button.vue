@@ -47,7 +47,12 @@
       },
       computed: {
          computedIconSize: function() {
-            return this.btnClass.includes('btn-sm') ? 'text-sm' : this.btnClass.includes('btn-lg') ? 'text-2xl' : 'text-lg';
+            if(this.btnClass.includes('btn-sm')){
+               return 'text-sm';
+            }else if(this.btnClass.includes('btn-lg')) {
+               return 'text-2xl';
+            }
+            return 'text-lg';
          },
          computedIconPosition: function() {
             if(this.text || this.isLoading){

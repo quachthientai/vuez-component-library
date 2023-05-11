@@ -32,12 +32,22 @@
             type: String,
             default: 'top'
          }
+      },
+      computed: {
+         computedBadgeSize: function() {
+            if(!this.text && this.icon){
+               return 'p-[5px]';
+            }else if (!this.text && !this.icon){
+               return 'p-[9px]';
+            }
+            return '';
+         }
       }
    }
 </script>
 
 <template>
-   <span :class="badgeClass" class="inline-flex items-center">
+   <span :class="[computedBadgeSize,badgeClass]" class="inline-flex items-center">
       
       <Icon v-if="icon" :icon="icon" />
       <span>

@@ -22,7 +22,7 @@
 
 <template>
   <div class="mt-3 ms-3">
-    <Badge text="Danger" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-danger"></Badge>
+    <Badge text="4"  badgeClass="badge badge-danger"></Badge>
     <Badge text="Primary" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-primary"></Badge>
     <Badge text="Warning" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-warning"></Badge>
     <Badge text="Success" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-success"></Badge>
@@ -36,13 +36,13 @@
     <Badge text="Secondary" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-secondary"></Badge>
     <Badge text="Info" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-info"></Badge>
 
-    <!-- <router-link to="/">Home</router-link> |
+    <router-link to="/">Home</router-link> |
     
-    <router-link to="/button">Button</router-link> | -->
+    <router-link to="/button">Button</router-link> |
     
     
   </div>
-  <!-- <router-view /> -->
+  <router-view />
   
 </template>
 
