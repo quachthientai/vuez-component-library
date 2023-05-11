@@ -60,37 +60,36 @@
 </script>
 
 <template>
-   <router-link :to="{path: routeLink}">
-      <button 
-         :class="`
-            ${btnClass}
-            ${isUppercase ? 'uppercase' : 'capitalize'}
-            ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
-            ${isLoading && !btnClass.includes('btn-icon-circle') ? 'pointer-events-none' : ''}`"
-         :disabled="isDisabled"
-      >
-         <a
-            :href="externalLink"
-            :class="`${isDisabled ? 'cursor-no-drop' : ''}`"
-         >  
-            <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
-               <span class="no-underline flex justify-center items-center">
-                  <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
+   <button 
+      :class="`
+         ${btnClass}
+         ${isUppercase ? 'uppercase' : 'capitalize'}
+         ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
+         ${isLoading && !btnClass.includes('btn-icon-circle') ? 'pointer-events-none' : ''}`"
+      :disabled="isDisabled"
+   >
+      <a
+         :href="externalLink"
+         :class="`${isDisabled ? 'cursor-no-drop' : ''}`"
+      >  
+         <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
+            <span class="no-underline flex justify-center items-center">
+               <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
                   Loading...
-               </span>  
-            </template>
+            </span>  
+         </template>
 
-            <template v-else>
-               <span class="no-underline flex justify-center items-center">
-                  <span v-if="!btnClass.includes('btn-icon-circle')">
-                     {{ text }}
-                  </span>
-                  <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
+         <template v-else>
+            <span class="no-underline flex justify-center items-center">
+               <span v-if="!btnClass.includes('btn-icon-circle')">
+                  {{ text }}
                </span>
-            </template>
-         </a>
-      </button>
-   </router-link>
+               <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
+            </span>
+         </template>
+      </a>
+   </button>
+   
    
 </template>
 

@@ -3,7 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './button';
+@import './components/button';
+@import './components/badge';
 
 
 @layer base {

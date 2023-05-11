@@ -1,0 +1,18 @@
+$variants: "primary", "secondary", "info", "warning", "danger", "success";
+
+@layer base {
+   .badge {
+      @apply bg-primary-500 font-bold text-white text-[13px] py-[1px] px-[6px] rounded-[3px]
+   }
+}
+
+@layer utilities {
+   @each $variant in $variants {
+      .badge-#{$variant} {
+         @apply bg-#{$variant}-500;
+      }
+      .badge-pill-#{$variant} {
+         @apply rounded-full bg-#{$variant}-500;
+      }
+   }
+}
