@@ -26,6 +26,8 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
 
 //variant class
 @layer utilities {
+
+   //regular button variant
    @each $variant in $variants {
       .btn-#{$variant}{
          @apply outline-none border-none bg-#{$variant}-500;
@@ -40,9 +42,10 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
       }
    }
 
+   //outline button variants
    @each $variant in $variants {
       .btn-outline-#{$variant}{
-         @apply bg-none border-[2px] border-#{$variant}-500;
+         @apply bg-none border-[2px] p-[10px] border-#{$variant}-500;
 
          &:not([disabled]):hover{
             @if $variant == 'secondary' {
@@ -51,13 +54,14 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
                @apply hover:bg-#{$variant}-100;
             }
          }
-
+         
          a{
             @apply text-#{$variant}-500;
          }
       }
    }
 
+   //button with icon circle shape variants
    .btn-icon-circle {
       @apply p-[12px] rounded-full;
       a > span > svg {
@@ -75,6 +79,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
          }
       }
    
+      //button outline size 
       @each $variant in $variants {
          &.btn-outline-#{$variant}{
             @apply p-[10px];

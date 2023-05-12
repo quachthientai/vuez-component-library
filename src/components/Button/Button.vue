@@ -87,7 +87,8 @@
          <template v-else>
             <span class="no-underline flex justify-center items-center">
                <span v-if="!btnClass.includes('btn-icon-circle')">
-                  {{ text }}
+                  {{ text }} 
+                  <slot />
                </span>
                <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
             </span>

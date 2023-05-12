@@ -22,20 +22,27 @@
 
 <template>
   <div class="mt-3 ms-3">
-    <Badge text="4"  badgeClass="badge badge-danger"></Badge>
+    <Badge text="Danger" icon="material-symbols:star-outline-rounded"  badgeClass="badge badge-danger"></Badge>
     <Badge text="Primary" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-primary"></Badge>
     <Badge text="Warning" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-warning"></Badge>
     <Badge text="Success" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-success"></Badge>
     <Badge text="Secondary" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-secondary"></Badge>
     <Badge text="Info" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-info"></Badge>
 
-    <Badge text="Danger" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-danger"></Badge>
+    <Badge  icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-danger"></Badge>
     <Badge text="Primary" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-primary"></Badge>
     <Badge text="Warning" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-warning"></Badge>
     <Badge text="Success" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-success"></Badge>
     <Badge text="Secondary" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-secondary"></Badge>
     <Badge text="Info" icon="material-symbols:star-outline-rounded" badgeClass="badge badge-pill-info"></Badge>
 
+
+    <Button text="test badge" class="relative mt-3" btnClass="btn btn-primary">
+      <Badge badgeClass="badge badge-pill-danger" text="99+" class="absolute border-[1px] -right-2 -top-2"></Badge>
+    </Button>
+
+    
+    
     <router-link to="/">Home</router-link> |
     
     <router-link to="/button">Button</router-link> |
