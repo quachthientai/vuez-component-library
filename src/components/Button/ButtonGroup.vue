@@ -6,19 +6,37 @@
       components: {
          Button
       },
+      data(){
+         return{
+            items:this.listOfButtons
+         }
+      },
       props: {
-         btnClass: {
-            type: String,
-            default: null,
+         listOfButtons:{
+            type:[Object],
             required: true,
          }
-      }
+      },
    }
+
+   
+   
 </script>
 
 <template>
    <div>
-      
+      <Button v-for="item in items" 
+         :text="item.text"
+         :routeLink="item.routeLink"
+         :icon="item.icon"
+         :iconPosition="item.iconPosition"
+         :isUppercase="item.isUppercase"
+         :isDisabled="item.isDisabled"
+         :btnClass="item.btnClass"
+         :isLoading="item.isLoading"
+         :externalLink="item.externalLink"
+         >
+      </Button>
    </div>
 </template>
 
