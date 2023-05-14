@@ -2,7 +2,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
 
 @layer base {
    .badge {
-      @apply bg-primary-500 font-bold text-white text-[9px] py-[1px] px-[5px] rounded-[3px]
+      @apply bg-primary-500 font-bold text-white rounded-[3px]
    }
 }
 

@@ -35,22 +35,20 @@
       },
       computed: {
          computedBadgeSize: function() {
-            if(!this.text && this.icon){
-               return 'p-[5px]';
-            }else if (!this.text && !this.icon){
-               return 'p-[9px]';
+            if (!this.text && !this.icon){
+               return 'inline-block w-4 h-4 rounded-full';
             }
-            return '';
+            return 'inline-flex items-center justify-center px-[3px] py-[3px] text-xs';
          }
       }
    }
 </script>
 
 <template>
-   <span :class="[computedBadgeSize,badgeClass]" class="inline-flex items-center">
+   <span :class="[computedBadgeSize,badgeClass]">
       
-      <Icon v-if="icon" :icon="icon" />
-      <span>
+      <Icon class="icon" v-if="icon" :icon="icon" />
+      <span v-if="text">
          {{ text }}
       </span>
       

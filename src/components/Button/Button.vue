@@ -59,6 +59,9 @@
                return this.iconPosition === 'right' ? 'order-last ml-1' : 'order-first mr-1';
             }
             return 'm-0';
+         },
+         computedBadgeStyling: function() {
+            console.log(this.$slots.default()[0]?.type?.name)
          }
       }
    }
@@ -88,7 +91,9 @@
             <span class="no-underline flex justify-center items-center">
                <span v-if="!btnClass.includes('btn-icon-circle')">
                   {{ text }} 
-                  <slot />
+                  <div class="slotWrapper" :class="computedBadgeStyling">
+                     <slot ></slot>
+                  </div>
                </span>
                <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
             </span>
@@ -99,4 +104,6 @@
    
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+   
+</style>
