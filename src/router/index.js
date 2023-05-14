@@ -6,13 +6,17 @@ const routes = [
    {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('@/views/HomeView.vue')
    },
-   
+   {
+      path: '/badge',
+      name: 'badge',
+      component: () => import('@/views/BadgeView.vue')
+   },
    {
       path: '/button',
       name: 'button',
-      component: ButtonView,
+      component: () => import('@/views/ButtonView.vue')
    }
 ]
 

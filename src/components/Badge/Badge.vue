@@ -23,31 +23,31 @@
             type: String,
             default: 'badge badge-primary',
             required: true,
-         },
-         positionX: {
-            type: String,
-            default: 'right'
-         },
-         positionY: {
-            type: String,
-            default: 'top'
          }
       },
       computed: {
-         computedBadgeSize: function() {
+         computedBadgeStyle: function() {
             if (!this.text && !this.icon){
-               return 'inline-block w-4 h-4 rounded-full';
+               return 'inline-block w-4 h-4';
+            }else if(!this.text && this.icon){
+               return 'px-1 py-1'
             }
-            return 'inline-flex items-center justify-center px-[3px] py-[3px] text-xs';
+            return 'inline-flex items-center justify-center px-2 py-1 text-xs';
+         },
+         computedIconPosition: function() {
+            if(this.text && this.icon){
+               return this.iconPosition === 'right' ? 'order-last' : 'order-first';
+            }
+            return '';
          }
       }
    }
 </script>
 
 <template>
-   <span :class="[computedBadgeSize,badgeClass]">
+   <span :class="[computedBadgeStyle,badgeClass]">
       
-      <Icon class="icon" v-if="icon" :icon="icon" />
+      <Icon class="icon" :class="[computedIconPosition]" v-if="icon" :icon="icon" />
       <span v-if="text">
          {{ text }}
       </span>

@@ -49,7 +49,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
 
          &:not([disabled]):hover{
             @if $variant == 'secondary' {
-               @apply hover:bg-#{$variant}-500;
+               @apply hover:bg-#{$variant}-200;
             } @else {
                @apply hover:bg-#{$variant}-100;
             }
