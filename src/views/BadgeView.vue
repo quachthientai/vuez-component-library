@@ -104,15 +104,57 @@
 
    <div class="flex justify-start ml-2 mt-2">
       <Button text="test badge" btnClass="btn btn-sm btn-primary relative mr-3 mt-3">
-         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" icon="material-symbols:star-outline-rounded"></Badge>
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" text="99+" ></Badge>
       </Button>
 
       <Button text="test badge" btnClass="btn btn-primary relative mr-3 mt-3">
-         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" icon="material-symbols:star-outline-rounded"></Badge>
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" text="99+" ></Badge>
+      </Button>
+
+      <Button text="test badge"  btnClass="btn btn-lg btn-primary relative mr-3 mt-3">
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" text="99+" icon="material-symbols:star-outline-rounded"></Badge>
+      </Button>
+   </div>
+
+   <div class="flex justify-start ml-2 mt-2">
+      <Button text="test badge" btnClass="btn btn-sm btn-primary relative mr-3 mt-3">
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" icon="material-symbols:star-outline-rounded" ></Badge>
+      </Button>
+
+      <Button text="test badge" btnClass="btn btn-primary relative mr-3 mt-3">
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" icon="material-symbols:star-outline-rounded" ></Badge>
       </Button>
 
       <Button text="test badge"  btnClass="btn btn-lg btn-primary relative mr-3 mt-3">
          <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" icon="material-symbols:star-outline-rounded"></Badge>
+      </Button>
+   </div>
+
+   <div class="flex justify-start ml-2 mt-2">
+      <Button text="test badge" btnClass="btn btn-sm btn-primary  mr-3 mt-3">
+         <Badge badgeClass="badge badge-danger inline-flexs" icon="material-symbols:star-outline-rounded" ></Badge>
+      </Button>
+
+      <Button text="test badge" btnClass="btn btn-primary flex mr-3 mt-3">
+         <Badge badgeClass="badge badge-pill-danger " text="99+" ></Badge>
+      </Button>
+
+      <Button text="test badge"  btnClass="btn btn-lg btn-primary  mr-3 mt-3">
+         <Badge badgeClass="badge badge-pill-danger " icon="material-symbols:star-outline-rounded"></Badge>
+      </Button>
+   </div>
+
+   <div class="flex justify-start ml-2 mt-2">
+      <Button text="test badge" btnClass="btn btn-sm btn-primary relative mr-3 mt-3">
+         <Badge badgeClass="badge badge-pill-danger inline-flexs absolute -right-2 -top-2"  ></Badge>
+      </Button>
+
+      <Button text="test badge" btnClass="btn btn-primary flex mr-3 mt-3 relative">
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2"  ></Badge>
+      </Button>
+
+      <Button text="test badge"  btnClass="btn btn-lg btn-primary relative mr-3 mt-3">
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" ></Badge>
       </Button>
    </div>
 

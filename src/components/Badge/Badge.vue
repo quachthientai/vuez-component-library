@@ -30,7 +30,7 @@
             if (!this.text && !this.icon){
                return 'inline-block w-4 h-4';
             }else if(!this.text && this.icon){
-               return 'px-1 py-1'
+               return 'px-1 py-1 inline-flex'
             }
             return 'inline-flex items-center justify-center px-2 py-1 text-xs';
          },

@@ -60,9 +60,7 @@
             }
             return 'm-0';
          },
-         computedBadgePosition: function() {
-            console.log(this.$parent)
-         }
+         
       }
    }
 </script>
@@ -89,9 +87,9 @@
 
          <template v-else>
             <span class="no-underline flex justify-center items-center">
-               <span v-if="!btnClass.includes('btn-icon-circle')" :class="[computedBadgePosition]">
-                  {{ text }} 
-                  <div class="slotWrapper" :class="computedBadgeStyling">
+               <span v-if="!btnClass.includes('btn-icon-circle')" :class="this.$slots ? 'flex items-center justify-center' : ''">
+                  <span>{{ text }}</span>
+                  <div class="ml-1 flex items-center">
                      <slot></slot>
                   </div>
                </span>

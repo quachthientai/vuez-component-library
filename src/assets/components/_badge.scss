@@ -15,4 +15,8 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
          @apply rounded-full bg-#{$variant}-500;
       }
    }
+
+   .badgeSlot-sm > * {
+      @apply px-[4px] py-[2px] text-[10px];
+   }
 }
