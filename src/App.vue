@@ -25,6 +25,8 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/button">Button</router-link> |
     <router-link to="/badge">Badge</router-link> |
+    <router-link to="/buttonGroup">Button Group</router-link> |
+    <router-link to="/switchButton"> Switch Button</router-link>
   </div>
   <router-view />
   

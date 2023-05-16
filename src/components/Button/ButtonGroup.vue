@@ -17,6 +17,7 @@
             required: true,
          }
       },
+      
    }
 
    
@@ -24,7 +25,7 @@
 </script>
 
 <template>
-   <div>
+   <div class="buttonGroup">
       <Button v-for="item in items" 
          :text="item.text"
          :routeLink="item.routeLink"
