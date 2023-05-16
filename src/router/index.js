@@ -17,13 +17,13 @@ const routes = [
       component: () => import('@/views/ButtonView.vue')
    },
    {
-      path: '/dropdown',
-      name: 'dropdown',
-      component: () => import('@/views/DropDownView.vue')
+      path: '/switchButton',
+      name: 'switchButton',
+      component: () => import('@/views/SwitchButtonView.vue')
    },
    {
-      path: '/button-group',
-      name: 'button-group',
+      path: '/buttonGroup',
+      name: 'buttonGroup',
       component: () => import('@/views/ButtonGroupView.vue')
    }
 ]
