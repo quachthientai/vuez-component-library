@@ -17,6 +17,11 @@ const routes = [
       path: '/button',
       name: 'button',
       component: () => import('@/views/ButtonView.vue')
+   },
+   {
+      path: '/dropdown',
+      name: 'dropdown',
+      component: () => import('@/views/DropDownView.vue')
    }
 ]
 

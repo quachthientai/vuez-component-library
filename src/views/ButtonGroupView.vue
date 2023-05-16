@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <ButtonGroup :list-of-buttons="[{btnClass=""}]"></ButtonGroup>
+    
 </template>
 
 <style lang="scss">
