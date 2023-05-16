@@ -1,5 +1,6 @@
 <script>
-   import Button from '../Button/Button.vue';
+   import Button from '@/components/Button/Button.vue';
+   import Icon from '@iconify/vue';
    export default {
       name: 'Dropdown',
       components: {

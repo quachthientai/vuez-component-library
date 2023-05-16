@@ -16,6 +16,7 @@
     <router-link to="/button">Button</router-link> |
     <router-link to="/badge">Badge</router-link> |
     <router-link to="/dropdown">DropDowns</router-link> |
+    <router-link to="/button-group">Button Group</router-link> |
   </div>
   <router-view />
   

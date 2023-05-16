@@ -3,14 +3,13 @@
     export default{
         name:'ButtonGroupView',
         components:{
-            
             ButtonGroup
         }
     }
 </script>
 
 <template>
-    
+    This is button group view
 </template>
 
 <style lang="scss">
