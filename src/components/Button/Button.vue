@@ -57,7 +57,7 @@
          },
          computedIconPosition: function() {
             if(this.text || this.isLoading){
-               return this.iconPosition === 'right' ? 'order-last ml-1' : 'order-first mr-1';
+               return this.iconPosition === 'right' ? 'order-last' : 'order-first mr-1';
             }
             return 'm-0';
          },

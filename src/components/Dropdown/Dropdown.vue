@@ -1,6 +1,6 @@
 <script>
    import Button from '@/components/Button/Button.vue';
-   import Icon from '@iconify/vue';
+
    export default {
       name: 'Dropdown',
       components: {
@@ -23,7 +23,7 @@
 </script>
 
 <template>
-   <Button :text="text" :btnClass="dropDownClass">
+   <Button :text="text" :btnClass="dropDownClass" iconPosition="right" icon="octicon:chevron-down-12">
       
    </Button>
 </template>
