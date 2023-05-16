@@ -1,5 +1,5 @@
 <script>
-import SwitchButton from '@/components/Button/SwitchButton.vue';
+import SwitchButton from '@/components/Forms/SwitchButton.vue';
 </script>
 
 <template>
