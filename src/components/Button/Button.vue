@@ -1,6 +1,7 @@
 <script>
    import { Icon } from '@iconify/vue'
    import { RouterLink } from 'vue-router';
+   
    export default {
       name: 'Button',
       components: {
@@ -61,6 +62,7 @@
             return 'm-0';
          },
          
+         
       }
    }
 </script>
@@ -89,7 +91,7 @@
             <span class="no-underline flex justify-center items-center">
                <span v-if="!btnClass.includes('btn-icon-circle')" :class="this.$slots ? 'flex items-center justify-center' : ''">
                   <span>{{ text }}</span>
-                  <div class="ml-1 flex items-center">
+                  <div class="ml-1 flex items-center" >
                      <slot></slot>
                   </div>
                </span>

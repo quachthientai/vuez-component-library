@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
-import ButtonView from '@/views/ButtonView.vue'
-import HomeView from '@/views/HomeView.vue'
 
 const routes = [
    {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: () => import('@/views/HomeView.vue')
    },
    {
@@ -17,16 +15,6 @@ const routes = [
       path: '/button',
       name: 'button',
       component: () => import('@/views/ButtonView.vue')
-   },
-   {
-      path:'/buttonGroup',
-      name:'buttonGroup',
-      component: ()=>import('@/views/ButtonGroupView.vue')
-   },
-   {
-      path:'/switchButton',
-      name:'switchButton',
-      component:()=>import('@/views/SwitchButtonView.vue')
    }
 ]
 
