@@ -1,22 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// Components Styles
+@layer components {
+   @import 'components/button';
+   @import 'components/badge';
+   @import 'components/button-group';
+   @import 'components/Forms/switch';
+}   
 
 //Typo
-@import './base/typography';
+@import 'base/typography';
 
 //Reset
 @layer base {
-   @import './base/reset';
+   @import 'base/reset';
 }
 
-// Components Styles
-@layer components {
-   @import './components/button';
-   @import './components/badge';
-   @import './components/button-group';
-   @import './components/Forms/switch';
-}
+
 
 
 

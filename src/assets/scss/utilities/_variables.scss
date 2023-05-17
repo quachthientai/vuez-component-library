@@ -1,5 +1,11 @@
 // Sass Variables
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+
+$variants: "primary", "secondary", "info", "warning", "danger", "success";
+
+
+
 

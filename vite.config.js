@@ -8,7 +8,8 @@ export default defineConfig({
   // css: {
   //   preprocessorOptions: {
   //     scss: {
-  //       additionalData: `@use "@/assets/main.scss" as *;`
+  //       includePaths: ['node_modules'],
+  //       additionalData: `@import "@/assets/scss/main.scss";`
   //     }
   //   }
   // },
