@@ -5,6 +5,13 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { hash } from './src/utils/functions.js'
 // https://vitejs.dev/config/
 export default defineConfig({
+  // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       additionalData: `@use "@/assets/main.scss" as *;`
+  //     }
+  //   }
+  // },
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {

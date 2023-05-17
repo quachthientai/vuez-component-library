@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 $variants: "primary", "secondary", "info", "warning", "danger", "success";
 
 @layer base {
