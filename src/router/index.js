@@ -22,9 +22,9 @@ const routes = [
       component: () => import('@/views/DropDownView.vue')
    },
    {
-      path: '/switch-button',
-      name: 'switch-button',
-      component: () => import('@/views/SwitchButtonView.vue')
+      path: '/switch',
+      name: 'switch',
+      component: () => import('@/views/SwitchView.vue')
    },
    {
       path: '/button-group',

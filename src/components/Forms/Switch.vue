@@ -1,6 +1,6 @@
 <script>
     export default{
-        name:"Switch Button",
+        name:"Switch",
         props: {
 
         },
