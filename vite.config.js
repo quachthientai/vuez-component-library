@@ -9,7 +9,7 @@ export default defineConfig({
   //   preprocessorOptions: {
   //     scss: {
   //       includePaths: ['node_modules'],
-  //       additionalData: `@import "@/assets/scss/main.scss";`
+  //       additionalData: `@import "@/assets/scss/main.scss"`
   //     }
   //   }
   // },

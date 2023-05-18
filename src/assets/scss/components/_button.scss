@@ -1,11 +1,11 @@
 
-$variants: "primary", "secondary", "info", "warning", "danger", "success";
+@use '../utilities/variables';
 
 //base class
-@layer base{
+@layer base{ 
    .btn {
       @apply font-bold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px] py-[8px] transition duration-100 ease-out hover:ease-in;
-      a{
+      a{ 
          @apply tracking-wide text-[15px] leading-[24px];
       }
    
@@ -24,12 +24,12 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
       }
    }
 }
-
+ 
 //variant class
 @layer utilities {
 
    //regular button variant
-   @each $variant in $variants {
+   @each $variant in variables.$variants {
       .btn-#{$variant}{
          @apply outline-none border-none bg-#{$variant}-500;
 
@@ -44,7 +44,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
    }
 
    //outline button variants
-   @each $variant in $variants {
+   @each $variant in variables.$variants {
       .btn-outline-#{$variant}{
          @apply bg-none border-[2px] p-[10px] border-#{$variant}-500;
 
@@ -68,7 +68,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
       a > span > svg {
          @apply m-0;
       }
-      @each $variant in $variants {
+      @each $variant in variables.$variants {
          &.btn-#{$variant}{
             &.btn-sm{
                @apply p-[9px];
@@ -81,7 +81,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
       }
    
       //button outline size 
-      @each $variant in $variants {
+      @each $variant in variables.$variants {
          &.btn-outline-#{$variant}{
             @apply p-[10px];
    

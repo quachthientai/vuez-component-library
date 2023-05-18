@@ -1,20 +1,21 @@
-// Components Styles
-@layer components {
-   @import 'components/button';
-   @import 'components/badge';
-   @import 'components/button-group';
-   @import 'components/Forms/switch';
-}   
+
 
 //Typo
-@import 'base/typography';
-
+@use 'base/typography';
+@use 'base/reset';
+@use 'components/button';
+@use 'components/badge';
+@use 'components/button-group';
+@use 'components/Forms/switch';
 //Reset
-@layer base {
-   @import 'base/reset';
-}
+// @layer base {
+   
+// } 
 
-
+// // Components Styles
+// @layer components {
+   
+// }   
 
 
 

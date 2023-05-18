@@ -1,8 +1,8 @@
+@use '../utilities/variables';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-$variants: "primary", "secondary", "info", "warning", "danger", "success";
 
 @layer base {
    .badge {
@@ -11,7 +11,7 @@ $variants: "primary", "secondary", "info", "warning", "danger", "success";
 }
 
 @layer utilities {
-   @each $variant in $variants {
+   @each $variant in variables.$variants {
       .badge-#{$variant} {
          @apply bg-#{$variant}-500;
       }
