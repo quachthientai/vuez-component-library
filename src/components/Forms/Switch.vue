@@ -27,7 +27,7 @@
             }
         },
         methods:{
-            switchToggle(){
+           switchToggle(){
                 this.isSelected = !this.isSelected
             }
         },
