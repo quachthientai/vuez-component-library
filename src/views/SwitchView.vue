@@ -1,13 +1,15 @@
 <script>
-import SwitchButton from '@/components/Forms/Switch.vue';
+    import Switch from '@/components/Forms/Switch.vue';
+    export default{
+        name: 'SwitchView',
+        components:{
+            Switch
+        }
+    }
 </script>
 
 <template>
-    
-    <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-    </label>
+    <Switch class="switch" onStateIcon="mdi-light:home" offStateIcon="mdi-light:home"></Switch>
 </template>
 
 <script>

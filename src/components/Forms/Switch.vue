@@ -6,6 +6,11 @@
         components: {
             Icon
         },
+        data(){
+            return{
+                isSelected: false,
+            }
+        },
         props: {
             switchClass: {
                 type: String,
@@ -22,19 +27,31 @@
             }
         },
         methods:{
-
+            switchToggle(){
+                this.isSelected = !this.isSelected
+            }
         },
         props:{
 
+        },
+        computed:{
+            computedIsSelected(){
+                return this.isSelected ? "switch-selected" : ''
+            },
+            computedIsSelectedSlider(){
+                return this.isSelected ? 'ml-10' : ''
+            }
         }
     }
 </script>
 
 <template>
-    <label class="switch-button">
-        <input type="checkbox">
-        <span class="switch-button-slider-round"></span>
-    </label>
+    <div @click="switchToggle" :class="`${switchClass} ${computedIsSelected}` ">
+        <span :class="`switch-slider ${computedIsSelectedSlider}` "></span>
+        <Icon icon="mdi-light:home" class="absolute top-3 left-3"/>
+        <Icon icon="mdi-light:home" class="absolute top-3 right-3"/>
+    </div>
+
 </template>
 <style lang="scss">
 </style>
