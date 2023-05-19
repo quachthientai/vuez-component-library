@@ -6,7 +6,7 @@ import SwitchButton from '@/components/Forms/Switch.vue';
     
     <label class="switch">
         <input type="checkbox">
-        <span class="slider round"></span>
+        <span class="switch__slider round"></span>
     </label>
 </template>
 

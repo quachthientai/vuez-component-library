@@ -1,4 +1,4 @@
-$variants: "primary", "secondary", "info", "warning", "danger", "success";
+@use '../utilities/variables';
 .buttonGroup{
     display: flex;
 }
