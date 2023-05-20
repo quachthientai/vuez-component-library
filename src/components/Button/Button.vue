@@ -84,7 +84,7 @@
             <span class="no-underline flex justify-center items-center">
                <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
                   Loading...
-            </span>  
+            </span>
          </template>
 
          <template v-else>

@@ -7,14 +7,12 @@
         }
     }
 </script>
-
-<template>
-    <Switch></Switch>
-    <label class="switch">
-        <input type="checkbox">
-        <span class="switch__slider round"></span>
-    </label>
-</template>
-
+    <template>
+        <!-- <Switch></Switch> -->
+        <label class="switch switch-danger">
+            <input @change="onChange" class="switch__input" type="checkbox">
+            <span class="switch__slider round"></span>
+        </label>
+    </template>
 <script>
 </script>

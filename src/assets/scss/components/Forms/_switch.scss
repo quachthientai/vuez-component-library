@@ -1,62 +1,110 @@
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 51px;
-    height: 25px;
-  } 
-  
-  .switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 2px solid #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 17px;
-    width: 17px;
-    left: 2px;
-    right: 5px;
-    bottom: 2px;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  } 
+@use '../../utilities/variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  input:checked + .slider {
-    background-color: #2196F3;
-    border: 2px solid #2196F3;
+@layer base {
+  .switch {
+    @apply inline-block w-[51px] h-[26px] relative;
+
+    &__input {
+      @apply opacity-0 w-0 h-0;
+    }
+    
+    &__slider{
+      @apply absolute cursor-pointer inset-0 border-[2px]  rounded-full transition-all duration-100;
+
+      &:before{
+        @apply absolute content-[""] h-[18px] w-[18px] left-[2px] right-[1px] bottom-[2px] rounded-full bg-slate-300 transition-all duration-500;
+      }
+    }
   }
+}
+
+@layer utilities {
+  @each $variant in variables.$variants {
+    .switch-#{$variant}{
+      input {
+        &:checked {
+          + .switch__slider {
+            @apply border-#{$variant}-500 bg-#{$variant}-500;
+          }
+          + .switch__slider:before {
+            @apply translate-x-[26px] bg-white;
+          }
+        }
+
+        &:focus {
+          + .switch__slider {
+            @apply shadow-[0_0_1px_bg]
+            box-shadow: 0 0 1px #2196F3;
+          }
+        }
+        
+      }
+    }
+  }
+}
+
+// .switch-primary{
+//   input:checked {
+   
+//       + &__slider {
+//         @apply bg-slate-500;
+//       }
+      
+//     }
+// }
+
+
+// .switch-primary > input:checked + .switch__slider {
+//   background-color: #2196F3;
+//   border: 2px solid #2196F3;
+// }
+
+
+
+// input:checked + .switch__slider:before {
+//   // -webkit-transform: translateX(26px);
+//   // -ms-transform: translateX(26px);
+//   transform: translateX(26px);
+//   background-color: white
+// }
+
+// .switch {
+//     position: relative;
+//     display: inline-block;
+//     width: 51px;
+//     height: 25px;
+//   } 
   
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
+  // .switch input { 
+  //   opacity: 0;
+  //   width: 0;
+  //   height: 0;
+  // }
   
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-    background-color: white
-  }
+  // .switch__slider {
+  //   position: absolute;
+  //   cursor: pointer;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   border: 2px solid #ccc;
+  //   -webkit-transition: .4s;
+  //   transition: .4s;
+  // }
+  
+
+
+
   
   /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
+  // .slider.round {
+  //   border-radius: 34px;
+  // }
   
-  .slider.round:before {
-    border-radius: 50%;
-  }
+  // .slider.round:before {
+  //   border-radius: 50%;
+  // }

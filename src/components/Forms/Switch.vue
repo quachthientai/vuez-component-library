@@ -31,9 +31,6 @@
                 this.isSelected = !this.isSelected
             }
         },
-        props:{
-
-        },
         computed:{
             computedIsSelected(){
                 return this.isSelected ? "switch-selected" : ''
@@ -46,8 +43,8 @@
 </script>
 
 <template>
-    <div @click="switchToggle" :class="`${switchClass} ${computedIsSelected}` ">
-        <span :class="`switch-slider ${computedIsSelectedSlider}` "></span>
+    <div @click="switchToggle" :class="[switchClass,computedIsSelected]">
+        <span :class="computedIsSelectedSlider" class="switch-slider"></span>
         <Icon icon="mdi-light:home" class="absolute top-3 left-3"/>
         <Icon icon="mdi-light:home" class="absolute top-3 right-3"/>
     </div>
