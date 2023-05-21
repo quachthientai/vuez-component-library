@@ -1,21 +1,27 @@
 <script>
     import { Icon } from '@iconify/vue'
-
     export default{
         name:"Switch",
         components: {
-            Icon
-        },
-        data(){
-            return{
-                isSelected: false,
-            }
+            Icon,
         },
         props: {
             switchClass: {
                 type: String,
                 default: null,
-                // required: true
+                required: true
+            },
+            isDisabled: {
+                type: Boolean,
+                default: false,
+            },
+            onStateText: {
+                type: String,
+                default: null,
+            },
+            offStateText: {
+                type: String,
+                default: null,
             },
             isDisabled: {
                 type: Boolean,
@@ -29,29 +35,25 @@
                 type: String,
                 default: null,
             }
-        },
-        methods:{
-           switchToggle(){
-                this.isSelected = !this.isSelected
-            }
-        },
-        computed:{
-            computedIsSelected(){
-                return this.isSelected ? "switch-selected" : ''
-            },
-            computedIsSelectedSlider(){
-                return this.isSelected ? 'ml-10' : ''
-            }
         }
     }
 </script>
 
 <template>
     <label :class="switchClass">
-        <input type="checkbox" class="switch__input">
-        <span class="switch__slider"></span>
+        <template v-if="!(onStateIcon || offStateIcon) && (onStateText || offStateText)">
+            <span class="switch__labels" :data-on="onStateText" :data-off="offStateText"></span>
+        </template>
+        
+        <template v-if="(onStateIcon || offStateIcon) && !(onStateText || offStateText)">
+            <span class="switch__labels">
+                <Icon :icon="onStateIcon" width="12" height="12" class="onIcon"></Icon>
+                <Icon :icon="offStateIcon" width="12" height="12" class="offIcon"></Icon>
+            </span>
+        </template>
+        
     </label>
-
 </template>
+
 <style lang="scss">
 </style>
