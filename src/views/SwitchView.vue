@@ -9,7 +9,10 @@
 </script>
     <template>
         
-        <Switch switchClass="switch switch-danger"></Switch>
+        <Switch onStateText="ON" offStateText="OFF" switchClass="switch switch-danger"></Switch>
+
+        <Switch onStateIcon="mingcute:lock-line"  offStateIcon="mingcute:unlock-line" switchClass="switch switch-danger"></Switch>
     </template>
 <script>
 </script>
+

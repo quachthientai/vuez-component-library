@@ -15,7 +15,7 @@
       @apply absolute cursor-pointer inset-0 border-[2px] rounded-full transition-all border-slate-300 duration-100;
 
       &:before{
-        @apply absolute content-[""] h-[18px] w-[18px] left-[2px] right-[1px] bottom-[2px] rounded-full bg-slate-300 transition-all duration-500;
+        @apply absolute content-[""] h-[18px] w-[18px] left-[2px] right-[1px] bottom-[2px] rounded-full bg-slate-300 transition-all duration-300;
       }
     }
   }
@@ -40,12 +40,12 @@
             }
           }
           
-          ~ .labels {
-            &:before {
+          ~ .switch__labels {
+            &:before, .onIcon {
               @apply opacity-100;
             }
 
-            &:after {
+            &:after, .offIcon {
               @apply opacity-0;
             }
           }
@@ -65,13 +65,22 @@
         }
       }
 
-      .labels{
+      .switch__labels{
+        @apply text-black font-extrabold text-[9px];
+        
+        .onIcon {
+          @apply absolute top-2 left-2 opacity-0;
+        }
+
+        .offIcon {
+          @apply absolute top-2 right-2 opacity-100;
+        }
         
         &:before {
-          @apply opacity-0 left-[6px] top-[7px] ml-1 content-[attr(data-on)] absolute font-extrabold text-[8px] transition-all duration-300 text-black;
+          @apply opacity-0 left-[6px] top-[7px] ml-1 content-[attr(data-on)] absolute  transition-all ease-in-out duration-100;
         }
         &:after {
-          @apply opacity-100 top-[7px] right-1 mr-1 content-[attr(data-off)] absolute text-[8px] transition-all duration-300 text-black font-extrabold;
+          @apply opacity-100 top-[7px] right-1 mr-1 content-[attr(data-off)] absolute  transition-all ease-in-out duration-100;
         }
       }
       

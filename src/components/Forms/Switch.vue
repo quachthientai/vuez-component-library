@@ -1,11 +1,13 @@
 <script>
     import { Icon } from '@iconify/vue'
+import { IconBase } from 'react-icons';
 
     export default{
         name:"Switch",
         components: {
-            Icon
-        },
+    Icon,
+    IconBase
+},
         // data(){
         //     return{
         //         isSelected: false,
@@ -37,32 +39,30 @@
                 type: String,
                 default: null,
             }
-        },
-        methods:{
-        //    switchToggle(){
-        //         this.isSelected = !this.isSelected
-        //     }
-            onChange() {
-                console.log();
-            }
-        },
-        computed:{
-            // computedIsSelected(){
-            //     return this.isSelected ? "switch-selected" : ''
-            // },
-            // computedIsSelectedSlider(){
-            //     return this.isSelected ? 'ml-10' : ''
-            // }
         }
     }
 </script>
 
 <template>
     <label :class="switchClass">
-        <input class="switch__input" @change="onChange" :disabled="isDisabled" type="checkbox">
+        <input 
+            class="switch__input" 
+            @change="onChange" 
+            :disabled="isDisabled" type="checkbox"
+        >
+
         <span class="switch__slider"></span>
+
+        <template v-if="!(onStateIcon || offStateIcon) && (onStateText || offStateText)">
+            <span class="switch__labels" :data-on="onStateText" :data-off="offStateText"></span>
+        </template>
         
-        <span class="labels" data-on="ON" data-off="OFF"></span>
+        <template v-if="(onStateIcon || offStateIcon) && !(onStateText || offStateText)">
+            <span class="switch__labels">
+                <Icon :icon="onStateIcon" width="11" class="onIcon"></Icon>
+                <Icon :icon="offStateIcon" width="11" class="offIcon"></Icon>
+            </span>
+        </template>
         
     </label>
 </template>
