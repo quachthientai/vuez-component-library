@@ -9,7 +9,7 @@
 </script>
     <template>
         <!-- <Switch></Switch> -->
-        <label class="switch switch-info">
+        <label class="switch switch-warning">
             <input @change="onChange" class="switch__input" type="checkbox">
             <span class="switch__slider round"></span>
         </label>
