@@ -1,14 +1,21 @@
 <script>
     import { Icon } from '@iconify/vue'
+
     export default{
         name:"Switch",
         components: {
             Icon,
         },
+        data() {
+            return {
+                isChecked: true
+            }
+        },
+
         props: {
             switchClass: {
                 type: String,
-                default: null,
+                default: 'switch switch-primary',
                 required: true
             },
             isDisabled: {
@@ -31,17 +38,24 @@
                 type: String,
                 default: null,
             }
+        },
+        methods: {
+            onChange(){
+                return this.isChecked = !this.isChecked;
+            }
         }
+        
     }
 </script>
 
 <template>
     <label :class="switchClass">
         <input 
-            checked
+            :checked="isChecked"
             class="switch__input" 
-            @change="onChange" 
-            :disabled="isDisabled" type="checkbox"
+            @change="onChange"
+            :disabled="isDisabled" 
+            type="checkbox"
         >
         <span class="switch__slider"></span>
 
