@@ -43,8 +43,6 @@
             <Switch class="mr-2" onStateIcon="mingcute:lock-line"  offStateIcon="mingcute:unlock-line" switchClass="switch switch-warning"></Switch>
             <Switch class="mr-2" onStateIcon="mingcute:lock-line"  offStateIcon="mingcute:unlock-line" switchClass="switch switch-danger"></Switch>
         </div>
-
-        
     </template>
 <script>
 </script>

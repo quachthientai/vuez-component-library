@@ -36,7 +36,7 @@
           
           + &:focus {
             + .switch__slider {
-              @apply ring-1 ring-offset-1 ring-#{$variant}-500/30;
+              @apply ring-2 ring-offset-1 ring-#{$variant}-500/30;
             }
           }
           
@@ -60,7 +60,7 @@
 
         &:focus {
           + .switch__slider {
-            @apply ring-1 ring-offset-1 ring-slate-500/20;
+            @apply ring-2 ring-offset-1 ring-slate-500/20;
           }
         }
       }

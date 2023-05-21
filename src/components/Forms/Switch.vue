@@ -30,6 +30,10 @@
                 type: String,
                 default: null,
             },
+            isDisabled: {
+                type: Boolean,
+                default: false
+            },
             onStateIcon: {
                 type: String,
                 default: null,   
