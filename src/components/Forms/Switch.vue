@@ -1,18 +1,10 @@
 <script>
     import { Icon } from '@iconify/vue'
-import { IconBase } from 'react-icons';
-
     export default{
         name:"Switch",
         components: {
-    Icon,
-    IconBase
-},
-        // data(){
-        //     return{
-        //         isSelected: false,
-        //     }
-        // },
+            Icon,
+        },
         props: {
             switchClass: {
                 type: String,
@@ -46,11 +38,11 @@ import { IconBase } from 'react-icons';
 <template>
     <label :class="switchClass">
         <input 
+            checked
             class="switch__input" 
             @change="onChange" 
             :disabled="isDisabled" type="checkbox"
         >
-
         <span class="switch__slider"></span>
 
         <template v-if="!(onStateIcon || offStateIcon) && (onStateText || offStateText)">
@@ -59,8 +51,8 @@ import { IconBase } from 'react-icons';
         
         <template v-if="(onStateIcon || offStateIcon) && !(onStateText || offStateText)">
             <span class="switch__labels">
-                <Icon :icon="onStateIcon" width="11" class="onIcon"></Icon>
-                <Icon :icon="offStateIcon" width="11" class="offIcon"></Icon>
+                <Icon :icon="onStateIcon" width="12" height="12" class="onIcon"></Icon>
+                <Icon :icon="offStateIcon" width="12" height="12" class="offIcon"></Icon>
             </span>
         </template>
         
