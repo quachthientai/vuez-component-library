@@ -5,9 +5,39 @@
 
 @layer base{
     .radio {
-        @apply focus:ring-1 ring-inset;
+        @apply w-[25px] h-[25px] relative rounded-full;
+        
+        
+        &:before{
+            content:'';
+            @apply w-[25px] h-[25px] absolute rounded-full border-[2px] border-solid border-[#D9D9D9];
+            
+            &:checked{
+                @apply border-solid border-primary-500;
+            }
 
-        
-        
+            &:focus{
+                @apply ring-1 ring-offset-1 ring-primary-500;
+            }
+        }
+    } 
+}
+
+@layer utilities{
+    @each $variant in variables.$variants{
+        .radio-#{$variant}{
+            &:before{
+                content:'';
+                @apply w-[25px] h-[25px] absolute rounded-full border-[2px] border-solid border-[#D9D9D9];
+                
+                &:checked{
+                    @apply border-solid border-#{$variant}-500;
+                }
+    
+                &:focus{
+                    @apply ring-1 ring-offset-1 ring-#{$variant}-500;
+                }
+            }
+        }
     }
 }
