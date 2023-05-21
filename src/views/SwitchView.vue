@@ -8,11 +8,8 @@
     }
 </script>
     <template>
-        <!-- <Switch></Switch> -->
-        <label class="switch switch-info">
-            <input @change="onChange" class="switch__input" type="checkbox">
-            <span class="switch__slider round"></span>
-        </label>
+        
+        <Switch switchClass="switch switch-danger"></Switch>
     </template>
 <script>
 </script>
