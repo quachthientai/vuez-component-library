@@ -23,6 +23,10 @@
                 type: String,
                 default: null,
             },
+            isDisabled: {
+                type: Boolean,
+                default: false
+            },
             onStateIcon: {
                 type: String,
                 default: null,   
@@ -37,14 +41,6 @@
 
 <template>
     <label :class="switchClass">
-        <input 
-            checked
-            class="switch__input" 
-            @change="onChange" 
-            :disabled="isDisabled" type="checkbox"
-        >
-        <span class="switch__slider"></span>
-
         <template v-if="!(onStateIcon || offStateIcon) && (onStateText || offStateText)">
             <span class="switch__labels" :data-on="onStateText" :data-off="offStateText"></span>
         </template>
