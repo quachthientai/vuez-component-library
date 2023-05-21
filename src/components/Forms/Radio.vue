@@ -12,18 +12,17 @@
                 type:String,
                 default:'',
                 required:true
+            },
+            radioType:{
+                type:String,
+                default:null
             }
         }
     }
 </script>
 
 <template>
-    
-    <label :class=[radioClass]>
-        <input class="radio__input" name="radio" type="radio" :value=[radioValue]>
-        <span class="radio__checkmark"></span>
-    </label>
-    
+    <input :class=[radioClass,radioType] name="radio" type="radio" :value=[radioValue]>
 </template>
 
 <style lang="scss">

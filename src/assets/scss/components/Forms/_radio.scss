@@ -5,6 +5,9 @@
 
 @layer base{
     .radio {
+        @apply focus:ring-1 ring-inset;
+
+        
         
     }
 }
