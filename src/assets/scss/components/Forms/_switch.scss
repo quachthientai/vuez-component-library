@@ -36,8 +36,7 @@
 
         &:focus {
           + .switch__slider {
-            @apply shadow-[0_0_1px_bg]
-            box-shadow: 0 0 1px #2196F3;
+            @apply shadow-[0_0_1px_bg] /*box-shadow: 0 0 1px #2196F3*/ /*bug here*/;
           }
         }
         
