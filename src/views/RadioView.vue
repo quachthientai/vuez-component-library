@@ -13,5 +13,6 @@
    <div>This is home view</div>
    <Radio class="radio" radioValue="1"></Radio>
    <Radio class="radio" radioValue="1"></Radio>
+   <Radio class="radio" radioValue="1"></Radio>
 </template>
 
