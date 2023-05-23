@@ -1,0 +1,39 @@
+@use '../../utilities/variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.checkbox {
+  @apply inline-block w-[17px] h-[17px] relative;
+
+  &__input {
+    @apply w-full h-full absolute opacity-0;
+
+    &:checked {
+      + .checkbox__custom {
+        background-color: red;
+        border: none;
+      }
+
+      ~ .checkbox__custom:after {
+        width: 5px;
+        height: 9px;
+        opacity: 1;
+      }
+    }
+
+    &:focus {
+      + .checkbox__custom {
+        @apply ring-2 ring-red-500/70 ring-offset-1;
+      }
+    }
+  }
+
+  + &__custom {
+    @apply block w-full h-full absolute rounded-[3px] border-[2px] border-slate-300;
+
+    &:after { 
+      @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-white border-r-[2px] border-b-[2px] rotate-45 transition-width transition-height transition-opacity duration-500; 
+    }
+  }
+}

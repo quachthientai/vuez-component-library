@@ -7,7 +7,7 @@
   .switch {
     @apply inline-block w-[51px] h-[26px] cursor-pointer relative;
 
-    &__input {
+    &__input[role="switch"] {
       @apply opacity-0 w-0 h-0;
     }
     
@@ -24,7 +24,7 @@
 @layer utilities {
   @each $variant in variables.$variants {
     .switch-#{$variant}{
-      input {
+      input[role="switch"] {
         &:checked {
           + .switch__slider {
             @apply border-#{$variant}-500 bg-#{$variant}-500;

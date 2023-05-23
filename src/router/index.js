@@ -27,6 +27,11 @@ const routes = [
       component: () => import('@/views/SwitchView.vue')
    },
    {
+      path: '/checkbox',
+      name: 'checkbox',
+      component: () => import('@/views/CheckboxView.vue')
+   },
+   {
       path: '/button-group',
       name: 'button-group',
       component: () => import('@/views/ButtonGroupView.vue')
