@@ -22,7 +22,7 @@
 </script>
 
 <template>
-    <input :class=[radioClass,radioType] name="radio" type="radio" :value=[radioValue]>
+    <input :class=[radioClass] name="radio" type="radio" :value=[radioValue]>
 </template>
 
 <style lang="scss">

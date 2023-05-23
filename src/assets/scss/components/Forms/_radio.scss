@@ -3,8 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+$disabled:#D9D9D9;
 
-$primary: #0284C7;
 
 @layer base{
     .radio {
@@ -12,7 +12,7 @@ $primary: #0284C7;
         
         &::before{
             content: '';
-            @apply w-[25px] h-[25px] absolute rounded-full  border-primary-500 border-2;
+            @apply w-[25px] h-[25px] absolute rounded-full   border-2;
 
         }
 
@@ -25,6 +25,10 @@ $primary: #0284C7;
             + &:after{
                 @apply opacity-100;
             }
+
+            + &::before{
+                @apply border-primary-500
+            }
         }
 
         
@@ -33,19 +37,18 @@ $primary: #0284C7;
     } 
 }
 
-/**
-@apply w-[28px] h-[28px] relative rounded-full;
-        
-        
-        &:before{
-            content:'';
-            @apply w-[28px] h-[28px] absolute rounded-full border-[3px] border-solid border-[#D9D9D9];
-            
-            &:checked{
-                @apply border-solid border-primary-500 opacity-100;
+@layer utilities{
+    @each $variant in variables.$variants{
+        .radio-#{$variant}{
+            &::after{
+                @apply bg-#{$variant}-500;
             }
 
+            &:checked{
+                + &::before{
+                    @apply border-#{$variant}-500;
+                }
+            }
         }
-        &::after{
-            content: '';
-            @apply w-[18px] h-[18px] absolute bg-slate-500 rounded-full top-[5px] left-[5px] opacity-0;**/
+    }
+}
