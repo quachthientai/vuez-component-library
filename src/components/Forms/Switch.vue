@@ -26,10 +26,6 @@
                 type: String,
                 default: null,
             },
-            isDisabled: {
-                type: Boolean,
-                default: false
-            },
             onStateIcon: {
                 type: String,
                 default: null,   
@@ -49,6 +45,7 @@
 
 <template>
     <label :class="switchClass">
+
         <input
             :checked="isChecked"
             class="switch__input" 
