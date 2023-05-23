@@ -18,10 +18,6 @@
                 default: 'switch switch-primary',
                 required: true
             },
-            isDisabled: {
-                type: Boolean,
-                default: false,
-            },
             onStateText: {
                 type: String,
                 default: null,
@@ -48,17 +44,17 @@
                 return this.isChecked = !this.isChecked;
             }
         }
-        
     }
 </script>
 
 <template>
     <label :class="switchClass">
-        <input 
+        <input
             :checked="isChecked"
             class="switch__input" 
             @change="onChange"
-            :disabled="isDisabled" 
+            :disabled="isDisabled"
+            role="switch" 
             type="checkbox"
         >
         <span class="switch__slider"></span>
