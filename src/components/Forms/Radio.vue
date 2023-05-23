@@ -5,7 +5,8 @@
         props:{
             radioClass:{
                 type: String,
-                default: '',
+                default: 'radio radio-primary',
+                required:true
                 
             },
             radioValue:{
@@ -22,7 +23,8 @@
 </script>
 
 <template>
-    <input :class=[radioClass] name="radio" type="radio" :value=[radioValue]>
+    
+    <input class="radio__input" name="radio" id="1" type="radio" :value=[radioValue]>
 </template>
 
 <style lang="scss">
