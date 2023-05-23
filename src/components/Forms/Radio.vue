@@ -5,7 +5,6 @@
         props:{
             radioClass:{
                 type: String,
-                default: 'radio radio-primary',
                 required:true
                 
             },
@@ -17,14 +16,27 @@
             radioType:{
                 type:String,
                 default:null
+            },
+            radioID:{
+                type:String,
+                default:null,
+                required:true
             }
         }
     }
 </script>
 
 <template>
-    <input :class=[radioClass] name="radio" id="1" type="radio" :value=[radioValue]>
+    <label class="inline-flex">
+        <input :class=[radioClass] name="radio" :id=[radioID] type="radio" :value=[radioValue]>
+        <span class="h-[25px] inline-flex align-middle">
+            <label>{{ radioValue }}</label>
+        </span>
+        
+    </label>
     
+    
+
 </template>
 
 <style lang="scss">

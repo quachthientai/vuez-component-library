@@ -12,9 +12,10 @@
 <template>
    <div>This is home view</div>
    
-   <Radio class="radio radio-primary" radioValue="1"></Radio>
+   <Radio radioClass="radio radio-success" radioValue="hello"></Radio>
+   <Radio radioClass="radio radio-info" radioValue="anh tai"></Radio>
    
-   <Radio class="radio radio-primary" radioValue="1"></Radio>
+   
    
    
 </template>
