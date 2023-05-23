@@ -12,6 +12,7 @@
     <template>
       <div class="ml-2">
          <Checkbox></Checkbox>
+         
          <!-- <Switch class="mr-2" switchClass="switch switch-primary"></Switch> -->
       </div>
         

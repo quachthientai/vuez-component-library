@@ -8,11 +8,15 @@ module.exports =  {
   ],
   theme: {
     extend: {
-      colors:{
-        white: colors.white,
-        black: colors.black,
-        'light': '#F8FAFC',
-        'dark': '#1E293B',
+      transitionProperty: {
+        'width': 'width',
+        'height': 'height'
+      },
+      colors: {
+          white: colors.white,
+          black: colors.black,
+          'light': '#F8FAFC',
+          'dark': '#1E293B',
         primary: {
           50: '#F0F9FF',
           100: '#E0F2FE',

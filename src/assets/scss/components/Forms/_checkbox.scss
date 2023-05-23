@@ -3,73 +3,37 @@
 @tailwind components;
 @tailwind utilities;
 
-// .checkbox {
-//    border: red 1px solid;
-//    @apply relative w-[50px] h-[19px];
-//    &__input {
-//       @apply absolute w-full h-full;
-//    }
-// }
-
-
-// rounded-[4px] cursor-pointer border-[2px] border-slate-300 content-[""] mr-[10px] p-0  align-text-top;
 .checkbox {
-   position: absolute; // take it out of document flow
-   opacity: 0;
-   + label {
-     position: relative;
-     cursor: pointer;
-     padding: 0;
-   }
- 
-   // Box.
-    + label:before {
-       @apply rounded-[4px] border-[2px] border-slate-300 content-[""] mr-[10px] inline-block align-text-top w-[19px] h-[19px];
+  @apply inline-block w-[17px] h-[17px] relative;
+
+  &__input {
+    @apply w-full h-full absolute opacity-0;
+
+    &:checked {
+      + .checkbox__custom {
+        background-color: red;
+        border: none;
+      }
+
+      ~ .checkbox__custom:after {
+        width: 5px;
+        height: 9px;
+        opacity: 1;
+      }
     }
- 
-   // Box hover
-   
-   // Box focus
-   &:focus + label:before {
-     @apply ring-2 ring-red-500/50 ring-offset-1;
-   }
- 
-   // Box checked
-   &:checked + label:before {
-     background: #f35429;
-     border: none;
-   }
- 
- //   // Disabled state label.
- //   &:disabled + label {
- //     color: #b8b8b8;
- //     cursor: auto;
- //   }
- 
- //   // Disabled box.
- //   &:disabled + label:before {
- //     box-shadow: none;
- //     background: #ddd;
- //   }
- 
-   // Checkmark. Could be replaced with an image
-   &:checked + label:after {
-    //  content: "✓";
-    content: "✔";
-    @apply font-extrabold;
-    
-    color: white;
-    font-size: 13px;
-     position: absolute;
-     left: 5px;
-     right: 0;
-     top: 0px;
-     bottom: 0;
-    //  background: white;
-    //  width: 2px;
-    //  height: 2px;
-    //  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white,
-    //    4px -6px 0 white, 4px -8px 0 white;
-    //  transform: rotate(45deg);
-   }
- }
+
+    &:focus {
+      + .checkbox__custom {
+        @apply ring-2 ring-red-500/70 ring-offset-1;
+      }
+    }
+  }
+
+  + &__custom {
+    @apply block w-full h-full absolute rounded-[3px] border-[2px] border-slate-300;
+
+    &:after { 
+      @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-white border-r-[2px] border-b-[2px] rotate-45 transition-width transition-height transition-opacity duration-500; 
+    }
+  }
+}
