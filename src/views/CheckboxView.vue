@@ -17,8 +17,6 @@
          <Checkbox checkboxClass="checkbox checkbox-info"></Checkbox>
          <Checkbox checkboxClass="checkbox checkbox-success"></Checkbox>
          <Checkbox checkboxClass="checkbox checkbox-danger"></Checkbox>
-
-         <input type="checkbox" checked >
          <!-- <Switch class="mr-2" switchClass="switch switch-primary"></Switch> -->
       </div>
         

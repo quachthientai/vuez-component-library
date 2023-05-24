@@ -22,8 +22,6 @@
         }
       }
 
-      
-
       &:focus {
         + .checkbox__custom {
           @apply ring-2 ring-slate-300/70 ring-offset-1;
