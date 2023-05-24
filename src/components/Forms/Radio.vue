@@ -27,13 +27,13 @@
 </script>
 
 <template>
-    <label class="inline-flex">
+    <label class="inline-flex align-middle">
         <input :class=[radioClass] name="radio" :id=[radioID] type="radio" :value=[radioValue]>
-        <span class="h-[25px] inline-flex align-middle">
-            <label>{{ radioValue }}</label>
-        </span>
-        
     </label>
+    <span class="ml-1 mr-1 align-middle">
+            <label>{{ radioValue }}</label>
+    </span>
+    
     
     
 
