@@ -6,10 +6,12 @@
 @layer base {
   .checkbox {
     @apply inline-block w-[17px] h-[17px] relative;
+
     
+
     &__input {
       @apply w-full h-full absolute opacity-0;
-  
+      
       &:checked {
         ~ .checkbox__custom:after {
           @apply w-[5px] h-[9px] opacity-100;
@@ -31,7 +33,11 @@
   
     + &__custom {
       @apply block w-full h-full absolute rounded-[3px] border-[2px] border-slate-300;
-  
+
+      &:hover{
+        @apply border-slate-400 cursor-pointer transition duration-100 ease-in;
+      }
+
       &:after { 
         @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-white border-r-[2px] border-b-[2px] rotate-45; 
         transition: width 0.3s, height 0.3s, opacity 0.3s;
@@ -55,7 +61,15 @@
               @apply ring-2 ring-offset-1 ring-#{$variant}-500/70;
             }
           }
+
+          + &:hover {
+            + .checkbox__custom {
+              @apply transition duration-100 ease-in bg-#{$variant}-600;
+            }
+          }
         }
+
+        
       }
     }
   }

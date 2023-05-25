@@ -21,6 +21,7 @@
             @apply tracking-wide text-[17px] leading-[24px];
          }
       }
+      
    }
 }
  
@@ -38,6 +39,10 @@
 
          a{
             @apply text-white;
+         }
+
+         &:focus {
+            @apply ring-4 ring-offset-0 ring-#{$variant}-500/70;
          }
       }
    }
@@ -57,6 +62,10 @@
          
          a{
             @apply text-#{$variant}-500;
+         }
+
+         &:focus {
+            @apply ring-4 ring-offset-0 ring-#{$variant}-500/30;
          }
       }
    }
