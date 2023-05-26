@@ -68,7 +68,9 @@
 </script>
 
 <template>
-   <button 
+   <button
+      type="button"
+      role="button"
       :class="`
          ${btnClass}
          ${isUppercase ? 'uppercase' : 'capitalize'}
