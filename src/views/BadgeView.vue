@@ -118,7 +118,7 @@
 
    <div class="flex justify-start ml-2 mt-2">
       <Button text="test badge" btnClass="btn btn-sm btn-primary relative mr-3 mt-3">
-         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" icon="material-symbols:star-outline-rounded" ></Badge>
+         <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2"  icon="material-symbols:star-outline-rounded" ></Badge>
       </Button>
 
       <Button text="test badge" btnClass="btn btn-primary relative mr-3 mt-3">
