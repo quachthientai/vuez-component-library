@@ -35,6 +35,11 @@ const routes = [
       path: '/button-group',
       name: 'button-group',
       component: () => import('@/views/ButtonGroupView.vue')
+   },
+   {
+      path:'/radio',
+      name:'radio',
+      component: ()=>import('@/views/RadioView.vue')
    }
 ]
 

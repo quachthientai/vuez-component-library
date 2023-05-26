@@ -19,6 +19,7 @@
     <router-link to="/switch">Switch Button</router-link> |
     <router-link to="/button-group">Button Group</router-link> |
     <router-link to="/checkbox">Checkbox</router-link> |
+    <router-link to="/radio">Radio</router-link> |
   </div>
   <router-view />
   
