@@ -33,7 +33,7 @@ $disabled:#D9D9D9;
 
         &:focus{
             +&::before{
-                @apply ring-1 ring-offset-1 ring-primary-500 transition-all duration-300;
+                @apply ring-2 ring-offset-0 ring-primary-500/50 transition-all duration-100;
             }
         }
         
@@ -57,7 +57,7 @@ $disabled:#D9D9D9;
 
             &:focus{
                 + &::before{
-                    @apply ring-#{$variant}-500;
+                    @apply ring-#{$variant}-500/50;
                 }
             }
         }
