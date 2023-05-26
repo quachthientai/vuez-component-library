@@ -28,15 +28,11 @@
 
 <template>
     <label class="inline-flex align-middle">
-        <input :class=[radioClass] name="radio" :id=[radioID] type="radio" :value=[radioValue]>
+        <input role="switch" :class=[radioClass] name="radio" :id=[radioID] type="radio" :value=[radioValue]>
     </label>
     <span class="ml-1 mr-1 align-middle">
-            <label>{{ radioValue }}</label>
+        <label role="switch-value">{{ radioValue }}</label>
     </span>
-    
-    
-    
-
 </template>
 
 <style lang="scss">
