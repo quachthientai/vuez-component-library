@@ -9,7 +9,7 @@
 </script>
 
 <template>
-    <ButtonGroup :list-of-buttons="[{btnClass:'btn btn-primary', text:'button 1'},{btnClass:'btn btn-primary', text:'button 2'}]"></ButtonGroup>
+    <ButtonGroup :list-of-buttons="[{btngroup:'btn btn-primary', text:'button 1'}]"></ButtonGroup>
 </template>
 
 <style lang="scss">

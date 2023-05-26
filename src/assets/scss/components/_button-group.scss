@@ -1,6 +1,8 @@
 @use '../utilities/variables';
-.buttonGroup{
-    display: flex;
-}
 
-//test switch
+
+@layer base{
+    .btnGroup-container{
+        @apply  inline-flex bg-slate-500 rounded-md overflow-hidden;
+    }
+}

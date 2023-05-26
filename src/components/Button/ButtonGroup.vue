@@ -25,7 +25,7 @@
 </script>
 
 <template>
-   <div class="buttonGroup">
+   <!--<div class="buttonGroup">
       <Button v-for="item in items" 
          :text="item.text"
          :routeLink="item.routeLink"
@@ -38,7 +38,18 @@
          :externalLink="item.externalLink"
          >
       </Button>
+   </div>-->
+   <div class="btnGroup-container">
+      <button v-for="item in items"
+      :class="[item.text, 
+            item.isUppercase, 
+            item.isDisabled, 
+            item.btnClass,
+            ]"
+      :disabled="item.isDisabled"
+      ></button>
    </div>
+
 </template>
 
 <style lang="scss"></style>
