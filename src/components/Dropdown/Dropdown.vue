@@ -24,20 +24,28 @@
       },
       computed: {
          computedBtnClass() {
-            switch(true) {
-               case this.dropDownClass.includes('dropdown-primary'):
-                  return 'btn btn-primary'
-               case this.dropDownClass.includes('dropdown-secondary'):
-                  return 'btn btn-secondary'
-               case this.dropDownClass.includes('dropdown-success'):
-                  return 'btn btn-success'
-               case this.dropDownClass.includes('dropdown-danger'):
-                  return 'btn btn-danger'
-               case this.dropDownClass.includes('dropdown-warning'):
-                  return 'btn btn-warning'
-               case this.dropDownClass.includes('dropdown-info'):
-                  return 'btn btn-info'
+            const variants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info']
+
+            for (const variant of variants) {
+               if(this.dropDownClass.includes(variant)){
+                  return 'btn btn-' + variant
+               }
+               continue;
             }
+            // switch(true) {
+            //    case this.dropDownClass.includes('dropdown-primary'):
+            //       return 'btn btn-primary'
+            //    case this.dropDownClass.includes('dropdown-secondary'):
+            //       return 'btn btn-secondary'
+            //    case this.dropDownClass.includes('dropdown-success'):
+            //       return 'btn btn-success'
+            //    case this.dropDownClass.includes('dropdown-danger'):
+            //       return 'btn btn-danger'
+            //    case this.dropDownClass.includes('dropdown-warning'):
+            //       return 'btn btn-warning'
+            //    case this.dropDownClass.includes('dropdown-info'):
+            //       return 'btn btn-info'
+            // }
          }
       },
       methods: {
@@ -72,36 +80,4 @@
 </template>
 
 <style lang="scss" scoped>
-   // .dropdown {
-   //    position: relative;
-   //    width: 14rem;
-   // }
-
-   // .dropdown__menu {
-   //    position: absolute;
-   //    width: 100%;
-   //    @apply  bg-light text-sm mt-[3px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
-   // }
-
-   // .dropdown__menu[aria-expand="true"]{
-   //    @apply max-h-40;
-   // }
-   
-
-   // .dropdown__item {
-      
-   //    @apply px-2 py-3;
-   //    &:hover{
-   //       @apply bg-primary-500 text-white overflow-hidden;
-         
-   //       &:first-of-type{
-   //          @apply rounded-t-[5px];
-   //       }
-
-   //       &:last-of-type{
-   //          @apply rounded-b-[5px];
-   //       }
-   //    }
-   // }
-
 </style>
