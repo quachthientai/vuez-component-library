@@ -24,12 +24,17 @@
       },
       methods: {
          toggle() {
+            this.rotateIcon(this.isOpen)
             return this.isOpen = !this.isOpen;
          },
-
+         rotateIcon(isOpen) {
+            const element = this.$refs.button.$el.getElementsByTagName('svg')[0]
+            return !isOpen ? element.classList.add('rotate-180') : element.classList.remove('rotate-180')
+         },
          clickOutside(e) {
-            console.log(e)
+            
             if(this.isOpen) {
+               this.rotateIcon(this.isOpen)
                this.isOpen = false;
             }
          }
