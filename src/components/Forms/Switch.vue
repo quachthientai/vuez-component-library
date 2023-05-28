@@ -18,6 +18,10 @@
                 default: 'switch switch-primary',
                 required: true
             },
+            isDisabled: {
+                type: Boolean,
+                default: false
+            },
             onStateText: {
                 type: String,
                 default: null,
