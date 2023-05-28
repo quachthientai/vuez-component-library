@@ -6,7 +6,6 @@
             radioClass:{
                 type: String,
                 required:true
-                
             },
             radioValue:{
                 type:String,
