@@ -1,6 +1,29 @@
 @use '../utilities/variables';
-.buttonGroup{
-    display: flex;
+
+@layer base{
+    .btnGroup{
+        @apply  inline-flex  rounded-sm m-2 overflow-hidden;
+
+        & > button{
+            @apply w-[107px] h-[40px] text-white bg-primary-500;
+
+            &:hover{
+                @apply bg-primary-600;
+            }
+        }
+    }
 }
 
-//test switch
+@layer utilities{
+    @each $variant in variables.$variants{
+        .btnGroup-#{$variant}{
+            & > button{
+                @apply bg-#{$variant}-500;
+
+                &:hover{
+                    @apply bg-#{$variant}-600;
+                }
+            }
+        }
+    }
+}

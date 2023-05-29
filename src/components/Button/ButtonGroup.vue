@@ -1,20 +1,22 @@
 <script>
-   import Button from '@/components/Button/Button.vue';
 
    export default {
       name: 'Button Group',
-      components: {
-         Button
-      },
       data(){
          return{
-            items:this.listOfButtons
+            itemList: this.btnGroupItemList,
          }
       },
       props: {
-         listOfButtons:{
+         btnGroupClass:{
+            type:String,
+            required:true,
+            default: "btnGroup btnGroup-primary"
+         },
+         btnGroupItemList:{
             type:[Object],
-            required: true,
+            required:true,
+            default:[],
          }
       },
       
@@ -25,19 +27,10 @@
 </script>
 
 <template>
-   <div class="buttonGroup">
-      <Button v-for="item in items" 
-         :text="item.text"
-         :routeLink="item.routeLink"
-         :icon="item.icon"
-         :iconPosition="item.iconPosition"
-         :isUppercase="item.isUppercase"
-         :isDisabled="item.isDisabled"
-         :btnClass="item.btnClass"
-         :isLoading="item.isLoading"
-         :externalLink="item.externalLink"
-         >
-      </Button>
+   <div :class=[btnGroupClass]>
+      <button v-for="item in itemList">
+         {{ item.text }}
+      </button>
    </div>
 </template>
 
