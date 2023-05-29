@@ -10,7 +10,7 @@
 
 <template> 
    <div class="flex ml-2 mt-2">
-      <Dropdown dropDownClass="dropdown dropdown-primary" class="ml-3" text="dropdown"></Dropdown>
+      <Dropdown dropDownClass="dropdown dropdown-secondary" class="ml-3" text="dropdown"></Dropdown>
       <Dropdown dropDownClass="dropdown dropdown-secondary" class="ml-3" text="dropdown"></Dropdown>
       <Dropdown dropDownClass="dropdown dropdown-success" class="ml-3" text="dropdown"></Dropdown>
       <Dropdown dropDownClass="dropdown dropdown-warning" class="ml-3" text="dropdown"></Dropdown>
