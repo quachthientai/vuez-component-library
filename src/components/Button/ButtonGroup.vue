@@ -40,16 +40,13 @@
       </Button>
    </div>-->
    <div class="btnGroup-container">
-      <button v-for="item in items"
-      :class="[item.text, 
-            item.isUppercase, 
-            item.isDisabled, 
-            item.btnClass,
-            ]"
-      :disabled="item.isDisabled"
-      ></button>
-   </div>
+      <button>123</button>|
+      <button>123</button>|
+      <button>123</button>
 
+   </div>
 </template>
+
+<buttonGroup :class="btnGroup btnGroup-primary" :itemsList="{}"></buttonGroup>
 
 <style lang="scss"></style>

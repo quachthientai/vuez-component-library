@@ -3,6 +3,6 @@
 
 @layer base{
     .btnGroup-container{
-        @apply  inline-flex bg-slate-500 rounded-md overflow-hidden;
+        @apply  inline-flex bg-slate-500 rounded-md overflow-hidden border;
     }
 }
