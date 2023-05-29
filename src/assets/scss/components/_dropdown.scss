@@ -18,29 +18,30 @@
    }
 }
 
-@each $variant in variables.$variants {
-   .dropdown-#{$variant} {
-      &.dropdown__item {
-         @apply px-2 py-3;
-   
-         &:first-of-type{
-            @apply mt-2;
-         }
-   
-         &:last-of-type{
-            @apply mb-2;
-         }
-   
-         &:hover{
-            @apply text-black overflow-hidden border-transparent border-l-[3px] bg-slate-300/20 border-#{$variant}-500;
-            
-            
+@layer utilities {
+   @each $variant in variables.$variants {
+      .dropdown-#{$variant} {
+         &.dropdown__item {
+            @apply px-2 py-3;
+      
+            &:first-of-type{
+               @apply mt-2;
+            }
+      
+            &:last-of-type{
+               @apply mb-2;
+            }
+      
+            &:hover{
+               @apply text-black overflow-hidden border-transparent border-l-[3px] bg-slate-300/20 border-#{$variant}-500;
+            }
          }
       }
+      
+      
    }
-   
-   
 }
+
       
    
    

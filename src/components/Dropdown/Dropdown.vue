@@ -18,20 +18,30 @@
          },
          dropDownClass: {
             type: String,
-            default: null,
+            default: 'dropdown dropdown-primary',
             required: true,
          }
-      },
+      }, 
       computed: {
-         computedBtnClass() {
-            const variants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info']
-
-            for (const variant of variants) {
-               if(this.dropDownClass.includes(variant)){
-                  return 'btn btn-' + variant
+         computedBtnSize() {
+            let sizes = ['sm', 'lg']
+            for (const size of sizes) {
+               if(this.dropDownClass.includes(size)){
+                  return 'btn-' + size;
                }
                continue;
             }
+           
+         },
+         computedBtnClass() {
+            let variants = ['dropdown-primary', 'dropdown-secondary', 'dropdown-success', 'dropdown-danger', 'dropdown-warning', 'dropdown-info'];
+            for (const variant of variants) {
+               if(this.dropDownClass.split(" ").indexOf(variant) > -1){
+                  return 'btn btn-' + variant.slice(9);
+               }
+               continue;
+            }
+            
             // switch(true) {
             //    case this.dropDownClass.includes('dropdown-primary'):
             //       return 'btn btn-primary'
@@ -49,11 +59,12 @@
          }
       },
       methods: {
-         toggle() {
+         toggle() { 
             this.rotateChevron(this.isOpen)
             return this.isOpen = !this.isOpen;
          },
          rotateChevron(isOpen) {
+            console.log(this.$refs.button.$el.getElementsByTagName('svg'));
             const element = this.$refs.button.$el.getElementsByTagName('svg')[0]
             return !isOpen ? element.classList.add('rotate-180') : element.classList.remove('rotate-180')
          },
@@ -69,7 +80,14 @@
 
 <template >
    <div class="dropdown">
-      <Button ref="button" class="dropdown__toggle" v-click-outside="clickOutside" :text="text"  @click="toggle" :btnClass="[computedBtnClass]" iconPosition="right" icon="octicon:chevron-down-12">
+      <Button ref="button"  
+         v-click-outside="clickOutside" 
+         :text="text"  
+         @click="toggle"
+         :class=[computedBtnSize]
+         :btnClass="computedBtnClass"
+         iconPosition="right" 
+         icon="octicon:chevron-down-12">
       </Button>
       <ul class="dropdown__menu" :aria-expand="isOpen">
          <li class="dropdown__item" :class="dropDownClass">Action one</li>

@@ -1,14 +1,8 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import App from '../src/App.vue'
-import '@/assets/scss/main.scss'
-import router from '@/router/index.js'
+import Vue from 'vue'
 
-
-const app = createApp(App)
-
-const clickOut = app.directive('click-outside', {
+export const clickOut = Vue.directive('click-outside', {
    mounted(el, binding) {
+      
       el.handleClick = function(e) {
          if(!(el === e.target || el.contains(e.target))) {
             binding.value(e)
@@ -21,7 +15,4 @@ const clickOut = app.directive('click-outside', {
    }
 })
 
-app.use(createPinia())
-   .use(router)
-   .use(clickOut)
-   .mount('#app')
+export default clickOut;
