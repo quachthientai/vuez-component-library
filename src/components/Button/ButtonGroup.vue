@@ -1,20 +1,38 @@
 <script>
-   import Button from '@/components/Button/Button.vue';
-
+   import Button from './Button.vue';
+   import Dropdown from '../Dropdown/Dropdown.vue';
    export default {
       name: 'Button Group',
-      components: {
-         Button
+      components:{
+         Button,
+         Dropdown
       },
       data(){
          return{
-            items:this.listOfButtons
+            itemList: this.btnGroupItemList,     
          }
       },
       props: {
-         listOfButtons:{
+         btnGroupClass:{
+            type:String,
+            required:true,
+            default: "btnGroup btnGroup-primary"
+         },
+         btnGroupItemList:{
             type:[Object],
-            required: true,
+            required:true,
+            default:[],
+         },
+         btnStyle:{
+            type:String,
+            required: false,
+            default:"normal"
+            //switch to pill shape
+         },
+         optional:{
+            type:String,
+            required:false,
+            default:"default"
          }
       },
       
@@ -24,29 +42,21 @@
    
 </script>
 
-<template>
-   <!--<div class="buttonGroup">
-      <Button v-for="item in items" 
-         :text="item.text"
-         :routeLink="item.routeLink"
-         :icon="item.icon"
-         :iconPosition="item.iconPosition"
-         :isUppercase="item.isUppercase"
-         :isDisabled="item.isDisabled"
-         :btnClass="item.btnClass"
-         :isLoading="item.isLoading"
-         :externalLink="item.externalLink"
-         >
-      </Button>
-   </div>-->
-   <div class="btnGroup-container">
-      <button>123</button>|
-      <button>123</button>|
-      <button>123</button>
 
+<template>
+   <div v-if="optional === 'default'" :class=[btnGroupClass,btnStyle]>
+      <button v-for="item in itemList">
+         {{ item.text }}
+         <a :href=[item.externalLink]>
+         </a>
+      </button>
+   </div>
+   <div v-else-if="optional==='custom'" class="btnGroup-custom">
+      <Button btnClass="btn btn-primary" class="mr-2" text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
+        <Button btnClass="btn btn-secondary" class="mr-2" text="Secondary" iconPosition="left" icon="ph:envelope-bold"></Button>
+        <Button btnClass="btn btn-danger" class="mr-2" text="Danger" iconPosition="left" icon="ph:envelope-bold"></Button>
+        <Dropdown dropDownClass="btn btn-primary" text="dropdown"></Dropdown>
    </div>
 </template>
-
-<buttonGroup :class="btnGroup btnGroup-primary" :itemsList="{}"></buttonGroup>
 
 <style lang="scss"></style>

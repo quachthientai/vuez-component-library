@@ -1,8 +1,50 @@
 @use '../utilities/variables';
 
-
 @layer base{
-    .btnGroup-container{
-        @apply  inline-flex bg-slate-500 rounded-md overflow-hidden border;
+    .btnGroup{
+        @apply  inline-flex  overflow-hidden;
+
+        & > button{
+            @apply w-[107px] h-[40px] text-white bg-primary-500;
+
+            &:hover{
+                @apply bg-primary-600;
+            }
+        }
+        //Option = custom
+        &-custom{
+            @apply inline-flex rounded-sm overflow-hidden;
+
+            .btn {
+                @apply m-0 border-0 rounded-none ;
+
+            }
+            
+        }
     }
+
+    .normal{
+        @apply rounded-sm m-2;
+    }
+
+    .pill{
+        @apply rounded-full
+    }
+    
+}
+
+@layer utilities{
+    @each $variant in variables.$variants{
+        .btnGroup-#{$variant}{
+            & > button{
+                @apply bg-#{$variant}-500;
+
+                &:hover{
+                    @apply bg-#{$variant}-600;
+                }
+            }
+        }
+    }
+
+
 }
