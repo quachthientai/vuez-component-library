@@ -5,6 +5,7 @@
       data(){
          return{
             itemList: this.btnGroupItemList,
+            itemText: itemList.text,
          }
       },
       props: {
