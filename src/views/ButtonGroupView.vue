@@ -30,8 +30,8 @@
     <ButtonGroup class="btnGroup pill btnGroup-danger" :btnGroupItemList="[{text:'button1'},{text:'button2'},{text:'button3'}]"></ButtonGroup>
     <br>
     <!--Custom-->
-    <ButtonGroup optional="custom">
-
+    <ButtonGroup optional="custom" :btnGroupItemList="[{btnClass:'btn btn-primary', class:'mr-2', text:'primary', iconPosition:'right',icon:'ph:envelope-bold'},{btnClass:'btn btn-primary', class:'mr-2', text:'primary', iconPosition:'right',icon:'ph:envelope-bold'}]">
+        
     </ButtonGroup>
 </template>
 

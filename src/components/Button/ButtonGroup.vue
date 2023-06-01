@@ -47,15 +47,20 @@
    <div v-if="optional === 'default'" :class=[btnGroupClass,btnStyle]>
       <button v-for="item in itemList">
          {{ item.text }}
-         <a :href=[item.externalLink]>
+         <a :href=[item.externalLink,routerLink]>
          </a>
       </button>
    </div>
-   <div v-else-if="optional==='custom'" class="btnGroup-custom">
-      <Button btnClass="btn btn-primary" class="mr-2" text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
-        <Button btnClass="btn btn-secondary" class="mr-2" text="Secondary" iconPosition="left" icon="ph:envelope-bold"></Button>
-        <Button btnClass="btn btn-danger" class="mr-2" text="Danger" iconPosition="left" icon="ph:envelope-bold"></Button>
-        <Dropdown dropDownClass="btn btn-primary" text="dropdown"></Dropdown>
+   <div v-else-if="optional=='custom'" class="btnGroup-custom">
+      <template v-for="item in itemList">
+         <Button v-if="item.btnClass" 
+            :btnClass="item.btnClass"
+            :class="item.class"
+            :text="item.text"
+            :iconPosition="item.iconPosition"
+            :icon="item.icon"
+         ></Button>
+      </template>
    </div>
 </template>
 

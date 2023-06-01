@@ -5,7 +5,7 @@
         @apply  inline-flex  overflow-hidden;
 
         & > button{
-            @apply w-[107px] h-[40px] text-white bg-primary-500;
+            @apply w-[107px] h-[40px] text-white bg-primary-500 ;
 
             &:hover{
                 @apply bg-primary-600;
@@ -24,7 +24,7 @@
     }
 
     .normal{
-        @apply rounded-sm m-2;
+        @apply rounded-sm;
     }
 
     .pill{
@@ -41,6 +41,10 @@
 
                 &:hover{
                     @apply bg-#{$variant}-600;
+                }
+
+                &:checked{
+                    @apply outline-none;
                 }
             }
         }
