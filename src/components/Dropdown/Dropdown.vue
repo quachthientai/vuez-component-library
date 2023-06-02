@@ -1,5 +1,6 @@
 <script>
    import Button from '@/components/Button/Button.vue';
+import router from '@/router';
 
    export default {
       name: 'Dropdown',
@@ -95,13 +96,30 @@
          </Button>
       
          <ul class="dropdown__menu " :aria-expand="isOpen">
-            <li class="dropdown__item" 
+            <template v-for="(item, i) in itemList" :key="i">
+               <router-link v-if="item.routerName" :to="{ path: '/' + item.routerName}">
+                  <li class="dropdown__item"
+                     :class="dropDownClass"
+                  >
+                     {{ item.title }}
+                  </li>
+               </router-link>
+               <li v-else class="dropdown__item"
+                  :class="dropDownClass"
+               >
+                  {{ item.title }}
+               </li>
+               
+               
+
+            </template>
+            <!-- <li class="dropdown__item" 
                :key="i" 
                :class="dropDownClass" 
                v-for="(item, i) in itemList"
             >
                {{ item.title }}
-            </li>
+            </li> -->
          </ul>
       </div>
    </template>
@@ -128,13 +146,15 @@
          </div>
          
          <ul class="dropdown__menu" :aria-expand="isOpen">
-            <li class="dropdown__item" 
-               :key="i" 
-               :class="dropDownClass" 
-               v-for="(item, i) in itemList"
-            >
-               {{ item.title }}
-            </li>
+            <template v-for="(item, i) in itemList" :key="i">
+               <router-link to="routerLink">
+                  <li class="dropdown__item"
+                     :class="dropDownClass"
+                  >
+                     {{ item.title }}
+                  </li>
+               </router-link>
+            </template>
          </ul>
       </div>
    </template>
