@@ -24,10 +24,6 @@
             type: String,
             default: null,
          },
-         iconPosition: {
-            type: String,
-            default: null
-         },
          isUppercase: {
             type: Boolean,
             default: false

@@ -14,7 +14,7 @@
       props: {
          text: {
             type: String,
-            default: 'Dropdown',
+            default: '',
          },
          dropDownClass: {
             type: String,
@@ -76,9 +76,6 @@
                this.isOpen = false;
             }
          }
-      },
-      created() {
-         console.log(this.$attrs.split)
       }
    }
 </script>
@@ -97,7 +94,7 @@
          >
          </Button>
       
-         <ul class="dropdown__menu" :aria-expand="isOpen">
+         <ul class="dropdown__menu " :aria-expand="isOpen">
             <li class="dropdown__item" 
                :key="i" 
                :class="dropDownClass" 
@@ -112,18 +109,22 @@
    <template v-else>
       <div class="dropdown ">
          <div class="split">
-            <Button ref="button"
-               v-click-outside="clickOutside" 
+            <Button 
                :text="text"  
-               @click="toggle"
                :class=[computedBtnSize]
-               class="rounded-e-none p-[10px] focus:ring-2"
                :btnClass="computedBtnClass"
                :prependIcon="leadingIcon"
             >
             </Button>
             
-            <Button  appendIcon="octicon:chevron-down-12" btnClass="btn btn-primary" class=" p-[10px] focus:ring-2 rounded-s-none"></Button>
+            <Button @click="toggle" 
+               ref="button" 
+               v-click-outside="clickOutside"  
+               appendIcon="octicon:chevron-down-12" 
+               :class=[computedBtnSize]
+               :btnClass="computedBtnClass"
+            >
+            </Button>
          </div>
          
          <ul class="dropdown__menu" :aria-expand="isOpen">
@@ -135,15 +136,6 @@
                {{ item.title }}
             </li>
          </ul>
-         <!-- <ul class="dropdown__menu" :aria-expand="isOpen">
-            <li class="dropdown__item" 
-               :key="i" 
-               :class="dropDownClass" 
-               v-for="(item, i) in itemList"
-            >
-               {{ item.title }}
-            </li>
-         </ul> -->
       </div>
    </template>
    
@@ -151,16 +143,6 @@
 
 <style lang="scss" scoped>
 
-   .dropdown {
-      .split {
-         display: flex;
-         gap: 1px;
-         > button {
-            &:first-of-type {
-               
-            }
-         }
-      }
-   }
+   
 
 </style>
