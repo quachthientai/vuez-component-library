@@ -117,13 +117,13 @@
                :text="text"  
                @click="toggle"
                :class=[computedBtnSize]
-               class="rounded-e-none p-[9px] focus:ring-2"
+               class="rounded-e-none p-[10px] focus:ring-2"
                :btnClass="computedBtnClass"
                :prependIcon="leadingIcon"
             >
             </Button>
             
-            <Button  appendIcon="octicon:chevron-down-12" btnClass="btn btn-primary" class=" p-[9px] focus:ring-2 rounded-s-none"></Button>
+            <Button  appendIcon="octicon:chevron-down-12" btnClass="btn btn-primary" class=" p-[10px] focus:ring-2 rounded-s-none"></Button>
          </div>
          
          <ul class="dropdown__menu" :aria-expand="isOpen">
@@ -154,7 +154,7 @@
    .dropdown {
       .split {
          display: flex;
-         gap: 0.3px;
+         gap: 1px;
          > button {
             &:first-of-type {
                
