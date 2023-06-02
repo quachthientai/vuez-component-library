@@ -59,17 +59,17 @@
             }
             return 'text-lg';
          },
-         computedIconPosition: function() {
-            if(this.text || this.isLoading){
-               if(this.appendIcon) {
-                  return 'order-last';
-               }else if(this.prependIcon) {
-                  return 'order-first mr-1'
-               }
-               return this.appendIcon ? 'order-last' : this.prependIcon ? 'order-first mr-1' : '';
-            }
-            return 'm-0';
-         },
+         // computedIconPosition: function() {
+         //    if(this.text || this.isLoading){
+         //       if(this.appendIcon) {
+         //          return 'order-last';
+         //       }else if(this.prependIcon) {
+         //          return 'order-first mr-1'
+         //       }
+         //       return this.appendIcon ? 'order-last' : this.prependIcon ? 'order-first mr-1' : '';
+         //    }
+         //    return 'm-0';
+         // },
          
          
       }
@@ -93,7 +93,7 @@
       >  
          <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
             <span class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
+               <Icon icon="mingcute:loading-fill" :class=[computedIconSize] class="animate-spin order-last ml-1"/>
                   Loading...
             </span>
          </template>
@@ -101,7 +101,7 @@
          <template v-else>
             <span class="no-underline flex justify-center items-center">
                <Icon v-if="prependIcon" :icon="prependIcon" class="transition duration-300 order-first mr-1" :class=[computedIconSize] />
-               <span v-if="!btnClass.includes('btn-icon-circle')" :class="this.$slots ? 'flex items-center justify-center' : ''">
+               <span v-if="!btnClass.includes('btn-icon-circle') && text" :class="this.$slots ? 'flex items-center justify-center' : ''">
                   <span>{{ text }}</span>
                   <div class="ml-1 flex items-center" >
                      <slot></slot>

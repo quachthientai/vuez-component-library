@@ -67,7 +67,7 @@
             return this.isOpen = !this.isOpen;
          },
          rotateChevron(isOpen) {
-            const element = this.$refs.button.$el.getElementsByTagName('svg')[0]
+            const element = this.$refs.button.$el.getElementsByClassName('iconify--octicon')[0]
             return !isOpen ? element.classList.add('rotate-180') : element.classList.remove('rotate-180')
          },
          clickOutside() {
@@ -83,44 +83,84 @@
    }
 </script>
 
-<template >
-   <div class="dropdown">
-      <Button ref="button"  
-         v-click-outside="clickOutside" 
-         :text="text"  
-         @click="toggle"
-         :class=[computedBtnSize]
-         :btnClass="computedBtnClass"
-         iconPosition="right" 
-         icon="octicon:chevron-down-12"
-      >
-      </Button>
-      
-      <ul class="dropdown__menu" 
-         :aria-expand="isOpen"
-      >
-         <li class="dropdown__item" 
-            :key="i" 
-            :class="dropDownClass" 
-            v-for="(item, i) in itemList"
+<template>
+   <template v-if="!this.$attrs.split">
+      <div class="dropdown">
+         <Button ref="button"  
+            v-click-outside="clickOutside" 
+            :text="text"  
+            @click="toggle"
+            :class=[computedBtnSize]
+            :btnClass="computedBtnClass"
+            :prependIcon="leadingIcon"
+            appendIcon="octicon:chevron-down-12"
          >
-            {{ item.title }}
-         </li>
-         
-         <!-- <template v-else>
-            <ul class="dropdown__menu" :aria-expanded="isOpen">
-               <slot name="menus"></slot>
-            </ul>
+         </Button>
+      
+         <ul class="dropdown__menu" :aria-expand="isOpen">
+            <li class="dropdown__item" 
+               :key="i" 
+               :class="dropDownClass" 
+               v-for="(item, i) in itemList"
+            >
+               {{ item.title }}
+            </li>
+         </ul>
+      </div>
+   </template>
+   
+   <template v-else>
+      <div class="dropdown ">
+         <div class="split">
+            <Button ref="button"
+               v-click-outside="clickOutside" 
+               :text="text"  
+               @click="toggle"
+               :class=[computedBtnSize]
+               class="rounded-e-none p-[9px] focus:ring-2"
+               :btnClass="computedBtnClass"
+               :prependIcon="leadingIcon"
+            >
+            </Button>
             
-         </template> -->
-         <!-- <li class="dropdown__item" :class="dropDownClass">Action one</li>
-         <li class="dropdown__item" :class="dropDownClass">Action two</li>
-         <li class="dropdown__item" :class="dropDownClass">Action three</li> -->
-      </ul>
-
-   </div>
+            <Button  appendIcon="octicon:chevron-down-12" btnClass="btn btn-primary" class=" p-[9px] focus:ring-2 rounded-s-none"></Button>
+         </div>
+         
+         <ul class="dropdown__menu" :aria-expand="isOpen">
+            <li class="dropdown__item" 
+               :key="i" 
+               :class="dropDownClass" 
+               v-for="(item, i) in itemList"
+            >
+               {{ item.title }}
+            </li>
+         </ul>
+         <!-- <ul class="dropdown__menu" :aria-expand="isOpen">
+            <li class="dropdown__item" 
+               :key="i" 
+               :class="dropDownClass" 
+               v-for="(item, i) in itemList"
+            >
+               {{ item.title }}
+            </li>
+         </ul> -->
+      </div>
+   </template>
    
 </template>
 
 <style lang="scss" scoped>
+
+   .dropdown {
+      .split {
+         display: flex;
+         gap: 0.3px;
+         > button {
+            &:first-of-type {
+               
+            }
+         }
+      }
+   }
+
 </style>

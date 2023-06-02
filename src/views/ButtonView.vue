@@ -57,11 +57,11 @@
  
    <div class="flex justify-start mt-2">
      <Button btnClass="btn btn-outline-primary" :isLoading="true" class="mr-2" text="Primary"  appendIcon="ph:envelope-bold"></Button>
-     <Button btnClass="btn btn-outline-secondary" :isLoading="true"  class="mr-2" text="Secondary"  appendIcon="ph:envelope-bold"></Button>
-     <Button btnClass="btn btn-outline-danger" :isLoading="true"  class="mr-2" text="Danger"  appendIcon="ph:envelope-bold"></Button>
-     <Button btnClass="btn btn-outline-warning" :isLoading="true"  class="mr-2" text="Warning"  appendIcon="ph:envelope-bold"></Button>
-     <Button btnClass="btn btn-outline-info" :isLoading="true"  class="mr-2" text="Info"  appendIcon="ph:envelope-bold"></Button>
-     <Button btnClass="btn btn-outline-success" :isLoading="true"  class="mr-2" text="Success"  appendIcon="ph:envelope-bold"></Button>
+     <Button btnClass="btn btn-outline-secondary" :isLoading="true" class="mr-2" text="Secondary"  appendIcon="ph:envelope-bold"></Button>
+     <Button btnClass="btn btn-outline-danger" :isLoading="true" class="mr-2" text="Danger"  appendIcon="ph:envelope-bold"></Button>
+     <Button btnClass="btn btn-outline-warning" :isLoading="true" class="mr-2" text="Warning"  appendIcon="ph:envelope-bold"></Button>
+     <Button btnClass="btn btn-outline-info" :isLoading="true" class="mr-2" text="Info"  appendIcon="ph:envelope-bold"></Button>
+     <Button btnClass="btn btn-outline-success" :isLoading="true" class="mr-2" text="Success"  appendIcon="ph:envelope-bold"></Button>
    </div>
  
    <div class="flex justify-start mt-2">

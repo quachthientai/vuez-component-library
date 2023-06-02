@@ -22,7 +22,7 @@
 
 <template> 
    <div class="flex ml-2 mt-2">
-      <Dropdown dropDownClass="dropdown dropdown-outline-warning btn-sm" :split="true" :itemList="items" class="ml-3" text="dropdown">
+      <Dropdown dropDownClass="dropdown dropdown-primary" leadingIcon="ph:envelope-bold" :split="true" :itemList="items" class="ml-3" text="dropdown">
          
       </Dropdown>
       <Dropdown dropDownClass="dropdown dropdown-secondary btn-lg" class="ml-3" text="dropdown">
