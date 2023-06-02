@@ -3,13 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 
+$dropdown-menu-width: theme('spacing.96');
+
+
 @layer base {
    .dropdown {
       @apply relative;
    }
    
    .dropdown__menu {
-      @apply absolute  w-[12rem] bg-light text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
+      @apply absolute bg-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
 
       &[aria-expand="true"] {
          @apply max-h-40;
@@ -20,7 +23,7 @@
 
 @layer utilities {
    @each $variant in variables.$variants {
-      .dropdown-#{$variant} {
+      .dropdown-#{$variant}, .dropdown-outline-#{$variant} {
          &.dropdown__item {
             @apply px-2 py-3;
       
@@ -37,7 +40,7 @@
             }
          }
       }
-      
+
       
    }
 }
