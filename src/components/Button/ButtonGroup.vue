@@ -45,15 +45,15 @@
 
 <template>
    <div v-if="optional === 'default'" :class=[btnGroupClass,btnStyle]>
-      <button v-for="item in itemList">
+      <button :key="i" v-for="(item,i) in itemList">
          {{ item.text }}
          <a :href=[item.externalLink,routerLink]>
          </a>
       </button>
    </div>
    <div v-else-if="optional=='custom'" class="btnGroup-custom">
-      <template v-for="item in itemList">
-         <Button v-if="item.btnClass" 
+      <template v-for="(item,i) in itemList">
+         <Button :key="i" v-if="item.btnClass" 
             :btnClass="item.btnClass"
             :class="item.class"
             :text="item.text"
