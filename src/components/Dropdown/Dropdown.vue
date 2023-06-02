@@ -1,6 +1,6 @@
 <script>
    import Button from '@/components/Button/Button.vue';
-import router from '@/router';
+   import router from '@/router';
 
    export default {
       name: 'Dropdown',
@@ -27,16 +27,31 @@ import router from '@/router';
             default: null,
          },
          itemList: {
-            type: Array,
+            type: [Object],
+            validator(value){
+               let regex = /^(?:routerNam|titl)e$/
+               for(const i of value) {
+                  for (const key in i) {
+                     if(key.match(regex)){
+                        continue;
+                     }
+                     console.error(`${key} is not valid!`)
+                  }
+               }
+               
+            },
             default: [
                {
                   title: 'Action 1',
+                  routerName: 'radio'
                },
                {
                   title: 'Action 2',
+                  routerName: 'as'
                },
                {
                   title: 'Action 3',
+                  routerName: 'asda',
                },
             ]
          }
