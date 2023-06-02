@@ -19,6 +19,12 @@
             default: "btnGroup btnGroup-primary"
          },
          btnGroupItemList:{
+         btnGroupClass:{
+            type:String,
+            required:true,
+            default: "btnGroup btnGroup-primary"
+         },
+         btnGroupItemList:{
             type:[Object],
             required:true,
             default:[],
@@ -37,6 +43,7 @@
       },
       
    }
+}
 
    
    
@@ -51,7 +58,7 @@
          </a>
       </button>
    </div>
-   <div v-else-if="optional=='custom'" class="btnGroup-custom">
+   <div v-else-if="optional==='custom'" class="btnGroup-custom">
       <template v-for="(item,i) in itemList">
          <Button :key="i" v-if="item.btnClass" 
             :btnClass="item.btnClass"
@@ -62,6 +69,8 @@
          ></Button>
       </template>
    </div>
+   <button></button>
+   
 </template>
 
 <style lang="scss"></style>

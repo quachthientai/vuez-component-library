@@ -9,8 +9,16 @@
 </script>
 
 <template> 
-   this is dropdown view
-   <Dropdown dropDownClass="btn btn-primary" text="dropdown"></Dropdown>
+   <div class="flex ml-2 mt-2">
+      <Dropdown dropDownClass="dropdown dropdown-secondary" class="ml-3" text="dropdown"></Dropdown>
+      <Dropdown dropDownClass="dropdown dropdown-secondary" class="ml-3" text="dropdown"></Dropdown>
+      <Dropdown dropDownClass="dropdown dropdown-success" class="ml-3" text="dropdown"></Dropdown>
+      <Dropdown dropDownClass="dropdown dropdown-warning" class="ml-3" text="dropdown"></Dropdown>
+      <Dropdown dropDownClass="dropdown dropdown-danger" class="ml-3" text="dropdown"></Dropdown>
+      <Dropdown dropDownClass="dropdown dropdown-info" class="ml-3" text="dropdown"></Dropdown>
+   </div>
+   
+
 </template>
 
 <style lang="scss">

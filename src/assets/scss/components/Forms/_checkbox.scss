@@ -7,8 +7,6 @@
   .checkbox {
     @apply inline-block w-[17px] h-[17px] relative;
 
-    
-
     &__input {
       @apply w-full h-full absolute opacity-0;
       

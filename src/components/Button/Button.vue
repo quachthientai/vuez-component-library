@@ -34,7 +34,7 @@
          }, 
          btnClass: {
             type: String,
-            default: '',
+            default: 'btn btn-primary',
             required: true
          },
          isLoading: {
@@ -97,13 +97,11 @@
                      <slot></slot>
                   </div>
                </span>
-               <Icon v-if="icon" :icon="icon" :class=[computedIconSize,computedIconPosition] />
+               <Icon v-if="icon" :icon="icon" class="transition duration-300" :class=[computedIconSize,computedIconPosition] />
             </span>
          </template>
       </a>
    </button>
-   
-   
 </template>
 
 <style lang="scss" scoped>
