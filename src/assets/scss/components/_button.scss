@@ -50,7 +50,7 @@
    //outline button variants
    @each $variant in variables.$variants {
       .btn-outline-#{$variant}{
-         @apply bg-none border-[2px] p-[10px] border-#{$variant}-500;
+         @apply bg-light border-[2px] p-[10px] border-#{$variant}-500;
 
          &:not([disabled]):hover{
             @if $variant == 'secondary' {

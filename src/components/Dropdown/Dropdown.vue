@@ -14,12 +14,30 @@
       props: {
          text: {
             type: String,
-            default: null,
+            default: 'Dropdown',
          },
          dropDownClass: {
             type: String,
             default: 'dropdown dropdown-primary',
             required: true,
+         },
+         leadingIcon: {
+            type: String,
+            default: null,
+         },
+         itemList: {
+            type: Array,
+            default: [
+               {
+                  title: 'Action 1',
+               },
+               {
+                  title: 'Action 2',
+               },
+               {
+                  title: 'Action 3',
+               },
+            ]
          }
       }, 
       computed: {
@@ -31,31 +49,16 @@
                }
                continue;
             }
-           
          },
          computedBtnClass() {
-            let variants = ['dropdown-primary', 'dropdown-secondary', 'dropdown-success', 'dropdown-danger', 'dropdown-warning', 'dropdown-info'];
-            for (const variant of variants) {
-               if(this.dropDownClass.split(" ").indexOf(variant) > -1){
-                  return 'btn btn-' + variant.slice(9);
+            let regex = /^(?:dropdown\-(?:outline\-(?:s(?:econdary|uccess)|primary|warning|danger|info)|s(?:econdary|uccess)|primary|warning|danger|info))$/
+
+            for (const c of this.dropDownClass.split(" ")) {
+               if(c.match(regex)) {
+                  return 'btn btn-' + c.slice(9);
                }
                continue;
             }
-            
-            // switch(true) {
-            //    case this.dropDownClass.includes('dropdown-primary'):
-            //       return 'btn btn-primary'
-            //    case this.dropDownClass.includes('dropdown-secondary'):
-            //       return 'btn btn-secondary'
-            //    case this.dropDownClass.includes('dropdown-success'):
-            //       return 'btn btn-success'
-            //    case this.dropDownClass.includes('dropdown-danger'):
-            //       return 'btn btn-danger'
-            //    case this.dropDownClass.includes('dropdown-warning'):
-            //       return 'btn btn-warning'
-            //    case this.dropDownClass.includes('dropdown-info'):
-            //       return 'btn btn-info'
-            // }
          }
       },
       methods: {
@@ -64,7 +67,6 @@
             return this.isOpen = !this.isOpen;
          },
          rotateChevron(isOpen) {
-            console.log(this.$refs.button.$el.getElementsByTagName('svg'));
             const element = this.$refs.button.$el.getElementsByTagName('svg')[0]
             return !isOpen ? element.classList.add('rotate-180') : element.classList.remove('rotate-180')
          },
@@ -74,6 +76,9 @@
                this.isOpen = false;
             }
          }
+      },
+      created() {
+         console.log(this.$attrs.split)
       }
    }
 </script>
@@ -87,14 +92,34 @@
          :class=[computedBtnSize]
          :btnClass="computedBtnClass"
          iconPosition="right" 
-         icon="octicon:chevron-down-12">
+         icon="octicon:chevron-down-12"
+      >
       </Button>
-      <ul class="dropdown__menu" :aria-expand="isOpen">
-         <li class="dropdown__item" :class="dropDownClass">Action one</li>
+      
+      <ul class="dropdown__menu" 
+         :aria-expand="isOpen"
+      >
+         <li class="dropdown__item" 
+            :key="i" 
+            :class="dropDownClass" 
+            v-for="(item, i) in itemList"
+         >
+            {{ item.title }}
+         </li>
+         
+         <!-- <template v-else>
+            <ul class="dropdown__menu" :aria-expanded="isOpen">
+               <slot name="menus"></slot>
+            </ul>
+            
+         </template> -->
+         <!-- <li class="dropdown__item" :class="dropDownClass">Action one</li>
          <li class="dropdown__item" :class="dropDownClass">Action two</li>
-         <li class="dropdown__item" :class="dropDownClass">Action three</li>
+         <li class="dropdown__item" :class="dropDownClass">Action three</li> -->
       </ul>
+
    </div>
+   
 </template>
 
 <style lang="scss" scoped>
