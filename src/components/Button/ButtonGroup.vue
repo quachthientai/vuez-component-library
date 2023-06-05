@@ -2,75 +2,64 @@
    import Button from './Button.vue';
    import Dropdown from '../Dropdown/Dropdown.vue';
    export default {
-      name: 'Button Group',
+      name:
+         'ButtonGroup'
+      ,
       components:{
-         Button,
-         Dropdown
+         Button, Dropdown
       },
       data(){
          return{
-            itemList: this.btnGroupItemList,     
+
          }
       },
-      props: {
+      props:{
          btnGroupClass:{
-            type:String,
-            required:true,
+            type: String,
             default: "btnGroup btnGroup-primary"
          },
-         btnGroupItemList:{
-         btnGroupClass:{
-            type:String,
-            required:true,
-            default: "btnGroup btnGroup-primary"
-         },
-         btnGroupItemList:{
+         itemList:{
             type:[Object],
-            required:true,
-            default:[],
+            required:true
          },
-         btnStyle:{
-            type:String,
-            required: false,
-            default:"normal"
-            //switch to pill shape
-         },
-         optional:{
+         option:{
             type:String,
             required:false,
-            default:"default"
+            default: 'default'
          }
       },
-      
+      methods:{
+      },
+      computed:{
+      }
    }
-}
-
-   
    
 </script>
 
 
 <template>
-   <div v-if="optional === 'default'" :class=[btnGroupClass,btnStyle]>
-      <button :key="i" v-for="(item,i) in itemList">
+   <div v-if="option == 'default'" :class="[btnGroupClass]">
+      <button v-for="item in itemList">
          {{ item.text }}
-         <a :href=[item.externalLink,routerLink]>
-         </a>
       </button>
    </div>
-   <div v-else-if="optional==='custom'" class="btnGroup-custom">
-      <template v-for="(item,i) in itemList">
-         <Button :key="i" v-if="item.btnClass" 
-            :btnClass="item.btnClass"
-            :class="item.class"
+   <div v-else-if="option == 'custom' " :class="[btnGroupClass, option]">
+      <template v-for="item in itemList">
+         <Button v-if="item.btnClass" 
             :text="item.text"
-            :iconPosition="item.iconPosition"
+            :routeLink="item.routeLink"
             :icon="item.icon"
-         ></Button>
+            :iconPosition="item.iconPosition"
+            :isUppercase="item.isUppercase"
+            :isDisabled="item.isDisabled"
+            :btnClass="item.btnClass"
+            :isLoading="item.isLoading"
+            :externalLink="item.externalLink"
+         >
+         </Button>
+         
       </template>
    </div>
-   <button></button>
-   
 </template>
 
 <style lang="scss"></style>
