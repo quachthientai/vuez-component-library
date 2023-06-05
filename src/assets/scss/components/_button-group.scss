@@ -2,7 +2,7 @@
 
 @layer base{
     .btnGroup{
-        @apply bg-slate-500 inline-flex   rounded-[5px] text-white overflow-hidden;
+        @apply  inline-flex   rounded-[5px] text-white overflow-hidden;
 
         > button{
             @apply bg-primary-500 h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
@@ -19,6 +19,25 @@
         }
     }
 
+    //Custom
+    .custom{
+        > .btn{
+            @apply rounded-none;
+
+            &:focus{
+                @apply ring-0 ring-offset-0;
+            }
+        }
+        > .dropdown__menu{
+            @apply rounded-none;
+
+            &:focus{
+                @apply ring-0 ring-offset-0;
+            }
+        }
+
+        
+    }
     
 }
 

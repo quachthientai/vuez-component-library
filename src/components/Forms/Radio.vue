@@ -27,10 +27,10 @@
 
 <template>
     <label class="inline-flex align-middle">
-        <input role="switch" :class=[radioClass] name="radio" :id=[radioID] type="radio" :value=[radioValue]>
+        <input role="radio" aria-label="Click the radio button for input"  :class=[radioClass] :id=[radioID] type="radio" :value=[radioValue]>
     </label>
     <span class="ml-1 mr-1 align-middle">
-        <label role="switch-value">{{ radioValue }}</label>
+        <label aria-label="Input value" :for="[radioID]" role="radio-value">{{ radioValue }}</label>
     </span>
 </template>
 

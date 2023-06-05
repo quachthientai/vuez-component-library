@@ -57,6 +57,11 @@
             :externalLink="item.externalLink"
          >
          </Button>
+         <Dropdown v-if="item.dropDownClass"
+            :text="item.text"
+            :dropDownClass="item.dropDownClass"
+         >
+         </Dropdown>
          
       </template>
    </div>
