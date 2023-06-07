@@ -1,5 +1,6 @@
 <script>
    import Button from '@/components/Button/Button.vue';
+   import router from '@/router';
 
    export default {
       name: 'Dropdown',
@@ -14,7 +15,7 @@
       props: {
          text: {
             type: String,
-            default: 'Dropdown',
+            default: '',
          },
          dropDownClass: {
             type: String,
@@ -26,16 +27,40 @@
             default: null,
          },
          itemList: {
-            type: Array,
+            type: [Object],
+            validator(value){
+               let itemListKey = ["title", "routerName"]
+               let falseKey = []
+
+               for(const i of value) {
+                  for (const key in i) {
+                     if(itemListKey.indexOf(key) > -1) {
+                        continue;
+                     }
+                     falseKey.push(key); 
+                  }
+               }
+
+               const isValidKey = falseKey.length > 0 ? false : true;
+
+               if(!isValidKey) {
+                  falseKey.forEach(key => console.warn(`${key} is not valid key in itemList!`))
+               }
+               return true;
+            
+            },
             default: [
                {
                   title: 'Action 1',
+                  routerName: 'radio'
                },
                {
                   title: 'Action 2',
+                  routerName: 'radio'
                },
                {
                   title: 'Action 3',
+                  routerName: 'radio',
                },
             ]
          }
@@ -76,9 +101,6 @@
                this.isOpen = false;
             }
          }
-      },
-      created() {
-         console.log(this.$attrs.split)
       }
    }
 </script>
@@ -97,14 +119,21 @@
          >
          </Button>
       
-         <ul class="dropdown__menu" :aria-expand="isOpen">
-            <li class="dropdown__item" 
-               :key="i" 
-               :class="dropDownClass" 
-               v-for="(item, i) in itemList"
-            >
-               {{ item.title }}
-            </li>
+         <ul class="dropdown__menu " :aria-expand="isOpen">
+            <template v-for="(item, i) in itemList">
+               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
+                  <li class="dropdown__item"
+                     :class="dropDownClass"
+                  >
+                     {{ item.title }}
+                  </li>
+               </router-link>
+               <li v-else class="dropdown__item"
+                  :class="dropDownClass"
+               >
+                  {{ item.title }}
+               </li>
+            </template>
          </ul>
       </div>
    </template>
@@ -112,38 +141,39 @@
    <template v-else>
       <div class="dropdown ">
          <div class="split">
-            <Button ref="button"
-               v-click-outside="clickOutside" 
+            <Button 
                :text="text"  
-               @click="toggle"
                :class=[computedBtnSize]
-               class="rounded-e-none p-[10px] focus:ring-2"
                :btnClass="computedBtnClass"
                :prependIcon="leadingIcon"
             >
             </Button>
             
-            <Button  appendIcon="octicon:chevron-down-12" btnClass="btn btn-primary" class=" p-[10px] focus:ring-2 rounded-s-none"></Button>
+            <Button @click="toggle" 
+               ref="button" 
+               v-click-outside="clickOutside"  
+               appendIcon="octicon:chevron-down-12" 
+               :class=[computedBtnSize]
+               :btnClass="computedBtnClass"
+            >
+            </Button>
          </div>
-         
-         <ul class="dropdown__menu" :aria-expand="isOpen">
-            <li class="dropdown__item" 
-               :key="i" 
-               :class="dropDownClass" 
-               v-for="(item, i) in itemList"
-            >
-               {{ item.title }}
-            </li>
+         <ul class="dropdown__menu " :aria-expand="isOpen">
+            <template v-for="(item, i) in itemList">
+               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
+                  <li class="dropdown__item"
+                     :class="dropDownClass"
+                  >
+                     {{ item.title }}
+                  </li>
+               </router-link>
+               <li v-else class="dropdown__item"
+                  :class="dropDownClass"
+               >
+                  {{ item.title }}
+               </li>
+            </template>
          </ul>
-         <!-- <ul class="dropdown__menu" :aria-expand="isOpen">
-            <li class="dropdown__item" 
-               :key="i" 
-               :class="dropDownClass" 
-               v-for="(item, i) in itemList"
-            >
-               {{ item.title }}
-            </li>
-         </ul> -->
       </div>
    </template>
    
@@ -151,16 +181,6 @@
 
 <style lang="scss" scoped>
 
-   .dropdown {
-      .split {
-         display: flex;
-         gap: 1px;
-         > button {
-            &:first-of-type {
-               
-            }
-         }
-      }
-   }
+   
 
 </style>

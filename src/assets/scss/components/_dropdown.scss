@@ -7,10 +7,6 @@ $dropdown-menu-width: theme('spacing.96');
 
 
 @layer base {
-   .dropdown {
-      @apply relative;
-   }
-   
    .dropdown__menu {
       @apply absolute bg-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
 
@@ -24,6 +20,7 @@ $dropdown-menu-width: theme('spacing.96');
 @layer utilities {
    @each $variant in variables.$variants {
       .dropdown-#{$variant}, .dropdown-outline-#{$variant} {
+         @apply relative;
          &.dropdown__item {
             @apply px-2 py-3;
       
@@ -41,6 +38,22 @@ $dropdown-menu-width: theme('spacing.96');
          }
       }
 
+      .dropdown {
+         .split {
+            display: flex;
+            gap: 1px;
+            > button {
+               &:first-of-type {
+                  @apply rounded-e-none p-[10px] focus:ring-2;
+               }
+   
+               &:last-of-type {
+                  @apply  p-[10px] focus:ring-2 rounded-s-none;
+               }
+               
+            }
+         }
+      }
       
    }
 }
