@@ -44,7 +44,7 @@
                const isValidKey = falseKey.length > 0 ? false : true;
 
                if(!isValidKey) {
-                  falseKey.forEach(key => console.warn(`${key} is not valid key in itemList!`))
+                  falseKey.forEach(key => console.warn(`${key} is not a valid key in itemList!`))
                }
                return true;
             
