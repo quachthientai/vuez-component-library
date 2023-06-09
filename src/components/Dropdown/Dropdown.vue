@@ -1,11 +1,13 @@
 <script>
    import Button from '@/components/Button/Button.vue';
-   import router from '@/router';
+   import { Icon } from '@iconify/vue';
+   
 
    export default {
       name: 'Dropdown',
       components: {
-         Button
+         Button,
+         Icon
       },
       data() {
          return {
@@ -13,6 +15,8 @@
          }
       },
       props: {
+         // [Object] - title, routerName, icon
+         //2 options: 1 - pass itemList as array of objects, 2 - pass itemList as slots
          text: {
             type: String,
             default: '',
@@ -28,8 +32,8 @@
          },
          itemList: {
             type: [Object],
-            validator(value){
-               let itemListKey = ["title", "routerName"]
+            validator(value) {
+               let itemListKey = ["title", "routerName", "prependIcon", "appendIcon"]
                let falseKey = []
 
                for(const i of value) {
@@ -41,12 +45,14 @@
                   }
                }
 
-               const isValidKey = falseKey.length > 0 ? false : true;
-
-               if(!isValidKey) {
-                  falseKey.forEach(key => console.warn(`${key} is not valid key in itemList!`))
+               if(falseKey.length > 0) {
+                  falseKey.forEach(key => {
+                     console.warn(`[${key}] is not valid key in itemList!`)
+                  })
                }
+
                return true;
+               
             
             },
             default: [
@@ -106,6 +112,7 @@
 </script>
 
 <template>
+
    <template v-if="!this.$attrs.split">
       <div class="dropdown">
          <Button ref="button"  
@@ -125,7 +132,9 @@
                   <li class="dropdown__item"
                      :class="dropDownClass"
                   >
+                     <Icon v-if="item.prependIcon" :icon="item.prependIcon" class="inline-flex"/>
                      {{ item.title }}
+                     <Icon v-if="item.appendIcon" :icon="item.appendIcon" class="inline-flex"/>
                   </li>
                </router-link>
                <li v-else class="dropdown__item"
@@ -160,7 +169,7 @@
          </div>
          <ul class="dropdown__menu " :aria-expand="isOpen">
             <template v-for="(item, i) in itemList">
-               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
+               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
                   <li class="dropdown__item"
                      :class="dropDownClass"
                   >

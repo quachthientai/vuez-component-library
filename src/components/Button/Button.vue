@@ -55,18 +55,6 @@
             }
             return 'text-lg';
          },
-         // computedIconPosition: function() {
-         //    if(this.text || this.isLoading){
-         //       if(this.appendIcon) {
-         //          return 'order-last';
-         //       }else if(this.prependIcon) {
-         //          return 'order-first mr-1'
-         //       }
-         //       return this.appendIcon ? 'order-last' : this.prependIcon ? 'order-first mr-1' : '';
-         //    }
-         //    return 'm-0';
-         // },
-         
          
       }
    }

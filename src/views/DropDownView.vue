@@ -1,23 +1,26 @@
 <script>
    import Dropdown from '@/components/Dropdown/Dropdown.vue';
+
    export default{
       name:'DropDownView',
       data() {
          return {
+            
             items: [
                {
                   title:'to radio',
-                  routerName: 'radio'
+                  routerName: 'radio',
+                  appendIcon: 'mingcute:unlock-line',
+                  prependIcon: 'mingcute:unlock-line'
                },
                {
                   title:'to button',
-                  
                   
                }
             ]
          }
       },
-      components:{
+      components: {
          Dropdown
       }
    }
