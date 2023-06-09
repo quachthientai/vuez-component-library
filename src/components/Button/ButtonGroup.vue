@@ -39,12 +39,12 @@
 
 <template>
    <div v-if="option == 'default'" :class="[btnGroupClass]">
-      <button v-for="item in itemList">
+      <button  v-for="item in itemList">
          {{ item.text }}
       </button>
    </div>
-   <div v-else-if="option == 'custom' " :class="[btnGroupClass, option]">
-      <template v-for="item in itemList">
+   <div v-else-if="option == 'custom' " :class="[`btnGroup-${option}`]">
+      <!-- <template v-for="item in itemList">
          <Button v-if="item.btnClass" 
             :text="item.text"
             :routeLink="item.routeLink"
@@ -62,8 +62,8 @@
             :dropDownClass="item.dropDownClass"
          >
          </Dropdown>
-         
-      </template>
+      </template> -->
+      <slot></slot>
    </div>
 </template>
 

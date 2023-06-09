@@ -1,15 +1,23 @@
 @use '../utilities/variables';
 
+.btnGroup-custom{
+    @apply inline-flex rounded-[2px] text-white overflow-hidden;
+
+    > .btn{
+        @apply rounded-none;
+
+        &:focus{
+            @apply ring-0 ring-offset-0;
+        }
+    }
+}
+
 @layer base{
     .btnGroup{
-        @apply  inline-flex   rounded-[5px] text-white overflow-hidden;
-
+        @apply  inline-flex   rounded-[5px]  text-white overflow-hidden;
+        
         > button{
-            @apply bg-primary-500 h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
-        }
-
-        > button:hover{
-            @apply bg-primary-600;
+            @apply  h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
         }
 
         //Pill
@@ -21,13 +29,7 @@
 
     //Custom
     .custom{
-        > .btn{
-            @apply rounded-none;
-
-            &:focus{
-                @apply ring-0 ring-offset-0;
-            }
-        }
+        
         > .dropdown__menu{
             @apply rounded-none;
 
@@ -37,6 +39,8 @@
         }
 
         
+    } + .btnGroup{
+
     }
     
 }
