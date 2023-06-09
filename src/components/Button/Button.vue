@@ -33,7 +33,7 @@
             default: false
          }, 
          btnClass: {
-            type: String,
+            type: [String, Array],
             default: 'btn btn-primary',
             required: true
          },
@@ -48,9 +48,10 @@
       },
       computed: {
          computedIconSize: function() {
-            if(this.btnClass.includes('btn-sm')){
+            const btnClass = typeof this.btnClass === "object" ? this.btnClass[0] : this.btnClass; 
+            if(btnClass.includes('btn-sm')){
                return 'text-sm';
-            }else if(this.btnClass.includes('btn-lg')) {
+            }else if(btnClass.includes('btn-lg')) {
                return 'text-2xl';
             }
             return 'text-lg';

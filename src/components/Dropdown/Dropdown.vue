@@ -119,8 +119,7 @@
             v-click-outside="clickOutside" 
             :text="text"  
             @click="toggle"
-            :class=[computedBtnSize]
-            :btnClass="computedBtnClass"
+            :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
             :prependIcon="leadingIcon"
             appendIcon="octicon:chevron-down-12"
          >
@@ -152,8 +151,7 @@
          <div class="split">
             <Button 
                :text="text"  
-               :class=[computedBtnSize]
-               :btnClass="computedBtnClass"
+               :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
                :prependIcon="leadingIcon"
             >
             </Button>
@@ -162,8 +160,7 @@
                ref="button" 
                v-click-outside="clickOutside"  
                appendIcon="octicon:chevron-down-12" 
-               :class=[computedBtnSize]
-               :btnClass="computedBtnClass"
+               :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
             >
             </Button>
          </div>
