@@ -117,7 +117,7 @@
 <template>
 
    <template v-if="!this.$attrs.split">
-      <div class="dropdown">
+      <div :class="dropDownClass">
          <Button ref="button"  
                v-click-outside="clickOutside"
                class="dropdown__toggle"
@@ -155,7 +155,7 @@
    </template>
    
    <template v-else>
-      <div class="dropdown">
+      <div :class="dropDownClass">
          <div class="split">
             <Button 
                :text="text"
