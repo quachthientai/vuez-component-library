@@ -55,20 +55,20 @@
                
             
             },
-            default: [
-               {
-                  title: 'Action 1',
-                  routerName: 'radio'
-               },
-               {
-                  title: 'Action 2',
-                  routerName: 'radio'
-               },
-               {
-                  title: 'Action 3',
-                  routerName: 'radio',
-               },
-            ]
+            // default: [
+            //    {
+            //       title: 'Action 1',
+            //       routerName: 'radio'
+            //    },
+            //    {
+            //       title: 'Action 2',
+            //       routerName: 'radio'
+            //    },
+            //    {
+            //       title: 'Action 3',
+            //       routerName: 'radio',
+            //    },
+            // ]
          }
       }, 
       computed: {
@@ -92,18 +92,27 @@
             }
          }
       },
+
       methods: {
          toggle() { 
             this.rotateChevron(this.isOpen)
-            return this.isOpen = !this.isOpen;
+            this.isOpen = !this.isOpen
+
+            const menu = this.$el.children[1];
+            return this.isOpen ? menu.classList.add('max-h-40') : menu.classList.remove('max-h-40')
          },
+         // expandMenu(isOpen) {
+         //    const menu = this.$el.children[1];
+         //    return !isOpen ? menu.classList.add('max-h-40') : menu.classList.remove('max-h-40')
+         // },
          rotateChevron(isOpen) {
             const element = this.$refs.button.$el.getElementsByClassName('iconify--octicon')[0]
             return !isOpen ? element.classList.add('rotate-180') : element.classList.remove('rotate-180')
          },
          clickOutside() {
             if(this.isOpen) {
-               this.rotateChevron(this.isOpen)
+               this.toggle()
+               // this.expandMenu(this.isOpen)
                this.isOpen = false;
             }
          }
@@ -125,7 +134,7 @@
          >
          </Button>
       
-         <ul class="dropdown__menu " :aria-expand="isOpen">
+         <ul class="dropdown__menu" v-if="!this.$slots.itemListSlots">
             <template v-for="(item, i) in itemList">
                <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
                   <li class="dropdown__item"
@@ -143,6 +152,13 @@
                </li>
             </template>
          </ul>
+
+         <template v-if="this.$slots.itemListSlots">
+            
+            <slot name="itemListSlots"></slot>
+            
+         </template>
+         
       </div>
    </template>
    
@@ -164,7 +180,7 @@
             >
             </Button>
          </div>
-         <ul class="dropdown__menu " :aria-expand="isOpen">
+         <ul class="dropdown__menu">
             <template v-for="(item, i) in itemList">
                <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
                   <li class="dropdown__item"
