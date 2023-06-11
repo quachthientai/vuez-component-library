@@ -118,9 +118,7 @@
 
    <template v-if="!this.$attrs.split">
       <div class="dropdown">
-         <!-- fallback slot content: dropdown-toggle -->
-         <slot name="dropdown-toggle-slot">
-            <Button ref="button"  
+         <Button ref="button"  
                v-click-outside="clickOutside"
                class="dropdown__toggle"
                :text="text"  
@@ -129,8 +127,7 @@
                :prependIcon="leadingIcon"
                appendIcon="octicon:chevron-down-12"
                :aria-expaned="isOpen"
-            />
-         </slot>
+         />
 
          <!-- fallback slot content: dropdown-menu -->
          <slot name="dropdown-menu-slot">
@@ -159,27 +156,22 @@
    
    <template v-else>
       <div class="dropdown">
-         <!-- fallback slot content: dropdown-toggle -->
-         <slot name="dropdown-toggle-slot">
-            <div class="split">
-               <Button 
-                  :text="text"
-                  :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-                  :prependIcon="leadingIcon"
-               >
-               </Button>
-               
-               <Button @click="toggle" 
-                  ref="button"
-                  class="dropdown__toggle"
-                  v-click-outside="clickOutside"  
-                  appendIcon="octicon:chevron-down-12" 
-                  :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-                  :aria-expaned="true"
-               >
-               </Button>
-            </div>
-         </slot>
+         <div class="split">
+            <Button 
+               :text="text"
+               :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
+               :prependIcon="leadingIcon"
+            />
+            
+            <Button @click="toggle" 
+               ref="button"
+               class="dropdown__toggle"
+               v-click-outside="clickOutside"  
+               appendIcon="octicon:chevron-down-12" 
+               :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
+               :aria-expaned="true"
+            />
+         </div>
 
          <!-- fallback slot content: dropdown-menu -->
          <slot name="dropdown-menu-slots">
