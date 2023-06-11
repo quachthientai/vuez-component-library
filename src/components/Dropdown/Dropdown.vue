@@ -55,20 +55,20 @@
                
             
             },
-            default: [
-               {
-                  title: 'Action 1',
-                  routerName: 'radio'
-               },
-               {
-                  title: 'Action 2',
-                  routerName: 'radio'
-               },
-               {
-                  title: 'Action 3',
-                  routerName: 'radio',
-               },
-            ]
+            // default: [
+            //    {
+            //       title: 'Action 1',
+            //       routerName: 'radio'
+            //    },
+            //    {
+            //       title: 'Action 2',
+            //       routerName: 'radio'
+            //    },
+            //    {
+            //       title: 'Action 3',
+            //       routerName: 'radio',
+            //    },
+            // ]
          }
       }, 
       computed: {
@@ -91,6 +91,12 @@
                continue;
             }
          }
+      },
+      mounted() {
+         console.log(this.$slots.itemListSlot)
+         // const element = document.getElementsByClassName('slot-wrapper')
+         // console.log(element[0].children)
+         
       },
       methods: {
          toggle() { 
@@ -125,7 +131,7 @@
          >
          </Button>
       
-         <ul class="dropdown__menu " :aria-expand="isOpen">
+         <ul class="dropdown__menu" v-if="!this.$slots.itemListSlot" :aria-expanded="isOpen">
             <template v-for="(item, i) in itemList">
                <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
                   <li class="dropdown__item"
@@ -143,6 +149,13 @@
                </li>
             </template>
          </ul>
+
+         <template v-if="this.$slots.itemListSlot">
+            
+            <slot name="itemListSlot" :aria-expanded="isOpen" ></slot>
+            
+         </template>
+         
       </div>
    </template>
    
@@ -164,7 +177,7 @@
             >
             </Button>
          </div>
-         <ul class="dropdown__menu " :aria-expand="isOpen">
+         <ul class="dropdown__menu " :aria-expanded="isOpen">
             <template v-for="(item, i) in itemList">
                <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
                   <li class="dropdown__item"
@@ -182,6 +195,8 @@
          </ul>
       </div>
    </template>
+
+   
    
 </template>
 

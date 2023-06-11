@@ -139,6 +139,19 @@
       <Dropdown dropDownClass="dropdown btn-lg dropdown-outline-info" :itemList="items" split="true" text="dropdown" class="ml-3" />
    </div>
 
+   <Dropdown dropDownClass="dropdown dropdown-outline-info" text="dropdown" class="ml-3 mt-5">
+      <template v-slot:itemListSlot >
+         
+         <ul class="dropdown__menu"  >
+            <li class="dropdown__item dropdown btn-lg dropdown-outline-info">asd</li>
+            <li class="dropdown__item dropdown btn-lg dropdown-outline-info">asd</li>
+            <li class="dropdown__item dropdown btn-lg dropdown-outline-info">asd</li>
+         </ul>
+      </template>
+      
+      
+   </Dropdown>
+
 </template>
 
 <style lang="scss">

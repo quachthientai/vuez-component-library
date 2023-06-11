@@ -10,10 +10,9 @@ $dropdown-menu-width: theme('spacing.96');
    .dropdown__menu {
       @apply absolute bg-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
 
-      &[aria-expand="true"] {
+      &[aria-expanded="true"] {
          @apply max-h-40;
       }
-
    }
 }
 
