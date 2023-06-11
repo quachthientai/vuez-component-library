@@ -78,7 +78,7 @@
                if(this.dropDownClass.includes(size)){
                   return 'btn-' + size;
                }
-               continue;
+               return ''
             }
          },
          computedBtnClass() {
@@ -94,17 +94,12 @@
       },
 
       methods: {
-         toggle() { 
+         toggle() {
+            const menu = this.$el.children[1];
             this.rotateChevron(this.isOpen)
             this.isOpen = !this.isOpen
-
-            const menu = this.$el.children[1];
             return this.isOpen ? menu.classList.add('max-h-40') : menu.classList.remove('max-h-40')
          },
-         // expandMenu(isOpen) {
-         //    const menu = this.$el.children[1];
-         //    return !isOpen ? menu.classList.add('max-h-40') : menu.classList.remove('max-h-40')
-         // },
          rotateChevron(isOpen) {
             const element = this.$refs.button.$el.getElementsByClassName('iconify--octicon')[0]
             return !isOpen ? element.classList.add('rotate-180') : element.classList.remove('rotate-180')
@@ -112,7 +107,6 @@
          clickOutside() {
             if(this.isOpen) {
                this.toggle()
-               // this.expandMenu(this.isOpen)
                this.isOpen = false;
             }
          }
@@ -131,6 +125,7 @@
             :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
             :prependIcon="leadingIcon"
             appendIcon="octicon:chevron-down-12"
+            :aria-expaned="isOpen"
          >
          </Button>
       
@@ -154,9 +149,7 @@
          </ul>
 
          <template v-if="this.$slots.itemListSlots">
-            
             <slot name="itemListSlots"></slot>
-            
          </template>
          
       </div>
@@ -177,6 +170,7 @@
                v-click-outside="clickOutside"  
                appendIcon="octicon:chevron-down-12" 
                :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
+               :aria-expaned="true"
             >
             </Button>
          </div>
