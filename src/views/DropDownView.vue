@@ -140,7 +140,7 @@
    </div>
 
    <Dropdown dropDownClass="dropdown dropdown-primary" class="m-3" text="dropdown">
-      <template v-slot:itemListSlots>
+      <template v-slot:dropdown-menu-slot>
          <ul class="dropdown__menu">
             <li class="dropdown__item dropdown dropdown-primary">assa</li>
             <li class="dropdown__item dropdown dropdown-primary">aaa</li>

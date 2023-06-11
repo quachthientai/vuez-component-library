@@ -118,78 +118,89 @@
 
    <template v-if="!this.$attrs.split">
       <div class="dropdown">
-         <Button ref="button"  
-            v-click-outside="clickOutside" 
-            :text="text"  
-            @click="toggle"
-            :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-            :prependIcon="leadingIcon"
-            appendIcon="octicon:chevron-down-12"
-            :aria-expaned="isOpen"
-         >
-         </Button>
-      
-         <ul class="dropdown__menu" v-if="!this.$slots.itemListSlots">
-            <template v-for="(item, i) in itemList">
-               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
-                  <li class="dropdown__item"
+         <!-- fallback slot content: dropdown-toggle -->
+         <slot name="dropdown-toggle-slot">
+            <Button ref="button"  
+               v-click-outside="clickOutside"
+               class="dropdown__toggle"
+               :text="text"  
+               @click="toggle"
+               :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
+               :prependIcon="leadingIcon"
+               appendIcon="octicon:chevron-down-12"
+               :aria-expaned="isOpen"
+            />
+         </slot>
+
+         <!-- fallback slot content: dropdown-menu -->
+         <slot name="dropdown-menu-slot">
+            <ul class="dropdown__menu">
+               <template v-for="(item, i) in itemList">
+                  <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
+                     <li class="dropdown__item"
+                        :class="dropDownClass"
+                     >
+                        <Icon v-if="item.prependIcon" :icon="item.prependIcon" class="inline-flex"/>
+                        {{ item.title }}
+                        <Icon v-if="item.appendIcon" :icon="item.appendIcon" class="inline-flex"/>
+                     </li>
+                  </router-link>
+                  <li v-else class="dropdown__item"
                      :class="dropDownClass"
                   >
-                     <Icon v-if="item.prependIcon" :icon="item.prependIcon" class="inline-flex"/>
                      {{ item.title }}
-                     <Icon v-if="item.appendIcon" :icon="item.appendIcon" class="inline-flex"/>
                   </li>
-               </router-link>
-               <li v-else class="dropdown__item"
-                  :class="dropDownClass"
-               >
-                  {{ item.title }}
-               </li>
-            </template>
-         </ul>
-
-         <template v-if="this.$slots.itemListSlots">
-            <slot name="itemListSlots"></slot>
-         </template>
-         
+               </template>
+            </ul>
+         </slot>
+                  
       </div>
    </template>
    
    <template v-else>
-      <div class="dropdown ">
-         <div class="split">
-            <Button 
-               :text="text"  
-               :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-               :prependIcon="leadingIcon"
-            >
-            </Button>
-            
-            <Button @click="toggle" 
-               ref="button" 
-               v-click-outside="clickOutside"  
-               appendIcon="octicon:chevron-down-12" 
-               :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-               :aria-expaned="true"
-            >
-            </Button>
-         </div>
-         <ul class="dropdown__menu">
-            <template v-for="(item, i) in itemList">
-               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
-                  <li class="dropdown__item"
+      <div class="dropdown">
+         <!-- fallback slot content: dropdown-toggle -->
+         <slot name="dropdown-toggle-slot">
+            <div class="split">
+               <Button 
+                  :text="text"
+                  :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
+                  :prependIcon="leadingIcon"
+               >
+               </Button>
+               
+               <Button @click="toggle" 
+                  ref="button"
+                  class="dropdown__toggle"
+                  v-click-outside="clickOutside"  
+                  appendIcon="octicon:chevron-down-12" 
+                  :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
+                  :aria-expaned="true"
+               >
+               </Button>
+            </div>
+         </slot>
+
+         <!-- fallback slot content: dropdown-menu -->
+         <slot name="dropdown-menu-slots">
+            <ul class="dropdown__menu">
+               <template v-for="(item, i) in itemList">
+                  <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
+                     <li class="dropdown__item"
+                        :class="dropDownClass"
+                     >
+                        {{ item.title }}
+                     </li>
+                  </router-link>
+                  <li v-else class="dropdown__item"
                      :class="dropDownClass"
                   >
                      {{ item.title }}
                   </li>
-               </router-link>
-               <li v-else class="dropdown__item"
-                  :class="dropDownClass"
-               >
-                  {{ item.title }}
-               </li>
-            </template>
-         </ul>
+               </template>
+            </ul>
+         </slot>
+
       </div>
    </template>
    
