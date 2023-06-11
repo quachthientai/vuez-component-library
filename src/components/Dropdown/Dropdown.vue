@@ -117,34 +117,38 @@
 
    <template v-if="!this.$attrs.split">
       <div :class="dropDownClass">
-         <Button ref="button"  
+         <Button ref="button"
+            class="dropdown__toggle"
             v-click-outside="clickOutside" 
             :text="text"  
             @click="toggle"
             :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
             :prependIcon="leadingIcon"
             appendIcon="octicon:chevron-down-12"
-         >
-         </Button>
-      
-         <ul class="dropdown__menu " :aria-expand="isOpen">
-            <template v-for="(item, i) in itemList">
-               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
-                  <li class="dropdown__item"
+            :aria-expaned="isOpen"
+         />
+
+         <!-- fall back content -->
+         <slot name="dropdown-menu-slot">
+            <ul class="dropdown__menu">
+               <template v-for="(item, i) in itemList">
+                  <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
+                     <li class="dropdown__item"
+                        :class="dropDownClass"
+                     >
+                        <Icon v-if="item.prependIcon" :icon="item.prependIcon" class="inline-flex"/>
+                        {{ item.title }}
+                        <Icon v-if="item.appendIcon" :icon="item.appendIcon" class="inline-flex"/>
+                     </li>
+                  </router-link>
+                  <li v-else class="dropdown__item"
                      :class="dropDownClass"
                   >
-                     <Icon v-if="item.prependIcon" :icon="item.prependIcon" class="inline-flex"/>
                      {{ item.title }}
-                     <Icon v-if="item.appendIcon" :icon="item.appendIcon" class="inline-flex"/>
                   </li>
-               </router-link>
-               <li v-else class="dropdown__item"
-                  :class="dropDownClass"
-               >
-                  {{ item.title }}
-               </li>
-            </template>
-         </ul>
+               </template>
+            </ul>
+         </slot>
       </div>
    </template>
    
@@ -163,25 +167,29 @@
                v-click-outside="clickOutside"  
                appendIcon="octicon:chevron-down-12" 
                :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-               :aria-expaned="true"
+               :aria-expaned="isOpen"
             />
          </div>
-         <ul class="dropdown__menu " :aria-expand="isOpen">
-            <template v-for="(item, i) in itemList">
-               <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
-                  <li class="dropdown__item"
+
+         <!-- fall back content -->
+         <slot name="dropdown-menu-slot">
+            <ul class="dropdown__menu ">
+               <template v-for="(item, i) in itemList">
+                  <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
+                     <li class="dropdown__item"
+                        :class="dropDownClass"
+                     >
+                        {{ item.title }}
+                     </li>
+                  </router-link>
+                  <li v-else class="dropdown__item"
                      :class="dropDownClass"
                   >
                      {{ item.title }}
                   </li>
-               </router-link>
-               <li v-else class="dropdown__item"
-                  :class="dropDownClass"
-               >
-                  {{ item.title }}
-               </li>
-            </template>
-         </ul>
+               </template>
+            </ul>
+         </slot>
       </div>
    </template>
 
