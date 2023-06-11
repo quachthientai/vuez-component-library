@@ -78,7 +78,7 @@
                if(this.dropDownClass.includes(size)){
                   return 'btn-' + size;
                }
-               continue;
+               return ''
             }
          },
          computedBtnClass() {
@@ -92,16 +92,12 @@
             }
          }
       },
-      mounted() {
-         console.log(this.$slots.itemListSlot)
-         // const element = document.getElementsByClassName('slot-wrapper')
-         // console.log(element[0].children)
-         
-      },
       methods: {
-         toggle() { 
+         toggle() {
+            const menu = this.$el.children[1];
             this.rotateChevron(this.isOpen)
-            return this.isOpen = !this.isOpen;
+            this.isOpen = !this.isOpen
+            return this.isOpen ? menu.classList.add('max-h-40') : menu.classList.remove('max-h-40')
          },
          rotateChevron(isOpen) {
             const element = this.$refs.button.$el.getElementsByClassName('iconify--octicon')[0]
@@ -109,7 +105,7 @@
          },
          clickOutside() {
             if(this.isOpen) {
-               this.rotateChevron(this.isOpen)
+               this.toggle()
                this.isOpen = false;
             }
          }
@@ -120,7 +116,7 @@
 <template>
 
    <template v-if="!this.$attrs.split">
-      <div class="dropdown">
+      <div :class="dropDownClass">
          <Button ref="button"  
             v-click-outside="clickOutside" 
             :text="text"  
@@ -131,7 +127,7 @@
          >
          </Button>
       
-         <ul class="dropdown__menu" v-if="!this.$slots.itemListSlot" :aria-expanded="isOpen">
+         <ul class="dropdown__menu " :aria-expand="isOpen">
             <template v-for="(item, i) in itemList">
                <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
                   <li class="dropdown__item"
@@ -149,35 +145,28 @@
                </li>
             </template>
          </ul>
-
-         <template v-if="this.$slots.itemListSlot">
-            
-            <slot name="itemListSlot" :aria-expanded="isOpen" ></slot>
-            
-         </template>
-         
       </div>
    </template>
    
    <template v-else>
-      <div class="dropdown ">
+      <div :class="dropDownClass">
          <div class="split">
             <Button 
-               :text="text"  
+               :text="text"
                :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
                :prependIcon="leadingIcon"
-            >
-            </Button>
+            />
             
             <Button @click="toggle" 
-               ref="button" 
+               ref="button"
+               class="dropdown__toggle"
                v-click-outside="clickOutside"  
                appendIcon="octicon:chevron-down-12" 
                :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-            >
-            </Button>
+               :aria-expaned="true"
+            />
          </div>
-         <ul class="dropdown__menu " :aria-expanded="isOpen">
+         <ul class="dropdown__menu " :aria-expand="isOpen">
             <template v-for="(item, i) in itemList">
                <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
                   <li class="dropdown__item"
