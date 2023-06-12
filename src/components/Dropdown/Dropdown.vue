@@ -133,17 +133,13 @@
             <ul class="dropdown__menu">
                <template v-for="(item, i) in itemList">
                   <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName}">
-                     <li class="dropdown__item"
-                        :class="dropDownClass"
-                     >
+                     <li class="dropdown__item">
                         <Icon v-if="item.prependIcon" :icon="item.prependIcon" class="inline-flex"/>
                         {{ item.title }}
                         <Icon v-if="item.appendIcon" :icon="item.appendIcon" class="inline-flex"/>
                      </li>
                   </router-link>
-                  <li v-else class="dropdown__item"
-                     :class="dropDownClass"
-                  >
+                  <li v-else class="dropdown__item">
                      {{ item.title }}
                   </li>
                </template>
@@ -173,18 +169,14 @@
 
          <!-- fall back content -->
          <slot name="dropdown-menu-slot">
-            <ul class="dropdown__menu ">
+            <ul class="dropdown__menu">
                <template v-for="(item, i) in itemList">
                   <router-link v-if="item.routerName" :key="i" :to="{ path: '/' + item.routerName }">
-                     <li class="dropdown__item"
-                        :class="dropDownClass"
-                     >
+                     <li class="dropdown__item">
                         {{ item.title }}
                      </li>
                   </router-link>
-                  <li v-else class="dropdown__item"
-                     :class="dropDownClass"
-                  >
+                  <li v-else class="dropdown__item">
                      {{ item.title }}
                   </li>
                </template>
