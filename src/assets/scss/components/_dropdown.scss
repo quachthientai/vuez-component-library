@@ -2,18 +2,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 $dropdown-menu-width: theme('spacing.96');
 
-
 @layer base {
+   .dropdown {
+      @apply relative
+   }
    .dropdown__menu {
-      @apply absolute bg-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
+      @apply absolute z-50 bg-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
 
       &[aria-expand="true"] {
          @apply max-h-40;
       }
-
    }
 }
 
@@ -21,9 +21,9 @@ $dropdown-menu-width: theme('spacing.96');
    @each $variant in variables.$variants {
       .dropdown-#{$variant}, .dropdown-outline-#{$variant} {
          @apply relative;
-         &.dropdown__item {
+         .dropdown__item {
             @apply px-2 py-3;
-      
+   
             &:first-of-type{
                @apply mt-2;
             }
@@ -36,8 +36,8 @@ $dropdown-menu-width: theme('spacing.96');
                @apply text-black overflow-hidden border-transparent border-l-[3px] bg-slate-300/20 border-#{$variant}-500;
             }
          }
+         
       }
-
       .dropdown {
          .split {
             display: flex;
@@ -54,11 +54,6 @@ $dropdown-menu-width: theme('spacing.96');
             }
          }
       }
-      
+
    }
 }
-
-      
-   
-   
-

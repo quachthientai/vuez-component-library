@@ -33,7 +33,7 @@
             default: false
          }, 
          btnClass: {
-            type: String,
+            type: [String, Array],
             default: 'btn btn-primary',
             required: true
          },
@@ -48,25 +48,14 @@
       },
       computed: {
          computedIconSize: function() {
-            if(this.btnClass.includes('btn-sm')){
+            const btnClass = typeof this.btnClass === "object" ? this.btnClass[0] : this.btnClass; 
+            if(btnClass.includes('btn-sm')){
                return 'text-sm';
-            }else if(this.btnClass.includes('btn-lg')) {
+            }else if(btnClass.includes('btn-lg')) {
                return 'text-2xl';
             }
             return 'text-lg';
          },
-         // computedIconPosition: function() {
-         //    if(this.text || this.isLoading){
-         //       if(this.appendIcon) {
-         //          return 'order-last';
-         //       }else if(this.prependIcon) {
-         //          return 'order-first mr-1'
-         //       }
-         //       return this.appendIcon ? 'order-last' : this.prependIcon ? 'order-first mr-1' : '';
-         //    }
-         //    return 'm-0';
-         // },
-         
          
       }
    }

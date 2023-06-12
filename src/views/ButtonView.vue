@@ -131,7 +131,7 @@
   </div>
 
   <div class="flex justify-start mt-2">
-    <Button btnClass="btn btn-sm btn-outline-info" class="mr-2" text="Small" appendIcon="ph:envelope-bold"></Button>
+    <Button btnClass="btn  btn-outline-info btn-sm" class="mr-2" text="Small" appendIcon="ph:envelope-bold"></Button>
     <Button btnClass="btn btn-outline-info" class="mr-2" text="regular" appendIcon="ph:envelope-bold"></Button>
     <Button btnClass="btn btn-lg btn-outline-info" text="large" class="mr-2" appendIcon="ph:envelope-bold"></Button>
   </div>
