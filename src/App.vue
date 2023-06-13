@@ -1,6 +1,7 @@
 <script>
   import {RouterLink, RouterView} from 'vue-router';
   import Button from './components/Button/Button.vue';
+  import Switch from './components/Forms/Switch.vue';
 
   export default {
     data() {
@@ -10,24 +11,26 @@
     },
     components: {
       Button,
+      Switch
     },
     methods: {
       handleClick() {
-        const div = document.getElementById('data')
-        div.classList.toggle('dark')
+        const body = document.getElementsByTagName('body')[0];
+        body.classList.toggle('dark')
       }
     }
   }
 </script>
 
 <template>
-  <div id="data" class="dark">
+  
     <div class="test">
       <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
+      <Switch class="mt-3" onStateText="ON"  offStateText="OFF" switchClass="switch switch-success"/>
 
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur debitis corrupti esse, molestiae odit beatae magni veniam, explicabo modi eligendi laboriosam commodi officiis, excepturi atque corporis dicta tenetur sint velit?
     </div>
-  </div>
+ 
   
 
   <div class="mt-3 ms-3">
