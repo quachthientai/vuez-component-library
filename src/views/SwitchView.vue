@@ -8,6 +8,8 @@
     }
 </script>
 <template>
+    Toggle
+    <Switch switchClass="switch switch-primary"/>
     <!-- <div class="bg-dark">
         <div class="mt-2 ml-2">
             <Switch class="mr-2" switchClass="switch switch-primary"></Switch>
