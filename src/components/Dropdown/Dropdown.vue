@@ -118,14 +118,14 @@
    <template v-if="!this.$attrs.split">
       <div :class="dropDownClass">
          <Button ref="button"
+            :prependIcon="leadingIcon"
+            :text="text"  
+            :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
+            :aria-expaned="isOpen"
+            @click="toggle"
             class="dropdown__toggle"
             v-click-outside="clickOutside" 
-            :text="text"  
-            @click="toggle"
-            :btnClass="[`${computedBtnClass} ${computedBtnSize}`]"
-            :prependIcon="leadingIcon"
             appendIcon="octicon:chevron-down-12"
-            :aria-expaned="isOpen"
          />
 
          <!-- fall back content -->
