@@ -26,7 +26,7 @@
   
     <div class="test">
       <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
-      <Switch class="mt-3" onStateText="ON"  offStateText="OFF" switchClass="switch switch-success"/>
+      <Button class="mt-3 ms-3" btnClass="btn btn-outline-secondary" text="Primary"  />
 
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur debitis corrupti esse, molestiae odit beatae magni veniam, explicabo modi eligendi laboriosam commodi officiis, excepturi atque corporis dicta tenetur sint velit?
     </div>
