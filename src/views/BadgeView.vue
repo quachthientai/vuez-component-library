@@ -157,9 +157,6 @@
          <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" ></Badge>
       </Button>
    </div>
-
-   
-   
  </template>
 
 <style lang="scss"></style>

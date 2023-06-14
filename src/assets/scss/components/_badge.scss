@@ -6,7 +6,7 @@
 
 @layer base {
    .badge {
-      @apply bg-primary-500 font-bold text-white rounded-[3px]
+      @apply bg-primary-500 font-bold text-light rounded-[3px]
    }
 }
 
@@ -16,7 +16,7 @@
          @apply bg-#{$variant}-500;
       }
       .badge-pill-#{$variant} {
-         @apply rounded-full bg-#{$variant}-500;
+         @apply rounded-full dark:bg-#{$variant}-500/90 bg-#{$variant}-500;
       }
    }
 

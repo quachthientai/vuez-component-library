@@ -97,7 +97,7 @@
             const menu = this.$el.children[1];
             this.rotateChevron(this.isOpen)
             this.isOpen = !this.isOpen
-            return this.isOpen ? menu.classList.add('max-h-40') : menu.classList.remove('max-h-40')
+            return this.isOpen ? menu.classList.add('show') : menu.classList.remove('show')
          },
          rotateChevron(isOpen) {
             const element = this.$refs.button.$el.getElementsByClassName('iconify--octicon')[0]
