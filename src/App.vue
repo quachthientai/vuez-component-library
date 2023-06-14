@@ -1,7 +1,7 @@
 <script>
   import {RouterLink, RouterView} from 'vue-router';
   import Button from './components/Button/Button.vue';
-  import Checkbox from './components/Forms/Checkbox.vue';
+  import Radio from './components/Forms/Radio.vue';
 
   export default {
     data() {
@@ -11,7 +11,7 @@
     },
     components: {
       Button,
-      Checkbox
+      Radio
     },
     methods: {
       handleClick() {
@@ -27,7 +27,8 @@
     <div class="test">
       <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
       
-      <Checkbox class="mt-3 ms-3" checkboxClass="checkbox checkbox-primary" />
+      <Radio radioClass="radio radio-primary" />
+      <Radio radioClass="radio radio-success" />
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur debitis corrupti esse, molestiae odit beatae magni veniam, explicabo modi eligendi laboriosam commodi officiis, excepturi atque corporis dicta tenetur sint velit?
     </div>
  
