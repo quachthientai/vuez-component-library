@@ -12,8 +12,10 @@
    <div>This is toast view</div>
    
    
-   <Toast toastClass="toast toast-primary"/>
-   
+   <Toast toastClass="toast toast-info" class="my-20"/>
+   <Toast toastClass="toast toast-success" class="my-40"/>
+   <Toast toastClass="toast toast-warning" class="my-60"/>
+   <Toast toastClass="toast toast-danger" class="my-80"/>
    
 </template>
 

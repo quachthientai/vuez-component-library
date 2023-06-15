@@ -38,26 +38,35 @@
             {{ this.title }}
          </strong>
          <small class="toast__text">
-            asd
+            This is a information toast
          </small>
       </div>
       <div class="toast__dismiss">
-
+         <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold"></Button>
       </div>
    </div>
 </template>
 
 <style lang='scss' scoped>
-   .toast {
-      @apply bg-info-300;
-      position: absolute;
-      display: flex;
-      width: 350px;
-      max-width: 100%;
-   }
-
-   .toast__body {
-      display: flex;
-      flex-direction: column;
-   }
+   // .toast {
+   //    @apply bg-danger-200 drop-shadow-md;
+   //    position: absolute;
+   //    display: grid;
+   //    grid-template-columns: 1.3fr 6fr .5fr;
+   //    width: 350px;
+   //    max-width: 100%;
+   //    border-radius: 5px;
+   //    padding: 10px 10px;
+   // }
+   // .toast__icon {
+   //    font-size: 35px;
+   //    align-self: center;
+   // }
+   
+   // .toast > div {
+   //    @apply text-danger-600;
+   // }
+   
+   
+   
 </style>
