@@ -1,6 +1,7 @@
 <script>
    import { Icon } from '@iconify/vue';
    import Button from '../Button/Button.vue';
+import { setTransitionHooks } from 'vue';
 
    export default {
       name: 'Toast',
@@ -25,13 +26,27 @@
          },
 
       },
+      computed: {
+         computedIcon() {
+            switch(true) {
+               case this.toastClass.includes('toast-info') :
+                  return 'material-symbols:info-outline'
+               case this.toastClass.includes('toast-success') :
+                  return 'mdi:success-circle-outline'
+               case this.toastClass.includes('toast-danger') :
+                  return 'material-symbols:dangerous-outline-rounded' 
+               case this.toastClass.includes('toast-warning') :
+                  return 'ion:warning-outline' 
+            }
+         }
+      }
    }
 </script>
 
 <template>
    <div :class="toastClass">
       <div class="toast__icon">
-         <Icon icon="material-symbols:info-outline"/>
+         <Icon :icon="computedIcon"/>
       </div>
       <div class="toast__body">
          <strong class="toast__title">
@@ -48,25 +63,5 @@
 </template>
 
 <style lang='scss' scoped>
-   // .toast {
-   //    @apply bg-danger-200 drop-shadow-md;
-   //    position: absolute;
-   //    display: grid;
-   //    grid-template-columns: 1.3fr 6fr .5fr;
-   //    width: 350px;
-   //    max-width: 100%;
-   //    border-radius: 5px;
-   //    padding: 10px 10px;
-   // }
-   // .toast__icon {
-   //    font-size: 35px;
-   //    align-self: center;
-   // }
-   
-   // .toast > div {
-   //    @apply text-danger-600;
-   // }
-   
-   
    
 </style>
