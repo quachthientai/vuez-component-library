@@ -9,6 +9,10 @@ module.exports =  {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        'max-height': 'max-height',
+        'border-width': 'border-width'
+      },
       colors: {
         'light': '#F8FAFC',
         'dark': '#1E293B',

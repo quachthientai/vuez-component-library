@@ -1,7 +1,7 @@
 <script>
   import {RouterLink, RouterView} from 'vue-router';
   import Button from './components/Button/Button.vue';
-  import Checkbox from './components/Forms/Checkbox.vue';
+  import Radio from './components/Forms/Radio.vue';
 
   export default {
     data() {
@@ -11,7 +11,7 @@
     },
     components: {
       Button,
-      Checkbox
+      Radio
     },
     methods: {
       handleClick() {
@@ -24,34 +24,39 @@
 
 <template>
   
-    <div class="test">
-      <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
+    <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
       
-      <Checkbox class="mt-3 ms-3" checkboxClass="checkbox checkbox-primary" />
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur debitis corrupti esse, molestiae odit beatae magni veniam, explicabo modi eligendi laboriosam commodi officiis, excepturi atque corporis dicta tenetur sint velit?
-    </div>
- 
+      <Radio radioClass="radio radio-primary" />
+      <Radio radioClass="radio radio-success" />
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur debitis corrupti esse, molestiae odit beatae magni veniam, explicabo modi eligendi laboriosam commodi officiis, excepturi atque corporis dicta tenetur sint velit?
+      
+   
+    
   
-
-  <div class="mt-3 ms-3">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/button">Button</router-link> |
-    <router-link to="/badge">Badge</router-link> |
-    <router-link to="/dropdown">Dropdown</router-link> |
-    <router-link to="/switch">Switch Button</router-link> |
-    <router-link to="/button-group">Button Group</router-link> |
-    <router-link to="/checkbox">Checkbox</router-link> |
-    <router-link to="/radio">Radio</router-link> |
-  </div>
-  <router-view />
+    <div class="mt-3 ms-3">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/button">Button</router-link> |
+      <router-link to="/badge">Badge</router-link> |
+      <router-link to="/dropdown">Dropdown</router-link> |
+      <router-link to="/switch">Switch Button</router-link> |
+      <router-link to="/button-group">Button Group</router-link> |
+      <router-link to="/checkbox">Checkbox</router-link> |
+      <router-link to="/radio">Radio</router-link> |
+      <router-link to="/toast">Toast</router-link> 
+    </div>
+    
+    <router-view/>
+  
+    
+   
+  
+  
   
 </template>
 
 <style lang="scss" scoped>
   
-  .test {
-    @apply mt-3 ms-3 border-2 text-dark border-red-400 bg-light dark:text-white dark:bg-dark;
-  }
+  
 
   
 </style>

@@ -9,11 +9,13 @@ $dropdown-menu-width: theme('spacing.96');
       @apply relative
    }
    .dropdown__menu {
-      @apply absolute z-50 bg-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words transition-all duration-500 overflow-hidden max-h-0;
+      transition: max-height 0.5s, border-width 0.1s;
+      @apply absolute z-50 bg-light text-dark dark:bg-dark border-0 dark:border-slate-300/40 dark:text-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words  overflow-hidden max-h-0;
 
-      &[aria-expand="true"] {
-         @apply max-h-40;
+      &.show{
+         @apply border-[2px] max-h-40;
       }
+         
    }
 }
 
@@ -33,7 +35,7 @@ $dropdown-menu-width: theme('spacing.96');
             }
       
             &:hover{
-               @apply text-black overflow-hidden border-transparent border-l-[3px] bg-slate-300/20 border-#{$variant}-500;
+               @apply text-dark dark:text-light overflow-hidden border-transparent border-l-[3px] bg-slate-300/20 border-#{$variant}-500;
             }
          }
          

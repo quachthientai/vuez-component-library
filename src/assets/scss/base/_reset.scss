@@ -9,7 +9,11 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      @apply bg-light;
+      @apply bg-light dark:text-light dark:bg-dark;
    }
 
+   .test {
+      @apply bg-light dark:text-light dark:bg-dark;
+   }
+   
 }
