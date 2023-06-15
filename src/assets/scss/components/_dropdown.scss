@@ -10,10 +10,10 @@ $dropdown-menu-width: theme('spacing.96');
    }
    .dropdown__menu {
       transition: max-height 0.5s, border-width 0.1s;
-      @apply absolute z-50 bg-light text-dark dark:bg-dark border-0 dark:border-slate-600 dark:text-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words  overflow-hidden max-h-0;
+      @apply absolute z-50 bg-light text-dark dark:bg-dark border-0 dark:border-slate-300/40 dark:text-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words  overflow-hidden max-h-0;
 
       &.show{
-         @apply border-[1px] max-h-40;
+         @apply border-[2px] max-h-40;
       }
          
    }

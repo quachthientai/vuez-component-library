@@ -1,5 +1,4 @@
 <script>
-   
    import Toast from '@/components/Toast/Toast.vue';
    export default {
       name: 'ToastView',
@@ -13,8 +12,7 @@
    <div>This is toast view</div>
    
    
-   
-   
+   <Toast toastClass="toast toast-primary"/>
    
    
 </template>
