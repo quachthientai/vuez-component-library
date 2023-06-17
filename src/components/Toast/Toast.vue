@@ -10,10 +10,15 @@
       },
       data() {
          return {
-            isShow: false
+            isShow: this.isShow
          }
       },
+      emits: ['onDismiss'],
       props: {
+         isShow: {
+            type: Boolean,
+            default: false
+         },
          toastClass: {
             type: String,
             required: true,
@@ -29,7 +34,7 @@
          }
       },
       methods:{
-        
+         
       },
       computed: {
          computedIcon() {
@@ -49,7 +54,6 @@
 </script>
 
 <template>
-   <Button class="ms-3" @click="isShow=!isShow" btnClass="btn btn-primary" text="show toast"/>
    <Transition name="slide-fade">
       <div :class="[toastClass, position]" v-if="isShow">
          <div class="toast__icon ms-2">
@@ -64,7 +68,7 @@
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" @click="isShow = !isShow" appendIcon="iconamoon:close-bold"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" @click="$emit('onDismiss')" appendIcon="iconamoon:close-bold"></Button>
          </div>
       </div>
    </Transition>
