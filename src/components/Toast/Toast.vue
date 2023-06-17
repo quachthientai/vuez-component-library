@@ -1,7 +1,6 @@
 <script>
    import { Icon } from '@iconify/vue';
    import Button from '../Button/Button.vue';
-import { setTransitionHooks } from 'vue';
 
    export default {
       name: 'Toast',
@@ -11,7 +10,7 @@ import { setTransitionHooks } from 'vue';
       },
       data() {
          return {
-
+            isShow: false
          }
       },
       props: {
@@ -24,7 +23,13 @@ import { setTransitionHooks } from 'vue';
             type: String,
             default: 'Title'
          },
-
+         position: {
+            type: String,
+            default: 'top-right',
+         }
+      },
+      methods:{
+        
       },
       computed: {
          computedIcon() {
@@ -44,24 +49,40 @@ import { setTransitionHooks } from 'vue';
 </script>
 
 <template>
-   <div :class="toastClass">
-      <div class="toast__icon">
-         <Icon :icon="computedIcon"/>
+   <Button class="ms-3" @click="isShow=!isShow" btnClass="btn btn-primary" text="show toast"/>
+   <Transition name="slide-fade">
+      <div :class="[toastClass, position]" v-if="isShow">
+         <div class="toast__icon ms-2">
+            <Icon :icon="computedIcon"/>
+         </div>
+         <div class="toast__body">
+            <strong class="toast__title">
+               {{ this.title }}
+            </strong>
+            <small class="toast__text">
+               This is a information toast
+            </small>
+         </div>
+         <div class="toast__dismiss">
+            <Button btnClass="btn-icon-circle btn-lg" @click="isShow = !isShow" appendIcon="iconamoon:close-bold"></Button>
+         </div>
       </div>
-      <div class="toast__body">
-         <strong class="toast__title">
-            {{ this.title }}
-         </strong>
-         <small class="toast__text">
-            This is a information toast
-         </small>
-      </div>
-      <div class="toast__dismiss">
-         <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold"></Button>
-      </div>
-   </div>
+   </Transition>
+   
 </template>
 
 <style lang='scss' scoped>
-   
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
 </style>

@@ -10,12 +10,14 @@
 
 <template>
    <div>This is toast view</div>
+   <Toast toastClass="toast toast-success"/>
+   <Toast toastClass="toast toast-success"/>
+   <!-- <Toast toastClass="toast toast-success" class="my-3 m-auto top-0 left-0 right-0"/> -->
+   <!-- <Toast toastClass="toast toast-success" class="my-3 m-auto bottom-0 left-0 right-0"/> -->
+   <!-- <Toast toastClass="toast toast-warning"/>
+   <Toast toastClass="toast toast-danger"/>
+   <Toast toastClass="toast toast-info" :position="top-right" /> -->
    
-   
-   <Toast toastClass="toast toast-info" class="my-20"/>
-   <Toast toastClass="toast toast-success" class="my-40"/>
-   <Toast toastClass="toast toast-warning" class="my-60"/>
-   <Toast toastClass="toast toast-danger" class="my-80"/>
    
 </template>
 

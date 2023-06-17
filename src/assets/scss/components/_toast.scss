@@ -1,12 +1,25 @@
 @use '../utilities/variables';
-
+@use "sass:map";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+$y-position-map: (
+   "top": (
+      "left": top-left,
+      "right": top-right,
+   ),
+   "bottom": (
+      "left": left,
+      "right": right,
+   )
+);
+
+
+
 @layer base {
    .toast {
-      @apply drop-shadow-md absolute grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] max-w-full rounded-md p-[10px];
+      @apply drop-shadow-md absolute grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] max-w-full rounded-md p-[10px] m-3;
 
       .toast__icon {
          @apply text-[32px] self-center;
@@ -17,7 +30,14 @@
       }
    }
    
+   @debug map.get($y-position-map,"top","right");
+   .top-right {
+      @apply top-0 right-0;
+   }
+      
 }
+
+   
 
 @layer utilities {
    @each $variant in variables.$variants {
