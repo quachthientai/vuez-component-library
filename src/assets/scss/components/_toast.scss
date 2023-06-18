@@ -4,16 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-$y-position-map: (
-   "top": (
-      "left": top-left,
-      "right": top-right,
-   ),
-   "bottom": (
-      "left": left,
-      "right": right,
-   )
-);
+$gravities: top, bottom;
+// $y-position-map: (
+//    "top": (
+//       "left": top-left,
+//       "right": top-right,
+//    ),
+//    "bottom": (
+//       "left": left,
+//       "right": right,
+//    )
+// );
 
 
 
@@ -30,10 +31,19 @@ $y-position-map: (
       }
    }
    
-   @debug map.get($y-position-map,"top","right");
-   .top-right {
-      @apply top-0 right-0;
+   // @debug map.get($y-position-map,"top","right");
+   @each $gravity in $gravities {
+      .#{$gravity}-left {
+         @apply left-0 #{$gravity}-0;
+      }
+
+      .#{$gravity}-right {
+         @apply right-0 #{$gravity}-0;
+      }
    }
+   // .top-right {
+   //    @apply top-0 right-0;
+   // }
       
 }
 

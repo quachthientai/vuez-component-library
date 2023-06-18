@@ -10,7 +10,7 @@
       },
       data() {
          return {
-            isShow: this.isShow
+            // isShow: this.isShow,
          }
       },
       emits: ['onDismiss'],
@@ -34,7 +34,10 @@
          }
       },
       methods:{
-         
+         // onDismiss() {
+            
+         //    this.$emit('onDismiss', this.isShow)
+         // }
       },
       computed: {
          computedIcon() {
@@ -42,20 +45,20 @@
                case this.toastClass.includes('toast-info') :
                   return 'material-symbols:info-outline'
                case this.toastClass.includes('toast-success') :
-                  return 'mdi:success-circle-outline'
+                  return 'material-symbols:check-circle-outline' 
                case this.toastClass.includes('toast-danger') :
-                  return 'material-symbols:dangerous-outline-rounded' 
+                  return 'material-symbols:dangerous-outline' 
                case this.toastClass.includes('toast-warning') :
-                  return 'ion:warning-outline' 
+                  return 'material-symbols:warning-outline-rounded' 
             }
          }
       }
    }
 </script>
 
-<template>
-   <Transition name="slide-fade">
-      <div :class="[toastClass, position]" v-if="isShow">
+<template >
+   <Transition name="bounce">
+      <div :class="[toastClass, position]" v-if="isShow" >
          <div class="toast__icon ms-2">
             <Icon :icon="computedIcon"/>
          </div>
@@ -68,7 +71,8 @@
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" @click="$emit('onDismiss')" appendIcon="iconamoon:close-bold"></Button>
+            <Button btnClass="btn-icon-circle btn-lg"
+            @click="$emit('onDismiss',isShow)" appendIcon="iconamoon:close-bold"></Button>
          </div>
       </div>
    </Transition>
@@ -76,17 +80,21 @@
 </template>
 
 <style lang='scss' scoped>
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
 }
-
-.slide-fade-leave-active {
-  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+.bounce-leave-active {
+  animation: bounce-in 0.3s reverse;
 }
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
