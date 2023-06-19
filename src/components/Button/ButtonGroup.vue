@@ -20,7 +20,21 @@
          },
          itemList:{
             type:[Object],
-            required:true
+            required:false,
+            validator(value){
+               const keyList = ['text', 'routingLink', 'event']
+               for (object in value){
+                  const objectKeys = Object.keys(object)
+                  for (key in objectKeys){
+                     if(!keyList.includes(key)){
+                        console.warn(`Key ${key} is not valid`)
+                     }else{
+                        return true
+                     }
+                  }
+               }
+
+            }
          },
          option:{
             type:String,
@@ -29,8 +43,12 @@
          }
       },
       methods:{
+         handleRouting : (link)=>{
+            location.href = link
+         }
       },
       computed:{
+         
       }
    }
    
@@ -38,31 +56,12 @@
 
 
 <template>
-   <div v-if="option == 'default'" :class="[btnGroupClass]">
-      <button  v-for="item in itemList">
+   <div v-if="option == 'default'" :class="[btnGroupClass] ">
+      <button @click="item.function? item.function : handleRouting(item.routingLink) " v-for="item in itemList">
          {{ item.text }}
       </button>
    </div>
    <div v-else-if="option == 'custom' " :class="[`btnGroup-${option}`]">
-      <!-- <template v-for="item in itemList">
-         <Button v-if="item.btnClass" 
-            :text="item.text"
-            :routeLink="item.routeLink"
-            :icon="item.icon"
-            :iconPosition="item.iconPosition"
-            :isUppercase="item.isUppercase"
-            :isDisabled="item.isDisabled"
-            :btnClass="item.btnClass"
-            :isLoading="item.isLoading"
-            :externalLink="item.externalLink"
-         >
-         </Button>
-         <Dropdown v-if="item.dropDownClass"
-            :text="item.text"
-            :dropDownClass="item.dropDownClass"
-         >
-         </Dropdown>
-      </template> -->
       <slot></slot>
    </div>
 </template>

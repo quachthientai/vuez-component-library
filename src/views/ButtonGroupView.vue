@@ -11,10 +11,13 @@
             
         }
     }
+    function hello(){
+        console.log(1)
+    }
 </script>
 
 <template>
-    <ButtonGroup option='default' class="btnGroup btnGroup-primary" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup btnGroup-primary" :item-list="[{text:'text1', event: hello},{text:'text2'},{text:'text3'}]"></ButtonGroup>
     <ButtonGroup option='default' class="btnGroup btnGroup-info" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
     <ButtonGroup option='default' class="btnGroup btnGroup-warning" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
     <br>
@@ -27,7 +30,7 @@
     <!-- <ButtonGroup option='custom' :item-list="[{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
 ,{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
 ,{dropDownClass:'dropwdown dropdown-secondary', class:'ml-3', text:'dropdown'}]"  ></ButtonGroup> -->
-    <ButtonGroup option="custom" :item-list="[{text:'1'}]"> 
+    <ButtonGroup option="custom" > 
         <Button btnClass="btn btn-primary"  text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
         <Button btnClass="btn btn-primary"  text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
         <Button btnClass="btn btn-outline-warning"  text="Warning" iconPosition="left" icon="ph:envelope-bold"></Button>
