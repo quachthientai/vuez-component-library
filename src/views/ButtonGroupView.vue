@@ -1,20 +1,42 @@
 <script>
     import ButtonGroup from '@/components/Button/ButtonGroup.vue';
-    export default {
+
+    import Button from '@/components/Button/Button.vue';
+    import Dropdown from '@/components/Dropdown/Dropdown.vue';
+    export default{
         name:'ButtonGroupView',
         components:{
-            ButtonGroup
+            ButtonGroup,
+            Button,
+            Dropdown,
+            
         }
+    }
+    function hello(){
+        console.log(1)
     }
 </script>
 
 <template>
-    <!-- <ButtonGroup class="btnGroup btnGroup-primary" :btnGroupItemList="[{text:'button1'},{text:'button2'},{text:'button3'}]"></ButtonGroup>
-    <ButtonGroup class="btnGroup btnGroup-secondary" :btnGroupItemList="[{text:'button1'},{text:'button2'},{text:'button3'}]"></ButtonGroup>
-    <ButtonGroup class="btnGroup btnGroup-info" :btnGroupItemList="[{text:'button1'},{text:'button2'},{text:'button3'}]"></ButtonGroup>
-    <ButtonGroup class="btnGroup btnGroup-success" :btnGroupItemList="[{text:'button1'},{text:'button2'},{text:'button3'}]"></ButtonGroup>
-    <ButtonGroup class="btnGroup btnGroup-warning" :btnGroupItemList="[{text:'button1'},{text:'button2'},{text:'button3'}]"></ButtonGroup>
-    <ButtonGroup class="btnGroup btnGroup-danger" :btnGroupItemList="[{text:'button1'},{text:'button2'},{text:'button3'}]"></ButtonGroup> -->
+
+    <ButtonGroup option='default' class="btnGroup btnGroup-primary" :item-list="[{text:'text1', event: hello},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup btnGroup-info" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup btnGroup-warning" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <br>
+    <!--Pill-->
+    <ButtonGroup option='default' class="btnGroup-pill btnGroup-primary" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup-pill btnGroup-info" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup-pill btnGroup-warning" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <br>
+    <!--Custom-->
+    <!-- <ButtonGroup option='custom' :item-list="[{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
+,{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
+,{dropDownClass:'dropwdown dropdown-secondary', class:'ml-3', text:'dropdown'}]"  ></ButtonGroup> -->
+    <ButtonGroup option="custom" > 
+        <Button btnClass="btn btn-primary"  text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
+        <Button btnClass="btn btn-primary"  text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
+        <Button btnClass="btn btn-outline-warning"  text="Warning" iconPosition="left" icon="ph:envelope-bold"></Button>
+    </ButtonGroup>
 </template>
 
 <style lang="scss">
