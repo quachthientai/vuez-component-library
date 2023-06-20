@@ -1,28 +1,59 @@
 @use '../utilities/variables';
 
-@layer base{
-    .btnGroup{
-        @apply  inline-flex  rounded-sm m-2 overflow-hidden;
+.btnGroup-custom{
+    @apply inline-flex rounded-[2px] text-white overflow-hidden;
 
-        & > button{
-            @apply w-[107px] h-[40px] text-white bg-primary-500;
+    > .btn{
+        @apply rounded-none;
 
-            &:hover{
-                @apply bg-primary-600;
-            }
+        &:focus{
+            @apply ring-0 ring-offset-0;
         }
     }
+}
+
+@layer base{
+    .btnGroup{
+        @apply  inline-flex   rounded-[5px]  text-white overflow-hidden;
+        
+        > button{
+            @apply  h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
+        }
+
+        //Pill
+
+        &-pill{
+            @apply rounded-full;
+        }
+    }
+
+    //Custom
+    .custom{
+        
+        > .dropdown__menu{
+            @apply rounded-none;
+
+            &:focus{
+                @apply ring-0 ring-offset-0;
+            }
+        }
+
+        
+    } + .btnGroup{
+
+    }
+    
 }
 
 @layer utilities{
     @each $variant in variables.$variants{
         .btnGroup-#{$variant}{
-            & > button{
+            > button {
                 @apply bg-#{$variant}-500;
+            }
 
-                &:hover{
-                    @apply bg-#{$variant}-600;
-                }
+            > button:hover {
+                @apply bg-#{$variant}-600;
             }
         }
     }
