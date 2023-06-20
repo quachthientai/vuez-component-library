@@ -13,6 +13,11 @@ module.exports =  {
         'max-height': 'max-height',
         'border-width': 'border-width'
       },
+      keyframes: {
+        progress: {
+          '100%' : {right: '100%'},
+        }
+      },
       colors: {
         'light': '#F8FAFC',
         'dark': '#1E293B',

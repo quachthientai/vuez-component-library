@@ -10,10 +10,12 @@
       },
       data() {
          return {
+            activeClass: 'active',
+            dismissDuration: this.duration
             // isShow: this.isShow,
          }
       },
-      emits: ['onDismiss'],
+      emits: ['update:isShow'],
       props: {
          isShow: {
             type: Boolean,
@@ -31,13 +33,20 @@
          position: {
             type: String,
             default: 'top-right',
+         },
+         duration: {
+            type: Number,
+            default: 0
          }
       },
-      methods:{
-         // onDismiss() {
-            
-         //    this.$emit('onDismiss', this.isShow)
-         // }
+      watch: {
+         isShow(v) {
+            if(v) {
+               setTimeout(() => {
+                  this.$emit('update:isShow', !this.isShow)
+               }, this.duration)
+            }
+         }
       },
       computed: {
          computedIcon() {
@@ -51,14 +60,17 @@
                case this.toastClass.includes('toast-warning') :
                   return 'material-symbols:warning-outline-rounded' 
             }
-         }
+         },
+         // computedProgressAnimate() {
+         //    return `before:animate-[progress_${this.duration}s_linear_forwards]`
+         // }
       }
    }
 </script>
 
 <template >
    <Transition name="bounce">
-      <div :class="[toastClass, position]" v-if="isShow" >
+      <div :class="[toastClass, position]" v-show="isShow" >
          <div class="toast__icon ms-2">
             <Icon :icon="computedIcon"/>
          </div>
@@ -71,30 +83,68 @@
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg"
-            @click="$emit('onDismiss',isShow)" appendIcon="iconamoon:close-bold"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" @click="$emit('update:isShow',isShow)" appendIcon="iconamoon:close-bold"></Button>
          </div>
+         <div class="toast__progress progress active"></div>
       </div>
    </Transition>
-   
 </template>
 
 <style lang='scss' scoped>
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-  animation: bounce-in 0.3s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+   .progress {
+      @apply bg-red-200 rounded;
+      position: absolute;
+      width:100%;
+      height: 4px;
+      left: 0;
+      bottom: 0;
+   }
+
+   // .toast {
+      
+   //    transform: translateX(calc(100% + 30px));
+   //    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+   // }
+
+   // .toast.active {
+   //    transform: translateX(0%);
+   // }
+
+   .toast .progress:before{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      right: 0px;
+      content: '';
+      @apply bg-red-500 rounded;
+   }
+   .progress.active:before{
+      
+
+      @apply animate-[progress_2s_linear_forwards];
+   }
+
+   // @keyframes progress {
+   //    100%{
+   //       right: 100%;
+   //    }
+   // }
+   .bounce-enter-active {
+     animation: bounce-in 0.5s;
+   }
+   .bounce-leave-active {
+     animation: bounce-in 0.3s reverse;
+   }
+   @keyframes bounce-in {
+     0% {
+       transform: scale(0);
+     }
+     50% {
+       transform: scale(1.1);
+     }
+     100% {
+       transform: scale(1);
+     }
+   }
 </style>

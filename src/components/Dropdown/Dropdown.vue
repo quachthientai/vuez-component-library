@@ -1,7 +1,6 @@
 <script>
    import Button from '@/components/Button/Button.vue';
    import { Icon } from '@iconify/vue';
-   
 
    export default {
       name: 'Dropdown',
@@ -33,6 +32,7 @@
          itemList: {
             type: [Object],
             validator(value) {
+               
                let itemListKey = ["title", "routerName", "prependIcon", "appendIcon"]
                let falseKey = []
 

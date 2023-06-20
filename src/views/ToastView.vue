@@ -14,10 +14,8 @@
          }
       },
       methods: {
-         handleToggle(e) {
-            console.log(e.target)
+         handleToggle() {
             this.isShow = !this.isShow
-            
          },
          // handleToggle2() {
          //    this.isShow2 = !this.isShow2
@@ -30,7 +28,7 @@
    <div>This is toast view</div>
 
    <Button class="ms-3" btnClass="btn btn-danger" @click="handleToggle" text="show toast"/>
-   <Toast toastClass="toast toast-danger" position="bottom-left" @onDismiss="handleToggle" :isShow="isShow" />
+   <Toast toastClass="toast toast-danger" :duration="2000" v-model:isShow="isShow" position="top-right" /> 
 
    <!-- <Button class="ms-3" btnClass="btn btn-warning" @click="handleToggle2" text="show toast"/>
 
