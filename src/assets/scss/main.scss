@@ -3,6 +3,7 @@
 //Typo
 @use 'base/typography';
 @use 'base/reset';
+@use 'themes/theme';
 @use 'components/button';
 @use 'components/badge';
 @use 'components/button-group';
@@ -10,6 +11,7 @@
 @use 'components/Forms/checkbox';
 @use 'components/Forms/radio';
 @use 'components/dropdown';
+@use 'components/toast';
 //Reset 
 // @layer base {
    

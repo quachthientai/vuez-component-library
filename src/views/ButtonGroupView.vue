@@ -1,5 +1,6 @@
 <script>
     import ButtonGroup from '@/components/Button/ButtonGroup.vue';
+
     import Button from '@/components/Button/Button.vue';
     import Dropdown from '@/components/Dropdown/Dropdown.vue';
     export default{
@@ -17,6 +18,7 @@
 </script>
 
 <template>
+
     <ButtonGroup option='default' class="btnGroup btnGroup-primary" :item-list="[{text:'text1', event: hello},{text:'text2'},{text:'text3'}]"></ButtonGroup>
     <ButtonGroup option='default' class="btnGroup btnGroup-info" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
     <ButtonGroup option='default' class="btnGroup btnGroup-warning" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>

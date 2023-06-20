@@ -40,6 +40,11 @@ const routes = [
       path:'/radio',
       name:'radio',
       component: ()=>import('@/views/RadioView.vue')
+   },
+   {
+      path: '/toast',
+      name: 'toast',
+      component: () => import('@/views/ToastView.vue')
    }
 ]
 

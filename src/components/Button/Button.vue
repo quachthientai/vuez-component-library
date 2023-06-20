@@ -16,13 +16,13 @@
             type: String,
             default: ''
          },
-         icon: {
+         prependIcon: {
             type: String,
             default: null,
          },
-         iconPosition: {
+         appendIcon: {
             type: String,
-            default: null
+            default: null,
          },
          isUppercase: {
             type: Boolean,
@@ -33,7 +33,7 @@
             default: false
          }, 
          btnClass: {
-            type: String,
+            type: [String, Array],
             default: 'btn btn-primary',
             required: true
          },
@@ -48,20 +48,14 @@
       },
       computed: {
          computedIconSize: function() {
-            if(this.btnClass.includes('btn-sm')){
+            const btnClass = typeof this.btnClass === "object" ? this.btnClass[0] : this.btnClass; 
+            if(btnClass.includes('btn-sm')){
                return 'text-sm';
-            }else if(this.btnClass.includes('btn-lg')) {
+            }else if(btnClass.includes('btn-lg')) {
                return 'text-2xl';
             }
             return 'text-lg';
          },
-         computedIconPosition: function() {
-            if(this.text || this.isLoading){
-               return this.iconPosition === 'right' ? 'order-last' : 'order-first mr-1';
-            }
-            return 'm-0';
-         },
-         
          
       }
    }
@@ -84,20 +78,22 @@
       >  
          <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
             <span class="no-underline flex justify-center items-center">
-               <Icon icon="mingcute:loading-fill" :class=[computedIconSize,computedIconPosition] class="animate-spin"/>
+               <Icon icon="mingcute:loading-fill" :class=[computedIconSize] class="animate-spin order-last ml-1"/>
                   Loading...
             </span>
          </template>
 
          <template v-else>
             <span class="no-underline flex justify-center items-center">
-               <span v-if="!btnClass.includes('btn-icon-circle')" :class="this.$slots ? 'flex items-center justify-center' : ''">
+               <Icon v-if="prependIcon" :icon="prependIcon" class="transition duration-300 order-first mr-1" :class=[computedIconSize] />
+               <span v-if="!btnClass.includes('btn-icon-circle') && text" :class="this.$slots ? 'flex items-center justify-center' : ''">
                   <span>{{ text }}</span>
                   <div class="ml-1 flex items-center" >
                      <slot></slot>
                   </div>
                </span>
-               <Icon v-if="icon" :icon="icon" class="transition duration-300" :class=[computedIconSize,computedIconPosition] />
+               <Icon v-if="appendIcon" :icon="appendIcon" class="transition duration-300" :class=[computedIconSize] />
+               
             </span>
          </template>
       </a>

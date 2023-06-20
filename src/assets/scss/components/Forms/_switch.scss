@@ -31,12 +31,12 @@
           }
 
           + .switch__slider:before {
-            @apply translate-x-[26px] bg-white;
+            @apply translate-x-[26px] bg-light;
           }
           
           + &:focus {
             + .switch__slider {
-              @apply ring-2 ring-offset-1 ring-#{$variant}-500/30;
+              @apply ring-2 ring-offset-1 dark:ring-offset-dark dark:ring-#{$variant}-500/50 ring-#{$variant}-500/30;
             }
           }
           
@@ -60,13 +60,13 @@
 
         &:focus {
           + .switch__slider {
-            @apply ring-2 ring-offset-1 ring-slate-500/20;
+            @apply ring-2 ring-offset-1 ring-slate-500/20 dark:ring-slate-300/30 dark:ring-offset-dark;
           }
         }
       }
 
       .switch__labels{
-        @apply text-black font-extrabold text-[9px];
+        @apply text-dark font-extrabold text-[9px] dark:text-light;
         
         .onIcon {
           @apply absolute top-2 left-2 opacity-0;

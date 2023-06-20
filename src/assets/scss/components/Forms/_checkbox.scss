@@ -24,7 +24,7 @@
 
       &:focus {
         + .checkbox__custom {
-          @apply ring-2 ring-slate-300/70 ring-offset-1;
+          @apply ring-2 ring-slate-300/70 dark:ring-offset-dark ring-offset-1;
         }
       }
     }
@@ -37,8 +37,8 @@
       }
 
       &:after { 
-        @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-white border-r-[2px] border-b-[2px] rotate-45; 
-        transition: width 0.3s, height 0.3s, opacity 0.3s;
+        @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-light border-r-[2px] border-b-[2px] rotate-45; 
+        transition: opacity 0.3s;
       }
     }
 

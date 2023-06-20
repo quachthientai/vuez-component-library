@@ -1,6 +1,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports =  {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -9,14 +10,12 @@ module.exports =  {
   theme: {
     extend: {
       transitionProperty: {
-        'width': 'width',
-        'height': 'height'
+        'max-height': 'max-height',
+        'border-width': 'border-width'
       },
       colors: {
-          white: colors.white,
-          black: colors.black,
-          'light': '#F8FAFC',
-          'dark': '#1E293B',
+        'light': '#F8FAFC',
+        'dark': '#1E293B',
         primary: {
           50: '#F0F9FF',
           100: '#E0F2FE',

@@ -1,0 +1,34 @@
+@use '../utilities/variables';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   .toast {
+      @apply drop-shadow-md absolute grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] max-w-full rounded-md p-[10px];
+
+      .toast__icon {
+         @apply text-[32px] self-center;
+      }
+
+      .toast__body {
+         @apply self-center flex flex-col;
+      }
+   }
+   
+}
+
+@layer utilities {
+   @each $variant in variables.$variants {
+      .toast-#{$variant} {
+         @apply bg-#{$variant}-200;
+
+         > div {
+            @apply text-#{$variant}-600;
+         }
+      }
+   }
+
+   
+}
