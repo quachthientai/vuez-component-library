@@ -42,10 +42,49 @@
 
 
 <template>
+   <!--
+      text: {
+            type: String,
+            default: null
+         },
+         routeLink: {
+            type: String,
+            default: ''
+         },
+         prependIcon: {
+            type: String,
+            default: null,
+         },
+         appendIcon: {
+            type: String,
+            default: null,
+         },
+         isUppercase: {
+            type: Boolean,
+            default: false
+         },
+         isDisabled: {
+            type: Boolean,
+            default: false
+         }, 
+         btnClass: {
+            type: [String, Array],
+            default: 'btn btn-primary',
+            required: true
+         },
+         isLoading: {
+            type: Boolean,
+            default: false,
+         },
+         externalLink: {
+            type: String,
+            default: null
+         }
+   -->
    <div v-if="option == 'default'" :class="[btnGroupClass] ">
-      <button @click="item.function? item.function : handleRouting(item.routingLink) " v-for="item in itemList">
-         {{ item.text }}
-      </button>
+     <Button>
+
+     </Button>
    </div>
    <div v-else-if="option == 'custom' " :class="[`btnGroup-${option}`]">
       <slot></slot>

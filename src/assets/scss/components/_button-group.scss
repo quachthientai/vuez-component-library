@@ -16,12 +16,12 @@
     > .dropdown .btn{
         @apply rounded-none;
 
-        &:last-of-type{
+        &:last-child{
             @apply rounded-r-sm;
         }
 
-        &:first-of-type{
-            @apply rounded-r-sm;
+        &:first-child{
+            @apply rounded-l-sm;
         }
 
         &:focus{

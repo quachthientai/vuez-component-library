@@ -45,7 +45,7 @@
                     </ul>
             </template>
         </Dropdown>
-        
+        <Dropdown dropDownClass="dropdown btn-lg dropdown-outline-info" :itemList="items" split="true" text="dropdown"/>
     </ButtonGroup>
 </template>
 
