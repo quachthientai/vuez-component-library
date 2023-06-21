@@ -6,7 +6,7 @@ $dropdown-menu-width: theme('spacing.96');
 
 @layer base {
    .dropdown {
-      @apply relative
+      @apply relative;
    }
    .dropdown__menu {
       transition: max-height 0.5s, border-width 0.1s;

@@ -21,20 +21,6 @@
          itemList:{
             type:[Object],
             required:false,
-            validator(value){
-               const keyList = ['text', 'routingLink', 'event']
-               for (object in value){
-                  const objectKeys = Object.keys(object)
-                  for (key in objectKeys){
-                     if(!keyList.includes(key)){
-                        console.warn(`Key ${key} is not valid`)
-                     }else{
-                        return true
-                     }
-                  }
-               }
-
-            }
          },
          option:{
             type:String,

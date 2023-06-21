@@ -32,10 +32,20 @@
     <!-- <ButtonGroup option='custom' :item-list="[{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
 ,{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
 ,{dropDownClass:'dropwdown dropdown-secondary', class:'ml-3', text:'dropdown'}]"  ></ButtonGroup> -->
-    <ButtonGroup option="custom" > 
+    <ButtonGroup class="mt-2" option="custom" > 
         <Button btnClass="btn btn-primary"  text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
         <Button btnClass="btn btn-primary"  text="Primary" iconPosition="right" icon="ph:envelope-bold"></Button>
         <Button btnClass="btn btn-outline-warning"  text="Warning" iconPosition="left" icon="ph:envelope-bold"></Button>
+        <Dropdown dropDownClass="dropdown dropdown-primary"  text="dropdown">
+            <template v-slot:dropdown-menu-slot>
+                <ul class="dropdown__menu">
+                    <li class="dropdown__item">assa</li>
+                    <li class="dropdown__item">aaa</li>
+                    <li class="dropdown__item">aaazzz</li>
+                    </ul>
+            </template>
+        </Dropdown>
+        
     </ButtonGroup>
 </template>
 
