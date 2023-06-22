@@ -13,16 +13,16 @@
         
         
     }
+
+    >.dropdown{
+
+        
+        
+    }
+
     > .dropdown .btn{
-        @apply rounded-none;
-
-        &:last-child{
-            @apply rounded-r-sm;
-        }
-
-        &:first-child{
-            @apply rounded-l-sm;
-        }
+        
+       @apply rounded-none;
 
         &:focus{
             @apply ring-0 ring-offset-0;
@@ -31,16 +31,28 @@
 
     > :first-child{
         @apply rounded-l-sm ;
+
+
+        .btn{
+            @apply rounded-l-sm rounded-r-none;
+
+        }
+
     }
 
     > :last-child{
         @apply rounded-r-sm;
+
+        .btn{
+            @apply rounded-r-sm rounded-l-none;
+
+        }
     }
 }
 
 @layer base{
     .btnGroup{
-        @apply  inline-flex   rounded-[2px]  text-white overflow-hidden;
+        @apply  inline-flex   rounded-[2px]  ;
         
         > button{
             @apply  h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
