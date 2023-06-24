@@ -10,12 +10,12 @@
       },
       data() {
          return {
-            activeClass: 'active',
-            dismissDuration: this.duration
+            // activeClass: 'active',
+            dismissDuration: 0,
             // isShow: this.isShow,
          }
       },
-      emits: ['update:isShow'],
+      emits: ['close-toast'],
       props: {
          isShow: {
             type: Boolean,
@@ -39,14 +39,46 @@
             default: 0
          }
       },
-      watch: {
+      watch:{
          isShow(v) {
-            if(v) {
+            if(v && this.dismissDuration > 0) {
                setTimeout(() => {
-                  this.$emit('update:isShow', !this.isShow)
-               }, this.duration)
+                  this.$emit('close-toast', false)
+               }, this.dismissDuration)
             }
-         }
+         },
+         // dismissDuration(v) {
+         //    console.log('heeee')
+         //    if(v > 0) {
+         //       setTimeout(() => {
+         //          this.$emit('close-toast', false)
+         //       }, v)
+         //    }
+         // },
+         
+         // duration: {
+         //    immediate: true,
+         //    handle(newVal, oldVal) {
+         //       if(newVal > 0) {
+         //          console.log('asadasdasdsasdasdsa')
+         //       }
+         //    }
+         // }
+         // duration(newVal, oldVal) {
+         //    if(newVal > 0) {
+         //       console.log('im duration')
+         //       // setTimeout(() => {
+         //       //    this.$emit('close-toast', false)
+         //       // }, this.duration)
+         //    }
+         // }
+      },
+      // unmounted() {
+      //    this.dismissDuration = 0;
+      // },
+      beforeMount() {
+         this.dismissDuration = this.duration
+         console.log(this.dismissDuration)
       },
       computed: {
          computedIcon() {
@@ -70,7 +102,7 @@
 
 <template >
    <Transition name="bounce">
-      <div :class="[toastClass, position]" v-show="isShow" >
+      <div :class="[toastClass, position]" @click="$emit('close-toast',true)" v-show="isShow" >
          <div class="toast__icon ms-2">
             <Icon :icon="computedIcon"/>
          </div>
@@ -83,7 +115,7 @@
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" @click="$emit('update:isShow',isShow)" appendIcon="iconamoon:close-bold"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" @click="$emit('close-toast',false)" appendIcon="iconamoon:close-bold"></Button>
          </div>
          <div class="toast__progress progress active"></div>
       </div>

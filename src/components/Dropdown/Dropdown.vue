@@ -139,6 +139,7 @@
                         <Icon v-if="item.appendIcon" :icon="item.appendIcon" class="inline-flex"/>
                      </li>
                   </router-link>
+                  
                   <li v-else class="dropdown__item">
                      {{ item.title }}
                   </li>
