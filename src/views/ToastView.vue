@@ -1,11 +1,11 @@
 <script>
-   import Toast from '@/components/Toast/Toast.vue';
+   // import Toast from '@/components/Toast/Toast.vue';
    import Button from '@/components/Button/Button.vue';
 
    export default {
       name: 'ToastView',
       components:{
-        Toast,
+      //   Toast,
         Button
       },
       data() {
@@ -14,17 +14,7 @@
          }
       },
       methods: {
-         handleToggle() {
-            this.isShow = !this.isShow
-            
-         },
-         test() {
-            
-            this.isShow=false
-         }
-         // handleToggle2() {
-         //    this.isShow2 = !this.isShow2
-         // }
+         
       }
    }
 </script>
@@ -32,9 +22,7 @@
 <template>
    <div>This is toast view</div>
 
-   <Button class="ms-3" btnClass="btn btn-danger" @click="handleToggle" text="show toast"/>
-
-   <Toast toastClass="toast toast-danger" @close-toast="test" :isShow="isShow" :duration="2000" position="top-right" /> 
+   
 
    
 

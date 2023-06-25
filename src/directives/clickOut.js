@@ -1,8 +1,5 @@
-import Vue from 'vue'
-
-export const clickOut = Vue.directive('click-outside', {
+export const clickOut = {
    mounted(el, binding) {
-      
       el.handleClick = function(e) {
          if(!(el === e.target || el.contains(e.target))) {
             binding.value(e)
@@ -13,6 +10,5 @@ export const clickOut = Vue.directive('click-outside', {
    unmounted(el){
       document.body.removeEventListener('click', el.handleClick)
    }
-})
+}
 
-export default clickOut;

@@ -1,6 +1,6 @@
 <script>
    import { Icon } from '@iconify/vue';
-   import Button from '../Button/Button.vue';
+   import Button from '../../components/Button/Button.vue';
 
    export default {
       name: 'Toast',
@@ -10,12 +10,19 @@
       },
       data() {
          return {
+            isVisible: false,
+            title: 'Info',
+            text: 'Hello from toast!!'
             // activeClass: 'active',
-            dismissDuration: 0,
+            // dismissDuration: 0,
             // isShow: this.isShow,
          }
       },
-      emits: ['close-toast'],
+      methods: {
+         hideToast() {
+            this.isVisible = false;
+         }
+      },
       props: {
          isShow: {
             type: Boolean,
@@ -39,47 +46,6 @@
             default: 0
          }
       },
-      watch:{
-         isShow(v) {
-            if(v && this.dismissDuration > 0) {
-               setTimeout(() => {
-                  this.$emit('close-toast', false)
-               }, this.dismissDuration)
-            }
-         },
-         // dismissDuration(v) {
-         //    console.log('heeee')
-         //    if(v > 0) {
-         //       setTimeout(() => {
-         //          this.$emit('close-toast', false)
-         //       }, v)
-         //    }
-         // },
-         
-         // duration: {
-         //    immediate: true,
-         //    handle(newVal, oldVal) {
-         //       if(newVal > 0) {
-         //          console.log('asadasdasdsasdasdsa')
-         //       }
-         //    }
-         // }
-         // duration(newVal, oldVal) {
-         //    if(newVal > 0) {
-         //       console.log('im duration')
-         //       // setTimeout(() => {
-         //       //    this.$emit('close-toast', false)
-         //       // }, this.duration)
-         //    }
-         // }
-      },
-      // unmounted() {
-      //    this.dismissDuration = 0;
-      // },
-      beforeMount() {
-         this.dismissDuration = this.duration
-         console.log(this.dismissDuration)
-      },
       computed: {
          computedIcon() {
             switch(true) {
@@ -92,30 +58,27 @@
                case this.toastClass.includes('toast-warning') :
                   return 'material-symbols:warning-outline-rounded' 
             }
-         },
-         // computedProgressAnimate() {
-         //    return `before:animate-[progress_${this.duration}s_linear_forwards]`
-         // }
+         }
       }
    }
 </script>
 
 <template >
    <Transition name="bounce">
-      <div :class="[toastClass, position]" @click="$emit('close-toast',true)" v-show="isShow" >
+      <div :class="[toastClass, position]" v-show="isVisible" >
          <div class="toast__icon ms-2">
-            <Icon :icon="computedIcon"/>
+            <Icon icon="material-symbols:info-outline"/>
          </div>
          <div class="toast__body">
             <strong class="toast__title">
                {{ this.title }}
             </strong>
             <small class="toast__text">
-               This is a information toast
+               {{ this.text }}
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" @click="$emit('close-toast',false)" appendIcon="iconamoon:close-bold"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="hideToast"></Button>
          </div>
          <div class="toast__progress progress active"></div>
       </div>
