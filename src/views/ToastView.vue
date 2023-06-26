@@ -14,7 +14,10 @@
          }
       },
       methods: {
-         
+         showToast() {
+            const params = 'sss'
+            this.$toast.show(params)
+         }
       }
    }
 </script>
@@ -23,8 +26,9 @@
    <div>This is toast view</div>
 
    
-
+   <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast"/>
    
+   <Toast />
 
    <!-- <Button class="ms-3" btnClass="btn btn-warning" @click="handleToggle2" text="show toast"/>
 

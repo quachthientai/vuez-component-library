@@ -1,6 +1,7 @@
 <script>
    import { Icon } from '@iconify/vue';
    import Button from '../../components/Button/Button.vue';
+   import { ToastPlugin } from '@/plugins/ToastPlugin/index';
 
    export default {
       name: 'Toast',
@@ -21,7 +22,16 @@
       methods: {
          hideToast() {
             this.isVisible = false;
+         },
+         show(params) {
+            console.log(params)
          }
+      },
+      beforeMount() {
+         
+         ToastPlugin.emitter.on('show', (params) => {
+            this.show(params);
+         })
       },
       props: {
          isShow: {
