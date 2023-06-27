@@ -15,8 +15,7 @@
       },
       methods: {
          showToast() {
-            const params = 'sss'
-            this.$toast.show(params)
+            this.$toast.show({title: "asdasdasdsad", text: 'zxczxczxcz'})
          }
       }
    }
@@ -28,7 +27,7 @@
    
    <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast"/>
    
-   <Toast />
+   <toast />
 
    <!-- <Button class="ms-3" btnClass="btn btn-warning" @click="handleToggle2" text="show toast"/>
 

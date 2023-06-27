@@ -1,7 +1,7 @@
 <script>
    import { Icon } from '@iconify/vue';
    import Button from '../../components/Button/Button.vue';
-   import { ToastPlugin } from '@/plugins/ToastPlugin/index';
+   import { eventBus } from '../../utils/eventBus';
 
    export default {
       name: 'Toast',
@@ -14,9 +14,6 @@
             isVisible: false,
             title: 'Info',
             text: 'Hello from toast!!'
-            // activeClass: 'active',
-            // dismissDuration: 0,
-            // isShow: this.isShow,
          }
       },
       methods: {
@@ -24,13 +21,15 @@
             this.isVisible = false;
          },
          show(params) {
-            console.log(params)
+            this.isVisible = true;
+            this.title = params.title;
+            this.text = params.text;
          }
       },
-      beforeMount() {
-         
-         ToastPlugin.emitter.on('show', (params) => {
-            this.show(params);
+      created(){
+         console.log(eventBus)
+         eventBus.on('show', params => {
+            this.show(params)
          })
       },
       props: {
@@ -41,7 +40,7 @@
          toastClass: {
             type: String,
             required: true,
-            default: 'toast toast-info'
+            default: 'toast toast-danger'
          },
          title: {
             type: String,

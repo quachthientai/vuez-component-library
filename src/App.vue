@@ -18,28 +18,11 @@
         const body = document.getElementsByTagName('body')[0];
         body.classList.toggle('dark')
       },
-      showModal() {
-        const params = 'hello'
-        
-        this.$modal.show(params)
-      },
-      alertFunc() {
-        alert('Hello!');
-      }
     }
   }
 </script>
 
 <template>
-  <Button btnClass="btn btn-primary" text="toggle" @click="showModal" />  
-  <my-header>
-    <template #title>
-      This is title
-    </template>
-    <template #author>
-      Tai Quach
-    </template>
-  </my-header>
 
     <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
     

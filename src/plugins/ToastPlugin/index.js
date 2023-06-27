@@ -1,14 +1,19 @@
-import Toast from '@/plugins/ToastPlugin/Toast.vue'
-import { app } from '@/main'
+import Toast from '@/components/Toast/Toast.vue'
+import { eventBus } from '@/utils/eventBus'
+
+
 
 export const ToastPlugin = {
-   install(vue, options) {
+   install(app, options) {
       
-      app.component('toast', Toast)
+      
+      
+      app.component('toast', Toast) 
 
+      //expose 
       app.config.globalProperties.$toast = {
          show(params) {
-            ToastPlugin.emitter.emit('show', params)
+            eventBus.emit('show', params)
          }
       }
       
