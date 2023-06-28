@@ -13,13 +13,6 @@
         
         
     }
-
-    >.dropdown{
-
-        
-        
-    }
-
     > .dropdown .btn{
         
        @apply rounded-none;
@@ -29,22 +22,35 @@
         }
     }
 
+    > .dropdown{
+        .split{
+            > button{
+                &:first-of-type {
+                    @apply rounded-e-none p-[10px] focus:ring-0;
+                 }
+     
+                 &:last-of-type {
+                    @apply  p-[10px] focus:ring-0 rounded-s-none;
+                 }
+            }
+        }
+    }
     > :first-child{
-        @apply rounded-l-sm ;
+        @apply rounded-l-[5px] ;
 
 
         .btn{
-            @apply rounded-l-sm rounded-r-none;
+            @apply rounded-l-[5px] rounded-r-none;
 
         }
 
     }
 
     > :last-child{
-        @apply rounded-r-sm;
+        @apply rounded-r-[5px];
 
         .btn{
-            @apply rounded-r-sm rounded-l-none;
+            @apply rounded-r-[5px] rounded-l-none;
 
         }
     }
@@ -52,10 +58,11 @@
 
 @layer base{
     .btnGroup{
-        @apply  inline-flex   rounded-[2px]  ;
+        @apply  inline-flex   rounded-[5px]  overflow-hidden text-white;
         
         > button{
-            @apply  h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
+            @apply  h-[40px] w-[107px] px-[15px] py-[8px] rounded-none;
+
         }
 
         //Pill
@@ -65,21 +72,8 @@
         }
     }
 
-    //Custom
-    .custom{
-        
-        > .dropdown__menu{
-            @apply rounded-none;
-
-            &:focus{
-                @apply ring-0 ring-offset-0;
-            }
-        }
-
-        
-    } + .btnGroup{
-
-    }
+   
+    
     
 }
 
@@ -88,11 +82,14 @@
         .btnGroup-#{$variant}{
             > button {
                 @apply bg-#{$variant}-500;
+
+                &:hover{
+                    @apply bg-#{$variant}-600;
+                }
             }
 
-            > button:hover {
-                @apply bg-#{$variant}-600;
-            }
+            
+            
         }
     }
 }

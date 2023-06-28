@@ -10,23 +10,37 @@
             Button,
             Dropdown,
             
+        },
+        data(){
+            return{
+                items: [
+               {
+                  title:'to radio',
+                  routerName: 'radio',
+                  appendIcon: 'mingcute:unlock-line',
+                  prependIcon: 'mingcute:unlock-line'
+               },
+               {
+                  title:'to button',
+                  
+               }
+            ]
+            }
         }
     }
-    function hello(){
-        console.log(1)
-    }
+    
 </script>
 
 <template>
 
-    <ButtonGroup option='default' class="btnGroup btnGroup-primary" :item-list="[{text:'text1', event: hello},{text:'text2'},{text:'text3'}]"></ButtonGroup>
-    <ButtonGroup option='default' class="btnGroup btnGroup-info" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
-    <ButtonGroup option='default' class="btnGroup btnGroup-warning" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup btnGroup-primary" :itemList="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup btnGroup-info" :itemList="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup btnGroup-warning" :itemList="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
     <br>
     <!--Pill-->
-    <ButtonGroup option='default' class="btnGroup-pill btnGroup-primary" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
-    <ButtonGroup option='default' class="btnGroup-pill btnGroup-info" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
-    <ButtonGroup option='default' class="btnGroup-pill btnGroup-warning" :item-list="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup-pill btnGroup-primary" :itemList="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup-pill btnGroup-info" :itemList="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
+    <ButtonGroup option='default' class="btnGroup-pill btnGroup-warning" :itemList="[{text:'text1'},{text:'text2'},{text:'text3'}]"></ButtonGroup>
     <br>
     <!--Custom-->
     <!-- <ButtonGroup option='custom' :item-list="[{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}

@@ -8,11 +8,6 @@
       components:{
          Button, Dropdown
       },
-      data(){
-         return{
-
-         }
-      },
       props:{
          btnGroupClass:{
             type: String,
@@ -21,6 +16,27 @@
          itemList:{
             type:[Object],
             required:false,
+            validator(value) {
+               let itemListKey = ["text"]
+               let falseKey = []
+
+               for(const i of value) {
+                  for (const key in i) {
+                     if(itemListKey.indexOf(key) > -1) {
+                        continue;
+                     }
+                     falseKey.push(key); 
+                  }
+               }
+
+               if(falseKey.length > 0) {
+                  falseKey.forEach(key => {
+                     console.warn(`[${key}] is not valid key in itemList!`)
+                  })
+               }
+
+               return true;
+            }
          },
          option:{
             type:String,
@@ -81,10 +97,11 @@
             default: null
          }
    -->
-   <div v-if="option == 'default'" :class="[btnGroupClass] ">
-     <Button>
 
-     </Button>
+   
+
+   <div v-if="option == 'default'" :class="[btnGroupClass] ">
+      <button v-for="item in itemList">{{ item.text }}</button>
    </div>
    <div v-else-if="option == 'custom' " :class="[`btnGroup-${option}`]">
       <slot></slot>
