@@ -1,8 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from '../src/App.vue'
-import { clickOut } from './directives/clickOut'
-
+import { clickOut } from './directives/clickOut';
 import { ToastPlugin } from '@/plugins/ToastPlugin/index.js';
 
 import '@/assets/scss/main.scss'

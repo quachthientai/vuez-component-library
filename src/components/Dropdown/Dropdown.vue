@@ -1,5 +1,6 @@
 <script>
    import Button from '@/components/Button/Button.vue';
+   import { keyValidator } from '@/utils/objectKeyValidator';
    import { Icon } from '@iconify/vue';
 
    export default {
@@ -32,26 +33,26 @@
          itemList: {
             type: [Object],
             validator(value) {
-               
                let itemListKey = ["title", "routerName", "prependIcon", "appendIcon"]
-               let falseKey = []
 
-               for(const i of value) {
-                  for (const key in i) {
-                     if(itemListKey.indexOf(key) > -1) {
-                        continue;
-                     }
-                     falseKey.push(key); 
-                  }
-               }
+               return keyValidator(itemListKey, value, 'array');
+               
+               // for(const i of value) {
+               //    for (const key in i) {
+               //       if(itemListKey.indexOf(key) > -1) {
+               //          continue;
+               //       }
+               //       falseKey.push(key); 
+               //    }
+               // }
 
-               if(falseKey.length > 0) {
-                  falseKey.forEach(key => {
-                     console.warn(`[${key}] is not valid key in itemList!`)
-                  })
-               }
+               // if(falseKey.length > 0) {
+               //    falseKey.forEach(key => {
+               //       console.warn(`[${key}] is not valid key in itemList!`)
+               //    })
+               // }
 
-               return true;
+               // return true;
                
             
             },

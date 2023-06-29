@@ -1,6 +1,8 @@
 <script>
    // import Toast from '@/components/Toast/Toast.vue';
    import Button from '@/components/Button/Button.vue';
+   
+   import { h, render } from 'vue';
 
    export default {
       name: 'ToastView',
@@ -15,8 +17,11 @@
       },
       methods: {
          showToast() {
-            this.$toast.show({title: "asdasdasdsad", text: 'zxczxczxcz'})
+            this.$toast.open();
          }
+      },
+      created() {
+         
       }
    }
 </script>
@@ -26,20 +31,10 @@
 
    
    <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast"/>
+
    
-   <toast />
 
-   <!-- <Button class="ms-3" btnClass="btn btn-warning" @click="handleToggle2" text="show toast"/>
-
-   <Toast toastClass="toast toast-warning" position="bottom-left" v-model:isShow="isShow2"/> -->
-
-   <!-- <Button class="ms-3" btnClass="btn btn-primary" @click="handleToggle2" text="create"/> -->
-   <!-- <Toast toastClass="toast toast-success"/> -->
-   <!-- <Toast toastClass="toast toast-success" class="my-3 m-auto top-0 left-0 right-0"/> -->
-   <!-- <Toast toastClass="toast toast-success" class="my-3 m-auto bottom-0 left-0 right-0"/> -->
-   <!-- <Toast toastClass="toast toast-warning"/>
-   <Toast toastClass="toast toast-danger"/>
-   <Toast toastClass="toast toast-info" :position="top-right" /> -->
+   
    
    
 </template>

@@ -27,33 +27,10 @@
          }
       },
       created(){
-         console.log(eventBus)
-         eventBus.on('show', params => {
-            this.show(params)
-         })
-      },
-      props: {
-         isShow: {
-            type: Boolean,
-            default: false
-         },
-         toastClass: {
-            type: String,
-            required: true,
-            default: 'toast toast-danger'
-         },
-         title: {
-            type: String,
-            default: 'Title'
-         },
-         position: {
-            type: String,
-            default: 'top-right',
-         },
-         duration: {
-            type: Number,
-            default: 0
-         }
+         // console.log(eventBus)
+         // eventBus.on('show', params => {
+         //    this.show(params)
+         // })
       },
       computed: {
          computedIcon() {
