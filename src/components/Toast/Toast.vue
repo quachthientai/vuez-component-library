@@ -11,37 +11,74 @@
       },
       data() {
          return {
-            isVisible: false,
-            title: 'Info',
-            text: 'Hello from toast!!'
+            isVisible: true,
+            container: null,
          }
       },
       methods: {
          hideToast() {
             this.isVisible = false;
          },
-         show(params) {
-            this.isVisible = true;
-            this.title = params.title;
-            this.text = params.text;
+         // show(params) {
+         //    this.isVisible = true;
+         //    this.title = params.title;
+         //    this.text = params.text;
+         // }
+      },
+      mounted() {
+         const shadowParent = this.$refs.toast.parentElement
+
+         this.container.insertAdjacentElement('afterbegin', this.$refs.toast)
+         console.log(this.$refs.toast)
+         console.log(this.container)
+         shadowParent.remove()
+         
+      },
+      beforeMount() {
+         this.container = document.querySelector('.toast-container')
+         if(this.container) return
+         
+         if(!this.container) {
+            this.container = document.createElement('div')
+            this.container.classList.add('toast-container')
+            var body = document.body
+            body.appendChild(this.container)
          }
       },
-      created(){
-         // console.log(eventBus)
-         // eventBus.on('show', params => {
-         //    this.show(params)
-         // })
+      // created(){
+      //    console.log(eventBus)
+      //    eventBus.on('show', params => {
+      //       this.show(params)
+      //    })
+      // },
+      props: {
+         title: {
+            type: String,
+            default: null,
+         },
+         variant: {
+            type: String,
+            default: null,
+         },
+         text: {
+            type: String,
+            default: null
+         },
+         position: {
+            type: String,
+            default: null,
+         }
       },
       computed: {
          computedIcon() {
             switch(true) {
-               case this.toastClass.includes('toast-info') :
+               case this.variant.includes('toast-info') :
                   return 'material-symbols:info-outline'
-               case this.toastClass.includes('toast-success') :
+               case this.variant.includes('toast-success') :
                   return 'material-symbols:check-circle-outline' 
-               case this.toastClass.includes('toast-danger') :
+               case this.variant.includes('toast-danger') :
                   return 'material-symbols:dangerous-outline' 
-               case this.toastClass.includes('toast-warning') :
+               case this.variant.includes('toast-warning') :
                   return 'material-symbols:warning-outline-rounded' 
             }
          }
@@ -51,7 +88,7 @@
 
 <template >
    <Transition name="bounce">
-      <div :class="[toastClass, position]" v-show="isVisible" >
+      <div ref="toast" :class="[variant, position]" class="toast" v-show="isVisible" >
          <div class="toast__icon ms-2">
             <Icon icon="material-symbols:info-outline"/>
          </div>

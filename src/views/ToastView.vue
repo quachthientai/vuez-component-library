@@ -17,7 +17,7 @@
       },
       methods: {
          showToast() {
-            this.$toast.open();
+            this.$toast.show();
          }
       },
       created() {

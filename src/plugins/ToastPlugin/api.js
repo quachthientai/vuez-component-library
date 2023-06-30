@@ -1,8 +1,9 @@
 import Toast from '@/components/Toast/Toast.vue'
+import { createComponent } from '../render'
 
 const defaultOption = {
    title: 'title',
-   variant: 'toast-primary',
+   variant: 'toast-success',
    text: 'text',
    position: 'top-right',
 }
@@ -10,9 +11,9 @@ const defaultOption = {
 export const useToast = {
    show(option) {
       if(!option) {
-         console.log(defaultOption)
+         createComponent(Toast, defaultOption, document.body)
          return
       }
-      console.log(option)
+      createComponent(Toast, option, document.body)
    }
 }

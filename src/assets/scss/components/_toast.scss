@@ -20,7 +20,7 @@ $gravities: top, bottom;
 
 @layer base {
    .toast {
-      @apply drop-shadow-md absolute grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] max-w-full rounded-md p-[10px] m-3 overflow-hidden;
+      @apply drop-shadow-md  grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] max-w-full rounded-md p-[10px] m-3 overflow-hidden;
 
       // transform: translateX(calc(100% + 30px));
       // transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
