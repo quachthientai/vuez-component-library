@@ -139,8 +139,10 @@
       <Dropdown dropDownClass="dropdown btn-lg dropdown-outline-info" :itemList="items" split="true" text="dropdown" class="ml-3" />
    </div>
 
-   
+   <!-- fall back -->
+   <Dropdown dropDownClass="dropdown btn-lg dropdown-outline-info" :itemList="items" split="true" text="dropdown" class="ml-3" />
 
+   <!-- custom -->
    <Dropdown dropDownClass="dropdown dropdown-primary" class="m-3" text="dropdown">
       <template v-slot:dropdown-menu-slot>
          <ul class="dropdown__menu">

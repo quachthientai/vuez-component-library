@@ -17,14 +17,15 @@
       handleClick() {
         const body = document.getElementsByTagName('body')[0];
         body.classList.toggle('dark')
-      }
+      },
     }
   }
 </script>
 
 <template>
-  
+
     <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
+    
       
       <Radio radioClass="radio radio-primary" />
       <Radio radioClass="radio radio-success" />

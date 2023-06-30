@@ -20,7 +20,10 @@
             @apply  h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
         }
 
-        //Pill
+        
+
+        //Pill  
+        
 
         &-pill{
             @apply rounded-full;
@@ -37,6 +40,13 @@
                 @apply ring-0 ring-offset-0;
             }
         }
+        &:first-of-type{
+            @apply rounded-l-lg;
+         }
+   
+         &:last-of-type{
+            @apply rounded-r-lg;
+         }
 
         
     } + .btnGroup{
