@@ -2,6 +2,10 @@
    import { Icon } from '@iconify/vue';
    import Button from '../../components/Button/Button.vue';
    import { eventBus } from '../../utils/eventBus';
+   import { uuid } from 'vue-uuid'
+   
+   import { Transition, render, h } from 'vue';
+
 
    export default {
       name: 'Toast',
@@ -11,46 +15,68 @@
       },
       data() {
          return {
-            isVisible: true,
+            isVisible: false,
             container: null,
+            transition: null,
+            // id: uuid.v1(),
          }
       },
       methods: {
-         hideToast() {
+         
+         dismiss() {
             this.isVisible = false;
+            const el = this.$refs.toast
+            
+            setTimeout(() => {
+               el.remove()
+            },1000)
          },
-         // show(params) {
-         //    this.isVisible = true;
-         //    this.title = params.title;
-         //    this.text = params.text;
-         // }
+         initContainer() {
+            this.container = document.querySelector('.toast-container')
+            if(this.container) return
+            
+            this.container = h('div', {
+               class: 'toast-container'
+            })
+            
+            render(this.container, document.body)
+            
+         }
+         
       },
       mounted() {
-         const shadowParent = this.$refs.toast.parentElement
+         
+         
+         eventBus.on('dismiss', this.dismiss);
 
-         this.container.insertAdjacentElement('afterbegin', this.$refs.toast)
-         console.log(this.$refs.toast)
-         console.log(this.container)
+         // autoAnimate(this.container)
+         const shadowParent = this.$refs.toast.parentElement
+         // shadowParent.insertAdjacentElement('afterbegin', this.$refs.toast)
+
+         
+         
+
+         
+
+         // this.container.insertAdjacentElement('afterbegin', this.$refs.toast)
+         this.container = document.querySelector('.toast-container')
+         this.container.append(this.$refs.toast)
+         this.isVisible = true;
+         
+         
+         
          shadowParent.remove()
          
       },
       beforeMount() {
-         this.container = document.querySelector('.toast-container')
-         if(this.container) return
+         this.initContainer()
+
          
-         if(!this.container) {
-            this.container = document.createElement('div')
-            this.container.classList.add('toast-container')
-            var body = document.body
-            body.appendChild(this.container)
-         }
+         
+         
       },
-      // created(){
-      //    console.log(eventBus)
-      //    eventBus.on('show', params => {
-      //       this.show(params)
-      //    })
-      // },
+      
+      
       props: {
          title: {
             type: String,
@@ -87,7 +113,7 @@
 </script>
 
 <template >
-   <Transition name="bounce">
+   <Transition name="fade">
       <div ref="toast" :class="[variant, position]" class="toast" v-show="isVisible" >
          <div class="toast__icon ms-2">
             <Icon icon="material-symbols:info-outline"/>
@@ -101,7 +127,7 @@
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="hideToast"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="dismiss"></Button>
          </div>
          <div class="toast__progress progress active"></div>
       </div>
@@ -149,7 +175,9 @@
    //    }
    // }
    .bounce-enter-active {
-     animation: bounce-in 0.5s;
+     animation: bounce-in .5s;
+     
+     
    }
    .bounce-leave-active {
      animation: bounce-in 0.3s reverse;
@@ -157,12 +185,36 @@
    @keyframes bounce-in {
      0% {
        transform: scale(0);
+       
      }
      50% {
        transform: scale(1.1);
+       
      }
      100% {
        transform: scale(1);
+       
      }
    }
+
+   /* 1. declare transition */
+.fade-enter-active{
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-leave-active {
+   transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* 2. declare enter from and leave to state */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+
+   
 </style>

@@ -1,5 +1,6 @@
 import Toast from '@/components/Toast/Toast.vue'
 import { createComponent } from '../render'
+import { eventBus } from '@/utils/eventBus'
 
 const defaultOption = {
    title: 'title',
@@ -10,10 +11,24 @@ const defaultOption = {
 
 export const useToast = {
    show(option) {
-      if(!option) {
-         createComponent(Toast, defaultOption, document.body)
-         return
-      }
-      createComponent(Toast, option, document.body)
-   }
+      
+      const vOption = option ? option : defaultOption;
+      eventBus.emit('show-toast', vOption);
+      return createComponent(Toast, vOption, document.body);
+   },
+   clear() {
+      eventBus.emit('dismiss');
+   },
+   success() {
+
+   },
+   warning() {
+
+   },
+   error() {
+
+   },
+   info() {
+
+   },
 }

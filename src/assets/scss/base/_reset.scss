@@ -5,12 +5,16 @@
 
 
 @layer base {
-   html{
+   body{
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      border: blue solid 1px;
+      position: relative;
       @apply bg-light dark:text-light dark:bg-dark;
    }
+
+   
 
    .test {
       @apply bg-light dark:text-light dark:bg-dark;

@@ -18,9 +18,44 @@ $gravities: top, bottom;
 
 
 
+.toast-container {
+   border: red 1px solid;
+   position: absolute;
+   width: 370px;
+   margin:auto;
+
+   // //top
+   // top: 0;
+   // left: 0;
+   // right: 0;
+
+   // //top-right
+   // top: 0;
+   // right: 0;
+
+   // //top-left
+   // top: 0;
+   // left: 0;
+
+   // //bottom
+   // bottom: 0;
+   // left: 0;
+   // right: 0;
+  
+   // //bottom-right
+   // bottom: 0;
+   // right: 0;
+   
+   //bottom-left
+   bottom: 0;
+   left: 0;
+}
+
+
 @layer base {
    .toast {
-      @apply drop-shadow-md  grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] max-w-full rounded-md p-[10px] m-3 overflow-hidden;
+      margin: 10px auto;
+      @apply drop-shadow-md grid grid-cols-[1.3fr_6fr_0.5fr] w-full rounded-md p-[10px] overflow-hidden;
 
       // transform: translateX(calc(100% + 30px));
       // transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);

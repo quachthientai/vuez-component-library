@@ -1,3 +1,5 @@
+// {key:value}
+// [{key:value}, {key:value}]
 export const keyValidator = (keyList, value, type) => {
    if(type === 'array') {
       for(const i of value) {
