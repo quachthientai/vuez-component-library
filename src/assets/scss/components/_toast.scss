@@ -4,64 +4,25 @@
 @tailwind components;
 @tailwind utilities;
 
-$gravities: top, bottom;
-// $y-position-map: (
-//    "top": (
-//       "left": top-left,
-//       "right": top-right,
-//    ),
-//    "bottom": (
-//       "left": left,
-//       "right": right,
-//    )
-// );
+@mixin toast-container {
+   @apply flex fixed pointer-events-none flex-col right-0 left-0;
+}
 
 
+.toast-top-container {
+   @include toast-container;
+   @apply top-0;
+}
 
-.toast-container {
-   border: red 1px solid;
-   position: fixed;
-   pointer-events: none;
-   display: flex;
-   flex-direction: column;
-   margin:auto;
-
-   // top
-   bottom: 0;
-   left: 0;
-   right: 0;
-
-   // //top-right
-   // top: 0;
-   // right: 0;
-
-   // //top-left
-   // top: 0;
-   // left: 0;
-
-   // //bottom
-   // bottom: 0;
-   // left: 0;
-   // right: 0;
-  
-   // //bottom-right
-   // bottom: 0;
-   // right: 0;
-   
-   // //bottom-left
-   // bottom: 0;
-   // left: 0;
+.toast-bottom-container {
+   @include toast-container;
+   @apply bottom-0;
 }
 
 
 @layer base {
    .toast {
-      margin: 10px;
-      align-self: flex-end;
-      pointer-events: auto;
-      top: 0;
-      left: 0;
-      @apply drop-shadow-md grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] rounded-md p-[10px] overflow-hidden;
+      @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] rounded-md p-[10px] overflow-hidden;
 
       // transform: translateX(calc(100% + 30px));
       // transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
@@ -77,21 +38,6 @@ $gravities: top, bottom;
          @apply self-center flex flex-col;
       }
    }
-   
-   // @debug map.get($y-position-map,"top","right");
-   @each $gravity in $gravities {
-      .#{$gravity}-left {
-         @apply left-0 #{$gravity}-0;
-      }
-
-      .#{$gravity}-right {
-         @apply right-0 #{$gravity}-0;
-      }
-   }
-   // .top-right {
-   //    @apply top-0 right-0;
-   // }
-      
 }
 
    

@@ -41,17 +41,9 @@
       },
       methods: {
          showToast() {
-            const shadowParent = this.$refs.toast.parentElement
-
-            console.log(this.topContainer)
-            // this.container = document.querySelector('.toast-container')
-            
-            // this.container.insertAdjacentElement('afterbegin', this.$refs.toast)
-            
             this.isVisible = true;
-            
-            
-            
+            const shadowParent = this.$refs.toast.parentElement
+            this.computedToastParent.insertAdjacentElement('afterbegin', this.$refs.toast)
             shadowParent.remove()
          },
          dismissToast() {
@@ -69,24 +61,19 @@
 
             if(this.topContainer && this.bottomContainer) return
 
+            
             if(!this.topContainer) {
-               this.topContainer = h('div', {
-                  class: 'toast-top-container'
-               })
+               this.topContainer = document.createElement('div')
+               this.topContainer.classList.add('toast-top-container')
             }
 
             if(!this.bottomContainer) {
-               this.bottomContainer = h('div', {
-                  class: 'toast-bottom-container'
-               })
+               this.bottomContainer = document.createElement('div')
+               this.bottomContainer.classList.add('toast-bottom-container')
             }
 
-            const wrapper = h('div', {
-               class: 'toast-container'
-            }, this.topContainer, this.bottomContainer)
-
-            render(wrapper, document.body)
-            
+            document.body.appendChild(this.topContainer)
+            document.body.appendChild(this.bottomContainer)
             
          }
          
@@ -99,6 +86,9 @@
          this.setupContainer();
       },
       computed: {
+         computedToastParent() {
+            return this.position.includes('top') ? this.topContainer : this.bottomContainer
+         },
          computedIcon() {
             switch(true) {
                case this.variant.includes('toast-info') :

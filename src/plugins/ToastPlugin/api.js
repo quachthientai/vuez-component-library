@@ -6,12 +6,11 @@ const defaultOption = {
    title: 'title',
    variant: 'toast-success',
    text: 'text',
-   position: 'top-right',
+   position: 'bottom-right',
 }
 
 export const useToast = {
    show(option) {
-      
       const vOption = option ? option : defaultOption;
       eventBus.emit('show-toast', vOption);
       return createComponent(Toast, vOption, document.body);
