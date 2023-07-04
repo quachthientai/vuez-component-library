@@ -16,67 +16,11 @@
       data() {
          return {
             isVisible: false,
-            container: null,
-            transition: null,
-            // id: uuid.v1(),
+            topContainer: null,
+            bottomContainer: null,
+            shadowContainer: null,
          }
       },
-      methods: {
-         
-         dismiss() {
-            this.isVisible = false;
-            const el = this.$refs.toast
-            
-            setTimeout(() => {
-               el.remove()
-            },1000)
-         },
-         initContainer() {
-            this.container = document.querySelector('.toast-container')
-            if(this.container) return
-            
-            this.container = h('div', {
-               class: 'toast-container'
-            })
-            
-            render(this.container, document.body)
-            
-         }
-         
-      },
-      mounted() {
-         
-         
-         eventBus.on('dismiss', this.dismiss);
-
-         // autoAnimate(this.container)
-         const shadowParent = this.$refs.toast.parentElement
-         // shadowParent.insertAdjacentElement('afterbegin', this.$refs.toast)
-
-         
-         
-
-         
-
-         // this.container.insertAdjacentElement('afterbegin', this.$refs.toast)
-         this.container = document.querySelector('.toast-container')
-         this.container.append(this.$refs.toast)
-         this.isVisible = true;
-         
-         
-         
-         shadowParent.remove()
-         
-      },
-      beforeMount() {
-         this.initContainer()
-
-         
-         
-         
-      },
-      
-      
       props: {
          title: {
             type: String,
@@ -94,6 +38,65 @@
             type: String,
             default: null,
          }
+      },
+      methods: {
+         showToast() {
+            const shadowParent = this.$refs.toast.parentElement
+
+            console.log(this.topContainer)
+            // this.container = document.querySelector('.toast-container')
+            
+            // this.container.insertAdjacentElement('afterbegin', this.$refs.toast)
+            
+            this.isVisible = true;
+            
+            
+            
+            shadowParent.remove()
+         },
+         dismissToast() {
+            this.isVisible = false;
+            const el = this.$refs.toast
+            
+            setTimeout(() => {
+               el.remove()
+            },1000)
+         },
+         setupContainer() {
+            
+            this.topContainer = document.querySelector('.toast-top-container')
+            this.bottomContainer = document.querySelector('.toast-bottom-container')
+
+            if(this.topContainer && this.bottomContainer) return
+
+            if(!this.topContainer) {
+               this.topContainer = h('div', {
+                  class: 'toast-top-container'
+               })
+            }
+
+            if(!this.bottomContainer) {
+               this.bottomContainer = h('div', {
+                  class: 'toast-bottom-container'
+               })
+            }
+
+            const wrapper = h('div', {
+               class: 'toast-container'
+            }, this.topContainer, this.bottomContainer)
+
+            render(wrapper, document.body)
+            
+            
+         }
+         
+      },
+      mounted() {
+         this.showToast()
+         eventBus.on('dismiss', this.dismissToast);
+      },
+      beforeMount() {
+         this.setupContainer();
       },
       computed: {
          computedIcon() {
@@ -127,7 +130,7 @@
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="dismiss"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="dismissToast"></Button>
          </div>
          <div class="toast__progress progress active"></div>
       </div>
@@ -144,16 +147,6 @@
       bottom: 0;
    }
 
-   // .toast {
-      
-   //    transform: translateX(calc(100% + 30px));
-   //    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
-   // }
-
-   // .toast.active {
-   //    transform: translateX(0%);
-   // }
-
    .toast .progress:before{
       position: absolute;
       width: 100%;
@@ -164,57 +157,21 @@
       @apply bg-red-500 rounded;
    }
    .progress.active:before{
-      
-
       @apply animate-[progress_2s_linear_forwards];
    }
 
-   // @keyframes progress {
-   //    100%{
-   //       right: 100%;
-   //    }
-   // }
-   .bounce-enter-active {
-     animation: bounce-in .5s;
-     
-     
-   }
-   .bounce-leave-active {
-     animation: bounce-in 0.3s reverse;
-   }
-   @keyframes bounce-in {
-     0% {
-       transform: scale(0);
-       
-     }
-     50% {
-       transform: scale(1.1);
-       
-     }
-     100% {
-       transform: scale(1);
-       
-     }
+   .fade-enter-active{
+      transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
    }
 
-   /* 1. declare transition */
-.fade-enter-active{
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-}
+   .fade-leave-active {
+      transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+   }
 
-.fade-leave-active {
-   transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
-}
+   .fade-enter-from,
+   .fade-leave-to {
+      opacity: 0;
+      transform: translateY(-30px);
+   }
 
-/* 2. declare enter from and leave to state */
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-/* 3. ensure leaving items are taken out of layout flow so that moving
-      animations can be calculated correctly. */
-
-   
 </style>

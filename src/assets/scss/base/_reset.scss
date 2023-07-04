@@ -8,13 +8,17 @@
    body{
       margin: 0;
       padding: 0;
+      z-index: 0;
       box-sizing: border-box;
+      pointer-events: all;
       border: blue solid 1px;
       position: relative;
       @apply bg-light dark:text-light dark:bg-dark;
    }
 
-   
+   html {
+      pointer-events: all;
+   }
 
    .test {
       @apply bg-light dark:text-light dark:bg-dark;
