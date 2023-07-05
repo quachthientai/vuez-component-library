@@ -89,6 +89,16 @@
          computedToastParent() {
             return this.position.includes('top') ? this.topContainer : this.bottomContainer
          },
+         computedPosition() {
+            switch(true) {
+               case this.position.includes('right') :
+                  return 'self-end'
+               case this.position.includes('left') :
+                  return 'self-start'
+               default :
+                  return 'self-center'
+            }
+         },
          computedIcon() {
             switch(true) {
                case this.variant.includes('toast-info') :
@@ -107,7 +117,7 @@
 
 <template >
    <Transition name="fade">
-      <div ref="toast" :class="[variant, position]" class="toast" v-show="isVisible" >
+      <div ref="toast" :class="[variant, computedPosition]" class="toast" v-show="isVisible" >
          <div class="toast__icon ms-2">
             <Icon icon="material-symbols:info-outline"/>
          </div>
@@ -122,7 +132,7 @@
          <div class="toast__dismiss">
             <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="dismissToast"></Button>
          </div>
-         <div class="toast__progress progress active"></div>
+         <div ref="progress" class="toast__progress progress active"></div>
       </div>
    </Transition>
 </template>
@@ -161,7 +171,7 @@
    .fade-enter-from,
    .fade-leave-to {
       opacity: 0;
-      transform: translateY(-30px);
+      transform: translateY(30px);
    }
 
 </style>

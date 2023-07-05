@@ -6,7 +6,7 @@ const defaultOption = {
    title: 'title',
    variant: 'toast-success',
    text: 'text',
-   position: 'bottom-right',
+   position: 'bottom-middle',
 }
 
 export const useToast = {
