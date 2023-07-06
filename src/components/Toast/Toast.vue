@@ -110,68 +110,42 @@
                case this.variant.includes('toast-warning') :
                   return 'material-symbols:warning-outline-rounded' 
             }
+         },
+         computedTransition() {
+            return this.position.includes('top') ? 'fade-top' : 'fade-bottom'
          }
       }
    }
 </script>
 
 <template >
-   <Transition name="fade">
+   <Transition :name="computedTransition">
       <div ref="toast" :class="[variant, computedPosition]" class="toast" v-show="isVisible" >
          <div class="toast__icon ms-2">
-            <Icon icon="material-symbols:info-outline"/>
+            <Icon :icon="computedIcon"/>
          </div>
          <div class="toast__body">
-            <strong class="toast__title">
+            <strong class="toast__body-title">
                {{ this.title }}
             </strong>
-            <small class="toast__text">
+            <small class="toast__body-text">
                {{ this.text }}
             </small>
          </div>
          <div class="toast__dismiss">
             <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="dismissToast"></Button>
          </div>
-         <div ref="progress" class="toast__progress progress active"></div>
+         <div ref="progress" class="toast__progress active"></div>
       </div>
    </Transition>
 </template>
 
 <style lang='scss' scoped>
-   .progress {
-      @apply bg-red-200 rounded;
-      position: absolute;
-      width:100%;
-      height: 4px;
-      left: 0;
-      bottom: 0;
-   }
-
-   .toast .progress:before{
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      bottom: 0;
-      right: 0px;
-      content: '';
-      @apply bg-red-500 rounded;
-   }
-   .progress.active:before{
+   
+   .toast__progress.active:before{
       @apply animate-[progress_2s_linear_forwards];
    }
 
-   .fade-enter-active{
-      transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-   }
-
-   .fade-leave-active {
-      transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
-   }
-
-   .fade-enter-from,
-   .fade-leave-to {
-      opacity: 0;
-      transform: translateY(30px);
-   }
+   
 
 </style>

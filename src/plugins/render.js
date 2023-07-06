@@ -1,5 +1,4 @@
-import { TransitionGroup, render, h } from 'vue'
-import Toast from '@/components/Toast/Toast.vue'
+import { render, h } from 'vue'
 
 export const createComponent = (component, option, root) => {
    var container = document.createElement('div');

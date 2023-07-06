@@ -1,4 +1,5 @@
-@use '../utilities/variables';
+@use '../../utilities/variables';
+@use '../Toast/transition';
 @use "sass:map";
 @tailwind base;
 @tailwind components;
@@ -24,18 +25,21 @@
    .toast {
       @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] rounded-md p-[10px] overflow-hidden;
 
-      // transform: translateX(calc(100% + 30px));
-      // transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
-
-      // &.active {
-      //    transform: translateX(0%);
-      // }
-      .toast__icon {
+      &__icon {
          @apply text-[32px] self-center;
       }
 
-      .toast__body {
+      &__body {
          @apply self-center flex flex-col;
+      }
+
+      &__progress {
+         @apply absolute w-full h-[4px] left-0 bottom-0 ;
+
+         &:before {
+            @apply absolute w-full h-full bottom-0 right-0 content-[''];
+            
+         }
       }
    }
 }
@@ -50,8 +54,15 @@
          > div {
             @apply text-#{$variant}-600;
          }
-      }
-   }
 
-   
+         > .toast__progress {
+            @apply rounded bg-#{$variant}-300;
+
+            &:before {
+               @apply bg-#{$variant}-600 rounded;
+            }
+         }
+      }
+      
+   }
 }

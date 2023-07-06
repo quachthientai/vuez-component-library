@@ -1,0 +1,21 @@
+.fade-top-enter-active,
+.fade-bottom-enter-active {
+   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-top-leave-active,
+.fade-bottom-leave-active {
+   transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-top-enter-from,
+.fade-top-leave-to {
+   opacity: 0;
+   transform: translateY(-30px);
+}
+
+.fade-bottom-enter-from,
+.fade-bottom-leave-to {
+   opacity: 0;
+   transform: translateY(30px);
+}
