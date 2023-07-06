@@ -18,7 +18,6 @@
             isVisible: false,
             topContainer: null,
             bottomContainer: null,
-            shadowContainer: null,
          }
       },
       props: {
@@ -37,22 +36,40 @@
          position: {
             type: String,
             default: null,
+         },
+         onClickDismiss: {
+            type: Boolean,
+            default: true
+         },
+         timeOut: {
+            type: Number,
+            default: 2000
          }
+         
       },
       methods: {
          showToast() {
             this.isVisible = true;
-            const shadowParent = this.$refs.toast.parentElement
+            const shadowContainer = this.$refs.toast.parentElement
             this.computedToastParent.insertAdjacentElement('afterbegin', this.$refs.toast)
-            shadowParent.remove()
+            shadowContainer.remove()
          },
          dismissToast() {
-            this.isVisible = false;
             const el = this.$refs.toast
-            
+            this.isVisible = false;
+
             setTimeout(() => {
                el.remove()
             },1000)
+            
+         },
+         startDismissTimeout() {
+            const progress = this.$refs.progress
+            this.showToast()
+            
+            setTimeout(() => {
+               this.dismissToast()
+            },this.timeOut)
          },
          setupContainer() {
             
@@ -79,11 +96,18 @@
          
       },
       mounted() {
-         this.showToast()
          eventBus.on('dismiss', this.dismissToast);
+
+         if(this.timeOut > 0) return this.startDismissTimeout()
+         
+         this.showToast()
+         
       },
       beforeMount() {
          this.setupContainer();
+      },
+      beforeUnmount() {
+         eventBus.off('dismiss', this.dismissToast);
       },
       computed: {
          computedToastParent() {
@@ -120,7 +144,11 @@
 
 <template >
    <Transition :name="computedTransition">
-      <div ref="toast" :class="[variant, computedPosition]" class="toast" v-show="isVisible" >
+      <div ref="toast" 
+         :class="[variant, computedPosition]" 
+         v-on="{ click: onClickDismiss ? this.dismissToast : null}" 
+         class="toast" v-show="isVisible" 
+      >
          <div class="toast__icon ms-2">
             <Icon :icon="computedIcon"/>
          </div>
@@ -133,17 +161,20 @@
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="dismissToast"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" 
+               appendIcon="iconamoon:close-bold" 
+               @click="dismissToast" 
+            />
          </div>
-         <div ref="progress" class="toast__progress active"></div>
+         <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
       </div>
    </Transition>
 </template>
 
 <style lang='scss' scoped>
    
-   .toast__progress.active:before{
-      @apply animate-[progress_2s_linear_forwards];
+   .toast__progress:before{
+      @apply animate-[progress_2000ms_linear_forwards];
    }
 
    
