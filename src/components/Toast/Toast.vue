@@ -66,19 +66,24 @@
             const el = this.$refs.toast
             
             this.isVisible = false;
-            const timer = new Timer(1000, el.remove())
-            // timer.start()
-            // setTimeout(() => {
-            //    el.remove()
-            // },1000)
             
+            // this.timer = new Timer(1000, this.removeElement(el))
+            // timer.start()
+            setTimeout(() => {
+               el.remove()
+            },1000)
+            
+         },
+         removeElement(el){
+            el.remove()
          },
          startDismissTimeout() {
             this.showToast()
-
-            setTimeout(() => {
-               this.dismissToast()
-            },this.timeOut)
+            
+            const timer = new Timer(this.timeOut, this.dismissToast)
+            // setTimeout(() => {
+            //    this.dismissToast()
+            // },this.timeOut)
          },
          setupContainer() {
             
