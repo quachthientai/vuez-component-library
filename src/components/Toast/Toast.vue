@@ -2,7 +2,7 @@
    import { Icon } from '@iconify/vue';
    import Button from '../../components/Button/Button.vue';
    import { eventBus } from '../../utils/eventBus';
-   import { uuid } from 'vue-uuid'
+   import { Timer } from '../../plugins/ToastPlugin/timer'
    
    import { Transition, render, h } from 'vue';
 
@@ -18,6 +18,13 @@
             isVisible: false,
             topContainer: null,
             bottomContainer: null,
+
+            progressStyle: {
+               animationName: 'progress',
+               animationDuration: `${this.timeOut}ms`,
+               animationFillMode: 'linear',
+               animationFillMode: 'forwards'
+            }
          }
       },
       props: {
@@ -49,6 +56,7 @@
       },
       methods: {
          showToast() {
+            
             this.isVisible = true;
             const shadowContainer = this.$refs.toast.parentElement
             this.computedToastParent.insertAdjacentElement('afterbegin', this.$refs.toast)
@@ -56,17 +64,18 @@
          },
          dismissToast() {
             const el = this.$refs.toast
+            
             this.isVisible = false;
-
-            setTimeout(() => {
-               el.remove()
-            },1000)
+            const timer = new Timer(1000, el.remove())
+            // timer.start()
+            // setTimeout(() => {
+            //    el.remove()
+            // },1000)
             
          },
          startDismissTimeout() {
-            const progress = this.$refs.progress
             this.showToast()
-            
+
             setTimeout(() => {
                this.dismissToast()
             },this.timeOut)
@@ -166,16 +175,17 @@
                @click="dismissToast" 
             />
          </div>
-         <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
+         <div ref="progress" v-if="this.timeOut > 0" :style="progressStyle" class="toast__progress"></div>
       </div>
    </Transition>
 </template>
 
 <style lang='scss' scoped>
    
-   .toast__progress:before{
-      @apply animate-[progress_2000ms_linear_forwards];
-   }
+   // .toast__progress:before{
+   //    @apply animate-[progress_2000ms_linear_forwards];
+   //    // before:animate-[progress_2000ms_linear_forwards]
+   // }
 
    
 

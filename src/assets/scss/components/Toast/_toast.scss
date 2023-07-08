@@ -34,12 +34,8 @@
       }
 
       &__progress {
-         @apply absolute w-full h-[4px] left-0 bottom-0 ;
-
-         &:before {
-            @apply absolute w-full h-full bottom-0 right-0 content-[''];
-            
-         }
+         @apply absolute h-[4px] right-0 left-0 bottom-0 ;
+         
       }
    }
 }
@@ -56,13 +52,13 @@
          }
 
          > .toast__progress {
-            @apply rounded bg-#{$variant}-300;
-
-            &:before {
-               @apply bg-#{$variant}-600 rounded;
-            }
+            @apply rounded bg-#{$variant}-600;
          }
       }
+      
+   }
+
+   @keyframes progress {
       
    }
 }
