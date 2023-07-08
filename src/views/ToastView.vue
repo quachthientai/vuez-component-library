@@ -17,7 +17,10 @@
       },
       methods: {
          showToast() {
-            this.$toast.open();
+            this.$toast.show();
+         },
+         clearToast() {
+            this.$toast.clear();
          }
       },
       created() {
@@ -32,8 +35,7 @@
    
    <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast"/>
 
-   
-
+   <Button class="mt-3 ms-3" btnClass="btn btn-danger" @click="clearToast" text="clear toast"/>
    
    
    

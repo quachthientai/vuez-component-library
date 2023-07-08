@@ -16,7 +16,7 @@
       },
       props: {
          // [Object] - title, routerName, icon
-         //2 options: 1 - pass itemList as array of objects, 2 - pass itemList as slots
+         // 2 options: 1 - pass itemList as array of objects, 2 - pass itemList as slots
          text: {
             type: String,
             default: '',
@@ -32,9 +32,11 @@
          },
          itemList: {
             type: [Object],
+            //<Dropdown  itemList/>
+            //boolean return
             validator(value) {
                let itemListKey = ["title", "routerName", "prependIcon", "appendIcon"]
-
+               
                return keyValidator(itemListKey, value, 'array');
                
                // for(const i of value) {

@@ -2,6 +2,10 @@
    import { Icon } from '@iconify/vue';
    import Button from '../../components/Button/Button.vue';
    import { eventBus } from '../../utils/eventBus';
+   import { Timer } from '../../plugins/ToastPlugin/timer'
+   
+   import { Transition, render, h } from 'vue';
+
 
    export default {
       name: 'Toast',
@@ -12,120 +16,182 @@
       data() {
          return {
             isVisible: false,
-            title: 'Info',
-            text: 'Hello from toast!!'
+            topContainer: null,
+            bottomContainer: null,
+
+            progressStyle: {
+               animationName: 'progress',
+               animationDuration: `${this.timeOut}ms`,
+               animationFillMode: 'linear',
+               animationFillMode: 'forwards'
+            }
          }
+      },
+      props: {
+         title: {
+            type: String,
+            default: null,
+         },
+         variant: {
+            type: String,
+            default: null,
+         },
+         text: {
+            type: String,
+            default: null
+         },
+         position: {
+            type: String,
+            default: null,
+         },
+         onClickDismiss: {
+            type: Boolean,
+            default: true
+         },
+         timeOut: {
+            type: Number,
+            default: 2000
+         }
+         
       },
       methods: {
-         hideToast() {
-            this.isVisible = false;
-         },
-         show(params) {
+         showToast() {
+            
             this.isVisible = true;
-            this.title = params.title;
-            this.text = params.text;
+            const shadowContainer = this.$refs.toast.parentElement
+            this.computedToastParent.insertAdjacentElement('afterbegin', this.$refs.toast)
+            shadowContainer.remove()
+         },
+         dismissToast() {
+            const el = this.$refs.toast
+            
+            this.isVisible = false;
+            
+            // this.timer = new Timer(1000, this.removeElement(el))
+            // timer.start()
+            setTimeout(() => {
+               el.remove()
+            },1000)
+            
+         },
+         removeElement(el){
+            el.remove()
+         },
+         startDismissTimeout() {
+            this.showToast()
+            
+            const timer = new Timer(this.timeOut, this.dismissToast)
+            // setTimeout(() => {
+            //    this.dismissToast()
+            // },this.timeOut)
+         },
+         setupContainer() {
+            
+            this.topContainer = document.querySelector('.toast-top-container')
+            this.bottomContainer = document.querySelector('.toast-bottom-container')
+
+            if(this.topContainer && this.bottomContainer) return
+
+            
+            if(!this.topContainer) {
+               this.topContainer = document.createElement('div')
+               this.topContainer.classList.add('toast-top-container')
+            }
+
+            if(!this.bottomContainer) {
+               this.bottomContainer = document.createElement('div')
+               this.bottomContainer.classList.add('toast-bottom-container')
+            }
+
+            document.body.appendChild(this.topContainer)
+            document.body.appendChild(this.bottomContainer)
+            
          }
+         
       },
-      created(){
-         // console.log(eventBus)
-         // eventBus.on('show', params => {
-         //    this.show(params)
-         // })
+      mounted() {
+         eventBus.on('dismiss', this.dismissToast);
+
+         if(this.timeOut > 0) return this.startDismissTimeout()
+         
+         this.showToast()
+         
+      },
+      beforeMount() {
+         this.setupContainer();
+      },
+      beforeUnmount() {
+         eventBus.off('dismiss', this.dismissToast);
       },
       computed: {
+         computedToastParent() {
+            return this.position.includes('top') ? this.topContainer : this.bottomContainer
+         },
+         computedPosition() {
+            switch(true) {
+               case this.position.includes('right') :
+                  return 'self-end'
+               case this.position.includes('left') :
+                  return 'self-start'
+               default :
+                  return 'self-center'
+            }
+         },
          computedIcon() {
             switch(true) {
-               case this.toastClass.includes('toast-info') :
+               case this.variant.includes('toast-info') :
                   return 'material-symbols:info-outline'
-               case this.toastClass.includes('toast-success') :
+               case this.variant.includes('toast-success') :
                   return 'material-symbols:check-circle-outline' 
-               case this.toastClass.includes('toast-danger') :
+               case this.variant.includes('toast-danger') :
                   return 'material-symbols:dangerous-outline' 
-               case this.toastClass.includes('toast-warning') :
+               case this.variant.includes('toast-warning') :
                   return 'material-symbols:warning-outline-rounded' 
             }
+         },
+         computedTransition() {
+            return this.position.includes('top') ? 'fade-top' : 'fade-bottom'
          }
       }
    }
 </script>
 
 <template >
-   <Transition name="bounce">
-      <div :class="[toastClass, position]" v-show="isVisible" >
+   <Transition :name="computedTransition">
+      <div ref="toast" 
+         :class="[variant, computedPosition]" 
+         v-on="{ click: onClickDismiss ? this.dismissToast : null}" 
+         class="toast" v-show="isVisible" 
+      >
          <div class="toast__icon ms-2">
-            <Icon icon="material-symbols:info-outline"/>
+            <Icon :icon="computedIcon"/>
          </div>
          <div class="toast__body">
-            <strong class="toast__title">
+            <strong class="toast__body-title">
                {{ this.title }}
             </strong>
-            <small class="toast__text">
+            <small class="toast__body-text">
                {{ this.text }}
             </small>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" appendIcon="iconamoon:close-bold" @click="hideToast"></Button>
+            <Button btnClass="btn-icon-circle btn-lg" 
+               appendIcon="iconamoon:close-bold" 
+               @click="dismissToast" 
+            />
          </div>
-         <div class="toast__progress progress active"></div>
+         <div ref="progress" v-if="this.timeOut > 0" :style="progressStyle" class="toast__progress"></div>
       </div>
    </Transition>
 </template>
 
 <style lang='scss' scoped>
-   .progress {
-      @apply bg-red-200 rounded;
-      position: absolute;
-      width:100%;
-      height: 4px;
-      left: 0;
-      bottom: 0;
-   }
-
-   // .toast {
-      
-   //    transform: translateX(calc(100% + 30px));
-   //    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+   
+   // .toast__progress:before{
+   //    @apply animate-[progress_2000ms_linear_forwards];
+   //    // before:animate-[progress_2000ms_linear_forwards]
    // }
 
-   // .toast.active {
-   //    transform: translateX(0%);
-   // }
+   
 
-   .toast .progress:before{
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      bottom: 0;
-      right: 0px;
-      content: '';
-      @apply bg-red-500 rounded;
-   }
-   .progress.active:before{
-      
-
-      @apply animate-[progress_2s_linear_forwards];
-   }
-
-   // @keyframes progress {
-   //    100%{
-   //       right: 100%;
-   //    }
-   // }
-   .bounce-enter-active {
-     animation: bounce-in 0.5s;
-   }
-   .bounce-leave-active {
-     animation: bounce-in 0.3s reverse;
-   }
-   @keyframes bounce-in {
-     0% {
-       transform: scale(0);
-     }
-     50% {
-       transform: scale(1.1);
-     }
-     100% {
-       transform: scale(1);
-     }
-   }
 </style>

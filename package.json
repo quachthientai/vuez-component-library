@@ -13,17 +13,21 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.7.0",
+    "animejs": "^3.2.1",
     "autoprefixer": "^10.4.14",
     "jquery": "^3.7.0",
     "lodash": "^4.17.21",
     "mitt": "^3.0.0",
     "pinia": "^2.0.32",
     "postcss": "^8.4.23",
+    "uuid": "^9.0.0",
     "v-click-outside": "^3.2.0",
     "vue": "^3.2.47",
     "vue-click-outside-element": "^3.1.2",
     "vue-router": "^4.1.6",
     "vue-toasted": "^1.1.28",
+    "vue-uuid": "^3.0.0",
     "vue3-clickout": "^1.1.1"
   },
   "devDependencies": {
