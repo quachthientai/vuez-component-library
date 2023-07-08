@@ -23,10 +23,10 @@
 
 @layer base {
    .toast {
-      @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.3fr_6fr_0.5fr] w-[350px] rounded-md p-[10px] overflow-hidden;
+      @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
 
       &__icon {
-         @apply text-[32px] self-center;
+         @apply text-[30px] self-center;
       }
 
       &__body {
@@ -43,6 +43,10 @@
    
 
 @layer utilities {
+   .toast-default {
+      @apply dark:bg-light dark:text-dark bg-slate-500 text-light
+   }
+
    @each $variant in variables.$variants {
       .toast-#{$variant} {
          @apply bg-#{$variant}-200;
@@ -58,7 +62,5 @@
       
    }
 
-   @keyframes progress {
-      
-   }
+
 }

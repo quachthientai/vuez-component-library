@@ -3,7 +3,7 @@
    import Button from '../../components/Button/Button.vue';
    import { eventBus } from '../../utils/eventBus';
    import { Timer } from '../../plugins/ToastPlugin/timer'
-   
+   import { POSITION, TYPE } from '@/plugins/ToastPlugin/constant'
    import { Transition, render, h } from 'vue';
 
 
@@ -28,13 +28,10 @@
          }
       },
       props: {
-         title: {
-            type: String,
-            default: null,
-         },
          variant: {
             type: String,
             default: null,
+            
          },
          text: {
             type: String,
@@ -43,6 +40,9 @@
          position: {
             type: String,
             default: null,
+            validator(value) {
+               return Object.values(POSITION).includes(value);
+            }
          },
          onClickDismiss: {
             type: Boolean,
@@ -50,7 +50,7 @@
          },
          timeOut: {
             type: Number,
-            default: 2000
+            default: 3000
          }
          
       },
@@ -118,6 +118,7 @@
          
       },
       beforeMount() {
+         console.log(POSITION)
          this.setupContainer();
       },
       beforeUnmount() {
@@ -167,15 +168,12 @@
             <Icon :icon="computedIcon"/>
          </div>
          <div class="toast__body">
-            <strong class="toast__body-title">
-               {{ this.title }}
-            </strong>
-            <small class="toast__body-text">
+            <span class="font-semibold text-[15px]">
                {{ this.text }}
-            </small>
+            </span>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle btn-lg" 
+            <Button btnClass="btn-icon-circle"
                appendIcon="iconamoon:close-bold" 
                @click="dismissToast" 
             />

@@ -3,9 +3,8 @@ import { createComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
 
 const defaultOption = {
-   title: 'title',
-   variant: 'toast-success',
-   text: 'text',
+   variant: 'toast-default',
+   text: "Hello I'm toast!",
    position: 'top-right',
 }
 
