@@ -11,7 +11,7 @@ export const TYPE = {
    SUCCESS: 'toast-success',
    WARNING: 'toast-warning',
    INFO: 'toast-info',
-   ERROR: 'toast-error',
+   ERROR: 'toast-danger',
    DEFAULT: 'toast-default'
 }
 

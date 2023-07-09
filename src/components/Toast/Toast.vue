@@ -2,7 +2,7 @@
    import { Icon } from '@iconify/vue';
    import Button from '../../components/Button/Button.vue';
    import { eventBus } from '../../utils/eventBus';
-   import { Timer } from '../../plugins/ToastPlugin/timer'
+   import { Timer } from '@/plugins/ToastPlugin/timer'
    import { POSITION, TYPE } from '@/plugins/ToastPlugin/constant'
    import { Transition, render, h } from 'vue';
 
@@ -28,10 +28,16 @@
          }
       },
       props: {
+         type: {
+            type: String, 
+            default: 'toast-default',
+            validator(value) {
+               return Object.values(TYPE).includes(value)
+            } 
+         },
          variant: {
             type: String,
             default: null,
-            
          },
          text: {
             type: String,
@@ -50,16 +56,16 @@
          },
          timeOut: {
             type: Number,
-            default: 3000
+            default: 2000
          }
          
       },
       methods: {
          showToast() {
-            
+            let insertPos = this.position.includes('top') ? 'afterbegin' : 'beforeend'
             this.isVisible = true;
             const shadowContainer = this.$refs.toast.parentElement
-            this.computedToastParent.insertAdjacentElement('afterbegin', this.$refs.toast)
+            this.computedToastParent.insertAdjacentElement(insertPos, this.$refs.toast)
             shadowContainer.remove()
          },
          dismissToast() {
@@ -69,21 +75,15 @@
             
             // this.timer = new Timer(1000, this.removeElement(el))
             // timer.start()
+            
             setTimeout(() => {
                el.remove()
             },1000)
             
          },
-         removeElement(el){
-            el.remove()
-         },
          startDismissTimeout() {
             this.showToast()
-            
-            const timer = new Timer(this.timeOut, this.dismissToast)
-            // setTimeout(() => {
-            //    this.dismissToast()
-            // },this.timeOut)
+            Timer.start(this.dismissToast, this.timeOut)
          },
          setupContainer() {
             
@@ -118,7 +118,6 @@
          
       },
       beforeMount() {
-         console.log(POSITION)
          this.setupContainer();
       },
       beforeUnmount() {
@@ -129,29 +128,42 @@
             return this.position.includes('top') ? this.topContainer : this.bottomContainer
          },
          computedPosition() {
-            switch(true) {
-               case this.position.includes('right') :
+            switch(this.position) {
+               case POSITION.BOTTOM_RIGHT :
+               case POSITION.TOP_RIGHT :
                   return 'self-end'
-               case this.position.includes('left') :
+               case POSITION.BOTTOM_LEFT :
+               case POSITION.TOP_LEFT :
                   return 'self-start'
                default :
                   return 'self-center'
             }
          },
          computedIcon() {
-            switch(true) {
-               case this.variant.includes('toast-info') :
+            switch(this.type) {
+               case TYPE.SUCCESS :
+                  return 'material-symbols:check-circle-outline'
+               case TYPE.INFO :
                   return 'material-symbols:info-outline'
-               case this.variant.includes('toast-success') :
-                  return 'material-symbols:check-circle-outline' 
-               case this.variant.includes('toast-danger') :
-                  return 'material-symbols:dangerous-outline' 
-               case this.variant.includes('toast-warning') :
-                  return 'material-symbols:warning-outline-rounded' 
+               case TYPE.WARNING :
+                  return 'material-symbols:warning-outline-rounded'
+               case TYPE.ERROR :
+                  return 'material-symbols:dangerous-outline'
+               default: 
+                  return 'material-symbols:info-outline'
             }
          },
          computedTransition() {
-            return this.position.includes('top') ? 'fade-top' : 'fade-bottom'
+            switch(this.position) {
+               case POSITION.TOP_RIGHT :
+               case POSITION.TOP_CENTER :
+               case POSITION.TOP_LEFT :
+                  return 'fade-top'
+               case POSITION.BOTTOM_RIGHT :
+               case POSITION.BOTTOM_CENTER :
+               case POSITION.BOTTOM_LEFT :
+                  return 'fade-bottom'
+            }
          }
       }
    }

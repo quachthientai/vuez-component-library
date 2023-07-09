@@ -1,18 +1,18 @@
 import Toast from '@/components/Toast/Toast.vue'
-import { createComponent } from '../render'
+import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
 
 const defaultOption = {
-   variant: 'toast-default',
+   variant: 'toast-success',
    text: "Hello I'm toast!",
-   position: 'top-right',
+   position: 'bottom-right',
 }
 
 export const useToast = {
    show(option) {
       const vOption = option ? option : defaultOption;
       eventBus.emit('show-toast', vOption);
-      return createComponent(Toast, vOption, document.body);
+      return createShadowComponent(Toast, vOption, document.body);
    },
    clear() {
       eventBus.emit('dismiss');

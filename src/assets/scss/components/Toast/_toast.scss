@@ -44,7 +44,15 @@
 
 @layer utilities {
    .toast-default {
-      @apply dark:bg-light dark:text-dark bg-slate-500 text-light
+      @apply dark:bg-slate-300 bg-slate-700;
+
+      > div {
+         @apply text-light dark:text-slate-800;
+      }
+
+      > .toast__progress {
+         @apply rounded bg-slate-300 dark:bg-slate-500;
+      }
    }
 
    @each $variant in variables.$variants {
