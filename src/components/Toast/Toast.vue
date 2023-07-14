@@ -18,7 +18,7 @@
             isVisible: false,
             topContainer: null,
             bottomContainer: null,
-
+            transition: null,
             progressStyle: {
                animationName: 'progress',
                animationDuration: `${this.timeOut}ms`,
@@ -56,7 +56,7 @@
          },
          timeOut: {
             type: Number,
-            default: 2000
+            default: 5000
          }
          
       },
@@ -83,7 +83,25 @@
          },
          startDismissTimeout() {
             this.showToast()
-            Timer.start(this.dismissToast, this.timeOut)
+            this.transition.play()
+            // this.timer = new Timer({
+            //    callback: this.dismissToast,
+            //    delay: this.timeOut
+            // })
+
+            this.timer = new Timer(this.dismissToast, this.timeOut)
+            
+            // this.timer.resume();
+            // Timer.resume();
+            // Timer.start(this.dismissToast, this.timeOut)
+         },
+         setupTransition() {
+            const keyFrame = new KeyframeEffect(this.$refs.progress,
+               {right: '100%'},
+               {duration: this.timeOut, fill: 'forwards', ease: 'linear'}
+            )
+
+            return this.transition = new Animation(keyFrame, document.timeline)
          },
          setupContainer() {
             
@@ -106,10 +124,20 @@
             document.body.appendChild(this.topContainer)
             document.body.appendChild(this.bottomContainer)
             
+         },
+         test() {
+            this.transition.pause()
+            this.timer.pause();
+            
+         },
+         test2() {
+            this.timer.resume();
+            this.transition.play();
          }
          
       },
       mounted() {
+         this.setupTransition();
          eventBus.on('dismiss', this.dismissToast);
 
          if(this.timeOut > 0) return this.startDismissTimeout()
@@ -119,6 +147,7 @@
       },
       beforeMount() {
          this.setupContainer();
+         
       },
       beforeUnmount() {
          eventBus.off('dismiss', this.dismissToast);
@@ -173,7 +202,9 @@
    <Transition :name="computedTransition">
       <div ref="toast" 
          :class="[variant, computedPosition]" 
-         v-on="{ click: onClickDismiss ? this.dismissToast : null}" 
+         v-on="{ click: onClickDismiss ? this.dismissToast : null}"
+         @mouseover="test"
+         @mouseleave="test2" 
          class="toast" v-show="isVisible" 
       >
          <div class="toast__icon ms-2">
@@ -190,7 +221,8 @@
                @click="dismissToast" 
             />
          </div>
-         <div ref="progress" v-if="this.timeOut > 0" :style="progressStyle" class="toast__progress"></div>
+         <!-- :style="progressStyle" -->
+         <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
       </div>
    </Transition>
 </template>
@@ -201,6 +233,8 @@
    //    @apply animate-[progress_2000ms_linear_forwards];
    //    // before:animate-[progress_2000ms_linear_forwards]
    // }
+
+   
 
    
 
