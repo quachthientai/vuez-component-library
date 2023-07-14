@@ -6,6 +6,9 @@ const defaultOption = {
    variant: 'toast-success',
    text: "Hello I'm toast!",
    position: 'bottom-right',
+   onClickDismiss: true,
+   timeOut: 2000,
+   pauseOnHover: true
 }
 
 export const useToast = {

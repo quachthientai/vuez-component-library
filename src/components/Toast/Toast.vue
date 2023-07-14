@@ -2,10 +2,8 @@
    import { Icon } from '@iconify/vue';
    import Button from '../../components/Button/Button.vue';
    import { eventBus } from '../../utils/eventBus';
-   import { Timer } from '@/plugins/ToastPlugin/timer'
-   import { POSITION, TYPE } from '@/plugins/ToastPlugin/constant'
+   import { POSITION, TYPE } from '@/plugins/ToastPlugin/constant';
    import { Transition, render, h } from 'vue';
-
 
    export default {
       name: 'Toast',
@@ -19,12 +17,6 @@
             topContainer: null,
             bottomContainer: null,
             transition: null,
-            progressStyle: {
-               animationName: 'progress',
-               animationDuration: `${this.timeOut}ms`,
-               animationFillMode: 'linear',
-               animationFillMode: 'forwards'
-            }
          }
       },
       props: {
@@ -52,11 +44,15 @@
          },
          onClickDismiss: {
             type: Boolean,
-            default: true
+            default: false
          },
          timeOut: {
             type: Number,
-            default: 5000
+            default: 0
+         },
+         pauseOnHover: {
+            type: Boolean,
+            default: false
          }
          
       },
@@ -72,11 +68,10 @@
             const el = this.$refs.toast
             
             this.isVisible = false;
-            
-            // this.timer = new Timer(1000, this.removeElement(el))
-            // timer.start()
+            this.transition.finish();
             
             setTimeout(() => {
+               // console.log(this.$.vnode)
                el.remove()
             },1000)
             
@@ -84,16 +79,6 @@
          startDismissTimeout() {
             this.showToast()
             this.transition.play()
-            // this.timer = new Timer({
-            //    callback: this.dismissToast,
-            //    delay: this.timeOut
-            // })
-
-            this.timer = new Timer(this.dismissToast, this.timeOut)
-            
-            // this.timer.resume();
-            // Timer.resume();
-            // Timer.start(this.dismissToast, this.timeOut)
          },
          setupTransition() {
             const keyFrame = new KeyframeEffect(this.$refs.progress,
@@ -102,6 +87,7 @@
             )
 
             return this.transition = new Animation(keyFrame, document.timeline)
+
          },
          setupContainer() {
             
@@ -125,31 +111,28 @@
             document.body.appendChild(this.bottomContainer)
             
          },
-         test() {
+         handleHover() {
             this.transition.pause()
-            this.timer.pause();
-            
          },
-         test2() {
-            this.timer.resume();
-            this.transition.play();
+         handleLeave() {
+            this.transition.play()
          }
-         
       },
       mounted() {
          this.setupTransition();
          eventBus.on('dismiss', this.dismissToast);
 
          if(this.timeOut > 0) return this.startDismissTimeout()
-         
+
          this.showToast()
          
       },
       beforeMount() {
+         console.log('mounted')
          this.setupContainer();
-         
       },
-      beforeUnmount() {
+      unmounted() {
+         console.log('ssss')
          eventBus.off('dismiss', this.dismissToast);
       },
       computed: {
@@ -194,6 +177,13 @@
                   return 'fade-bottom'
             }
          }
+      },
+      watch: {
+         transition(v) {
+            Promise.resolve(v.finished).then(() => {
+               return this.dismissToast()
+            })
+         }
       }
    }
 </script>
@@ -202,9 +192,11 @@
    <Transition :name="computedTransition">
       <div ref="toast" 
          :class="[variant, computedPosition]" 
-         v-on="{ click: onClickDismiss ? this.dismissToast : null}"
-         @mouseover="test"
-         @mouseleave="test2" 
+         v-on="{ 
+            click: this.onClickDismiss ? dismissToast : null,
+            mouseover: this.pauseOnHover ? handleHover : null,
+            mouseleave: this.pauseOnHover ? handleLeave : null
+         }"
          class="toast" v-show="isVisible" 
       >
          <div class="toast__icon ms-2">
@@ -221,21 +213,11 @@
                @click="dismissToast" 
             />
          </div>
-         <!-- :style="progressStyle" -->
          <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
       </div>
    </Transition>
 </template>
 
 <style lang='scss' scoped>
-   
-   // .toast__progress:before{
-   //    @apply animate-[progress_2000ms_linear_forwards];
-   //    // before:animate-[progress_2000ms_linear_forwards]
-   // }
-
-   
-
-   
 
 </style>
