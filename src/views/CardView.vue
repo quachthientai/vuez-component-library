@@ -12,8 +12,8 @@
 </script>
 
 <template>
-   <div class="m-5">
-      <Card />
+   <div class="m-5" >
+      <Card :elevation="3"/>
    </div>
    
    
