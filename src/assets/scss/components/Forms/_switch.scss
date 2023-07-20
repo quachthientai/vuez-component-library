@@ -27,7 +27,7 @@
       input[role="switch"] {
         &:checked {
           + .switch__slider {
-            @apply border-#{$variant}-500 bg-#{$variant}-500;
+            @apply dark:bg-#{$variant}-500/90 border-#{$variant}-500 bg-#{$variant}-500;
           }
 
           + .switch__slider:before {

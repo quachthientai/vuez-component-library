@@ -8,8 +8,8 @@ const defaultOption = {
    position: 'top-center',
    onClickDismiss: true,
    timeOut: 2000,
-   pauseOnHover: true,
-   hideCloseButton: true,
+   pauseOnHover: false,
+   hideCloseButton: false,
 }
 
 export const useToast = {

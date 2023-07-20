@@ -45,6 +45,11 @@ const routes = [
       path: '/toast',
       name: 'toast',
       component: () => import('@/views/ToastView.vue')
+   },
+   {
+      path: '/card',
+      name: 'card',
+      component: () => import('@/views/CardView.vue')
    }
 ]
 
@@ -53,9 +58,5 @@ const router = createRouter({
    routes,
    
 })
-
-
- 
-
 
 export default router

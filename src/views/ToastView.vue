@@ -2,12 +2,9 @@
    // import Toast from '@/components/Toast/Toast.vue';
    import Button from '@/components/Button/Button.vue';
    
-   import { h, render } from 'vue';
-
    export default {
       name: 'ToastView',
       components:{
-      //   Toast,
         Button
       },
       data() {
@@ -18,13 +15,10 @@
       methods: {
          showToast() {
             
-            this.$toast.error('Info!', {
-               timeOut: 3000,
-            });
-            
-            this.$toast.warning('Warning!', {
-               type: 'toast-danger',
-               timeOut: 10000})
+            this.$toast.success('Success!');
+            this.$toast.info('Info!');
+            this.$toast.warning('Warning!');
+            this.$toast.error('Error!');
          },
          clearToast() {
             this.$toast.clear();

@@ -26,14 +26,6 @@
 
     <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
     
-      
-      <Radio radioClass="radio radio-primary" />
-      <Radio radioClass="radio radio-success" />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur debitis corrupti esse, molestiae odit beatae magni veniam, explicabo modi eligendi laboriosam commodi officiis, excepturi atque corporis dicta tenetur sint velit?
-      
-   
-    
-  
     <div class="mt-3 ms-3">
       <router-link to="/">Home</router-link> |
       <router-link to="/button">Button</router-link> |
@@ -43,7 +35,8 @@
       <router-link to="/button-group">Button Group</router-link> |
       <router-link to="/checkbox">Checkbox</router-link> |
       <router-link to="/radio">Radio</router-link> |
-      <router-link to="/toast">Toast</router-link> 
+      <router-link to="/toast">Toast</router-link> |
+      <router-link to="/card">Card</router-link> |
     </div>
     
     <router-view/>

@@ -4,7 +4,7 @@
    import { eventBus } from '../../utils/eventBus';
    import { POSITION, TYPE } from '@/plugins/ToastPlugin/constant';
    
-   import { Transition, render, h } from 'vue';
+   import { Transition, render, h, isVNode } from 'vue';
 
    export default {
       name: 'Toast',
@@ -72,7 +72,6 @@
             this.transition.finish();
             
             setTimeout(() => {
-               
                el.remove()
             },1000)
             
@@ -165,13 +164,13 @@
          },
          computedIcon() {
             switch(this.type) {
-               case TYPE.SUCCESS :
+               case 'success' :
                   return 'material-symbols:check-circle-outline'
-               case TYPE.INFO :
+               case 'info' :
                   return 'material-symbols:info-outline'
-               case TYPE.WARNING :
+               case 'warning' :
                   return 'material-symbols:warning-outline-rounded'
-               case TYPE.ERROR :
+               case 'error' :
                   return 'material-symbols:dangerous-outline'
                default: 
                   return 'material-symbols:info-outline'
@@ -219,8 +218,8 @@
                {{ this.text }}
             </span>
          </div>
-         <div class="toast__dismiss">
-            <Button  btnClass="btn-icon-circle"
+         <div class="toast__dismiss" :class="[hideCloseButton ? 'opacity-0' : '']" >
+            <Button btnClass="btn-icon-circle"
                appendIcon="iconamoon:close-bold" 
                @click="dismissToast" 
             />
