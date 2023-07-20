@@ -17,7 +17,9 @@
       },
       methods: {
          showToast() {
-            this.$toast.show();
+            this.$toast.success('Howdy!', {
+               variant: 'toast-danger'
+            });
          },
          clearToast() {
             this.$toast.clear();

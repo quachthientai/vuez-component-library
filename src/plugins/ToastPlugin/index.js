@@ -5,7 +5,7 @@ export const ToastPlugin = {
 
       const instance = useToast
       app.config.globalProperties.$toast = instance
-
+      
       
    }
 } 

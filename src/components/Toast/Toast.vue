@@ -3,6 +3,7 @@
    import Button from '../../components/Button/Button.vue';
    import { eventBus } from '../../utils/eventBus';
    import { POSITION, TYPE } from '@/plugins/ToastPlugin/constant';
+   
    import { Transition, render, h } from 'vue';
 
    export default {
@@ -53,6 +54,10 @@
          pauseOnHover: {
             type: Boolean,
             default: false
+         },
+         hideCloseButton: {
+            type: Boolean,
+            default: false
          }
          
       },
@@ -71,7 +76,7 @@
             this.transition.finish();
             
             setTimeout(() => {
-               // console.log(this.$.vnode)
+               
                el.remove()
             },1000)
             
@@ -80,7 +85,7 @@
             this.showToast()
             this.transition.play()
          },
-         setupTransition() {
+         setupProgressTransition() {
             const keyFrame = new KeyframeEffect(this.$refs.progress,
                {right: '100%'},
                {duration: this.timeOut, fill: 'forwards', ease: 'linear'}
@@ -90,7 +95,6 @@
 
          },
          setupContainer() {
-            
             this.topContainer = document.querySelector('.toast-top-container')
             this.bottomContainer = document.querySelector('.toast-bottom-container')
 
@@ -119,20 +123,18 @@
          }
       },
       mounted() {
-         this.setupTransition();
+         this.setupProgressTransition();
          eventBus.on('dismiss', this.dismissToast);
 
          if(this.timeOut > 0) return this.startDismissTimeout()
-
+         
          this.showToast()
          
       },
       beforeMount() {
-         console.log('mounted')
          this.setupContainer();
       },
       unmounted() {
-         console.log('ssss')
          eventBus.off('dismiss', this.dismissToast);
       },
       computed: {
@@ -165,7 +167,7 @@
                   return 'material-symbols:info-outline'
             }
          },
-         computedTransition() {
+         computedToastTransition() {
             switch(this.position) {
                case POSITION.TOP_RIGHT :
                case POSITION.TOP_CENTER :
@@ -189,13 +191,13 @@
 </script>
 
 <template >
-   <Transition :name="computedTransition">
+   <Transition :name="computedToastTransition">
       <div ref="toast" 
          :class="[variant, computedPosition]" 
          v-on="{ 
             click: this.onClickDismiss ? dismissToast : null,
-            mouseover: this.pauseOnHover ? handleHover : null,
-            mouseleave: this.pauseOnHover ? handleLeave : null
+            mouseover: this.pauseOnHover && this.timeOut > 0 ? handleHover : null,
+            mouseleave: this.pauseOnHover && this.timeOut > 0 ? handleLeave : null
          }"
          class="toast" v-show="isVisible" 
       >
@@ -208,7 +210,7 @@
             </span>
          </div>
          <div class="toast__dismiss">
-            <Button btnClass="btn-icon-circle"
+            <Button  btnClass="btn-icon-circle"
                appendIcon="iconamoon:close-bold" 
                @click="dismissToast" 
             />
