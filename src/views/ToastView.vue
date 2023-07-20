@@ -17,9 +17,14 @@
       },
       methods: {
          showToast() {
-            this.$toast.success('Howdy!', {
-               variant: 'toast-danger'
+            
+            this.$toast.error('Info!', {
+               timeOut: 3000,
             });
+            
+            this.$toast.warning('Warning!', {
+               type: 'toast-danger',
+               timeOut: 10000})
          },
          clearToast() {
             this.$toast.clear();

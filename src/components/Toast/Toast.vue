@@ -23,14 +23,10 @@
       props: {
          type: {
             type: String, 
-            default: 'toast-default',
+            default: 'default',
             validator(value) {
                return Object.values(TYPE).includes(value)
             } 
-         },
-         variant: {
-            type: String,
-            default: null,
          },
          text: {
             type: String,
@@ -138,6 +134,20 @@
          eventBus.off('dismiss', this.dismissToast);
       },
       computed: {
+         computedType() {
+            switch(this.type) {
+               case 'success' :
+                  return TYPE.SUCCESS
+               case 'info' :
+                  return TYPE.INFO
+               case 'error' :
+                  return TYPE.ERROR
+               case 'warning' :
+                  return TYPE.WARNING
+               default :
+                  return TYPE.DEFAULT
+            }
+         },
          computedToastParent() {
             return this.position.includes('top') ? this.topContainer : this.bottomContainer
          },
@@ -193,7 +203,7 @@
 <template >
    <Transition :name="computedToastTransition">
       <div ref="toast" 
-         :class="[variant, computedPosition]" 
+         :class="[computedType, computedPosition]" 
          v-on="{ 
             click: this.onClickDismiss ? dismissToast : null,
             mouseover: this.pauseOnHover && this.timeOut > 0 ? handleHover : null,

@@ -3,7 +3,7 @@ import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
 
 const defaultOption = {
-   variant: 'toast-default',
+   type: 'default',
    text: "Hello I'm toast!",
    position: 'top-center',
    onClickDismiss: true,
@@ -14,16 +14,15 @@ const defaultOption = {
 
 export const useToast = {
    show(message, option) {
-      let vOption;
-
       try{
          if(!message) throw new Error('Invalid arguments!')
       }catch(e) {
          console.error(e);
       }
       
-      vOption = option ? Object.assign(defaultOption, {text: message}, option) : Object.assign(defaultOption, {text: message});
-      
+      let vOption = option ? Object.assign(defaultOption, {text: message}, option) 
+                           : Object.assign(defaultOption, {text: message});
+
       eventBus.emit('show-toast', vOption);
       return createShadowComponent(Toast, vOption, document.body, 'shadow-container');
    },
@@ -31,43 +30,39 @@ export const useToast = {
       eventBus.emit('dismiss');
    },
    success(message, option) {
-      if(!option) return this.show(message, {variant: 'toast-success'})
+      const typeObj = {type: 'success'}
 
-      Object.defineProperty(option, "variant", {
-         value: 'toast-success',
-         writable: false,
-      })
+      if(!option) return this.show(message, typeObj)
       
-      return this.show(message, option);
+      let vOption = Object.assign(option, typeObj)
+
+      return this.show(message, vOption);
    },
    warning(message, option) {
-      if(!option) return this.show(message, {variant: 'toast-warning'})
+      const typeObj = {type: 'warning'}
 
-      Object.defineProperty(option, "variant", {
-         value: 'toast-warning',
-         writable: false,
-      })
-      
-      return this.show(message, option);
+      if(!option) return this.show(message, typeObj)
+
+      let vOption = Object.assign(option, typeObj)
+
+      return this.show(message, vOption);
    },
    error(message, option) {
-      if(!option) return this.show(message, {variant: 'toast-error'})
+      const typeObj = {type: 'error'}
 
-      Object.defineProperty(option, "variant", {
-         value: 'toast-error',
-         writable: false,
-      })
-      
-      return this.show(message, option);
+      if(!option) return this.show(message, typeObj)
+
+      let vOption = Object.assign(option, typeObj)
+
+      return this.show(message, vOption);
    },
    info(message, option) {
-      if(!option) return this.show(message, {variant: 'toast-info'})
+      const typeObj = {type: 'info'}
 
-      Object.defineProperty(option, "variant", {
-         value: 'toast-info',
-         writable: false,
-      })
-      
-      return this.show(message, option);
+      if(!option) return this.show(message, typeObj)
+
+      let vOption = Object.assign(option, typeObj)
+
+      return this.show(message, vOption);
    },
 }
