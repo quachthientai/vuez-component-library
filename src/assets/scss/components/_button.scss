@@ -1,113 +1,108 @@
 @use '../utilities/variables';
 
 //base class
-@layer base{ 
-   .btn {
-      @apply font-bold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px]  transition duration-100 ease-out hover:ease-in;
-      a{ 
-         @apply tracking-wide text-base leading-[24px];
+@layer base {
+  .btn {
+    @apply font-bold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px]  transition duration-100 ease-out hover:ease-in;
+    a {
+      @apply tracking-wide text-base leading-[24px];
+    }
+
+    &.btn-sm {
+      @apply h-[30px]  px-[13px];
+      a {
+        @apply tracking-wide text-sm leading-[24px];
       }
-   
-      &.btn-sm {
-         @apply h-[30px]  px-[13px];
-         a{
-            @apply tracking-wide text-sm leading-[24px];
-         }
+    }
+
+    &.btn-lg {
+      @apply h-[50px] px-[20px];
+      a {
+        @apply tracking-wide text-lg leading-[24px];
       }
-       
-      &.btn-lg {
-         @apply h-[50px] px-[20px];
-         a{
-            @apply tracking-wide text-lg leading-[24px];
-         }
-      }
-      
-   }
+    }
+  }
 }
- 
+
 //variant class
 @layer utilities {
+  //regular button variant
+  @each $variant in variables.$variants {
+    .btn-#{$variant} {
+      @apply outline-none border-none bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
 
-   //regular button variant
-   @each $variant in variables.$variants {
-      .btn-#{$variant}{
-         @apply outline-none border-none bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
-
-         &:not([disabled]):hover {
-            @apply bg-#{$variant}-600;
-         }
-
-         a{
-            @apply text-light;
-         }
-
-         &:focus {
-            @apply ring-4 ring-offset-0 ring-#{$variant}-500/70;
-         }
+      &:not([disabled]):hover {
+        @apply bg-#{$variant}-600;
       }
-   }
 
-   //outline button variants
-   @each $variant in variables.$variants {
-      .btn-outline-#{$variant}{
-         @apply bg-none border-[2px] p-[10px] dark:border-#{$variant}-400/40 border-#{$variant}-500;
+      a {
+        @apply text-light;
+      }
 
-         &:not([disabled]):hover{
-            @if $variant == 'secondary' {
-               @apply hover:bg-#{$variant}-200 dark:hover:bg-#{$variant}-700/50;
-            } @else {
-               @apply hover:bg-#{$variant}-100 dark:hover:bg-#{$variant}-500/10;
-            }
-         }
-         
-         a{
-            @apply dark:text-#{$variant}-400/90 text-#{$variant}-500;
-         }
+      &:focus {
+        @apply ring-4 ring-offset-0 ring-#{$variant}-500/70;
+      }
+    }
+  }
 
-         &:focus {
-            @apply ring-4 ring-offset-0 ring-#{$variant}-500/30;
-         }
-      }
-   }
+  //outline button variants
+  @each $variant in variables.$variants {
+    .btn-outline-#{$variant} {
+      @apply bg-none border-[2px] p-[10px] dark:border-#{$variant}-400/40 border-#{$variant}-500;
 
-   //button with icon circle shape variants
-   .btn-icon-circle {
-      @apply p-[12px] rounded-full;
-      a > span > svg {
-         @apply m-0;
+      &:not([disabled]):hover {
+        @if $variant == 'secondary' {
+          @apply hover:bg-#{$variant}-200 dark:hover:bg-#{$variant}-700/50;
+        } @else {
+          @apply hover:bg-#{$variant}-100 dark:hover:bg-#{$variant}-500/10;
+        }
       }
-      @each $variant in variables.$variants {
-         &.btn-#{$variant}{
-            &.btn-sm{
-               @apply p-[9px];
-            }
-   
-            &.btn-lg{
-               @apply p-[14px];
-            }
-         }
+
+      a {
+        @apply dark:text-#{$variant}-400/90 text-#{$variant}-500;
       }
-   
-      //button outline size 
-      @each $variant in variables.$variants {
-         &.btn-outline-#{$variant}{
-            @apply p-[10px];
-   
-            &.btn-sm{
-               @apply p-[7px];
-            }
-   
-            &.btn-lg{
-               @apply p-[12px];
-            }
-         }
+
+      &:focus {
+        @apply ring-4 ring-offset-0 ring-#{$variant}-500/30;
       }
-   }
+    }
+  }
+
+  //button with icon circle shape variants
+  .btn-icon-circle {
+    @apply p-[12px] rounded-full;
+    a > span > svg {
+      @apply m-0;
+    }
+    @each $variant in variables.$variants {
+      &.btn-#{$variant} {
+        &.btn-sm {
+          @apply p-[9px];
+        }
+
+        &.btn-lg {
+          @apply p-[14px];
+        }
+      }
+    }
+
+    //button outline size
+    @each $variant in variables.$variants {
+      &.btn-outline-#{$variant} {
+        @apply p-[10px];
+
+        &.btn-sm {
+          @apply p-[7px];
+        }
+
+        &.btn-lg {
+          @apply p-[12px];
+        }
+      }
+    }
+  }
 }
 
-
-
-
 .rounded {
-   @apply rounded-full;
+  @apply rounded-full;
 }

@@ -13,11 +13,10 @@
 //    )
 // }
 
-html[data-theme="light"] {
-   @apply bg-light text-dark;
+html[data-theme='light'] {
+  @apply bg-light text-dark;
 }
 
-html[data-theme="dark"]{
-   @apply bg-dark text-light;
+html[data-theme='dark'] {
+  @apply bg-dark text-light;
 }
-

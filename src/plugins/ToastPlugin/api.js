@@ -3,66 +3,67 @@ import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
 
 const defaultOption = {
-   type: 'default',
-   text: "Hello I'm toast!",
-   position: 'top-center',
-   onClickDismiss: true,
-   timeOut: 2000,
-   pauseOnHover: false,
-   hideCloseButton: false,
+  type: 'default',
+  text: "Hello I'm toast!",
+  position: 'top-center',
+  onClickDismiss: true,
+  timeOut: 2000,
+  pauseOnHover: false,
+  hideCloseButton: false
 }
 
 export const useToast = {
-   show(message, option) {
-      try{
-         if(!message) throw new Error('Invalid arguments!')
-      }catch(e) {
-         console.error(e);
-      }
-      
-      let vOption = option ? Object.assign(defaultOption, {text: message}, option) 
-                           : Object.assign(defaultOption, {text: message});
+  show(message, option) {
+    try {
+      if (!message) throw new Error('Invalid arguments!')
+    } catch (e) {
+      console.error(e)
+    }
 
-      eventBus.emit('show-toast', vOption);
-      return createShadowComponent(Toast, vOption, document.body, 'shadow-container');
-   },
-   clear() {
-      eventBus.emit('dismiss');
-   },
-   success(message, option) {
-      const typeObj = {type: 'success'}
+    let vOption = option
+      ? Object.assign(defaultOption, { text: message }, option)
+      : Object.assign(defaultOption, { text: message })
 
-      if(!option) return this.show(message, typeObj)
-      
-      let vOption = Object.assign(option, typeObj)
+    eventBus.emit('show-toast', vOption)
+    return createShadowComponent(Toast, vOption, document.body, 'shadow-container')
+  },
+  clear() {
+    eventBus.emit('dismiss')
+  },
+  success(message, option) {
+    const typeObj = { type: 'success' }
 
-      return this.show(message, vOption);
-   },
-   warning(message, option) {
-      const typeObj = {type: 'warning'}
+    if (!option) return this.show(message, typeObj)
 
-      if(!option) return this.show(message, typeObj)
+    let vOption = Object.assign(option, typeObj)
 
-      let vOption = Object.assign(option, typeObj)
+    return this.show(message, vOption)
+  },
+  warning(message, option) {
+    const typeObj = { type: 'warning' }
 
-      return this.show(message, vOption);
-   },
-   error(message, option) {
-      const typeObj = {type: 'error'}
+    if (!option) return this.show(message, typeObj)
 
-      if(!option) return this.show(message, typeObj)
+    let vOption = Object.assign(option, typeObj)
 
-      let vOption = Object.assign(option, typeObj)
+    return this.show(message, vOption)
+  },
+  error(message, option) {
+    const typeObj = { type: 'error' }
 
-      return this.show(message, vOption);
-   },
-   info(message, option) {
-      const typeObj = {type: 'info'}
+    if (!option) return this.show(message, typeObj)
 
-      if(!option) return this.show(message, typeObj)
+    let vOption = Object.assign(option, typeObj)
 
-      let vOption = Object.assign(option, typeObj)
+    return this.show(message, vOption)
+  },
+  info(message, option) {
+    const typeObj = { type: 'info' }
 
-      return this.show(message, vOption);
-   },
+    if (!option) return this.show(message, typeObj)
+
+    let vOption = Object.assign(option, typeObj)
+
+    return this.show(message, vOption)
+  }
 }

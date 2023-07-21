@@ -1,23 +1,18 @@
 import { render, h } from 'vue'
 
-export const helper = (function() {
-   'use strict';
+export const helper = (function () {
+  'use strict'
 
-   function _create(component, option, root, container) {
-      
-   }
+  function _create(component, option, root, container) {}
 
-   function _get() {
-
-   }
-
-})();
+  function _get() {}
+})()
 
 export const createShadowComponent = (component, option, root, container) => {
-   var vContainer = document.createElement('div');
-   vContainer.classList.add(container);
-   root.appendChild(vContainer);
-   
-   const vComponent = h(component,option)
-   render(vComponent, vContainer)
+  var vContainer = document.createElement('div')
+  vContainer.classList.add(container)
+  root.appendChild(vContainer)
+
+  const vComponent = h(component, option)
+  render(vComponent, vContainer)
 }

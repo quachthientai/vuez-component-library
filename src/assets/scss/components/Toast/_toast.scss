@@ -1,74 +1,66 @@
 @use '../../utilities/variables';
 @use '../Toast/transition';
-@use "sass:map";
+@use 'sass:map';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @mixin toast-container {
-   @apply flex fixed pointer-events-none flex-col right-0 left-0;
+  @apply flex fixed pointer-events-none flex-col right-0 left-0;
 }
 
-
 .toast-top-container {
-   @include toast-container;
-   @apply top-0;
+  @include toast-container;
+  @apply top-0;
 }
 
 .toast-bottom-container {
-   @include toast-container;
-   @apply bottom-0;
+  @include toast-container;
+  @apply bottom-0;
 }
-
 
 @layer base {
-   .toast {
-      @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
+  .toast {
+    @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
 
-      &__icon {
-         @apply text-[30px] self-center;
-      }
+    &__icon {
+      @apply text-[30px] self-center;
+    }
 
-      &__body {
-         @apply self-center flex flex-col;
-      }
+    &__body {
+      @apply self-center flex flex-col;
+    }
 
-      &__progress {
-         @apply absolute h-[4px] right-0 left-0 bottom-0 ;
-         
-      }
-   }
+    &__progress {
+      @apply absolute h-[4px] right-0 left-0 bottom-0;
+    }
+  }
 }
 
-   
-
 @layer utilities {
-   .toast-default {
-      @apply dark:bg-slate-300 bg-slate-700;
+  .toast-default {
+    @apply dark:bg-slate-300 bg-slate-700;
+
+    > div {
+      @apply text-light dark:text-slate-800;
+    }
+
+    > .toast__progress {
+      @apply rounded bg-slate-300 dark:bg-slate-500;
+    }
+  }
+
+  @each $variant in variables.$variants {
+    .toast-#{$variant} {
+      @apply bg-#{$variant}-200;
 
       > div {
-         @apply text-light dark:text-slate-800;
+        @apply text-#{$variant}-600;
       }
 
       > .toast__progress {
-         @apply rounded bg-slate-300 dark:bg-slate-500;
+        @apply rounded bg-#{$variant}-600;
       }
-   }
-
-   @each $variant in variables.$variants {
-      .toast-#{$variant} {
-         @apply bg-#{$variant}-200;
-
-         > div {
-            @apply text-#{$variant}-600;
-         }
-
-         > .toast__progress {
-            @apply rounded bg-#{$variant}-600;
-         }
-      }
-      
-   }
-
-
+    }
+  }
 }

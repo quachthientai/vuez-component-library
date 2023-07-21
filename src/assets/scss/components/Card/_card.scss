@@ -3,14 +3,11 @@
 @tailwind utilities;
 
 @for $i from 1 through 5 {
-   .elevation-#{$i} {
-      @apply shadow-elevation-#{$i};
-   }
-   
-};
+  .elevation-#{$i} {
+    @apply shadow-elevation-#{$i};
+  }
+}
 
 // @layer utilities {
-   
-   
-   
+
 // };

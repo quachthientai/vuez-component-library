@@ -1,23 +1,18 @@
 <script>
-   import Card from '@/components/Card/Card.vue';
-   export default {
-      name: 'CardView',
-      components: {
-         Card
-      },
-      data() {
-
-      }
-   }
+import Card from '@/components/Card/Card.vue'
+export default {
+  name: 'CardView',
+  components: {
+    Card
+  },
+  data() {}
+}
 </script>
 
 <template>
-   <div class="m-5" >
-      <Card :elevation="3"/>
-   </div>
-   
-   
+  <div class="m-5">
+    <Card :elevation="3" />
+  </div>
 </template>
 
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>
