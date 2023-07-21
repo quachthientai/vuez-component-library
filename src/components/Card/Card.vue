@@ -14,7 +14,7 @@ export default {
     }
   },
   computed: {
-    computedElevation() {
+    computedElevation() { 
       return `elevation-${this.elevation}`
     }
   }
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-  <div class="card" :class="computedElevation">asd</div>
+  <div class="card" :class="computedElevation"></div>
 </template>
 
 <style lang="scss" scoped>
