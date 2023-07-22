@@ -5,13 +5,17 @@ export default {
   components: {
     Card
   },
-  data() {}
+  data() {
+    return {
+
+    }
+  }
 }
 </script>
 
 <template>
   <div class="m-5">
-    <Card :elevation="3" />
+    <Card :elevation="1" :width="400" />
   </div>
 </template>
 
