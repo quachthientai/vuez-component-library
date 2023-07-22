@@ -15,7 +15,7 @@ export default {
 
 <template>
   <div class="m-5">
-    <Card :elevation="1" :width="400" />
+    <Card :elevation="1" outlined="false" class="w-full" />
   </div>
 </template>
 

@@ -14,10 +14,11 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.success('Success!')
-      this.$toast.info('Info!')
-      this.$toast.warning('Warning!')
-      this.$toast.error('Error!')
+      this.$toast.show('default', {timeOut: 5000});
+      this.$toast.success('Success!', {timeOut: 4000})
+      this.$toast.info('Info!', {timeOut: 3000})
+      this.$toast.warning('Warning!', {timeOut: 2000})
+      this.$toast.error('Error!', {timeOut: 1000})
     },
     clearToast() {
       this.$toast.clear()

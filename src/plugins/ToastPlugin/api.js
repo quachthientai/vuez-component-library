@@ -1,6 +1,7 @@
 import Toast from '@/components/Toast/Toast.vue'
 import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
+import { v4 } from 'uuid'
 
 const defaultOption = {
   type: 'default',
@@ -12,7 +13,31 @@ const defaultOption = {
   hideCloseButton: false
 }
 
-export const useToast = {
+// export const useToast = () => {
+//   return {
+//     show(message, option) {
+//       let vOption = option
+//         ? Object.assign({}, defaultOption, { text: message }, option)
+//         : Object.assign({}, defaultOption, { text: message })
+
+//       eventBus.emit('show-toast', vOption)
+//       return createShadowComponent(Toast, vOption, document.body, 'shadow-container')
+//     },
+
+//     success(message, option) {
+//       const typeObj = { type: 'success' }
+
+//       if (!option) return this.show(message, typeObj)
+
+//       let vOption = Object.assign(option, typeObj)
+
+//       return this.show(message, vOption)
+//     }
+//   }
+// }
+
+
+export const useToast =  {
   show(message, option) {
     try {
       if (!message) throw new Error('Invalid arguments!')
@@ -21,8 +46,8 @@ export const useToast = {
     }
 
     let vOption = option
-      ? Object.assign(defaultOption, { text: message }, option)
-      : Object.assign(defaultOption, { text: message })
+      ? Object.assign({}, defaultOption, { text: message }, option)
+      : Object.assign({}, defaultOption, { text: message })
 
     eventBus.emit('show-toast', vOption)
     return createShadowComponent(Toast, vOption, document.body, 'shadow-container')
