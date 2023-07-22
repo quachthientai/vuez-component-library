@@ -1,11 +1,11 @@
 <script>
-   import Button from '@/components/Button/Button.vue'
+import Button from '@/components/Button/Button.vue'
 
-   export default {
-      name: 'HomeView'
-   }
+export default {
+  name: 'HomeView'
+}
 </script>
 
 <template>
-   <div>This is home view</div>
+  <div>This is home view</div>
 </template>

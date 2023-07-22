@@ -5,57 +5,54 @@
 $dropdown-menu-width: theme('spacing.96');
 
 @layer base {
-   .dropdown {
-      @apply relative
-   }
-   .dropdown__menu {
-      transition: max-height 0.5s, border-width 0.1s;
-      @apply absolute z-50 bg-light text-dark dark:bg-dark dark:border-0 dark:border-slate-300/40 dark:text-light w-[12rem] text-sm mt-[5px] rounded-[5px] drop-shadow-[0px_1px_2px_rgba(0,0,0,0.25)] break-words overflow-hidden max-h-0;
+  .dropdown {
+    @apply relative;
+  }
+  .dropdown__menu {
+    transition: max-height 0.5s, border-width 0.1s;
+    @apply absolute z-50 bg-light text-dark dark:bg-dark dark:border-0 dark:border-slate-300/40 dark:text-light w-[12rem] text-sm mt-[5px] rounded-[5px] dark:shadow-elevation-4 shadow-elevation-2 break-words overflow-hidden max-h-0;
 
-      &.show{
-         @apply dark:border-[1px] max-h-40;
-      }
-         
-   }
+    &.show {
+      @apply dark:border-[1px] max-h-40;
+    }
+  }
 }
 
 @layer utilities {
-   @each $variant in variables.$variants {
-      .dropdown-#{$variant}, .dropdown-outline-#{$variant} {
-         @apply relative;
-         .dropdown__item {
-            @apply px-2 py-3;
-   
-            &:first-of-type{
-               @apply mt-2;
-            }
-      
-            &:last-of-type{
-               @apply mb-2;
-            }
-      
-            &:hover{
-               @apply text-dark dark:text-light overflow-hidden border-transparent border-l-[3px] bg-slate-300/20 border-#{$variant}-500;
-            }
-         }
-         
-      }
-      .dropdown {
-         .split {
-            display: flex;
-            gap: 1px;
-            > button {
-               &:first-of-type {
-                  @apply rounded-e-none p-[10px] focus:ring-2;
-               }
-   
-               &:last-of-type {
-                  @apply  p-[10px] focus:ring-2 rounded-s-none;
-               }
-               
-            }
-         }
-      }
+  @each $variant in variables.$variants {
+    .dropdown-#{$variant},
+    .dropdown-outline-#{$variant} {
+      @apply relative;
+      .dropdown__item {
+        @apply px-2 py-3;
 
-   }
+        &:first-of-type {
+          @apply mt-2;
+        }
+
+        &:last-of-type {
+          @apply mb-2;
+        }
+
+        &:hover {
+          @apply text-dark dark:text-light overflow-hidden border-transparent border-l-[3px] bg-slate-300/20 border-#{$variant}-500;
+        }
+      }
+    }
+    .dropdown {
+      .split {
+        display: flex;
+        gap: 1px;
+        > button {
+          &:first-of-type {
+            @apply rounded-e-none p-[10px] focus:ring-2;
+          }
+
+          &:last-of-type {
+            @apply p-[10px] focus:ring-2 rounded-s-none;
+          }
+        }
+      }
+    }
+  }
 }

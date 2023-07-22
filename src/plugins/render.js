@@ -1,9 +1,18 @@
 import { render, h } from 'vue'
 
-export const createComponent = (component, option, root) => {
-   var container = document.createElement('div');
-   container.classList.add('shadow-toast-container');
-   root.appendChild(container);
-   const toast = h(component,option)
-   render(toast,container)
+export const helper = (function () {
+  'use strict'
+
+  function _create(component, option, root, container) {}
+
+  function _get() {}
+})()
+
+export const createShadowComponent = (component, option, root, container) => {
+  var vContainer = document.createElement('div')
+  vContainer.classList.add(container)
+  root.appendChild(vContainer)
+
+  const vComponent = h(component, option)
+  render(vComponent, vContainer)
 }

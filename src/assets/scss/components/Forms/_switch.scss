@@ -7,14 +7,14 @@
   .switch {
     @apply inline-block w-[51px] h-[26px] cursor-pointer relative;
 
-    &__input[role="switch"] {
+    &__input[role='switch'] {
       @apply opacity-0 w-0 h-0;
     }
-    
-    &__slider{
+
+    &__slider {
       @apply absolute cursor-pointer inset-0 border-[2px] rounded-full transition-all border-slate-300 duration-100;
 
-      &:before{
+      &:before {
         @apply absolute content-[""] h-[18px] w-[18px] left-[2px] right-[1px] bottom-[2px] rounded-full bg-slate-300 transition-all duration-300;
       }
     }
@@ -23,33 +23,34 @@
 
 @layer utilities {
   @each $variant in variables.$variants {
-    .switch-#{$variant}{
-      input[role="switch"] {
+    .switch-#{$variant} {
+      input[role='switch'] {
         &:checked {
           + .switch__slider {
-            @apply border-#{$variant}-500 bg-#{$variant}-500;
+            @apply dark:bg-#{$variant}-500/90 border-#{$variant}-500 bg-#{$variant}-500;
           }
 
           + .switch__slider:before {
             @apply translate-x-[26px] bg-light;
           }
-          
+
           + &:focus {
             + .switch__slider {
               @apply ring-2 ring-offset-1 dark:ring-offset-dark dark:ring-#{$variant}-500/50 ring-#{$variant}-500/30;
             }
           }
-          
+
           ~ .switch__labels {
-            &:before, .onIcon {
+            &:before,
+            .onIcon {
               @apply opacity-100;
             }
 
-            &:after, .offIcon {
+            &:after,
+            .offIcon {
               @apply opacity-0;
             }
           }
-          
         }
 
         &:disabled {
@@ -65,9 +66,9 @@
         }
       }
 
-      .switch__labels{
+      .switch__labels {
         @apply text-dark font-extrabold text-[9px] dark:text-light;
-        
+
         .onIcon {
           @apply absolute top-2 left-2 opacity-0;
         }
@@ -75,7 +76,7 @@
         .offIcon {
           @apply absolute top-2 right-2 opacity-100;
         }
-        
+
         &:before {
           @apply opacity-0 left-[6px] top-[7px] ml-1 content-[attr(data-on)] absolute  transition-all ease-in-out duration-100;
         }
@@ -83,9 +84,6 @@
           @apply opacity-100 top-[7px] right-1 mr-1 content-[attr(data-off)] absolute  transition-all ease-in-out duration-100;
         }
       }
-      
     }
   }
 }
-
-

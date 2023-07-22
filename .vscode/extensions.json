@@ -2,6 +2,7 @@
   "recommendations": [
     "vue.volar",
     "vue.vscode-typescript-vue-plugin",
-    "fehey.brackets-light-pro"
+    "fehey.brackets-light-pro",
+    "aaron-bond.better-comments"
   ]
 }

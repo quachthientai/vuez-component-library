@@ -9,13 +9,13 @@
 
     &__input {
       @apply w-full h-full absolute opacity-0;
-      
+
       &:checked {
         ~ .checkbox__custom:after {
           @apply w-[5px] h-[9px] opacity-100;
         }
       }
-      
+
       &:disabled {
         + .checkbox__custom {
           @apply opacity-50 cursor-no-drop;
@@ -28,20 +28,19 @@
         }
       }
     }
-  
+
     + &__custom {
       @apply block w-full h-full absolute rounded-[3px] border-[2px] border-slate-300;
 
-      &:hover{
+      &:hover {
         @apply border-slate-400 cursor-pointer transition duration-100 ease-in;
       }
 
-      &:after { 
-        @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-light border-r-[2px] border-b-[2px] rotate-45; 
+      &:after {
+        @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-light border-r-[2px] border-b-[2px] rotate-45;
         transition: opacity 0.3s;
       }
     }
-
   }
 }
 
@@ -66,10 +65,7 @@
             }
           }
         }
-
-        
       }
     }
   }
 }
-

@@ -1,70 +1,63 @@
 @use '../utilities/variables';
 
-.btnGroup-custom{
-    @apply inline-flex rounded-[2px] text-white overflow-hidden;
+.btnGroup-custom {
+  @apply inline-flex rounded-[2px] text-white overflow-hidden;
 
-    > .btn{
-        @apply rounded-none;
+  > .btn {
+    @apply rounded-none;
 
-        &:focus{
-            @apply ring-0 ring-offset-0;
-        }
+    &:focus {
+      @apply ring-0 ring-offset-0;
     }
+  }
 }
 
-@layer base{
-    .btnGroup{
-        @apply  inline-flex   rounded-[5px]  text-white overflow-hidden;
-        
-        > button{
-            @apply  h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
-        }
+@layer base {
+  .btnGroup {
+    @apply inline-flex   rounded-[5px]  text-white overflow-hidden;
 
-        
-
-        //Pill  
-        
-
-        &-pill{
-            @apply rounded-full;
-        }
+    > button {
+      @apply h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
     }
 
-    //Custom
-    .custom{
-        
-        > .dropdown__menu{
-            @apply rounded-none;
+    //Pill
 
-            &:focus{
-                @apply ring-0 ring-offset-0;
-            }
-        }
-        &:first-of-type{
-            @apply rounded-l-lg;
-         }
-   
-         &:last-of-type{
-            @apply rounded-r-lg;
-         }
-
-        
-    } + .btnGroup{
-
+    &-pill {
+      @apply rounded-full;
     }
-    
+  }
+
+  //Custom
+  .custom {
+    > .dropdown__menu {
+      @apply rounded-none;
+
+      &:focus {
+        @apply ring-0 ring-offset-0;
+      }
+    }
+    &:first-of-type {
+      @apply rounded-l-lg;
+    }
+
+    &:last-of-type {
+      @apply rounded-r-lg;
+    }
+  }
+  + .btnGroup {
+  }
 }
 
-@layer utilities{
-    @each $variant in variables.$variants{
-        .btnGroup-#{$variant}{
-            > button {
-                @apply bg-#{$variant}-500;
-            }
+@layer utilities {
+  @each $variant in variables.$variants {
+    .btnGroup-#{$variant} {
+      > button {
+        @apply bg-#{$variant}-500;
+      }
 
-            > button:hover {
-                @apply bg-#{$variant}-600;
-            }
-        }
+      > button:hover {
+        @apply bg-#{$variant}-600;
+      }
     }
+  }
 }

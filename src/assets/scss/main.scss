@@ -1,5 +1,3 @@
-
-
 //Typo
 @use 'base/typography';
 @use 'base/reset';
@@ -12,24 +10,13 @@
 @use 'components/Forms/radio';
 @use 'components/dropdown';
 @use 'components/Toast/toast';
-//Reset 
+@use 'components/Card/card';
+//Reset
 // @layer base {
-   
-// } 
+
+// }
 
 // // Components Styles
 // @layer components {
-   
-// }   
 
-
-
-
-
-
-
-
-
-
-
-
+// }
