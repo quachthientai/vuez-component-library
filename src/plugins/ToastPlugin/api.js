@@ -13,31 +13,7 @@ const defaultOption = {
   hideCloseButton: false
 }
 
-// export const useToast = () => {
-//   return {
-//     show(message, option) {
-//       let vOption = option
-//         ? Object.assign({}, defaultOption, { text: message }, option)
-//         : Object.assign({}, defaultOption, { text: message })
-
-//       eventBus.emit('show-toast', vOption)
-//       return createShadowComponent(Toast, vOption, document.body, 'shadow-container')
-//     },
-
-//     success(message, option) {
-//       const typeObj = { type: 'success' }
-
-//       if (!option) return this.show(message, typeObj)
-
-//       let vOption = Object.assign(option, typeObj)
-
-//       return this.show(message, vOption)
-//     }
-//   }
-// }
-
-
-export const useToast =  {
+export const useToast = {
   show(message, option) {
     try {
       if (!message) throw new Error('Invalid arguments!')
