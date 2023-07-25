@@ -64,6 +64,7 @@ export default {
   <button
     type="button"
     role="button"
+    v-ripple
     :class="`
          ${btnClass}
          ${isUppercase ? 'uppercase' : 'capitalize'}

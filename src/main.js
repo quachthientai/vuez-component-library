@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from '../src/App.vue'
-import { clickOut } from './directives/clickOut'
+import { ClickOut } from './directives/click-outside'
+import { Ripple } from './directives/ripple'
 import { ToastPlugin } from '@/plugins/ToastPlugin/index.js'
 
 import '@/assets/scss/main.scss'
@@ -13,5 +14,6 @@ app
   .use(createPinia())
   .use(ToastPlugin)
   .use(router)
-  .directive('click-outside', clickOut)
+  .directive('ripple', Ripple)
+  .directive('click-outside', ClickOut)
   .mount('#app')
