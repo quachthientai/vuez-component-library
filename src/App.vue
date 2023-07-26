@@ -34,6 +34,7 @@ export default {
     <router-link to="/checkbox">Checkbox</router-link> |
     <router-link to="/radio">Radio</router-link> | <router-link to="/toast">Toast</router-link> |
     <router-link to="/card">Card</router-link> |
+    <router-link to="/drag-and-drop">Drag and Drop</router-link> |
   </div>
 
   <router-view />

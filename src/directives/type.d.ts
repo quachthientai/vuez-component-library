@@ -1,4 +1,4 @@
-export type Event = MouseEvent | PointerEvent
+export type Event = MouseEvent | PointerEvent | DragEvent 
 
 export interface Binding {
    value?: any,
