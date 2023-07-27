@@ -1,11 +1,11 @@
-import { Event } from "../type";
-import { Binding } from "../type";
+import { Event, Binding, HandleClickOutFunc } from "../type";
 
-function handleClickOut(event: Event, element: HTMLElement, binding: Binding) : void {
+const handleClickOut : HandleClickOutFunc = (event, element, binding) => {
   if(!(element === event.target || element.contains(event.target as HTMLElement))) {
     binding.value(event);
   }
 }
+
 
 export const ClickOut = {
   mounted(el: HTMLElement, binding?: Binding) {

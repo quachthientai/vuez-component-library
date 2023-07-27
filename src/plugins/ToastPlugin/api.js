@@ -1,7 +1,7 @@
 import Toast from '@/components/Toast/Toast.vue'
 import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
-import { v4 } from 'uuid'
+
 
 const defaultOption = {
   type: 'default',

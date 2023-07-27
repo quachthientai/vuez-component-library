@@ -14,8 +14,7 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.show()
-      this.$toast.show('default', {timeOut: 5000, position: 'top-right'});
+      this.$toast.show('default', {timeOut: 5000});
       this.$toast.success('Success!', {timeOut: 4000})
       this.$toast.info('Info!', {timeOut: 3000})
       this.$toast.warning('Warning!', {timeOut: 2000})
