@@ -1,13 +1,19 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import DragDopVue from '@/components/DragAndDrop/DragDop.vue'
 export default defineComponent({
     
 })
 </script>
 
 <template>
-    <DragDrop></DragDrop>
+    <div>
+    <!-- Example usage of the v-drag directive -->
+        <div v-drag="{ id: 1, name: 'Item 1' }">Item 1</div>
+        
+
+        <div v-drag="{ id: 2, name: 'Item 2' }" class="w-[100px] h-[100px] bg-slate-600"></div>
+    </div>
+    
 </template>
 
 <style lang="scss" scoped>
