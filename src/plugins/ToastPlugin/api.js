@@ -2,6 +2,7 @@ import Toast from '@/components/Toast/Toast.vue'
 import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
 
+
 const defaultOption = {
   type: 'default',
   text: "Hello I'm toast!",
@@ -21,8 +22,8 @@ export const useToast = {
     }
 Object.assign()
     let vOption = option
-      ? Object.assign(defaultOption, { text: message }, option)
-      : Object.assign(defaultOption, { text: message })
+      ? Object.assign({}, defaultOption, { text: message }, option)
+      : Object.assign({}, defaultOption, { text: message })
 
     eventBus.emit('show-toast', vOption)
     return createShadowComponent(Toast, vOption, document.body, 'shadow-container')

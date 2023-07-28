@@ -15,10 +15,11 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.success('Success!',{timeOut: 5000})
-
+      this.$toast.show('default', {timeOut: 5000});
+      this.$toast.success('Success!', {timeOut: 4000})
+      this.$toast.info('Info!', {timeOut: 3000})
+      this.$toast.warning('Warning!', {timeOut: 2000})
       this.$toast.error('Error!', {timeOut: 1000})
-      this.$toast.info('Info!', {pauseOnHover: true})
     },
     clearToast() {
       this.$toast.clear()

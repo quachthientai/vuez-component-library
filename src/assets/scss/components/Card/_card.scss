@@ -5,7 +5,32 @@
 @for $i from 1 through 5 {
   .elevation-#{$i} {
     @apply shadow-elevation-#{$i};
+  };
+};
+
+.card {
+  @apply p-3 flex flex-col gap-4 dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis;
+
+  &__header {
+    @apply flex flex-col;
+
+    &-title {
+      @apply text-h5 font-bold mb-0;
+    }
+
+    &-subtitle {
+      @apply  dark:text-slate-400 text-slate-500 text-content-5 p-0;
+    }
   }
+
+  &__content {
+    @apply  text-content-5 mb-0;
+  }
+
+  &__action {
+    @apply grid grid-cols-4 gap-2;
+  }
+  
 }
 
 // @layer utilities {

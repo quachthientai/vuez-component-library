@@ -1,49 +1,71 @@
 <script setup lang="ts">
-  import { computed, useAttrs } from 'vue'
-  // import {CardProps} from '@/components/Card/type';
+  import { ref, reactive, computed, onMounted, useAttrs, useSlots } from 'vue';
+  import Button from '../Button/Button.vue';
+  import Badge from '../Badge/Badge.vue';
+
+  // import { CardProps } from './type';
 
   interface CardProps {
-    elevation: number,
     title?: string,
     subtitle?: string,
-    text?: string,
-    isLoading?: boolean,
+    elevation?: number,
   }
-
+  
   const attrs = useAttrs();
-
+  
   const props = withDefaults(defineProps<CardProps>(), {
-    title: 'Card Title',
-    subtitle: 'Card Subtitle',
-    text: 'Card text',
-    isLoading: false,
     elevation: 0,
   })
 
   const computedElevation = computed(() => {
-    return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : '';
+    return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border dark:border-slate-300/30 border-slate-400/70`;
   })
 
-  const computedStyle = computed(() => {
-    return attrs.outlined ? 'border border-slate-300/70' : ''
-  })
-
+  onMounted(() => {
+    // console.log(slots)
+  }) 
+  
+  // const computedStyling = computed(() => {
+  //   return attrs.outlined ? `border dark:border-slate-300/30 border-slate-400/70` : '';
+  // })
+  
+  
 </script>
 
 <template>
-  <div class="card" v-drag :class="[computedElevation, computedStyle]">
-    <div class="card-header mb-5">
-      <div class="card-title text-[1.25rem] font-semibold">This is card</div>
-      <div class="card-subtitle text-[.85rem] text-slate-500">Subtitle</div>
-    </div>
-    <div class="card-content">
-      <div class="card-text text-[.3rem]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, saepe veritatis. Voluptates, libero expedita vero facere maiores sint rem vitae!</div>
-    </div>
+  <div class="card" :class="computedElevation">
+    <!-- Fallback content slot, if slot is apply -->
+    <slot>
+      <div class="card__header">
+        <div class="card__header-title">
+          <slot name="title">{{ $props.title }}</slot>
+        </div>
+
+        <div class="card__header-subtitle">
+          <slot name="sub-title">{{ $props.subtitle }}</slot>
+        </div>
+      </div>
+
+      <div class="card__content">
+        <slot name="content">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum placeat aut assumenda corrupti necessitatibus impedit earum velit eveniet aliquam nihil!
+        </slot>
+      </div>
+
+      <div class="card__action ">
+        <Button text="Action" class="mt-2" btnClass="btn btn-sm btn-primary"></Button>
+      </div>
+    </slot>
+
+    <!-- <slot name="title">
+
+    </slot> -->
+    
+    
   </div>
+  
 </template>
 
 <style lang="scss" scoped>
-.card {
-  @apply block relative rounded-md p-3 overflow-hidden text-ellipsis;
-}
+
 </style>

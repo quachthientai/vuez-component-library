@@ -3,22 +3,22 @@
 //base class
 @layer base {
   .btn {
-    @apply font-bold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px]  transition duration-100 ease-out hover:ease-in;
+    @apply relative font-bold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px] overflow-hidden  transition duration-100 ease-out hover:ease-in;
     a {
-      @apply tracking-wide text-base leading-[24px];
+      @apply tracking-wider text-[15px] leading-[24px];
     }
 
     &.btn-sm {
-      @apply h-[30px]  px-[13px];
+      @apply h-[30px] px-[13px];
       a {
-        @apply tracking-wide text-sm leading-[24px];
+        @apply tracking-wider text-sm leading-[24px];
       }
     }
 
     &.btn-lg {
       @apply h-[50px] px-[20px];
       a {
-        @apply tracking-wide text-lg leading-[24px];
+        @apply tracking-wider text-lg leading-[24px];
       }
     }
   }
@@ -40,7 +40,7 @@
       }
 
       &:focus {
-        @apply ring-4 ring-offset-0 ring-#{$variant}-500/70;
+        @apply ring-2 ring-offset-0 ring-#{$variant}-500/70;
       }
     }
   }
@@ -63,7 +63,7 @@
       }
 
       &:focus {
-        @apply ring-4 ring-offset-0 ring-#{$variant}-500/30;
+        @apply ring-2 ring-offset-0 ring-#{$variant}-500/30;
       }
     }
   }

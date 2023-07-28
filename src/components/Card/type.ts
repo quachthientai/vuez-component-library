@@ -1,4 +1,4 @@
 export interface CardProps {
-   width: number ,
-   elevation: number,
+   width?: number,
+   elevation?: number,
 }

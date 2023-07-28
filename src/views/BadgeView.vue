@@ -280,8 +280,14 @@ export default {
       <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2"></Badge>
     </Button>
 
-    <Button text="test badge" btnClass="btn btn-lg btn-primary relative mr-3 mt-3">
-      <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2"></Badge>
+    <Button text="test badge" btnClass="btn btn-primary relative mr-3 mt-3">
+
+      <span class="absolute -right-1.5 -top-1.5 flex">
+        <Badge badgeClass="badge absolute badge-pill-danger animate-ping"/>
+        <Badge badgeClass="badge badge-pill-danger"/>
+      </span>
+
+      <!-- <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2"></Badge> -->
     </Button>
   </div>
 </template>
