@@ -1,7 +1,7 @@
 import Toast from '@/components/Toast/Toast.vue'
 import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
-import { v4 } from 'uuid'
+
 
 const defaultOption = {
   type: 'default',
@@ -20,7 +20,7 @@ export const useToast = {
     } catch (e) {
       console.error(e)
     }
-
+Object.assign()
     let vOption = option
       ? Object.assign({}, defaultOption, { text: message }, option)
       : Object.assign({}, defaultOption, { text: message })

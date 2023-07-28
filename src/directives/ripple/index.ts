@@ -1,6 +1,7 @@
-import { Event } from "../type";
+import { HandleRippleFunc } from "../type";
 
-function handleRipple(event: Event, element: HTMLElement) : void {
+
+const handleRipple : HandleRippleFunc = (event, element) => {
    const circle = document.createElement("span");
    const diameter = Math.max(element.clientWidth, element.clientHeight);
    const radius = diameter / 2;
@@ -16,6 +17,9 @@ function handleRipple(event: Event, element: HTMLElement) : void {
    }
    element.appendChild(circle);
 }
+// function handleRipple(event: Event, element: HTMLElement) : void {
+   
+// }
 
    
 export const Ripple = {

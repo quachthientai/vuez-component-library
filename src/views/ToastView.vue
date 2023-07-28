@@ -1,6 +1,7 @@
 <script>
 // import Toast from '@/components/Toast/Toast.vue';
 import Button from '@/components/Button/Button.vue'
+import { times } from 'lodash'
 
 export default {
   name: 'ToastView',
@@ -14,8 +15,7 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.show()
-      this.$toast.show('default', {timeOut: 5000, position: 'top-right'});
+      this.$toast.show('default', {timeOut: 5000});
       this.$toast.success('Success!', {timeOut: 4000})
       this.$toast.info('Info!', {timeOut: 3000})
       this.$toast.warning('Warning!', {timeOut: 2000})
