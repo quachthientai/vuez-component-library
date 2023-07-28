@@ -19,7 +19,7 @@ export const useToast = {
     } catch (e) {
       console.error(e)
     }
-
+Object.assign()
     let vOption = option
       ? Object.assign(defaultOption, { text: message }, option)
       : Object.assign(defaultOption, { text: message })

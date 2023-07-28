@@ -1,6 +1,7 @@
 <script>
 // import Toast from '@/components/Toast/Toast.vue';
 import Button from '@/components/Button/Button.vue'
+import { times } from 'lodash'
 
 export default {
   name: 'ToastView',
@@ -14,10 +15,10 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.success('Success!')
-      this.$toast.info('Info!')
-      this.$toast.warning('Warning!')
-      this.$toast.error('Error!')
+      this.$toast.success('Success!',{timeOut: 5000})
+
+      this.$toast.error('Error!', {timeOut: 1000})
+      this.$toast.info('Info!', {pauseOnHover: true})
     },
     clearToast() {
       this.$toast.clear()

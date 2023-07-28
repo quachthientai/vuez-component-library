@@ -50,6 +50,11 @@ const routes = [
     path: '/card',
     name: 'card',
     component: () => import('@/views/CardView.vue')
+  },
+  {
+    path: '/drag-and-drop',
+    name: 'drag-and-drop',
+    component: () => import('@/views/DragDropView.vue')
   }
 ]
 
