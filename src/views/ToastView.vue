@@ -1,6 +1,7 @@
 <script>
 // import Toast from '@/components/Toast/Toast.vue';
 import Button from '@/components/Button/Button.vue'
+import { times } from 'lodash'
 
 export default {
   name: 'ToastView',
