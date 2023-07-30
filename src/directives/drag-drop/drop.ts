@@ -1,19 +1,22 @@
+import { event } from 'cypress/types/jquery';
 import { Event } from '../type'
 import { Binding } from '../type'
 
-export const Drop = {
-    mounted(el:HTMLElement, binding:Binding){
-        const target = document.querySelector('.dragging')
-        console.log(target.nodeType)
+const Drop = {
+    mounted(el:HTMLElement, binding:any){
+        
 
         el.addEventListener('dragover',function(ev:Event){
             ev.preventDefault();
-            
         })
 
-        el.addEventListener('drop',function(ev:Event){
+        el.addEventListener('drop',function(ev){
             ev.preventDefault();
-            this.appendChild(target)
+            let receiveData = document.getElementById(ev.dataTransfer.getData('test'));
+            
+            el.appendChild(receiveData)
         })
     }
 }
+
+export default Drop
