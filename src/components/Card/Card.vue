@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import { ref, reactive, computed, onMounted, useAttrs, toRef } from 'vue';
+  import { ref, reactive, computed, onMounted, useAttrs, useSlots } from 'vue';
   import Button from '../Button/Button.vue';
   import Badge from '../Badge/Badge.vue';
+
   // import { CardProps } from './type';
 
   interface CardProps {
@@ -11,17 +12,19 @@
   }
   
   const attrs = useAttrs();
+  
   const props = withDefaults(defineProps<CardProps>(), {
     elevation: 0,
   })
 
   const computedElevation = computed(() => {
-    return  props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border dark:border-slate-300/30 border-slate-400/70`;
+    return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border dark:border-slate-300/30 border-slate-400/70`;
   })
 
-  const test = function () {
-    console.log('hey')
-  }
+  onMounted(() => {
+    // console.log(slots)
+  }) 
+  
   // const computedStyling = computed(() => {
   //   return attrs.outlined ? `border dark:border-slate-300/30 border-slate-400/70` : '';
   // })
@@ -30,50 +33,39 @@
 </script>
 
 <template>
-  <div class="card p-3 flex flex-col gap-4" :class="computedElevation">
-    <div class="card-title flex flex-col">
-      <div class="title text-h5 font-bold mb-0">Title</div>
-      <div class="sub-title dark:text-slate-400 text-slate-500 text-content-5 p-0">Subtitle</div>
-    </div>
+  <div class="card" :class="computedElevation">
+    <!-- Fallback content slot, if slot is apply -->
+    <slot>
+      <div class="card__header">
+        <div class="card__header-title">
+          <slot name="title">{{ $props.title }}</slot>
+        </div>
 
-    <div class="card-content">
-      <div class="title text-content-5 mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum placeat aut assumenda corrupti necessitatibus impedit earum velit eveniet aliquam nihil!</div>
-    </div>
+        <div class="card__header-subtitle">
+          <slot name="sub-title">{{ $props.subtitle }}</slot>
+        </div>
+      </div>
 
-    <div class="action">
-      
-      <!-- <Badge
-        text="Primary"
-        icon="material-symbols:star-outline-rounded"
-        class="mr-2"
-        badgeClass="badge badge-pill-primary "
-      />
+      <div class="card__content">
+        <slot name="content">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum placeat aut assumenda corrupti necessitatibus impedit earum velit eveniet aliquam nihil!
+        </slot>
+      </div>
 
-      <Badge
-        text="Danger"
-        icon="material-symbols:star-outline-rounded"
-        class="mr-2"
-        badgeClass="badge badge-pill-danger "
-      /> -->
+      <div class="card__action ">
+        <Button text="Action" class="mt-2" btnClass="btn btn-sm btn-primary"></Button>
+      </div>
+    </slot>
 
-      <!-- <span class="relative flex m-3">
-        <Badge class="mr-2" badgeClass="badge absolute badge-pill-primary animate-ping"/>
-        <Badge class="mr-2" badgeClass="badge badge-pill-primary"/>
-      </span> -->
-      
+    <!-- <slot name="title">
 
-      
-
-      
-     
-    </div>
-    <Button text="Action" @click="test" class="mt-2" btnClass="btn btn-primary"></Button>
+    </slot> -->
+    
+    
   </div>
   
 </template>
 
 <style lang="scss" scoped>
-.card {
-  @apply w-[400px]  dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis;
-}
+
 </style>
