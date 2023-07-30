@@ -9,7 +9,7 @@ const isDragEvent = (e: Event) : e is DragEvent => {
 const handleDrop: HandleDrop = (event) => {
    if(isDragEvent(event)) {
       let receiveElement = document.getElementById(event.dataTransfer.getData('DragElement'));
-
+      receiveElement.classList.remove('invisible');
       if(receiveElement.hasAttribute('data-draggable')) {
          // put logic to process data
          console.log(JSON.parse(receiveElement.getAttribute('data-draggable')));

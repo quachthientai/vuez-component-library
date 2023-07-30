@@ -1,3 +1,4 @@
+
 @use '../utilities/variables';
 
 //base class
@@ -29,19 +30,19 @@
   //regular button variant
   @each $variant in variables.$variants {
     .btn-#{$variant} {
-      @apply outline-none border-none bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
+      @apply outline-none border-none dark:bg-#{$variant}-500/90 bg-#{$variant}-500;
 
       &:not([disabled]):hover {
         @apply bg-#{$variant}-600;
-      }
+      };
 
       a {
         @apply text-light;
       }
 
-      &:focus {
-        @apply ring-2 ring-offset-0 ring-#{$variant}-500/70;
-      }
+      // &:focus {
+      //   @apply ring-2 ring-offset-0 ring-#{$variant}-500/70;
+      // }
     }
   }
 
@@ -62,9 +63,9 @@
         @apply dark:text-#{$variant}-400/90 text-#{$variant}-500;
       }
 
-      &:focus {
-        @apply ring-2 ring-offset-0 ring-#{$variant}-500/30;
-      }
+      // &:focus {
+      //   @apply ring-2 ring-offset-0 ring-#{$variant}-500/30;
+      // }
     }
   }
 

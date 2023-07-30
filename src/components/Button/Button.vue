@@ -63,6 +63,7 @@ export default {
 <template>
   <button
     type="button"
+    tabindex="0"
     role="button"
     v-ripple
     :class="`
