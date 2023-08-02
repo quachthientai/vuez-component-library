@@ -9,6 +9,8 @@ const isDragEvent = (e: Event) : e is DragEvent => {
 const handleDrag: HandleDrag = (event, element) => {
    if(isDragEvent(event)) {
       event.dataTransfer.effectAllowed = 'move';
+      element.classList.add('dragging')
+      
       return event.dataTransfer.setData('DragElement', (event.target as HTMLElement).id);
    }
 }
@@ -24,8 +26,13 @@ export const Drag = {
          el.setAttribute('id', uuidv4());
       }
       
+      el.classList.add('draggable')
       el.draggable = true;
       el.addEventListener('dragstart', (ev) => handleDrag(ev, el))
+      el.addEventListener('dragend',()=>{
+         el.classList.remove('dragging')
+      })
+      
    },
    unmounted(el: HTMLElement, binding?: DirectiveBinding) {
       el.removeEventListener('dragstart', (ev) => handleDrag(ev, el))
