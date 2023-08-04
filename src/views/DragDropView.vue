@@ -24,14 +24,14 @@
       
       <!-- Drop zones -->
       <div class="flex">
-         <div v-drop class="border-4 mr-3 p-3 flex flex-col border-red-500 w-[500px] h-[700px]">
+         <div v-drop:horizontal class="border-4 mr-3 p-3 flex border-red-500 w-[500px] h-[700px]">
 
             <!-- <Card v-drag :elevation="1" class="mb-5" :outlined="false" title="This is title (props)" subtitle="This is subtitle (props)"/> -->
             
             
          </div>
 
-         <div v-drop class="border-4 p-3 flex flex-col border-blue-500 w-[500px] h-[700px]"></div>
+         <div v-drop:vertical class="border-4 p-3 flex flex-col border-blue-500 w-[500px] h-[700px]"></div>
       </div>
         
     </div>

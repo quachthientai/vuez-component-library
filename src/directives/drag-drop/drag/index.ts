@@ -42,7 +42,7 @@ export const Drag = {
       el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
       el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
    },
-   unmounted(el: HTMLElement, binding?: DirectiveBinding) {
+   unmounted(el: HTMLElement) {
       el.removeEventListener('dragstart', (ev) => handleDragStart(ev, el))
       el.removeEventListener('dragend', (ev) => handleDragEnd(ev,el))
    }

@@ -1,6 +1,12 @@
 import { Event, HandleEventDirective } from "@/directives/type";
+import { eventBus } from "@/utils/eventBus";
+import { DirectiveBinding, VNode, callWithAsyncErrorHandling } from "vue";
 
-import { DirectiveBinding, VNode } from "vue";
+// let option = {
+//    sortX: false,
+//    sortY: false,
+// }
+
 
 
 const isDragEvent = (e: Event) : e is DragEvent => {
@@ -21,7 +27,7 @@ const handleDrop: HandleEventDirective = (event) => {
 }
 
 
-function getDragAfterElement(container, y) : HTMLElement{
+function getDragAfterElement(container, event: Event, binding: DirectiveBinding ) : HTMLElement {
    
    const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')]
    
@@ -29,7 +35,9 @@ function getDragAfterElement(container, y) : HTMLElement{
    return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect()
       
-      const offset = y - box.top - box.height / 2
+      const offset = binding.arg == 'horizontal' ? event.clientX - box.left - box.width /2 : event.clientY - box.top - box.height / 2
+      // const offset = y - box.top - box.height / 2
+      // const offset = y - box.left - box.width / 2
       
       if(offset < 0 && offset > closest.offset) {
          return {offset: offset, element: child}   
@@ -44,34 +52,13 @@ function getDragAfterElement(container, y) : HTMLElement{
 
 }
 
-
-function moveWithAnimation(parent : HTMLElement, draggable : HTMLElement, afterElement : HTMLElement) {
-   let isTransitioning = true;
-
-   
-   const moveDirection = !afterElement || afterElement.previousElementSibling === draggable.nextElementSibling;
-   const animationTarget : any = moveDirection ? 
-        (afterElement ? afterElement.previousElementSibling : draggable.nextElementSibling) : draggable.previousElementSibling;
-
-   // animation
-   animationTarget.style.transform = `translateY(${moveDirection ? '-100%' : '100%'})`;
-   animationTarget.style.transition = "transform .3s";
-   
-   // animationTarget.classList.add('disable-transition')
-
-   animationTarget.ontransitionend = () => {
-      animationTarget.style.transition = "";
-      animationTarget.style.transform = "";
-      parent.insertBefore(draggable, afterElement);
-   };
-
-}
-
-const handleDragOver: HandleEventDirective = (event, element) => {
+const handleDragOver: HandleEventDirective = (event, element, binding) => {
    if(isDragEvent(event)) {
       event.preventDefault()
-
-      const afterElement = getDragAfterElement(element, event.clientY);
+      
+      // const afterElement = getDragAfterElement(element, event.clientY);
+      
+      const afterElement =getDragAfterElement(element, event, binding)
       const dragElement = document.querySelector('.dragging');
       // console.log(dragElement.previousElementSibling);
       
@@ -86,9 +73,14 @@ const handleDragOver: HandleEventDirective = (event, element) => {
 }
 
 export const Drop = {
+   beforeMount(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode){
+      if(!binding.arg || !(binding.arg == 'horizontal' || binding.arg == 'vertical') ){
+         throw new Error('Directive argument is not valid!')
+      }
+   },
+
    mounted(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode ) {
-      
-      el.addEventListener('dragover', (ev) => handleDragOver(ev,el));
+      el.addEventListener('dragover', (ev) => handleDragOver(ev,el,binding));
       el.addEventListener('drop', (ev) => handleDrop(ev,el))
    },
    unmounted(el: HTMLElement, binding?: DirectiveBinding) {
