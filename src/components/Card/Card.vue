@@ -53,7 +53,7 @@
       </div>
 
       <div class="card__action">
-        <Button text="Action" btnClass="btn btn-sm btn-primary"></Button>
+        <!-- <Button text="Action" btnClass="btn btn-sm btn-primary"></Button> -->
       </div>
     </slot>
     

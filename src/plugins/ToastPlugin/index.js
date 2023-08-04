@@ -5,6 +5,7 @@ export const ToastPlugin = {
   install(app, opts) {
     
     // const instance = new useToast('ssss')
+    console.log('ssss')
     const instance = useToast;
     
     app.config.globalProperties.$toast = instance

@@ -1,4 +1,4 @@
-import { Event, Binding, HandleDrag } from "@/directives/type"
+import { Event, HandleEventDirective } from "@/directives/type"
 import { DirectiveBinding } from "vue";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -6,21 +6,28 @@ const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
 }
 
-const handleDrag: HandleDrag = (event, element) => {
+const handleDragEnd: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
-      event.dataTransfer.effectAllowed = 'move';
+      element.classList.remove('dragging');
       
+   }
+}
+
+const handleDragStart: HandleEventDirective = (event, element) => {
+   if(isDragEvent(event)) {
+      
+      event.dataTransfer.effectAllowed = 'move';
       setTimeout(() => {
-         (event.target as HTMLElement).classList.add('invisible')
+         element.classList.add('dragging');
       },0)
       
-      return event.dataTransfer.setData('DragElement', (event.target as HTMLElement).id);
+      event.dataTransfer.setData('DragElement', element.id);
    }
 }
 
 export const Drag = {
    mounted(el: HTMLElement, binding?: DirectiveBinding) {
-
+      
       if(binding.value) {
          el.setAttribute('data-draggable', JSON.stringify(binding.value));
       }
@@ -28,12 +35,15 @@ export const Drag = {
       if(!el.id) {
          el.setAttribute('id', uuidv4());
       }
-      
+
       el.draggable = true;
-      el.addEventListener('dragstart', (ev) => handleDrag(ev, el))
-      
+      el.classList.add('draggable-item');
+
+      el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
+      el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
    },
    unmounted(el: HTMLElement, binding?: DirectiveBinding) {
-      el.removeEventListener('dragstart', (ev) => handleDrag(ev, el))
+      el.removeEventListener('dragstart', (ev) => handleDragStart(ev, el))
+      el.removeEventListener('dragend', (ev) => handleDragEnd(ev,el))
    }
 }

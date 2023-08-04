@@ -1,0 +1,19 @@
+.draggable-item.dragging {
+   // opacity: 0;
+  
+   // border: 2px dashed red;
+   // background: wheat;
+   // color: black;
+   // box-shadow: 0 0 10px gray;
+   background: none;
+   border: 2px black dashed;
+   
+}
+
+.disable-transition {
+   transition: none;
+}
+
+.draggable-item {
+   cursor: grabbing;
+}

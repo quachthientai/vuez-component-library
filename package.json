@@ -17,6 +17,7 @@
     "mitt": "^3.0.0",
     "pinia": "^2.0.32",
     "postcss": "^8.4.23",
+    "sortablejs": "^1.15.0",
     "stylelint-scss": "^5.0.1",
     "uuid": "^9.0.0",
     "vue": "^3.3.4",
