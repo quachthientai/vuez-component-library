@@ -21,6 +21,7 @@ const handleDrop: HandleEventDirective = (event) => {
       if(receiveElement.hasAttribute('data-draggable')) {
          // put logic to process data
          console.log(JSON.parse(receiveElement.getAttribute('data-draggable')));
+         // eventBus.emit('onDragOver', JSON.parse(receiveElement.getAttribute('data-draggable')));
       }
 
    }
@@ -35,7 +36,7 @@ function getDragAfterElement(container, event: Event, binding: DirectiveBinding 
    return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect()
       
-      const offset = binding.arg == 'horizontal' ? event.clientX - box.left - box.width /2 : event.clientY - box.top - box.height / 2
+      const offset = binding.arg == 'horizontal' ? event.clientX - box.left - box.width / 2 : event.clientY - box.top - box.height / 2
       // const offset = y - box.top - box.height / 2
       // const offset = y - box.left - box.width / 2
       
@@ -73,6 +74,7 @@ const handleDragOver: HandleEventDirective = (event, element, binding) => {
 }
 
 export const Drop = {
+
    beforeMount(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode){
       if(!binding.arg || !(binding.arg == 'horizontal' || binding.arg == 'vertical') ){
          throw new Error('Directive argument is not valid!')
@@ -84,8 +86,7 @@ export const Drop = {
       el.addEventListener('drop', (ev) => handleDrop(ev,el))
    },
    unmounted(el: HTMLElement, binding?: DirectiveBinding) {
-      el.removeEventListener('dragover', (ev) => handleDragOver(ev, el));
-      
+      el.removeEventListener('dragover', (ev) => handleDragOver(ev, el, binding));
       el.removeEventListener('drop', (ev) => handleDrop(ev,el))
    }
 }
