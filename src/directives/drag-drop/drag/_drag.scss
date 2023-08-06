@@ -5,10 +5,16 @@
    // background: wheat;
    // color: black;
    // box-shadow: 0 0 10px gray;
-   background: none;
+   opacity: 0;
    border: 2px black dashed;
    
 }
+
+.handle {
+   
+   color: white;
+}
+
 
 .disable-transition {
    transition: none;

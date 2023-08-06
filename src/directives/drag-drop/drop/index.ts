@@ -75,8 +75,8 @@ const handleDragOver: HandleEventDirective = (event, element, binding) => {
 
 export const Drop = {
 
-   beforeMount(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode){
-      if(!binding.arg || !(binding.arg == 'horizontal' || binding.arg == 'vertical') ){
+   beforeMount(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode) {
+      if(!binding.arg || !(binding.arg == 'horizontal' || binding.arg == 'vertical')) {
          throw new Error('Directive argument is not valid!')
       }
    },
