@@ -10,6 +10,7 @@ export const createShadowComponent = (component, option, root, container) => {
 }
 
 export const createSubComponent = (component, option, container, styleClass) => {
+  
   const vComponent = defineComponent({
     render() {
       return h(component, option)

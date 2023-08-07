@@ -572,6 +572,14 @@ export default {
       class="mr-2"
       appendIcon="ph:envelope-bold"
     ></Button>
+
+    <Button
+      btnClass="btn btn-plain"
+      class="mr-2"
+      text="asdasd"
+      :isLoading="false"
+      appendIcon="ph:envelope-bold"
+    ></Button>
   </div>
 </template>
 

@@ -67,8 +67,7 @@ export default {
     role="button"
     v-ripple
     :class="`
-         ${btnClass}
-         ${isUppercase ? 'uppercase' : 'capitalize'}
+         ${btnClass} ${isUppercase ? 'uppercase' : 'capitalize'}
          ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
          ${isLoading && !btnClass.includes('btn-icon-circle') ? 'pointer-events-none' : ''}`"
     :disabled="isDisabled"

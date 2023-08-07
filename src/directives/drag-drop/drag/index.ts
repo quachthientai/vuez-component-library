@@ -41,7 +41,7 @@ export const Drag = {
       if(binding.arg === 'options') {
          vOption = Object.assign({}, defaultOption, binding.value)
          if(vOption.handle) {
-            createSubComponent(ButtonVue, {btnClass:"btn btn-icon-circle btn-sm btn-outline-info",
+            createSubComponent(ButtonVue, {btnClass:"btn btn-icon-circle btn-plain",
             class:"mr-2",
             appendIcon:"fluent:drag-20-filled"}, el, 'handle')
          }

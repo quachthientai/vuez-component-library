@@ -21,9 +21,9 @@
      <div class="flex mb-3 ">
         <div v-drag="{id:1, name: 'test1'}" id="111" class="w-[100px] h-[100px] bg-red-600"></div>
 
-        <div v-drag:options="{handle: true}" class="w-[100px] h-[100px] bg-blue-600"></div>
+        <div v-drag:options="{handle: true}" class="w-[100px] h-[100px] bg-light border-4"></div>
 
-        <div v-drag:options="{handle: false}" class="w-[100px] h-[100px] bg-green-600"></div>
+        <div v-drag:options="{handle: true}" class="w-[100px] h-[100px] bg-green-600"></div>
 
         <div v-drag class="w-[100px] h-[100px] bg-yellow-600"></div>
      </div>
