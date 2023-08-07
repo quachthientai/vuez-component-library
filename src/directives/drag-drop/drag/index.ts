@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 const defaultOption = getOptions
 let vOption = null;
 let handleTarget = null;
+let cloneNode = null;
 
 const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
@@ -15,6 +16,10 @@ const isDragEvent = (e: Event) : e is DragEvent => {
 
 const handleDragEnd: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
+      if((event.target as HTMLElement).className.indexOf('handle') != -1) {
+         
+         document.body.removeChild(cloneNode)
+      }
       element.classList.remove('dragging');
    }
 }
@@ -23,10 +28,23 @@ const handleDragStart: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
       
       event.dataTransfer.effectAllowed = 'move';
-      setTimeout(() => {
+      
+      if((event.target as HTMLElement).className.indexOf('handle') != -1) {
+         cloneNode  = element.cloneNode(true) as HTMLElement
+         cloneNode.classList.add('cloneNode');
          
+         cloneNode.style.width = `${element.clientWidth}`;
+         cloneNode.style.height = `${element.clientHeight}`;
+
+         document.body.appendChild(cloneNode)
+
+         event.dataTransfer.setDragImage(cloneNode, 0,0);
+      }
+      
+      setTimeout(() => {
          element.classList.add('dragging');
       },0)
+      
       event.dataTransfer.setData('DragElement', element.id);
       
    }
@@ -58,23 +76,24 @@ export const Drag = {
             handleTarget = v.el;
             
             handleTarget.draggable = true
-            handleTarget.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
-            handleTarget.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
+
+            handleTarget.addEventListener('dragstart', (ev : Event) => handleDragStart(ev, el))
+            handleTarget.addEventListener('dragend', (ev : Event) => handleDragEnd(ev,el))
+            
          }
       }else {
          el.draggable = true
          el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
          el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
       }
-
       
       el.classList.add('draggable-item');
 
-      
-      
    },
    unmounted(el: HTMLElement) {
       el.removeEventListener('dragstart', (ev) => handleDragStart(ev, el))
       el.removeEventListener('dragend', (ev) => handleDragEnd(ev,el))
+      handleTarget.removeEventListener('dragstart', (ev : Event) => handleDragStart(ev, el))
+      handleTarget.removeEventListener('dragend', (ev : Event) => handleDragEnd(ev,el))
    }
 }

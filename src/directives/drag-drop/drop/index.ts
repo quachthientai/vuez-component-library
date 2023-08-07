@@ -17,12 +17,18 @@ const handleDrop: HandleEventDirective = (event) => {
    if(isDragEvent(event)) {
       
       let receiveElement = document.getElementById(event.dataTransfer.getData('DragElement'));
-      receiveElement.classList.remove('dragging');
-      if(receiveElement.hasAttribute('data-draggable')) {
-         // put logic to process data
-         console.log(JSON.parse(receiveElement.getAttribute('data-draggable')));
-         // eventBus.emit('onDragOver', JSON.parse(receiveElement.getAttribute('data-draggable')));
+
+      if(receiveElement) {
+         receiveElement.classList.remove('dragging');
+         
+         if(receiveElement.hasAttribute('data-draggable')) {
+            // put logic to process data
+            console.log(JSON.parse(receiveElement.getAttribute('data-draggable')));
+            // eventBus.emit('onDragOver', JSON.parse(receiveElement.getAttribute('data-draggable')));
+         }
       }
+      
+      
 
    }
 }
@@ -62,13 +68,15 @@ const handleDragOver: HandleEventDirective = (event, element, binding) => {
       const afterElement =getDragAfterElement(element, event, binding)
       const dragElement = document.querySelector('.dragging');
       // console.log(dragElement.previousElementSibling);
-      
-      if(afterElement == null) {
-         element.appendChild(dragElement);
-      }else {
-         // moveWithAnimation(element, dragElement as HTMLElement, afterElement);
-         element.insertBefore(dragElement, afterElement);
+      if(dragElement) {
+         if(afterElement == null && dragElement) {
+            element.appendChild(dragElement);
+         }else {
+            // moveWithAnimation(element, dragElement as HTMLElement, afterElement);
+            element.insertBefore(dragElement, afterElement);
+         }
       }
+      
       
    }
 }
