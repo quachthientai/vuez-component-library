@@ -1,19 +1,40 @@
 .draggable-item.dragging {
    // opacity: 0;
-  
    // border: 2px dashed red;
    // background: wheat;
    // color: black;
    // box-shadow: 0 0 10px gray;
    opacity: 0;
    border: 2px black dashed;
-   
 }
 
-.handle {
-   
-   color: black;
+.dragging {
+   opacity: 0;
 }
+// .handle {
+//    @apply absolute top-0 mr-1 right-0;
+// }
+span.handle {
+   @apply absolute top-0 mr-[6px] right-0;
+   content: '.....';
+   width: 11px;
+   height: 20px;
+   overflow: hidden;
+   line-height: 5px;
+   // border: 1px red solid;
+   cursor: move;
+   
+   vertical-align: middle;
+   
+   font-size: 20px;
+   
+   letter-spacing: 2px;
+   color: black;
+   // text-shadow: 1px 0 1px black;
+ }
+ span.handle::after {
+   content: '.. .. .. ';
+ }
 
 
 .disable-transition {
@@ -21,5 +42,6 @@
 }
 
 .draggable-item {
+   position: relative;
    cursor: grabbing;
 }

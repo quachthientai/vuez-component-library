@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const defaultOption = getOptions
 let vOption = null;
+let handleTarget = null;
 
 const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
@@ -23,10 +24,11 @@ const handleDragStart: HandleEventDirective = (event, element) => {
       
       event.dataTransfer.effectAllowed = 'move';
       setTimeout(() => {
+         
          element.classList.add('dragging');
       },0)
-      
       event.dataTransfer.setData('DragElement', element.id);
+      
    }
 }
 
@@ -38,15 +40,6 @@ export const Drag = {
    },
    mounted(el: HTMLElement, binding?: DirectiveBinding) {
       
-      if(binding.arg === 'options') {
-         vOption = Object.assign({}, defaultOption, binding.value)
-         if(vOption.handle) {
-            createSubComponent(ButtonVue, {btnClass:"btn btn-icon-circle btn-plain",
-            class:"mr-2",
-            appendIcon:"fluent:drag-20-filled"}, el, 'handle')
-         }
-      }
-
       if(binding.value && binding.arg !== 'options') {
          el.setAttribute('data-draggable', JSON.stringify(binding.value));
       }
@@ -55,13 +48,30 @@ export const Drag = {
          el.setAttribute('id', uuidv4());
       }
 
-      
+      if(binding.arg === 'options') {
+         vOption = Object.assign({}, defaultOption, binding.value)
+         
+         if(vOption.handle) {
+            const v = h('span', {id: `handle-${el.id}`, class: 'handle'});
+            render(v, el)
+            
+            handleTarget = v.el;
+            
+            handleTarget.draggable = true
+            handleTarget.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
+            handleTarget.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
+         }
+      }else {
+         el.draggable = true
+         el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
+         el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
+      }
 
-      el.draggable = true;
+      
       el.classList.add('draggable-item');
 
-      el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
-      el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
+      
+      
    },
    unmounted(el: HTMLElement) {
       el.removeEventListener('dragstart', (ev) => handleDragStart(ev, el))

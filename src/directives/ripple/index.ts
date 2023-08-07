@@ -18,18 +18,12 @@ const handleRipple : HandleRippleFunc = (event, element) => {
    circle.classList.add("ripple");
    const ripple = element.getElementsByClassName("ripple")[0];
 
-   
-
    if (ripple) {
       ripple.remove();
    }
    element.appendChild(circle);
 }
-// function handleRipple(event: Event, element: HTMLElement) : void {
-   
-// }
 
-   
 export const Ripple = {
    beforeMount(el: HTMLElement) {
       
