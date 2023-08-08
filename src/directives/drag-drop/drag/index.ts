@@ -17,7 +17,6 @@ const isDragEvent = (e: Event) : e is DragEvent => {
 const handleDragEnd: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
       if((event.target as HTMLElement).className.indexOf('handle') != -1) {
-         
          document.body.removeChild(cloneNode)
       }
       element.classList.remove('dragging');
@@ -32,9 +31,9 @@ const handleDragStart: HandleEventDirective = (event, element) => {
       if((event.target as HTMLElement).className.indexOf('handle') != -1) {
          cloneNode  = element.cloneNode(true) as HTMLElement
          cloneNode.classList.add('cloneNode');
-         
-         cloneNode.style.width = `${element.clientWidth}`;
-         cloneNode.style.height = `${element.clientHeight}`;
+
+         cloneNode.style.width = `${element.offsetWidth}`;
+         cloneNode.style.height = `${element.offsetHeight}`;
 
          document.body.appendChild(cloneNode)
 

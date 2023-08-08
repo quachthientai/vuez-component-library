@@ -1,10 +1,10 @@
 <script>
    import { eventBus } from '@/utils/eventBus';
-
+   import Card from '@/components/Card/Card.vue';
    export default {
       name: 'DragDropView',
       components: {
-
+         Card
       },
       data() {
          return {
@@ -19,6 +19,8 @@
      <!-- Draggable Elements -->
 
      <div class="flex mb-3 ">
+      
+
         <div v-drag="{id:1, name: 'test1'}" id="111" class="w-[100px] h-[100px] bg-red-600">asdasd</div>
 
         <div v-drag:options="{handle: true}" class="w-[100px] h-[100px] bg-blue-600">asdasd</div>
@@ -30,9 +32,13 @@
      
      <!-- Drop zones -->
      <div class="flex">
-        <div v-drop:horizontal class="border-4 mr-3 p-3 flex border-red-500 w-[500px] h-[700px]">
+        <div v-drop:vertical class="border-4 mr-3 p-3 flex-col border-red-500 w-[500px] h-[700px]">
 
-           <!-- <Card v-drag :elevation="1" class="mb-5" :outlined="false" title="This is title (props)" subtitle="This is subtitle (props)"/> -->
+         <Card v-drag:options="{handle: true}" :elevation="1" class="mb-5 w-[442px]" :outlined="true" title="This is title (props)" subtitle="This is subtitle (props)"></Card>
+
+         <Card v-drag:options="{handle: true}" :elevation="1" class="mb-5 w-[442px]" :outlined="true" title="This is title (props)" subtitle="This is subtitle (props)"></Card>
+
+         <Card v-drag:options="{handle: true}" :elevation="1" class="mb-5 w-[442px]" :outlined="true" title="This is title (props)" subtitle="This is subtitle (props)"></Card>
            
            
         </div>

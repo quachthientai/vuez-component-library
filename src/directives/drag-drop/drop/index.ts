@@ -2,13 +2,6 @@ import { Event, HandleEventDirective } from "@/directives/type";
 import { eventBus } from "@/utils/eventBus";
 import { DirectiveBinding, VNode, callWithAsyncErrorHandling } from "vue";
 
-// let option = {
-//    sortX: false,
-//    sortY: false,
-// }
-
-
-
 const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
 }
@@ -20,16 +13,13 @@ const handleDrop: HandleEventDirective = (event) => {
 
       if(receiveElement) {
          receiveElement.classList.remove('dragging');
-         
+
          if(receiveElement.hasAttribute('data-draggable')) {
             // put logic to process data
             console.log(JSON.parse(receiveElement.getAttribute('data-draggable')));
             // eventBus.emit('onDragOver', JSON.parse(receiveElement.getAttribute('data-draggable')));
          }
       }
-      
-      
-
    }
 }
 
@@ -62,11 +52,11 @@ function getDragAfterElement(container, event: Event, binding: DirectiveBinding 
 const handleDragOver: HandleEventDirective = (event, element, binding) => {
    if(isDragEvent(event)) {
       event.preventDefault()
-      
       // const afterElement = getDragAfterElement(element, event.clientY);
       
-      const afterElement =getDragAfterElement(element, event, binding)
+      const afterElement = getDragAfterElement(element, event, binding)
       const dragElement = document.querySelector('.dragging');
+
       // console.log(dragElement.previousElementSibling);
       if(dragElement) {
          if(afterElement == null && dragElement) {
