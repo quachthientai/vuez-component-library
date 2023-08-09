@@ -15,12 +15,13 @@ const defaultOption = {
 
 export const useToast = {
   show(message, option) {
+    
     try {
       if (!message) throw new Error('Invalid arguments!')
     } catch (e) {
       console.error(e)
     }
-Object.assign()
+    
     let vOption = option
       ? Object.assign({}, defaultOption, { text: message }, option)
       : Object.assign({}, defaultOption, { text: message })

@@ -18,7 +18,7 @@
   })
 
   const computedElevation = computed(() => {
-    return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border dark:border-slate-300/30 border-slate-400/70`;
+    return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border dark:border-slate-300/30 border-slate-400/30`;
   })
 
   onMounted(() => {
@@ -52,15 +52,10 @@
         </slot>
       </div>
 
-      <div class="card__action ">
-        <Button text="Action" class="mt-2" btnClass="btn btn-sm btn-primary"></Button>
+      <div class="card__action">
+        <!-- <Button text="Action" btnClass="btn btn-sm btn-primary"></Button> -->
       </div>
     </slot>
-
-    <!-- <slot name="title">
-
-    </slot> -->
-    
     
   </div>
   

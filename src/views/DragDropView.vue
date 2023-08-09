@@ -1,11 +1,17 @@
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue'
-import { eventBus } from '@/utils/eventBus';
-export default defineComponent({
-    
-})
+<script>
+   import { eventBus } from '@/utils/eventBus';
+   import Card from '@/components/Card/Card.vue';
+   export default {
+      name: 'DragDropView',
+      components: {
+         Card
+      },
+      data() {
+         return {
 
-
+         }
+      }
+   }
 </script>
 
 <template>
@@ -20,8 +26,8 @@ export default defineComponent({
       
       <!-- Drop zones -->
       <div class="flex absolute">
-         <div v-drop class="border-4 mr-3  border-red-500 w-[500px] h-[700px]"></div>
-         <div v-drop class="border-4  border-blue-500 w-[500px] h-[700px]"></div>
+         <div v-drop class="border-4 mr-3 flex border-red-500 w-[500px] h-[700px]"></div>
+         <div v-drop class="border-4 flex border-blue-500 w-[500px] h-[700px]"></div>
       </div>
         
     </div>
@@ -30,3 +36,4 @@ export default defineComponent({
 <style lang="scss" scoped>
 
 </style>
+

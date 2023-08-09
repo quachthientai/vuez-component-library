@@ -16,10 +16,10 @@ export default {
 <template>
   <div class="m-5 w-[400px]">
     Pass as props
-    <Card :elevation="1" class="mb-5" :outlined="false" title="This is title (props)" subtitle="This is subtitle (props)"></Card>
+    <Card :elevation="1" class="mb-5" :outlined="true" title="This is title (props)" subtitle="This is subtitle (props)"></Card>
 
     Using slots
-    <Card :elevation="2" :outlined="false" title="This is titlaaae"> 
+    <Card :elevation="2" :outlined="true" title="This is titlaaae"> 
       <template v-slot:title>This is title</template>
       <template v-slot:sub-title>This is subtitle</template>
       <template v-slot:content>This is content</template>

@@ -1,4 +1,7 @@
 @use '../utilities/variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 //base class
 @layer base {
@@ -28,22 +31,37 @@
 @layer utilities {
   //regular button variant
   @each $variant in variables.$variants {
-    .btn-#{$variant} {
-      @apply outline-none border-none bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
-
-      &:not([disabled]):hover {
-        @apply bg-#{$variant}-600;
+    
+    @if $variant == 'plain' {
+      .btn-plain {
+        @apply outline-none border-none 
       }
+    } @else {
+      .btn-#{$variant} {
+        @apply outline-none border-none dark:bg-#{$variant}-500/90 bg-#{$variant}-500;
 
-      a {
-        @apply text-light;
-      }
+        &:not([disabled]):hover {
+          @apply bg-#{$variant}-600;
+        };
 
-      &:focus {
-        @apply ring-2 ring-offset-0 ring-#{$variant}-500/70;
+        a {
+          @apply text-light;
+        }
       }
     }
-  }
+  } 
+    
+    
+
+    
+      
+    
+
+      // &:focus {
+      //   @apply ring-2 ring-offset-0 ring-#{$variant}-500/70;
+      // }
+    
+  
 
   //outline button variants
   @each $variant in variables.$variants {
@@ -62,9 +80,9 @@
         @apply dark:text-#{$variant}-400/90 text-#{$variant}-500;
       }
 
-      &:focus {
-        @apply ring-2 ring-offset-0 ring-#{$variant}-500/30;
-      }
+      // &:focus {
+      //   @apply ring-2 ring-offset-0 ring-#{$variant}-500/30;
+      // }
     }
   }
 
