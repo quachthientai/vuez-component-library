@@ -33,8 +33,6 @@ function getDragAfterElement(container, event: Event, binding: DirectiveBinding 
       const box = child.getBoundingClientRect()
       
       const offset = binding.arg == 'horizontal' ? event.clientX - box.left - box.width / 2 : event.clientY - box.top - box.height / 2
-      // const offset = y - box.top - box.height / 2
-      // const offset = y - box.left - box.width / 2
       
       if(offset < 0 && offset > closest.offset) {
          return {offset: offset, element: child}   
@@ -42,27 +40,21 @@ function getDragAfterElement(container, event: Event, binding: DirectiveBinding 
          return closest;
       }
 
-      
    }, {offset: Number.NEGATIVE_INFINITY}).element
-
-   
-
 }
 
 const handleDragOver: HandleEventDirective = (event, element, binding) => {
    if(isDragEvent(event)) {
+      
       event.preventDefault()
-      // const afterElement = getDragAfterElement(element, event.clientY);
       
       const afterElement = getDragAfterElement(element, event, binding)
       const dragElement = document.querySelector('.dragging');
 
-      // console.log(dragElement.previousElementSibling);
       if(dragElement) {
          if(afterElement == null && dragElement) {
             element.appendChild(dragElement);
          }else {
-            // moveWithAnimation(element, dragElement as HTMLElement, afterElement);
             element.insertBefore(dragElement, afterElement);
          }
       }
@@ -72,7 +64,6 @@ const handleDragOver: HandleEventDirective = (event, element, binding) => {
 }
 
 export const Drop = {
-
    beforeMount(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode) {
       if(!binding.arg || !(binding.arg == 'horizontal' || binding.arg == 'vertical')) {
          throw new Error('Directive argument is not valid!')

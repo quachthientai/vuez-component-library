@@ -1,6 +1,4 @@
 import { Event, HandleEventDirective } from "@/directives/type"
-import ButtonVue from "@/components/Button/Button.vue";
-import { createSubComponent } from "@/plugins/render";
 import { getOptions } from "./getOptions";
 import { DirectiveBinding, h, render } from "vue";
 import { v4 as uuidv4 } from 'uuid';
@@ -14,9 +12,13 @@ const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
 }
 
+const handleMouseOver: HandleEventDirective = (event, element) => {
+   element.style.cursor = 'move';
+}
+
 const handleDragEnd: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
-      if((event.target as HTMLElement).className.indexOf('handle') != -1) {
+      if(element.className.indexOf('handle') != -1) {
          document.body.removeChild(cloneNode)
       }
       element.classList.remove('dragging');
@@ -82,16 +84,18 @@ export const Drag = {
          }
       }else {
          el.draggable = true
+         
+         el.addEventListener('mouseover', (ev) => handleMouseOver(ev, el))
          el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
          el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
       }
-      
+   
       el.classList.add('draggable-item');
-
    },
    unmounted(el: HTMLElement) {
       el.removeEventListener('dragstart', (ev) => handleDragStart(ev, el))
       el.removeEventListener('dragend', (ev) => handleDragEnd(ev,el))
+      el.removeEventListener('mouseover', (ev) => handleMouseOver(ev, el))
       handleTarget.removeEventListener('dragstart', (ev : Event) => handleDragStart(ev, el))
       handleTarget.removeEventListener('dragend', (ev : Event) => handleDragEnd(ev,el))
    }
