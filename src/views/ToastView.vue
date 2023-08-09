@@ -15,11 +15,9 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.show('default');
-      this.$toast.success('Success!', {timeOut: 4000})
-      this.$toast.info('Info!', {timeOut: 3000})
-      this.$toast.warning('Warning!', {timeOut: 2000})
-      this.$toast.error('Error!', {timeOut: 1000})
+      
+      this.$toast.success('Success!', {timeOut: 0, onClickDismiss: true})
+      
     },
     clearToast() {
       this.$toast.clear()
@@ -31,8 +29,11 @@ export default {
 
 <template>
   <div>This is toast view</div>
+  <div class="flex flex-row-reverse">
 
-  <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast" />
+    <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast" />
 
-  <Button class="mt-3 ms-3" btnClass="btn btn-danger" @click="clearToast" text="clear toast" />
+    <Button class="ms-3" btnClass="btn btn-danger" @click="clearToast" text="clear toast" />
+  </div>
+  
 </template>

@@ -19,14 +19,32 @@
   @apply bottom-0;
 }
 
+.toast.animate {
+  opacity: 0;
+  transform: translateY(-300px);
+  transition: all 1s;
+}
+
+.test {
+  height: 76px;
+  margin-bottom: 5px;
+}
+
+.test.animate2 {
+  height: 0;
+  margin: 0;
+  transition: all .3s;
+}
+
+
 @layer base {
-  .toast {
-    @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
+  .toast{
+    @apply pointer-events-auto m-[10px] h-[76px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
 
     &__icon {
       @apply text-[30px] self-center;
     }
-
+    
     &__body {
       @apply self-center flex flex-col;
     }
@@ -35,6 +53,7 @@
       @apply absolute h-[4px] right-0 left-0 bottom-0;
     }
   }
+
 }
 
 @layer utilities {

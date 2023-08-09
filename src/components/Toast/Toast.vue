@@ -17,7 +17,8 @@ export default {
       isVisible: false,
       topContainer: null,
       bottomContainer: null,
-      transition: null
+      transition: null,
+      test:null,
     }
   },
   props: {
@@ -61,18 +62,33 @@ export default {
       let insertPos = this.position.includes('top') ? 'afterbegin' : 'beforeend'
       this.isVisible = true
       const shadowContainer = this.$refs.toast.parentElement
-      this.computedToastParent.insertAdjacentElement(insertPos, this.$refs.toast)
+      this.test = document.createElement('div');
+      this.test.classList.add('test');
+      this.test.appendChild(this.$refs.toast)
+      
+      this.computedToastParent.insertAdjacentElement(insertPos,this.test);
+      // this.computedToastParent.insertAdjacentElement(insertPos, this.$refs.toast);
+
       shadowContainer.remove()
+    },
+    dismissTransition() {
+      const el = this.$refs.toast
+      // this.isVisible = false
+      el.remove();
+      this.transition.finish()
+      
+      
     },
     dismissToast() {
       const el = this.$refs.toast
-
-      this.isVisible = false
-      this.transition.finish()
-
-      setTimeout(() => {
-        el.remove()
-      }, 1000)
+      el.classList.add('animate');
+      this.test.classList.add('animate2');
+      // this.isVisible = false
+      // this.transition.finish()
+      
+      // setTimeout(() => {
+      //   el.remove();
+      // }, 1000)
     },
     startDismissTimeout() {
       this.showToast()
@@ -195,14 +211,15 @@ export default {
 </script>
 
 <template>
-  <Transition :name="computedToastTransition">
+  <!-- <Transition :name="computedToastTransition"> -->
     <div
       ref="toast"
       :class="[computedType, computedPosition]"
       v-on="{
         click: this.onClickDismiss ? dismissToast : null,
         mouseover: this.pauseOnHover && this.timeOut > 0 ? handleHover : null,
-        mouseleave: this.pauseOnHover && this.timeOut > 0 ? handleLeave : null
+        mouseleave: this.pauseOnHover && this.timeOut > 0 ? handleLeave : null,
+        transitionend: this.dismissTransition
       }"
       class="toast"
       v-show="isVisible"
@@ -224,7 +241,7 @@ export default {
       </div>
       <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
     </div>
-  </Transition>
+  <!-- </Transition> -->
 </template>
 
 <style lang="scss" scoped></style>
