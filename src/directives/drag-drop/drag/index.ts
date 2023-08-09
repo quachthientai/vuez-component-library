@@ -1,4 +1,4 @@
-import { Event, HandleEventDirective } from "@/directives/type"
+import {Event, HandleEventDirective} from "@/directives/type";
 import ButtonVue from "@/components/Button/Button.vue";
 import { createSubComponent } from "@/plugins/render";
 import { getOptions } from "./getOptions";
