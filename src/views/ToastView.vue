@@ -16,8 +16,12 @@ export default {
   methods: {
     showToast() {
       
-      this.$toast.success('Success!', {timeOut: 0, onClickDismiss: true})
-      
+      this.$toast.success('Success!', {timeOut: 6000, onClickDismiss: true})
+      this.$toast.success('Success!', {timeOut: 4000, onClickDismiss: true})
+      this.$toast.success('Success!', {timeOut: 3000, onClickDismiss: true})
+      this.$toast.success('Success!', {timeOut: 1000, onClickDismiss: true})
+      this.$toast.success('Success!', {timeOut: 2000, onClickDismiss: true})
+      this.$toast.success('Success!', {timeOut: 1000, onClickDismiss: true})
     },
     clearToast() {
       this.$toast.clear()
