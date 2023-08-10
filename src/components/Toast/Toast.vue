@@ -61,34 +61,20 @@ export default {
     showToast() {
       let insertPos = this.position.includes('top') ? 'afterbegin' : 'beforeend'
       this.isVisible = true
-      const shadowContainer = this.$refs.toast.parentElement
-      this.test = document.createElement('div');
-      this.test.classList.add('test');
-      this.test.appendChild(this.$refs.toast)
-      
-      this.computedToastParent.insertAdjacentElement(insertPos,this.test);
-      // this.computedToastParent.insertAdjacentElement(insertPos, this.$refs.toast);
+      const shadowContainer = this.$refs.toastWrapper.parentElement
+      console.log(this.$refs.toastWrapper.parentElement)
+      this.computedToastParent.insertAdjacentElement(insertPos,this.$refs.toastWrapper);
 
       shadowContainer.remove()
     },
-    dismissTransition() {
-      const el = this.$refs.toast
-      // this.isVisible = false
-      el.remove();
+    dismissToast() {
+      const el = this.$refs.toastWrapper
+      this.isVisible = false
       this.transition.finish()
       
-      
-    },
-    dismissToast() {
-      const el = this.$refs.toast
-      el.classList.add('animate');
-      this.test.classList.add('animate2');
-      // this.isVisible = false
-      // this.transition.finish()
-      
-      // setTimeout(() => {
-      //   el.remove();
-      // }, 1000)
+      setTimeout(() => {
+        el.remove();
+      }, 1000)
     },
     startDismissTimeout() {
       this.showToast()
@@ -118,7 +104,6 @@ export default {
         this.bottomContainer = document.createElement('div')
         this.bottomContainer.classList.add('toast-bottom-container')
       }
-
       document.body.appendChild(this.topContainer)
       document.body.appendChild(this.bottomContainer)
     },
@@ -211,37 +196,76 @@ export default {
 </script>
 
 <template>
-  <!-- <Transition :name="computedToastTransition"> -->
-    <div
-      ref="toast"
-      :class="[computedType, computedPosition]"
+  <Transition :name="computedToastTransition">
+    <div class="toast-wrapper" 
+      ref="toastWrapper"
+      :class="computedPosition"
+      v-show="isVisible"
       v-on="{
         click: this.onClickDismiss ? dismissToast : null,
         mouseover: this.pauseOnHover && this.timeOut > 0 ? handleHover : null,
         mouseleave: this.pauseOnHover && this.timeOut > 0 ? handleLeave : null,
-        transitionend: this.dismissTransition
       }"
-      class="toast"
-      v-show="isVisible"
     >
-      <div class="toast__icon ms-2">
-        <Icon :icon="computedIcon" />
+      <div
+        ref="toast"
+        :class="computedType"
+        class="toast"
+      >
+        <div class="toast__icon ms-2">
+          <Icon :icon="computedIcon" />
+        </div>
+        <div class="toast__body">
+          <span class="font-semibold text-[15px]">
+            {{ this.text }}
+          </span>
+        </div>
+        <div class="toast__dismiss" :class="[hideCloseButton ? 'opacity-0' : '']">
+          <Button
+            btnClass="btn-icon-circle"
+            appendIcon="iconamoon:close-bold"
+            @click="dismissToast"
+          />
+        </div>
+        <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
       </div>
-      <div class="toast__body">
-        <span class="font-semibold text-[15px]">
-          {{ this.text }}
-        </span>
-      </div>
-      <div class="toast__dismiss" :class="[hideCloseButton ? 'opacity-0' : '']">
-        <Button
-          btnClass="btn-icon-circle"
-          appendIcon="iconamoon:close-bold"
-          @click="dismissToast"
-        />
-      </div>
-      <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
     </div>
-  <!-- </Transition> -->
+  </Transition>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.test1-leave-active {
+  transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.test1-enter-active {
+  transition: all .3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.test1-leave-to,
+.test1-enter-from {
+  height: 0;
+  padding: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  transform: translateY(-100px);
+}
+
+.fade-top-leave-active {
+  transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-top-enter-active {
+  transition: all .3s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.fade-top-leave-to,
+.fade-top-enter-from {
+  height: 0;
+  padding: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  transform: translateY(-100px);
+}
+
+</style>
