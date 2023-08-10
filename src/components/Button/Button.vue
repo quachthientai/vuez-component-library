@@ -65,7 +65,7 @@ export default {
     type="button"
     tabindex="0"
     role="button"
-    v-ripple
+    
     :class="`
          ${btnClass} ${isUppercase ? 'uppercase' : 'capitalize'}
          ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}

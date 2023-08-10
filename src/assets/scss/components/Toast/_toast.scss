@@ -1,5 +1,6 @@
 @use '../../utilities/variables';
 @use '../Toast/transition';
+
 @use 'sass:map';
 @tailwind base;
 @tailwind components;
@@ -21,7 +22,6 @@
 
 @layer base {
   .toast-wrapper {
-    border: red 1px solid;
     @apply flex items-center justify-around h-[95px] pointer-events-auto p-0;
   }
 

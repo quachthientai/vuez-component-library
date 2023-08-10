@@ -25,9 +25,9 @@ export default {
     type: {
       type: String,
       default: 'default',
-      validator(value) {
-        return Object.values(TYPE).includes(value)
-      }
+      // validator(value) {
+      //   return Object.values(TYPE).includes(value)
+      // }
     },
     text: {
       type: String,
@@ -234,38 +234,33 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.test1-leave-active {
-  transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
-}
 
-.test1-enter-active {
-  transition: all .3s cubic-bezier(0.55, 0, 0.1, 1);
-}
+  @mixin toast-transition {
+    @apply h-0 p-0 opacity-0;
+  }
 
-.test1-leave-to,
-.test1-enter-from {
-  height: 0;
-  padding: 0;
-  opacity: 0;
-  margin-bottom: 0;
-  transform: translateY(-100px);
-}
+  .fade-top-leave-active,
+  .fade-bottom-leave-active {
+    transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
 
-.fade-top-leave-active {
-  transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
-}
+  .fade-top-enter-active,
+  .fade-bottom-enter-active {
+    transition: all .3s cubic-bezier(0.55, 0, 0.1, 1);
+  }
 
-.fade-top-enter-active {
-  transition: all .3s cubic-bezier(0.55, 0, 0.1, 1);
-}
+  .fade-top-leave-to,
+  .fade-top-enter-from {
+    @include toast-transition;
+    margin-bottom: 0;
+    transform: translateY(-100px);
+  }
 
-.fade-top-leave-to,
-.fade-top-enter-from {
-  height: 0;
-  padding: 0;
-  opacity: 0;
-  margin-bottom: 0;
-  transform: translateY(-100px);
-}
+  .fade-bottom-leave-to,
+  .fade-bottom-enter-from {
+    @include toast-transition;
+    margin-top: 0;
+    transform: translateY(100px);
+  }
 
 </style>
