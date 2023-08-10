@@ -18,7 +18,6 @@ export default {
       topContainer: null,
       bottomContainer: null,
       transition: null,
-      test:null,
     }
   },
   props: {
