@@ -1,5 +1,6 @@
 @use '../../utilities/variables';
 @use '../Toast/transition';
+
 @use 'sass:map';
 @tailwind base;
 @tailwind components;
@@ -19,30 +20,20 @@
   @apply bottom-0;
 }
 
-.toast.animate {
-  opacity: 0;
-  transform: translateY(-300px);
-  transition: all .5s;
-}
-
-.test {
-  height: 76px;
-  margin-bottom: 5px;
-}
-
-.test.animate2 {
-  height: 0;
-  margin: 0;
-  transition: all .3s;
-}
-
-
 @layer base {
+  .toast-wrapper {
+    @apply flex items-center justify-around h-[95px] pointer-events-auto p-0;
+  }
+
   .toast{
-    @apply pointer-events-auto m-[10px] h-[76px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
+    @apply pointer-events-auto  h-[76px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
 
     &__icon {
       @apply text-[30px] self-center;
+    }
+
+    &__dismiss {
+      @apply flex items-center;
     }
     
     &__body {
