@@ -1,14 +1,22 @@
 import { Event, HandleEventDirective } from "@/directives/type";
 import { eventBus } from "@/utils/eventBus";
+import Sortable from "sortablejs";
 import { DirectiveBinding, VNode, callWithAsyncErrorHandling } from "vue";
 
 const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
 }
 
-const handleDrop: HandleEventDirective = (event) => {
+const sortAnimation = (e: any) => {
+   new Sortable (e, {
+      group: "shared",
+      animation: 150,
+   })
+}
+
+const handleDrop: HandleEventDirective = (event,element) => {
    if(isDragEvent(event)) {
-      
+      console.log('asdasds')
       let receiveElement = document.getElementById(event.dataTransfer.getData('DragElement'));
 
       if(receiveElement) {
@@ -20,6 +28,8 @@ const handleDrop: HandleEventDirective = (event) => {
             // eventBus.emit('onDragOver', JSON.parse(receiveElement.getAttribute('data-draggable')));
          }
       }
+      element.appendChild(receiveElement);
+      // sortAnimation(element);
    }
 }
 
@@ -48,16 +58,16 @@ const handleDragOver: HandleEventDirective = (event, element, binding) => {
       
       event.preventDefault()
       
-      const afterElement = getDragAfterElement(element, event, binding)
-      const dragElement = document.querySelector('.dragging');
-
-      if(dragElement) {
-         if(afterElement == null && dragElement) {
-            element.appendChild(dragElement);
-         }else {
-            element.insertBefore(dragElement, afterElement);
-         }
-      }
+      // const afterElement = getDragAfterElement(element, event, binding)
+      // const dragElement = document.querySelector('.dragging');
+      
+      // if(dragElement) {
+      //    if(afterElement == null && dragElement) {
+      //       element.appendChild(dragElement);
+      //    }else {
+      //       element.insertBefore(dragElement, afterElement);
+      //    }
+      // }
       
       
    }
@@ -71,8 +81,10 @@ export const Drop = {
    },
 
    mounted(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode ) {
+      sortAnimation(el);
       el.addEventListener('dragover', (ev) => handleDragOver(ev,el,binding));
       el.addEventListener('drop', (ev) => handleDrop(ev,el))
+      
    },
    unmounted(el: HTMLElement, binding?: DirectiveBinding) {
       el.removeEventListener('dragover', (ev) => handleDragOver(ev, el, binding));

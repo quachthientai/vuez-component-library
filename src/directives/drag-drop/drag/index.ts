@@ -1,12 +1,14 @@
 import { Event, HandleEventDirective } from "@/directives/type"
 import { getOptions } from "./getOptions";
-import { DirectiveBinding, h, render } from "vue";
+import { DirectiveBinding, VNode, h, render } from "vue";
 import { v4 as uuidv4 } from 'uuid';
 
 const defaultOption = getOptions
 let vOption = null;
 let handleTarget = null;
 let cloneNode = null;
+
+let dx = 0, dy = 0, draggedItem = undefined;
 
 const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
@@ -18,7 +20,7 @@ const handleMouseOver: HandleEventDirective = (event, element) => {
 
 const handleDragEnd: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
-      if(element.className.indexOf('handle') != -1) {
+      if((event.target as HTMLElement).className.indexOf('handle') != -1) {
          document.body.removeChild(cloneNode)
       }
       element.classList.remove('dragging');
@@ -29,6 +31,7 @@ const handleDragStart: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
       
       event.dataTransfer.effectAllowed = 'move';
+      draggedItem = event.target;
       
       if((event.target as HTMLElement).className.indexOf('handle') != -1) {
          cloneNode  = element.cloneNode(true) as HTMLElement
@@ -51,14 +54,14 @@ const handleDragStart: HandleEventDirective = (event, element) => {
    }
 }
 
+
 export const Drag = {
    beforeMount(el: HTMLElement, binding?: DirectiveBinding){
       if(binding.arg && binding.arg !== 'options') {
          throw new Error('Argument must be "options"')
       }
    },
-   mounted(el: HTMLElement, binding?: DirectiveBinding) {
-      
+   mounted(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode) {
       if(binding.value && binding.arg !== 'options') {
          el.setAttribute('data-draggable', JSON.stringify(binding.value));
       }
@@ -84,7 +87,6 @@ export const Drag = {
          }
       }else {
          el.draggable = true
-         
          el.addEventListener('mouseover', (ev) => handleMouseOver(ev, el))
          el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
          el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
