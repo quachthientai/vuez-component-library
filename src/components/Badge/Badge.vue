@@ -33,7 +33,6 @@ export default {
         return 'p-1'
       }
     },
-
     computedIconPosition: function () {
       if (this.text && this.icon) {
         return this.iconPosition === 'right' ? 'order-last ml-1' : 'order-first mr-1'
@@ -47,15 +46,9 @@ export default {
 <template>
   <span :class="[computedBadgeStyle, badgeClass]">
     <Icon class="badge-icon" :class="[computedIconPosition]" v-if="icon" :icon="icon" />
-    
       <template v-if="text">
         {{ text }}
       </template>
-    
-    
-    <!-- <span v-if="text">
-      {{ text }}
-    </span> -->
   </span>
 </template>
 

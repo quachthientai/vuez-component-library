@@ -1,5 +1,4 @@
 @use '../utilities/variables';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,9 +8,6 @@
     @apply bg-primary-500 px-1.5 py-0.5 inline-flex items-center text-xs font-semibold max-w-[10rem] text-light rounded-[.3rem];
   }
 
-  // .badge-icon {
-  //   @apply w-3.5 h-3.5;
-  // }
 }
 
 @layer utilities {
