@@ -10,7 +10,7 @@
 
          @apply bg-transparent bg-light dark:bg-dark border border-black border-dashed;
 
-         & > * {
+         > * {
             @apply opacity-0;
          }
          
@@ -31,56 +31,3 @@
       }
    }
 }
-// .draggable-item.dragging {
-//    background: none;
-//    border: 1px black dashed;
-// }
-
-// .draggable-item.dragging > * {
-//    opacity: 0;
-// } 
-
-// .draggable-item.cloneNode {
-//    position: absolute;
-//    top: 0;
-//    right: 0;
-//    z-index: -1;
-// }
-
-// // .draggable-item.hide {
-// //    display: none;
-// // }
-// // .handle {
-// //    @apply absolute top-0 mr-1 right-0;
-// // }
-// span.handle {
-//    @apply absolute top-[5px] right-[10px];
-//    content: '.....';
-//    width: 15px;
-//    height: 27px;
-//    overflow: hidden;
-//    line-height: 7px;
-//    // border: 1px red solid;
-//    cursor: move;
-   
-//    vertical-align: middle;
-//    font-weight: bold;
-//    font-size: 23px;
-   
-//    letter-spacing: 2px;
-//    @apply dark:text-light text-slate-400;
-//    // text-shadow: 1px 0 1px black;
-//  }
-//  span.handle::after {
-//    content: '.. .. .. ';
-//  }
-
-
-// .disable-transition {
-//    transition: none;
-// }
-
-// .draggable-item {
-//    position: relative;
-//    // cursor: grabbing;
-// }

@@ -7,6 +7,10 @@
   .btn {
     @apply relative font-bold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px] transition duration-100 ease-out hover:ease-in;
 
+    // &:not(.badge) {
+    //   @apply overflow-auto
+    // }
+
     a {
       @apply tracking-wider text-[15px] leading-[24px];
     }

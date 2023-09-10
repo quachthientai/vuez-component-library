@@ -5,7 +5,7 @@
 
 @layer base {
   .badge {
-    @apply bg-primary-500 px-1.5 py-0.5 inline-flex items-center text-xs font-semibold max-w-[10rem] text-light rounded-[.3rem];
+    @apply z-40 bg-primary-500 px-1.5 py-0.5 inline-flex items-center text-xs font-semibold max-w-[10rem] text-light rounded-[.3rem];
   }
 
 }

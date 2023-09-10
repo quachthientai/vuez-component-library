@@ -2,6 +2,7 @@
    "plugins": [
       "stylelint-scss"
    ],
+   "fix": true,
    "rules": {
       "at-rule-no-unknown": null,
       "selector-class-pattern": null,
@@ -9,6 +10,8 @@
       "no-descending-specificity": null,
       "at-rule-empty-line-before": null,
       "import-notation": "string",
+      "alpha-value-notation": "number",
+      "color-function-notation": "modern",
       "scss/at-rule-no-unknown": [
          true,
          {
