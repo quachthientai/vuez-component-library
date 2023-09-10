@@ -7,6 +7,7 @@
       @apply relative;
       
       &.dragging {
+
          @apply bg-transparent bg-light dark:bg-dark border border-black border-dashed;
 
          & > * {

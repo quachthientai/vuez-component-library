@@ -6,21 +6,25 @@
 
 @layer base {
   .badge {
-    @apply bg-primary-500 font-bold text-light rounded-[3px];
+    @apply bg-primary-500 px-1.5 py-0.5 inline-flex items-center text-xs font-semibold max-w-[10rem] text-light rounded-[.3rem];
   }
+
+  // .badge-icon {
+  //   @apply w-3.5 h-3.5;
+  // }
 }
 
 @layer utilities {
   @each $variant in variables.$variants {
     .badge-#{$variant} {
-      @apply bg-#{$variant}-500;
+      @apply bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
     }
     .badge-pill-#{$variant} {
-      @apply rounded-full dark:bg-#{$variant}-500/90 bg-#{$variant}-500;
+      @apply rounded-full bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
     }
   }
 
-  .badgeSlot-sm > * {
-    @apply px-[4px] py-[2px] text-[10px];
-  }
+  // .badgeSlot-sm > * {
+  //   @apply px-[4px] py-[2px] text-[10px];
+  // }
 }

@@ -31,10 +31,8 @@ export default {
 
 <template>
   <div>This is toast view</div>
-  <div class="flex flex-row-reverse">
-
+  <div class="flex flex-row-reverse me-3">
     <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast" />
-
     <Button class="ms-3" btnClass="btn btn-danger" @click="clearToast" text="clear toast" />
   </div>
   

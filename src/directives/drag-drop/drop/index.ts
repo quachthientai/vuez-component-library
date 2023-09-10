@@ -16,7 +16,7 @@ const sortAnimation = (e: any) => {
 
 const handleDrop: HandleEventDirective = (event,element) => {
    if(isDragEvent(event)) {
-      console.log('asdasds')
+      
       let receiveElement = document.getElementById(event.dataTransfer.getData('DragElement'));
 
       if(receiveElement) {
@@ -27,7 +27,7 @@ const handleDrop: HandleEventDirective = (event,element) => {
             console.log(JSON.parse(receiveElement.getAttribute('data-draggable')));
             // eventBus.emit('onDragOver', JSON.parse(receiveElement.getAttribute('data-draggable')));
          }
-      }
+      } 
       element.appendChild(receiveElement);
       // sortAnimation(element);
    }
@@ -35,9 +35,7 @@ const handleDrop: HandleEventDirective = (event,element) => {
 
 
 function getDragAfterElement(container, event: Event, binding: DirectiveBinding ) : HTMLElement {
-   
    const draggableElements = [...container.querySelectorAll('.draggable-item:not(.dragging)')]
-   
    
    return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect()
@@ -58,16 +56,16 @@ const handleDragOver: HandleEventDirective = (event, element, binding) => {
       
       event.preventDefault()
       
-      // const afterElement = getDragAfterElement(element, event, binding)
-      // const dragElement = document.querySelector('.dragging');
+      const afterElement = getDragAfterElement(element, event, binding)
+      const dragElement = document.querySelector('.dragging');
       
-      // if(dragElement) {
-      //    if(afterElement == null && dragElement) {
-      //       element.appendChild(dragElement);
-      //    }else {
-      //       element.insertBefore(dragElement, afterElement);
-      //    }
-      // }
+      if(dragElement) {
+         if(afterElement == null && dragElement) {
+            element.appendChild(dragElement);
+         }else {
+            element.insertBefore(dragElement, afterElement);
+         }
+      }
       
       
    }
@@ -81,7 +79,7 @@ export const Drop = {
    },
 
    mounted(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode ) {
-      sortAnimation(el);
+      // sortAnimation(el);
       el.addEventListener('dragover', (ev) => handleDragOver(ev,el,binding));
       el.addEventListener('drop', (ev) => handleDrop(ev,el))
       

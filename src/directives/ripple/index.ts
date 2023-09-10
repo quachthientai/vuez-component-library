@@ -2,7 +2,7 @@ import { HandleRippleFunc } from "../type";
 
 
 const handleRipple : HandleRippleFunc = (event, element) => {
-   
+   console.log(event)
    const circle = document.createElement("span");
 
    if(element.className.split(' ').includes('btn-plain')){
@@ -25,11 +25,7 @@ const handleRipple : HandleRippleFunc = (event, element) => {
 }
 
 export const Ripple = {
-   beforeMount(el: HTMLElement) {
-      
-   },
    mounted(el: HTMLElement | null) {
-      
       el.addEventListener('click', (event) => handleRipple(event, el));
    },
    unmounted(el: HTMLElement | null){

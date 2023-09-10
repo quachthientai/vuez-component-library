@@ -58,6 +58,8 @@ export default {
     }
   }
 }
+
+
 </script>
 
 <template>
@@ -97,7 +99,7 @@ export default {
             :class="this.$slots ? 'flex items-center justify-center' : ''"
           >
             <span>{{ text }}</span>
-            <div class="ml-1 flex items-center">
+            <div class=" flex items-center">
               <slot></slot>
             </div>
           </span>

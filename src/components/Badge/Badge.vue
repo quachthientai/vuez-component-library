@@ -26,17 +26,17 @@ export default {
     }
   },
   computed: {
-    computedBadgeStyle: function () {
-      if (!this.text && !this.icon) {
-        return 'inline-block w-4 h-4'
-      } else if (!this.text && this.icon) {
-        return 'px-1 py-1 inline-flex'
+    computedBadgeStyle: function() {
+      if(!this.text && !this.icon) {
+        return 'w-4 h-4'
+      } else if (this.icon && !this.text) {
+        return 'p-1'
       }
-      return 'inline-flex items-center justify-center px-2 py-1 text-xs'
     },
+
     computedIconPosition: function () {
       if (this.text && this.icon) {
-        return this.iconPosition === 'right' ? 'order-last' : 'order-first'
+        return this.iconPosition === 'right' ? 'order-last ml-1' : 'order-first mr-1'
       }
       return ''
     }
@@ -46,10 +46,16 @@ export default {
 
 <template>
   <span :class="[computedBadgeStyle, badgeClass]">
-    <Icon class="icon" :class="[computedIconPosition]" v-if="icon" :icon="icon" />
-    <span v-if="text">
+    <Icon class="badge-icon" :class="[computedIconPosition]" v-if="icon" :icon="icon" />
+    
+      <template v-if="text">
+        {{ text }}
+      </template>
+    
+    
+    <!-- <span v-if="text">
       {{ text }}
-    </span>
+    </span> -->
   </span>
 </template>
 
