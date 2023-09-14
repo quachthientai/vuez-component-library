@@ -1,6 +1,14 @@
 const handleValueChange = (e:any)=>{
     //event.target.value -> handle value
     //event.target -> point to the ref target
+    if(e.target.value.length < 3){
+        console.log('must be larger than 3')
+        const warningP = document.createElement("p")
+        const warningPText = document.createTextNode("Must be larger than 3")
+        warningP.appendChild(warningPText)
+        
+        e.target.after(warningP)
+    }
 }
 
 export const InputValidate = {
