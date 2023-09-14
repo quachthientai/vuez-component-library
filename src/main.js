@@ -6,6 +6,7 @@ import { Ripple } from './directives/ripple'
 import { ToastPlugin } from '@/plugins/ToastPlugin/index.js'
 import { Drag } from './directives/drag-drop/drag/index'
 import { Drop } from './directives/drag-drop/drop/index'
+import { InputValidate } from './directives/validate/validate'
 
 import '@/assets/scss/main.scss'
 import router from '@/router/index.js'
@@ -21,4 +22,5 @@ app
   .directive('click-outside', ClickOut)
   .directive('drag', Drag)
   .directive('drop', Drop)
+  .directive('validate',InputValidate)
   .mount('#app')
