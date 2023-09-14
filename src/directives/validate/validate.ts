@@ -1,5 +1,6 @@
-const validation = ()=>{
-    
+const handleValueChange = (e:any)=>{
+    //event.target.value -> handle value
+    //event.target -> point to the ref target
 }
 
 export const InputValidate = {
@@ -8,9 +9,7 @@ export const InputValidate = {
         console.log(el.value)
         switch (el.type) {
             case "email":
-                if(el.value == ''){
-                    console.log('null value')
-                }
+                el.addEventListener('input',handleValueChange) //onInput update value in realtime 
                 break;
             case "date":
                 break;
