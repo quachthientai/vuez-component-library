@@ -12,7 +12,7 @@
     elevation?: number,
   }
   console.log(CardTitle);
-  console.log(Button)
+  
   const attrs = useAttrs();
   
   const props = withDefaults(defineProps<CardProps>(), {

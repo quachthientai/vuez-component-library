@@ -1,26 +1,21 @@
-import { ComponentObjectPropsOptions, ComponentPropsOptions, PropType, defineComponent, h, ref } from "vue";
+import { ComponentObjectPropsOptions, defineComponent, h } from "vue";
 
-// export function createFunctional(name: string, type: string):void
-// export function createFunctional(name: string, p?:Object, type: string, class: string):void
-export function createFunctional(name: string, type: string) : void
-export function createFunctional(name: string, p?: Object, type?: string) : void
+//function overloading signatures
+export function createFunctional(name: string, type: string, klass?: string) : any
+export function createFunctional(name: string, type?: string, klass?: string, p?: Object) : any
 
-export function createFunctional(name: string, p?: Object, type?: string) {
-   return p !== undefined ? defineComponent({
+//Function implentation
+export function createFunctional(name: string, type?: string, klass?: string, p?: Object) : any {
+   const vProps = p !== undefined ? {...p } : null;
+   const vType = type !== undefined ? 'div' : type;
+   return defineComponent({
       name: name,
-      props: {
-         ...p as ComponentObjectPropsOptions
-      },
-      setup(props, {slots, emit}){
-         return() => {
-            return h(type, props, slots)
-         }
-      }
-   }) : defineComponent({
-      name: name,
-      setup(props, {slots, emit}){
-         return() => {
-            return h(type, slots)
+      props: vProps as ComponentObjectPropsOptions | null,
+      setup(props, {slots, emit}) {
+         return () => {
+            return p !== undefined 
+               ? h(vType, { class: klass, props: props }, slots?.default()) 
+               : h('div', { class: klass }, slots?.default())
          }
       }
    })

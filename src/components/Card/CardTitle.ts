@@ -1,12 +1,9 @@
-import { createFunctional } from "@/utils/createFC"
 
-export const CardTitle = createFunctional('v-card-title', {
+import { createFunctional } from "../../utils/createFunctional"
+
+export const CardTitle = createFunctional('v-card-title', 'div', 'card__header-title', {
    title: {
       type: String,
-      default: 'Card Title'
+      default: 'title prop'
    }
-}, 'div')
-
-
-
-// export const CardTitle = createFunctional()
+})
