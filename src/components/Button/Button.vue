@@ -1,11 +1,14 @@
 <script>
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
-
+import { Ripple } from '@/directives/ripple'
 export default {
   name: 'Button',
   components: {
     Icon
+  },
+  directives: {
+    ripple: Ripple
   },
   props: {
     text: {
@@ -58,8 +61,6 @@ export default {
     }
   }
 }
-
-
 </script>
 
 <template>

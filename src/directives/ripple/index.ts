@@ -1,14 +1,12 @@
 import { HandleRippleFunc } from "../type";
 import { createVNode } from "@/plugins/render";
-import { VNode, isVNode, render } from "vue";
 
 const handleRipple : HandleRippleFunc = (event, element) => {
    const container = element.getElementsByClassName("ripple")[0]
    const diameter = Math.max(element.clientWidth, element.clientHeight);
    const radius = diameter / 2;
-   const ripple = element.getElementsByClassName("ripple__effect")[0];
    
-   const circle = createVNode(
+   const effect = createVNode(
       'span',
       container, { 
          height: `${diameter}px`,
@@ -20,14 +18,11 @@ const handleRipple : HandleRippleFunc = (event, element) => {
       'ripple__effect'
    )
    
-   if (ripple) {
-      ripple.remove();
+   if (effect.el) {
+      (effect.el).remove();
    }
    
-   container.appendChild(circle.el as HTMLElement);
-  
-   
-   
+   container.appendChild(effect.el as HTMLElement);
 }
 
 export const Ripple = {

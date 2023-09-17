@@ -1,16 +1,18 @@
 <script setup lang="ts">
   import { ref, reactive, computed, onMounted, useAttrs, useSlots } from 'vue';
+  import { CardTitle } from './CardTitle';
   import Button from '../Button/Button.vue';
   import Badge from '../Badge/Badge.vue';
 
   // import { CardProps } from './type';
-
+  
   interface CardProps {
     title?: string,
     subtitle?: string,
     elevation?: number,
   }
-  
+  console.log(CardTitle);
+  console.log(Button)
   const attrs = useAttrs();
   
   const props = withDefaults(defineProps<CardProps>(), {
@@ -18,24 +20,15 @@
   })
 
   const computedElevation = computed(() => {
-    return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border dark:border-slate-300/30 border-slate-400/30`;
+    return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border border-2 dark:border-slate-300/30 border-slate-400/30`;
   })
 
-  onMounted(() => {
-    // console.log(slots)
-  }) 
-  
-  // const computedStyling = computed(() => {
-  //   return attrs.outlined ? `border dark:border-slate-300/30 border-slate-400/70` : '';
-  // })
-  
-  
 </script>
 
 <template>
   <div class="card" :class="computedElevation">
-    <!-- Fallback content slot, if slot is apply -->
-    <slot>
+    <CardTitle>{{ $props.title }}</CardTitle>
+    <!-- <slot>
       <div class="card__header">
         <div class="card__header-title">
           <slot name="title">{{ $props.title }}</slot>
@@ -53,14 +46,15 @@
       </div>
 
       <div class="card__action">
-        <!-- <Button text="Action" btnClass="btn btn-sm btn-primary"></Button> -->
+        <slot name="action">
+          <Button text="Primary Action" btnClass="btn btn-info"></Button>
+          <Button text="Secondary Action" btnClass="btn btn-plain"></Button>
+        </slot>
+        
       </div>
-    </slot>
+    </slot> -->
     
   </div>
   
 </template>
 
-<style lang="scss" scoped>
-
-</style>

@@ -3,15 +3,12 @@
 @tailwind utilities;
 
 span.ripple__effect {
-  @apply absolute rounded-[50%] animate-ripple;
+  @apply absolute rounded-[50%] animate-ripple ;
   transform: scale(0);
   background-color: rgb(222 219 219 / 0.485);
-};
+
+}
 
 div.ripple {
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
+  @apply rounded-[5px] overflow-hidden absolute top-0 bottom-0 w-full;
 }

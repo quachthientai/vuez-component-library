@@ -61,7 +61,7 @@ export default {
       let insertPos = this.position.includes('top') ? 'afterbegin' : 'beforeend'
       this.isVisible = true
       const shadowContainer = this.$refs.toastWrapper.parentElement
-      console.log(this.$refs.toastWrapper.parentElement)
+      // console.log(this.$refs.toastWrapper.parentElement)
       this.computedToastParent.insertAdjacentElement(insertPos,this.$refs.toastWrapper);
 
       shadowContainer.remove()
