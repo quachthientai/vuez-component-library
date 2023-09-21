@@ -32,19 +32,15 @@ class formValidate{
         this.maxLength = value
     }
 
-    public validateMinLength = (tag:HTMLInputElement):boolean=>{
-        if(Number(tag.value) == this.minLength){
-            return true
-        }else{
-            return true
+    public validateMinLength = (value:number):string=>{
+        if(value < this.minLength){
+            return `The input must have more than ${this.minLength} characters`
         }
     }
 
-    public validateMaxLength = (tag:HTMLInputElement):boolean=>{
-        if(Number(tag.value) == this.maxLength){
-            return true
-        }else{
-            return true
+    public validateMaxLength = (value:number):string=>{
+        if(value < this.maxLength){
+            return `The input must have less than ${this.maxLength} characters`
         }
     }
 
@@ -56,6 +52,6 @@ class formValidate{
         }
     }
 
-
-
 }
+
+export default formValidate
