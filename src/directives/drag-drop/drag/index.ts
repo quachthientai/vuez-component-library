@@ -29,12 +29,9 @@ const handleDragEnd: HandleEventDirective = (event, element) => {
 
 const handleDragStart: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
-      
       event.dataTransfer.effectAllowed = 'move';
-      // draggedItem = event.target;
       
       if((event.target as HTMLElement).className.indexOf('handle') != -1) {
-
          cloneNode = element.cloneNode(true) as HTMLElement
          cloneNode.classList.add('cloneNode');
 
@@ -73,15 +70,11 @@ export const Drag = {
 
       if(binding.arg === 'options') {
          vOption = Object.assign({}, defaultOption, binding.value)
-         
          if(vOption.handle) {
             const v = h('span', {id: `handle-${el.id}`, class: 'handle'});
             render(v, el)
-            
             handleTarget = v.el;
-            
             handleTarget.draggable = true
-
             handleTarget.addEventListener('dragstart', (ev: Event) => handleDragStart(ev, el))
             handleTarget.addEventListener('dragend', (ev: Event) => handleDragEnd(ev,el))
             

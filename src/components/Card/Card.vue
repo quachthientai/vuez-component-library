@@ -1,18 +1,13 @@
 <script setup lang="ts">
-  import { ref, reactive, computed, onMounted, useAttrs, useSlots } from 'vue';
-  import { CardTitle } from './CardTitle';
-  import Button from '../Button/Button.vue';
-  import Badge from '../Badge/Badge.vue';
-
-  // import { CardProps } from './type';
+  import { computed, useAttrs, useSlots } from 'vue';
+  import { CardHeader } from '../Card/CardHeader';
   
   interface CardProps {
     title?: string,
     subtitle?: string,
     elevation?: number,
   }
-  console.log(CardTitle);
-  
+
   const attrs = useAttrs();
   
   const props = withDefaults(defineProps<CardProps>(), {
@@ -27,7 +22,13 @@
 
 <template>
   <div class="card" :class="computedElevation">
-    <CardTitle>{{ $props.title }}</CardTitle>
+    
+    <CardHeader :title="$props.title" :subtitle="$props.subtitle"></CardHeader>
+    <CardHeader>
+      <template v-slot:title>sssss</template>
+      <template v-slot:subtitle>Subtitle</template>
+    </CardHeader>
+    
     <!-- <slot>
       <div class="card__header">
         <div class="card__header-title">

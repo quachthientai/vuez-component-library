@@ -30,6 +30,7 @@
     "@types/lodash": "^4.14.195",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
+    "@vue/babel-plugin-jsx": "^1.1.5",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/test-utils": "^2.3.0",
     "cypress": "^12.7.0",

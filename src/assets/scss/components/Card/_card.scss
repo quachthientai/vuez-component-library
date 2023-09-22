@@ -9,7 +9,7 @@
 };
 
 .card {
-  @apply p-[20px] flex flex-col gap-[16px] dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis ;
+  @apply p-[20px] flex flex-col gap-[16px] dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis min-h-[52px];
 
   &__header {
     @apply flex flex-col;
