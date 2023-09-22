@@ -1,5 +1,5 @@
-const colors = require("tailwindcss/colors");
-
+// const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme")
 module.exports =  {
   darkMode: 'class',
   content: [
@@ -8,6 +8,11 @@ module.exports =  {
     "./src/assets/scss/**/*.{vue,js,ts,jsx,tsx,scss}"
   ],
   theme: {
+    screens: {
+      'xxs': {'max': '300px'},
+      'xs': {'max': '475px'},
+      ...defaultTheme.screens
+    },
     extend: {
       boxShadow: {
         'elevation-1': '0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)',
@@ -117,7 +122,9 @@ module.exports =  {
           700: '#334155',
           800: '#1e293b',
           900: '#0f172a',
-        }
+        },
+        ...defaultTheme.colors
+        
       },
       textColor:{
         'light': '#E2E8F0',

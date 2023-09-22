@@ -1,35 +1,35 @@
 import { HandleRippleFunc } from "../type";
-
+import { createVNode } from "@/plugins/render";
 
 const handleRipple : HandleRippleFunc = (event, element) => {
-   
-   const circle = document.createElement("span");
-
-   if(element.className.split(' ').includes('btn-plain')){
-      circle.style.backgroundColor = 'rgba(186, 184, 184, 0.7)';
-   }
-
+   const container = element.getElementsByClassName("ripple")[0]
    const diameter = Math.max(element.clientWidth, element.clientHeight);
    const radius = diameter / 2;
-
-   circle.style.width = circle.style.height = `${diameter}px`;
-   circle.style.left = `${event.clientX - (element.offsetLeft + radius)}px`;
-   circle.style.top = `${event.clientY - (element.offsetTop + radius)}px`;
-   circle.classList.add("ripple");
-   const ripple = element.getElementsByClassName("ripple")[0];
-
-   if (ripple) {
-      ripple.remove();
+   
+   const effect = createVNode(
+      'span',
+      container, { 
+         height: `${diameter}px`,
+         width: `${diameter}px`,
+         top: `${event.clientY - (element.offsetTop + radius)}px`,
+         left: `${event.clientX - (element.offsetLeft + radius)}px`
+      },
+      null,
+      'ripple__effect'
+   )
+   
+   if (effect.el) {
+      (effect.el).remove();
    }
-   element.appendChild(circle);
+   
+   container.appendChild(effect.el as HTMLElement);
 }
 
 export const Ripple = {
-   beforeMount(el: HTMLElement) {
-      
+   created(el: HTMLElement | null) {
+      createVNode('div', el, null, null, 'ripple');
    },
    mounted(el: HTMLElement | null) {
-      
       el.addEventListener('click', (event) => handleRipple(event, el));
    },
    unmounted(el: HTMLElement | null){

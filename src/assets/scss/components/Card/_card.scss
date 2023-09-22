@@ -9,7 +9,7 @@
 };
 
 .card {
-  @apply p-3 flex flex-col gap-4 dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis;
+  @apply p-[20px] flex flex-col gap-[16px] dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis min-h-[52px];
 
   &__header {
     @apply flex flex-col;
@@ -19,20 +19,19 @@
     }
 
     &-subtitle {
-      @apply  dark:text-slate-400 text-slate-500 text-content-5 p-0;
+      @apply  dark:text-slate-400 text-slate-500 text-content-6 p-0;
     }
   }
 
   &__content {
-    @apply  text-content-5 mb-0;
+    @apply text-content-5 mb-0;
   }
 
   &__action {
-    @apply grid grid-cols-4 gap-2;
+    @apply flex;
+    > * {
+      @apply mr-2
+    }
   }
   
 }
-
-// @layer utilities {
-
-// };
