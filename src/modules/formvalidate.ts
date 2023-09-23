@@ -1,14 +1,32 @@
 class formValidate{
-    //Check if it is required
+    //Construction values
+    minLength:number = 3
+    maxLength:number = 100
+    format:RegExp
+    type:string
+    statement:string
+    private value: string | number | RegExp
+
     private required:boolean
-    constructor(required:boolean){
-        this.required = required
+    constructor(requirements:{
+        minLength?:number,
+        maxLength?:number,
+        format?:RegExp,
+        type:string,
+        statements?:string,
+        value: string | number| RegExp
+    }){
+        this.minLength = requirements.minLength
+        this.maxLength = requirements.maxLength
+        this.format = requirements.format
+        this.type = requirements.type
+        this.statement = requirements.statements
+        this.value = requirements.value
     }
 
     private emailFormat:RegExp = new RegExp('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')
     private zipCodeFormat:RegExp = new RegExp('^\d{5}(?:[-\s]\d{4})?$')
-    private minLength:number = 3
-    private maxLength:number = 100
+    
     
     private creditCardsCollection:{
         americanExpress:RegExp
@@ -32,15 +50,19 @@ class formValidate{
         this.maxLength = value
     }
 
-    public validateMinLength = (value:number):string=>{
-        if(value < this.minLength){
-            return `The input must have more than ${this.minLength} characters`
+    public validateMinLength = (value:string):string=>{
+        if(value.length < 3){
+            return `The input must have more than 3 characters`
+        }else{
+            return null
         }
     }
 
-    public validateMaxLength = (value:number):string=>{
-        if(value < this.maxLength){
-            return `The input must have less than ${this.maxLength} characters`
+    public validateMaxLength = (value:string):string=>{
+        if(value.length > 100){
+            return `The input must have less than 100 characters`
+        }else{
+            return null
         }
     }
 
