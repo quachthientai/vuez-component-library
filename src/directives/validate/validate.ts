@@ -3,31 +3,29 @@ import formValidate from "@/modules/formvalidate"
 const handleValueChange = (e:any)=>{
 
     const validateModel = new formValidate({type:e.target.type,value:e.target.value})
-    console.log(validateModel.validateMinLength(e.target.value))
-    // //event.target.value -> handle value
-    // //event.target -> point to the ref target
-    // const warningP = document.createElement("p")
-    // const warningPText = document.createTextNode("Must be larger than 3")
-    // warningP.appendChild(warningPText)
-    // if(e.target.value.length < 3){
-    //     console.log('must be larger than 3')
-    //     e.target.after(warningP)
-    // }else{
-    //     e.target
-    // }
+    const warningText = document.getElementById("form-warning-text")
+
+    if(!validateModel.validateMinLength(e.target.value)){    
+        warningText.classList.add("hidden")
+    }else{
+        warningText.classList.remove("hidden")
+    }
 }
 
 export const InputValidate = {
-
-    
-
     mounted(el:HTMLInputElement){
-        console.log(el.type)
-        console.log(el.value)
+        const warningP = document.createElement("p")
+        //Will have binding statement
+        const warningPText = document.createTextNode("Must be larger than 3")
+
+        //Fix it so it could become dynamic
+        warningP.appendChild(warningPText)
+        warningP.setAttribute("id", "form-warning-text")
+
         switch (el.type) {
             case "text":
-                el.addEventListener('input', handleValueChange)    
-                break;
+                el.after(warningP)
+                el.addEventListener('input', handleValueChange)
             case "email": 
                 break;
             case "date":
@@ -42,5 +40,8 @@ export const InputValidate = {
                 break;
         }
 
-    }
+    },
+    updated(el:HTMLInputElement) {
+
+    },
 }

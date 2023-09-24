@@ -50,19 +50,19 @@ class formValidate{
         this.maxLength = value
     }
 
-    public validateMinLength = (value:string):string=>{
+    public validateMinLength = (value:string):boolean=>{
         if(value.length < 3){
-            return `The input must have more than 3 characters`
+            return true
         }else{
-            return null
+            return false
         }
     }
 
-    public validateMaxLength = (value:string):string=>{
+    public validateMaxLength = (value:string):boolean=>{
         if(value.length > 100){
-            return `The input must have less than 100 characters`
+            return true
         }else{
-            return null
+            return false
         }
     }
 
