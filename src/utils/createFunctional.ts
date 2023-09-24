@@ -20,8 +20,8 @@ export function createFunctional(name: string, type?: string, klass?: string, p?
       setup(props, {slots, emit}) {
          return () => {
             return p !== undefined 
-               ? h(vType, { class: vKlass, props: props }, slots?.default()) 
-               : h(vType, { class: vKlass }, slots?.default())
+               ? h(vType, { class: vKlass, props: props }, slots.default?.()) 
+               : h(vType, { class: vKlass }, slots.default?.())
          }
       }
    })

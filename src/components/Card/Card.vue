@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import { computed, useAttrs, useSlots, ref } from 'vue';
   import { CardHeader } from '../Card/CardHeader';
-  
+  import { CardTitle } from '../Card/CardTitle';
+  import { CardSubtitle } from '../Card/CardSubtitle'
+  import { Icon } from '@iconify/vue';
+
   interface CardProps {
     title?: string,
     width?: number | string,
@@ -27,7 +30,17 @@
 
 <template>
   <div class="card" :style="{width: width + 'px'}" :class="[computedElevation]">
-    <!-- <CardHeader :title="$props.title" :subtitle="$props.subtitle"></CardHeader> -->
+
+    <!-- <CardHeader title="thisss" prependIcon="mdi-home" :subtitle="$props.subtitle"></CardHeader> -->
+
+    <!-- <CardHeader>
+      <CardTitle>ssss</CardTitle>
+      <CardSubtitle>asdasdad</CardSubtitle>
+    </CardHeader> -->
+
+
+
+
     <CardHeader  prependIcon="mdi-home">
       <template v-slot:title>This is title</template>
       <template v-slot:subtitle>This is subtitle</template>
