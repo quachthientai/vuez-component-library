@@ -19,7 +19,7 @@ export default {
 <template>
   <div class="m-5">
     Pass as props
-    <Card :elevation="1" class="mb-5 w-[500px]" title="this is card title" :outlined="true"  subtitle="This is subtitle (props)"></Card>
+    <Card :elevation="2" :width="500" title="this is card title"  subtitle="This is subtitle (props)"></Card>
 
     <!-- Using slots
     <Card :elevation="3" :outlined="true" subtitle="subtitle" title="This is titlaaae">

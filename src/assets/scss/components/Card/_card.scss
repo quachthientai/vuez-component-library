@@ -9,17 +9,34 @@
 };
 
 .card {
-  @apply p-[20px] flex flex-col gap-[16px] dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis min-h-[52px];
-
+  @apply p-[20px] gap-[16px] dark:bg-slate-700 bg-light rounded-md  min-h-[52px];
   &__header {
-    @apply flex flex-col;
+    display: grid;
+    gap: 1rem;
+    grid-template-areas: "prepend content append";
+    grid-template-columns: max-content auto max-content;
 
-    &-title {
-      @apply text-h5 font-bold mb-0;
+    &-prepend {
+      @apply self-center text-[1.8rem];
+      grid-area: prepend;
     }
 
-    &-subtitle {
-      @apply  dark:text-slate-400 text-slate-500 text-content-6 p-0;
+    &-append {
+      @apply self-center text-[1.8rem];
+      grid-area: append;
+    }
+
+    &-content {
+      @apply truncate;
+      grid-area: content;
+      
+      .card__title {
+        @apply text-h6 font-semibold mb-0 truncate;
+      }
+  
+      .card__subtitle {
+        @apply  dark:text-slate-400 text-slate-500 text-content-6 truncate p-0;
+      }
     }
   }
 

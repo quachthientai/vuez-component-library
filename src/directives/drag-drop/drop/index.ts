@@ -1,17 +1,8 @@
 import { Event, HandleEventDirective } from "@/directives/type";
-import { eventBus } from "@/utils/eventBus";
-import Sortable from "sortablejs";
 import { DirectiveBinding, VNode, callWithAsyncErrorHandling } from "vue";
 
 const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
-}
-
-const sortAnimation = (e: any) => {
-   new Sortable (e, {
-      group: "shared",
-      animation: 150,
-   })
 }
 
 const handleDrop: HandleEventDirective = (event,element) => {
@@ -25,11 +16,9 @@ const handleDrop: HandleEventDirective = (event,element) => {
          if(receiveElement.hasAttribute('data-draggable')) {
             // put logic to process data
             console.log(JSON.parse(receiveElement.getAttribute('data-draggable')));
-            // eventBus.emit('onDragOver', JSON.parse(receiveElement.getAttribute('data-draggable')));
          }
       } 
       element.appendChild(receiveElement);
-      // sortAnimation(element);
    }
 }
 
@@ -66,8 +55,6 @@ const handleDragOver: HandleEventDirective = (event, element, binding) => {
             element.insertBefore(dragElement, afterElement);
          }
       }
-      
-      
    }
 }
 

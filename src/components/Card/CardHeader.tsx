@@ -1,5 +1,6 @@
 import { ComponentObjectPropsOptions, defineComponent } from "vue";
 import { Icon } from "@iconify/vue";
+import { IconifyIcon } from "@iconify/types";
 import { CardTitle } from "./CardTitle";
 import { CardSubtitle } from "./CardSubtitle";
 
@@ -7,11 +8,11 @@ import { CardSubtitle } from "./CardSubtitle";
 const vProps : ComponentObjectPropsOptions = {
   title: {
     type: String,
-    default: 'Card Title'
+
   },
   subtitle: {
     type: String,
-    default: 'Card Subtitle'
+
   },
   appendIcon: {
     type: String,
@@ -21,6 +22,7 @@ const vProps : ComponentObjectPropsOptions = {
   }
 }
 
+
 export const CardHeader = defineComponent({
   name: 'CardHeader',
   props: vProps,
@@ -28,17 +30,26 @@ export const CardHeader = defineComponent({
     return () => {
       return (
         <div class="card__header">
-          <div class="card__header-title">
+          { props.prependIcon ?
+            <div class="card__header-prepend">
+              <Icon icon={ props.prependIcon as IconifyIcon } />
+            </div> : null }
+            
+          <div class="card__header-content">
             { !slots.title ? 
               <CardTitle> { props.title } </CardTitle> :
-              slots?.title() }
+              <div class="card__title"> { slots?.title() } </div> }
+            
+            { !slots.subtitle ?
+              <CardSubtitle> { props.subtitle } </CardSubtitle> :
+              <div class="card__subtitle"> { slots?.subtitle() } </div> }
           </div>
           
-          <div class="card__header-subtitle">
-            { !slots.subtitle ? 
-              <CardSubtitle> { props.subtitle } </CardSubtitle> :
-              slots?.subtitle() }
-          </div>
+          
+          { props.appendIcon ?
+            <div class="card__header-append">
+              <Icon icon={ props.appendIcon as IconifyIcon }/>
+            </div> : null }
         </div>
       );
     };

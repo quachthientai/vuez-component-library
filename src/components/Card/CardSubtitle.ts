@@ -1,3 +1,3 @@
 import { createFunctional } from "../../utils/createFunctional";
 
-export const CardSubtitle = createFunctional('v-card-subtitle', 'div')
+export const CardSubtitle = createFunctional('v-card-subtitle', 'div', 'card__subtitle')  

@@ -1,32 +1,36 @@
 <script setup lang="ts">
-  import { computed, useAttrs, useSlots } from 'vue';
+  import { computed, useAttrs, useSlots, ref } from 'vue';
   import { CardHeader } from '../Card/CardHeader';
   
   interface CardProps {
     title?: string,
+    width?: number | string,
     subtitle?: string,
     elevation?: number,
   }
 
   const attrs = useAttrs();
-  
+
   const props = withDefaults(defineProps<CardProps>(), {
     elevation: 0,
   })
 
+  const width = ref(props.width);
+  
   const computedElevation = computed(() => {
     return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border border-2 dark:border-slate-300/30 border-slate-400/30`;
   })
 
+
+
 </script>
 
 <template>
-  <div class="card" :class="computedElevation">
-    
-    <CardHeader :title="$props.title" :subtitle="$props.subtitle"></CardHeader>
-    <CardHeader>
-      <template v-slot:title>sssss</template>
-      <template v-slot:subtitle>Subtitle</template>
+  <div class="card" :style="{width: width + 'px'}" :class="[computedElevation]">
+    <!-- <CardHeader :title="$props.title" :subtitle="$props.subtitle"></CardHeader> -->
+    <CardHeader  prependIcon="mdi-home">
+      <template v-slot:title>This is title</template>
+      <template v-slot:subtitle>This is subtitle</template>
     </CardHeader>
     
     <!-- <slot>
