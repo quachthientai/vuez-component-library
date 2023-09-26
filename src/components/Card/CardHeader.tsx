@@ -1,4 +1,4 @@
-import { ComponentObjectPropsOptions, defineComponent } from "vue";
+import { ComponentObjectPropsOptions, getCurrentInstance, defineComponent } from "vue";
 import { Icon } from "@iconify/vue";
 import { IconifyIcon } from "@iconify/types";
 import { CardTitle } from "./CardTitle";
@@ -23,42 +23,49 @@ const vProps : ComponentObjectPropsOptions = {
 export const CardHeader = defineComponent({
   name: 'CardHeader',
   props: vProps,
+
   setup(props, {slots}) {
     const hasDefaultSlot = !!slots.default;
-    const hasTitleSlot = !!slots.title;
-    const hasSubtitleSlot = !!slots.subtitle;
+    const hasTitle = !!(slots.title || props.title);
+    const hasSubtitle= !!(slots.subtitle || props.subtitle);
+    const hasPrepend = !!(slots.prepend || props.prependIcon);
+    const hasAppend = !!(slots.append || props.appendIcon);
 
     return () => {
+
       return (
         <div class="card__header">
-          { props.prependIcon 
-            ? <div class="card__header-prepend">
-                <Icon icon={ props.prependIcon as IconifyIcon } />
-              </div> 
-            : null 
+          { hasPrepend &&
+            ( <div class="card__header-prepend">
+                  { props.prependIcon 
+                    ? <Icon icon={ props.prependIcon as IconifyIcon } />
+                    : slots.prepend?.() }
+              </div> )
           }
-            
-          <div class="card__header-content">
-            { !hasDefaultSlot 
-              && ( !hasTitleSlot
+  
+          { (hasDefaultSlot || hasTitle || hasSubtitle) && (
+            <div class="card__header-content">
+            { !hasDefaultSlot
+              && ( props.title
                   ? <CardTitle> { props.title ?? props.title } </CardTitle> 
                   : <div class="card__title"> {slots.title?.()} </div> ) 
             }
 
             { !hasDefaultSlot 
-              && ( !hasSubtitleSlot
+              && ( props.subtitle
                   ? <CardSubtitle> { props.subtitle ?? props.subtitle } </CardSubtitle>
                   : <div class="card__subtitle"> {slots.subtitle?.()} </div> ) 
             }
-            { slots.default?.()}
+            { slots.default?.() }
           </div>
-          
-          
-          { props.appendIcon 
-            ? <div class="card__header-append">
-                <Icon icon={ props.appendIcon as IconifyIcon }/>
-              </div> 
-            : null 
+          )}
+        
+          { hasAppend &&
+            ( <div class="card__header-append">
+                  { props.appendIcon 
+                    ? <Icon icon={ props.appendIcon as IconifyIcon } />
+                    : slots.append?.() }
+              </div> )
           }
         </div>
       );

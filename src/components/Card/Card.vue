@@ -31,20 +31,40 @@
 <template>
   <div class="card" :style="{width: width + 'px'}" :class="[computedElevation]">
 
-    <!-- <CardHeader title="thisss" prependIcon="mdi-home" :subtitle="$props.subtitle"></CardHeader> -->
+    <CardHeader>
+      <template v-slot:prepend>
+        <Icon icon="mdi:menu" />
+      </template>
+
+      <CardTitle>title</CardTitle>
+      <CardSubtitle>sub</CardSubtitle>
+
+      <template v-slot:append>
+        <Icon icon="mdi-dots-vertical" />
+      </template>
+
+    </CardHeader>
+
+    <CardHeader prependIcon="mdi:home" appendIcon="mdi-dots-vertical">
+      <template v-slot:title>title</template>
+      <template v-slot:subtitle>sub</template>
+    </CardHeader>
+
+    <CardHeader prependIcon="mdi:home" appendIcon="mdi-dots-vertical" title="title" subtitle="sub"></CardHeader>
 
     <!-- <CardHeader>
-      <CardTitle>ssss</CardTitle>
-      <CardSubtitle>asdasdad</CardSubtitle>
+      
+      
+      
     </CardHeader> -->
 
 
 
 
-    <CardHeader  prependIcon="mdi-home">
+    <!-- <CardHeader prependIcon="mdi-home" appendIcon="mdi-dots-vertical">
       <template v-slot:title>This is title</template>
       <template v-slot:subtitle>This is subtitle</template>
-    </CardHeader>
+    </CardHeader> -->
     
     <!-- <slot>
       <div class="card__header">
