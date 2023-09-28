@@ -9,20 +9,20 @@
 };
 
 .card {
-  @apply p-[20px] gap-[16px] dark:bg-slate-700 bg-light rounded-md  min-h-[52px];
+  @apply p-[1rem] dark:bg-slate-700 bg-light rounded-md  min-h-[1rem];
   &__header {
     display: grid;
     grid-template-areas: "prepend content append";
     grid-template-columns: max-content auto max-content;
 
     &-prepend {
-      @apply self-center text-[1.6rem];
+      @apply self-center text-[1.5rem];
       grid-area: prepend;
       margin-right: 1rem;
     }
 
     &-append {
-      @apply self-center text-[1.6rem];
+      @apply self-center text-[1.5rem];
       grid-area: append;
       margin-left: 1rem;
     }

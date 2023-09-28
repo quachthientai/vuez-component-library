@@ -45,12 +45,13 @@
 
     </CardHeader>
 
-    <CardHeader prependIcon="mdi:home" appendIcon="mdi-dots-vertical">
+    <CardHeader></CardHeader>
+    <!-- <CardHeader prependIcon="mdi:home" appendIcon="mdi-dots-vertical">
       <template v-slot:title>title</template>
       <template v-slot:subtitle>sub</template>
     </CardHeader>
 
-    <CardHeader prependIcon="mdi:home" appendIcon="mdi-dots-vertical" title="title" subtitle="sub"></CardHeader>
+    <CardHeader prependIcon="mdi:home" appendIcon="mdi-dots-vertical" title="title" subtitle="sub"></CardHeader> -->
 
     <!-- <CardHeader>
       
