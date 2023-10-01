@@ -9,29 +9,56 @@
 };
 
 .card {
-  @apply p-[20px] flex flex-col gap-[16px] dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis min-h-[52px];
-
+  @apply dark:bg-slate-700 bg-light rounded-md  min-h-[1rem];
   &__header {
-    @apply flex flex-col;
+    @apply p-[1.2rem];
+    display: grid;
+    grid-template-areas: "prepend content append";
+    grid-template-columns: max-content auto max-content;
 
-    &-title {
-      @apply text-h5 font-bold mb-0;
+    &-prepend {
+      @apply self-center justify-center text-[1.4rem];
+      grid-area: prepend;
+      margin-right: 1.4rem;
     }
 
-    &-subtitle {
-      @apply  dark:text-slate-400 text-slate-500 text-content-6 p-0;
+    &-append {
+      @apply self-center text-[1.4rem];
+      grid-area: append;
+      margin-left: 1.4rem;
+      
+    }
+
+    &-content {
+      @apply truncate;
+      grid-area: content;
+      
+      .card__title {
+        @apply text-h6 font-semibold mb-0 truncate;
+      }
+  
+      .card__subtitle {
+        @apply  dark:text-slate-400 text-slate-500 text-content-6 truncate p-0;
+      }
     }
   }
 
-  &__content {
-    @apply text-content-5 mb-0;
+  &__text {
+    @apply p-[1.2rem] text-content-5 text-justify mb-0;
   }
 
-  &__action {
-    @apply flex;
-    > * {
-      @apply mr-2
-    }
+  &__header + &__text, &__header + &__action {
+    @apply pt-0;
   }
   
+  &__action {
+    @apply flex items-center p-[1.2rem];
+    > * {
+      @apply mr-2;
+    }
+  }
+
+  &.outlined {
+    @apply border-2 dark:border-slate-300/30 border-slate-400/30;
+  }
 }

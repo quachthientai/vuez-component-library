@@ -8,8 +8,6 @@ let vOption = null;
 let handleTarget = null;
 let cloneNode = null;
 
-// let dx = 0, dy = 0, draggedItem = undefined;
-
 const isDragEvent = (e: Event) : e is DragEvent => {
    return e.constructor.name === 'DragEvent';
 }

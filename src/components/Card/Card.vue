@@ -1,60 +1,60 @@
 <script setup lang="ts">
-  import { computed, useAttrs, useSlots } from 'vue';
+  import { computed, useAttrs, useSlots, ref } from 'vue';
   import { CardHeader } from '../Card/CardHeader';
+  import { CardTitle } from '../Card/CardTitle';
+  import { CardSubtitle } from '../Card/CardSubtitle';
+  import { CardAction } from '../Card/CardAction';
+  import { CardText } from '../Card/CardText';
+
+  import Button from '@/components/Button/Button.vue';
+
   
+
+
   interface CardProps {
     title?: string,
+    text?: string,
+    width?: number | string,
     subtitle?: string,
     elevation?: number,
   }
 
   const attrs = useAttrs();
-  
+
   const props = withDefaults(defineProps<CardProps>(), {
     elevation: 0,
   })
 
+  const width = ref(props.width);
+  
   const computedElevation = computed(() => {
     return props.elevation > 0 && !attrs.outlined ? `elevation-${props.elevation}` : `border border-2 dark:border-slate-300/30 border-slate-400/30`;
   })
 
+
+
 </script>
 
 <template>
-  <div class="card" :class="computedElevation">
-    
-    <CardHeader :title="$props.title" :subtitle="$props.subtitle"></CardHeader>
-    <CardHeader>
-      <template v-slot:title>sssss</template>
-      <template v-slot:subtitle>Subtitle</template>
-    </CardHeader>
-    
-    <!-- <slot>
-      <div class="card__header">
-        <div class="card__header-title">
-          <slot name="title">{{ $props.title }}</slot>
-        </div>
+  <div class="card" :style="{width: width + 'px'}" :class="[computedElevation]">
 
-        <div class="card__header-subtitle">
-          <slot name="sub-title">{{ $props.subtitle }}</slot>
-        </div>
-      </div>
+    <!-- <CardHeader prependIcon="mdi-menu">
+      <CardTitle>Card Title</CardTitle>
+      <CardSubtitle>Card Subtitle</CardSubtitle>
+    </CardHeader> -->
 
-      <div class="card__content">
-        <slot name="content">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum placeat aut assumenda corrupti necessitatibus impedit earum velit eveniet aliquam nihil!
-        </slot>
-      </div>
 
-      <div class="card__action">
-        <slot name="action">
-          <Button text="Primary Action" btnClass="btn btn-info"></Button>
-          <Button text="Secondary Action" btnClass="btn btn-plain"></Button>
-        </slot>
-        
+    <CardText class="card-text">
+      <div class="font-bold mb-1 text-[1.2em]">
+        Lorem
       </div>
-    </slot> -->
-    
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi corporis id ullam dolorem dolorum quaerat tenetur blanditiis aut voluptas eveniet eos facilis rerum, pariatur at.
+    </CardText>
+
+    <!-- <CardAction>
+      <Button text="ACTION 1" class="mr-3" btnClass="btn btn-info"></Button>
+      <Button text="ACTION 2" btnClass="btn btn-plain"></Button>
+    </CardAction> -->
   </div>
   
 </template>

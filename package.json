@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@iconify/types": "^2.0.0",
     "autoprefixer": "^10.4.14",
     "mitt": "^3.0.0",
     "pinia": "^2.0.32",
