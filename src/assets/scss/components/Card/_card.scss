@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @for $i from 1 through 5 {
-  .elevation-#{$i} {
-    @apply shadow-elevation-#{$i};
+  .card.elevation-#{$i} {
+    @apply border-none shadow-elevation-#{$i};
   };
 };
 
 .card {
-  @apply dark:bg-slate-700 bg-light rounded-md  min-h-[1rem];
+  @apply dark:bg-slate-700 bg-light rounded-md  min-h-[1rem] border border-slate-400/40 dark:border-slate-300/40;
   &__header {
     @apply p-[1.2rem];
     display: grid;
@@ -58,7 +58,7 @@
     }
   }
 
-  &.outlined {
-    @apply border-2 dark:border-slate-300/30 border-slate-400/30;
-  }
+  // &.outlined {
+  //   @apply border dark:border-slate-300/30 border-slate-400/30;
+  // }
 }
