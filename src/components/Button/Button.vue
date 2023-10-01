@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
 import { Ripple } from '@/directives/ripple'

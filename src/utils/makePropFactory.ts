@@ -11,7 +11,7 @@ type PropsOptions<Props> = {
    [K in keyof Props] : PropOptions<Props[K]>;
 }
 
-export default function makePropsFactory(vProps: PropsOptions<Object>) : ComponentObjectPropsOptions {
+export default function makePropsFactory(vProps: PropsOptions<object>) : ComponentObjectPropsOptions {
    return vProps as ComponentObjectPropsOptions;
 }
 

@@ -9,22 +9,24 @@
 };
 
 .card {
-  @apply p-[1rem] dark:bg-slate-700 bg-light rounded-md  min-h-[1rem];
+  @apply dark:bg-slate-700 bg-light rounded-md  min-h-[1rem];
   &__header {
+    @apply p-[1.2rem];
     display: grid;
     grid-template-areas: "prepend content append";
     grid-template-columns: max-content auto max-content;
 
     &-prepend {
-      @apply self-center text-[1.5rem];
+      @apply self-center justify-center text-[1.4rem];
       grid-area: prepend;
-      margin-right: 1rem;
+      margin-right: 1.4rem;
     }
 
     &-append {
-      @apply self-center text-[1.5rem];
+      @apply self-center text-[1.4rem];
       grid-area: append;
-      margin-left: 1rem;
+      margin-left: 1.4rem;
+      
     }
 
     &-content {
@@ -41,15 +43,22 @@
     }
   }
 
-  &__content {
-    @apply text-content-5 mb-0;
+  &__text {
+    @apply p-[1.2rem] text-content-5 text-justify mb-0;
   }
 
-  &__action {
-    @apply flex;
-    > * {
-      @apply mr-2
-    }
+  &__header + &__text, &__header + &__action {
+    @apply pt-0;
   }
   
+  &__action {
+    @apply flex items-center p-[1.2rem];
+    > * {
+      @apply mr-2;
+    }
+  }
+
+  &.outlined {
+    @apply border-2 dark:border-slate-300/30 border-slate-400/30;
+  }
 }

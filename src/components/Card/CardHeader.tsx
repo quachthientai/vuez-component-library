@@ -1,13 +1,11 @@
-import { ComponentObjectPropsOptions, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { Icon } from "@iconify/vue";
 import { IconifyIcon } from "@iconify/types";
 import { CardTitle } from "./CardTitle";
 import { CardSubtitle } from "./CardSubtitle";
-
 import makePropsFactory from "@/utils/makePropFactory";
 
-
-const vProps : ComponentObjectPropsOptions = {
+const vProps = makePropsFactory({
   title: {
     type: String,
   },
@@ -20,15 +18,12 @@ const vProps : ComponentObjectPropsOptions = {
   prependIcon: {
     type: String
   }
-}
+})
 
-const props = makePropsFactory(vProps);
-console.log(props);
 
 export const CardHeader = defineComponent({
   name: 'CardHeader',
-  props: props,
-
+  props: vProps,
   setup(props, {slots}) {
     const hasDefaultSlot = !!slots.default;
     const hasTitle = !!(slots.title || props.title);
@@ -76,4 +71,6 @@ export const CardHeader = defineComponent({
     };
   },
 });
+
+
 
