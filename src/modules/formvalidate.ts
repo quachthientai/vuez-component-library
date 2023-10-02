@@ -41,7 +41,7 @@ class formValidate{
         masterCard: new RegExp('/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/'),
         visa: new RegExp('/^4[0-9]{12}(?:[0-9]{3})?$/')
     }
-
+    //Will expand later
     public setMinLength = (value:number):void=>{
         this.minLength = value
     }
@@ -50,6 +50,7 @@ class formValidate{
         this.maxLength = value
     }
 
+    //Check for min length of input
     public validateMinLength = (value:string):boolean=>{
         if(value.length < 3){
             return true
@@ -58,6 +59,7 @@ class formValidate{
         }
     }
 
+    //Check for max length of input
     public validateMaxLength = (value:string):boolean=>{
         if(value.length > 100){
             return true
@@ -66,11 +68,48 @@ class formValidate{
         }
     }
 
-    public validateEmail = (tag:HTMLInputElement):boolean=>{
-        if(this.emailFormat.test(tag.value)){
+
+    //Check for the format of email
+    public validateEmail = (value:string):boolean=>{
+        if(this.emailFormat.test(value)){
             return true
         }else{
-            return true
+            return false
+        }
+    }
+
+    //Check for the format of credit/debit card:
+    public validateCard = (value:string, type:string):boolean=>{
+        switch(type.toLowerCase()){
+            case'american express':
+                if(this.creditCardsCollection.americanExpress.test(value)){
+                    return true
+                }
+                break
+            case 'discover':
+                if(this.creditCardsCollection.discover.test(value)){
+                    return true
+                }
+                break
+            case 'jcb':
+                if(this.creditCardsCollection.JCB.test(value)){
+                    return true
+                }
+                break
+            case 'mastercard':
+                if(this.creditCardsCollection.masterCard.test(value)){
+                    return true
+                }
+                break
+            case 'visa':
+                if(this.creditCardsCollection.visa.test(value)){
+                    return true
+                }
+                break
+            default:
+                window.alert('Invalid Card')
+                console.log('Invalid Card')
+            
         }
     }
 
