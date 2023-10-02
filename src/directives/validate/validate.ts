@@ -13,7 +13,7 @@ const handleValueChange = (e:any)=>{
 }
 
 export const InputValidate = {
-    mounted(el:HTMLInputElement){
+    mounted(el:HTMLInputElement,binding:any){
         const warningP = document.createElement("p")
         //Will have binding statement
         const warningPText = document.createTextNode("Must be larger than 3")
@@ -22,10 +22,15 @@ export const InputValidate = {
         warningP.appendChild(warningPText)
         warningP.setAttribute("id", "form-warning-text")
 
+        //Binding format could include
+        
+        
+        console.log(binding.value.statement)
         switch (el.type) {
             case "text":
                 el.after(warningP)
                 el.addEventListener('input', handleValueChange)
+                
             case "email": 
                 break;
             case "date":

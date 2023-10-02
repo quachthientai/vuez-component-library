@@ -10,7 +10,7 @@ export default defineComponent({
 
 
 <template>
-    <input v-validate class="input_test border border-slate-800" name="email"  type="text" />
+    <input v-validate="{statement:'Hello there'}" class="input_test border border-slate-800" name="email"  type="text" />
 </template>
 
 <style lang="scss">
