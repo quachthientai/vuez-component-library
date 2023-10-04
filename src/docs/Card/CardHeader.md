@@ -30,7 +30,7 @@ The `<CardHeader>` component has the following slots:
 
 ## Usage
 To use the `<CardHeader>` component, you can import it from the `@/components/Card/index` module and use it in your Vue.js templates.
-```vue
+```ts
 import { CardHeader } from '@/components/Card/index'
 ```
  Here's an example of how you can use the `<CardAction>` component:
