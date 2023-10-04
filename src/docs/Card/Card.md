@@ -1,13 +1,29 @@
 Card Component
 ==============
 
-The `Card` component is a Vue.js component that can be used to render a card with an optional elevation and default slot content.
+The `Card` component is a component that can be used to render a card with an optional elevation and default slot content.
+```jsx
+import Head from 'next/head'
+
+function IndexPage() {
+  return (
+    <div>
+      <Head>
+        <title>My page title</title>
+      </Head>
+      <p>Hello world!</p>
+    </div>
+  )
+}
+
+export default IndexPage
+```
 
 Props
 -----
 | Component | Description |
 | - | - |
-| [`<Card>`](/api/v-card/) | Primary Component |
+| [`<Card>`](@/components/Card/Card.tsx) | Primary Component |
 | [`<CardHeader>`](/api/v-card-item/) | Sub-component used to wrap the Card's `<CardTitle>` and `<CardSubtitle>` components. |
 | [`<CardTitle>`](/api/v-card-title/) | Sub-component used to display the Card's title. Wraps the `#title` slot |
 | [`<CardSubtitle>`](/api/v-card-subtitle/) | Sub-component used to display the Card's subtitle. Wraps the `#subtitle` slot. |
