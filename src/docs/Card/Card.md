@@ -1,34 +1,18 @@
-Card Component
-==============
+# Card Component
 
-The `Card` component is a component that can be used to render a card with an optional elevation and default slot content.
-```jsx
-import Head from 'next/head'
+The `Card` is a flexible component that can be used to render a content container with many optional options.
 
-function IndexPage() {
-  return (
-    <div>
-      <Head>
-        <title>My page title</title>
-      </Head>
-      <p>Hello world!</p>
-    </div>
-  )
-}
+## API
 
-export default IndexPage
-```
-
-Props
------
 | Component | Description |
 | - | - |
 | [`<Card>`](/src/components/Card/Card.tsx) | Primary Component |
 | [`<CardHeader>`](/src/components/Card/CardHeader.tsx) | Sub-component used to wrap the Card's `<CardTitle>` and `<CardSubtitle>` components. |
-| [`<CardTitle>`](/api/v-card-title/) | Sub-component used to display the Card's title. Wraps the `#title` slot |
-| [`<CardSubtitle>`](/api/v-card-subtitle/) | Sub-component used to display the Card's subtitle. Wraps the `#subtitle` slot. |
-| [`<CardText>`](/api/v-card-text/) | Sub-component used to display the Card's text. Wraps the `#text` slot. |
-| [`<CardAction>`](/api/v-card-actions/) | Sub-component that modifies the default styling of [v-btn](/components/buttons/). Wraps the `#actions` slot |
+| [`<CardTitle>`](/src/components/Card/CardTitle.ts) | Sub-component used to display the Card's title. Wraps the `#title` slot |
+| [`<CardSubtitle>`](/src/components/Card/CardSubtitle.ts) | Sub-component used to display the Card's subtitle. Wraps the `#subtitle` slot. |
+| [`<CardText>`](/src/components/Card/CardText.ts) | Sub-component used to display the Card's text. Wraps the `#text` slot. |
+| [`<CardAction>`](/src/components/Card/CardAction.ts) | Sub-component that modifies the default styling of [`<Button>`](/src/components/Button/Button.vue). Wraps the `#actions` slot |
+
 The `Card` component has the following props:
 
 -   `title`: A string that represents the title of the card.

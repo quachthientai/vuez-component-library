@@ -1,6 +1,6 @@
 <script>
    import { eventBus } from '@/utils/eventBus';
-   import Card from '@/components/Card/Card.vue';
+   import {Card} from '@/components/Card/index'
    export default {
       name: 'DragDropView',
       components: {

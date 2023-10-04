@@ -42,23 +42,37 @@ export default {
     </Card>
 
     <Card>
-      
-      <CardHeader>
-        <template v-slot:append>asd</template>
-        <template v-slot:title>aaaaa</template>
-        <template v-slot:subtitle>aaaaa</template>
-      </CardHeader>
-      
+      <CardText>
+        <div class="text-content-6 text-slate-500">Word of the day</div>
+        <p class="text-h4">
+          el·ee·mos·y·nar·y
+        </p>
+        <p class="text-slate-800">adjective</p>
+        <br>
+        <div class="text-slate-800">
+          relating to or dependent on charity; charitable.<br>
+          "an eleemosynary educational institution."
+        </div>
+      </CardText>
+      <CardAction>
+        <Button btnClass="btn btn-info" text="Learn more" />
+      </CardAction>
     </Card>
 
-    <Card title="this is title(props)" subtitle="this is sub(props)"/>
+    <Card title="this is title(props)" subtitle="this is sub(props)">
+      <template v-slot:text>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque dignissimos ut officia repellat numquam nobis ipsa, temporibus, expedita voluptatibus laudantium blanditiis architecto laboriosam, recusandae iure sit! Facere, temporibus quibusdam.</template>
+      <template v-slot:action>
+        <Button btnClass="btn btn-primary" text="Primary" />
+        <Button btnClass="btn btn-plain" text="Secondary" />
+      </template>
+    </Card>
 
     <Card>
       <template v-slot:title>this is title (slots)</template>
       <template v-slot:subtitle>this is sub (slots)</template>
       <template v-slot:action>
         <Button btnClass="btn btn-primary" text="Primary" />
-        <Button btnClass="btn btn-plain" text="Primary" />
+        <Button btnClass="btn btn-plain" text="Secondary" />
       </template>
     </Card>
 
