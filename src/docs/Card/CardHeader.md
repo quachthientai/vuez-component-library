@@ -11,7 +11,7 @@ The `CardHeader` is a sub-component of the [`<Card>`](/src/components/Card/Card.
 The `CardHeader` component has the following props:
 
 | Name | Type | Default |
-| - | - | - | - |
+| - | - | - |
 |title|String|`undefined`|
 |subtitle|String|`undefined`|
 |appendIcon|String|`undefined`|
