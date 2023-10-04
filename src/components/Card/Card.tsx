@@ -1,21 +1,22 @@
 import { defineComponent, computed, useAttrs } from "vue";
 import makePropsFactory from "@/utils/makePropFactory";
+import { CardHeader, CardText, CardAction  } from '@/components/Card/index';
 
 const vProps = makePropsFactory({
    title: {
       type: String,
-   },
-   variant: {
-      type: String,
-      validator: (value: string) => {
-         return ['outlined', 'elevated'].includes(value);
-      }
    },
    subtitle: {
       type: String,
    },
    width: {
       type: [String, Number],
+   },
+   appendIcon: {
+      type: String,
+   },
+   prependIcon: {
+      type: String
    },
    elevation: {
       type: Number,
@@ -27,22 +28,47 @@ export const Card = defineComponent({
    name: 'Card',
    props: vProps,
    setup(props, {attrs, slots}) {
-      const hasDefaultSlot = !!slots.default;
-      
+      const hasTitle = !!(slots.title || props.title);
+      const hasSubtitle = !!(slots.subtitle || props.subtitle);
+      const hasAppend = !!(slots.append || props.appendIcon);
+      const hasPrepend = !!(slots.prepend || props.prependIcon);
+      const hasTextSlot = !!slots.text;
+      const hasActionSlot = !!slots.action;
 
-      console.log(!!attrs.outlined);
       const elevation = computed(() => {
          return props.elevation as number > 0 ? `elevation-${props.elevation}` : '';
       });
-      const outlined = computed(() => {
-         return
-      })
-      
-      
+
       return() => {
          return (
-            <div class={['card', elevation.value]} >
-               {hasDefaultSlot && slots.default?.()}
+            <div style="width: 400px; margin:3rem;" class={['card', elevation.value]}>
+               {  (hasTitle || hasSubtitle || hasPrepend || hasAppend) && (
+                  <CardHeader 
+                     title={props.title ?? props.title }
+                     appendIcon={props.appendIcon ?? props.appendIcon}
+                     prependIcon={props.prependIcon ?? props.prependIcon}
+                     subtitle={props.subtitle ?? props.subtitle}
+                  >
+                     {{ title: slots.title,
+                        subtitle: slots.subtitle,
+                        append: slots.append,
+                        prepend: slots.prepend
+                     }}
+                  </CardHeader>
+               )}
+               { hasTextSlot && (
+                  <CardText>
+                     {slots.text?.()}
+                  </CardText>
+               )}
+
+               { hasActionSlot && (
+                  <CardAction>
+                     {slots.action?.()}
+                  </CardAction>
+               )}
+
+               {slots.default?.()}
             </div>
          )
       }

@@ -3,30 +3,36 @@
 @tailwind utilities;
 
 @for $i from 1 through 5 {
-  .elevation-#{$i} {
-    @apply shadow-elevation-#{$i};
+  .card.elevation-#{$i} {
+    @apply border-none shadow-elevation-#{$i};
   };
 };
 
 .card {
-  @apply dark:bg-slate-700 bg-light rounded-md  min-h-[1rem];
+  @apply dark:bg-slate-700 bg-light rounded-md  min-h-[1rem] border border-slate-400/40 dark:border-slate-300/40;
   &__header {
     @apply p-[1.2rem];
     display: grid;
+    flex: none;
     grid-template-areas: "prepend content append";
     grid-template-columns: max-content auto max-content;
 
     &-prepend {
-      @apply self-center justify-center text-[1.4rem];
+      @apply self-center;
       grid-area: prepend;
       margin-right: 1.4rem;
+      > * {
+        @apply inline-block align-middle;
+      }
     }
 
     &-append {
-      @apply self-center text-[1.4rem];
+      @apply self-center;
       grid-area: append;
       margin-left: 1.4rem;
-      
+      > * {
+        @apply inline-block align-middle;
+      }
     }
 
     &-content {
@@ -47,9 +53,12 @@
     @apply p-[1.2rem] text-content-5 text-justify mb-0;
   }
 
-  &__header + &__text, &__header + &__action {
+  &__header + &__text,
+  &__header + &__action,
+  &__text + &__action {
     @apply pt-0;
   }
+  
   
   &__action {
     @apply flex items-center p-[1.2rem];
@@ -58,7 +67,7 @@
     }
   }
 
-  &.outlined {
-    @apply border-2 dark:border-slate-300/30 border-slate-400/30;
-  }
+  // &.outlined {
+  //   @apply border dark:border-slate-300/30 border-slate-400/30;
+  // }
 }

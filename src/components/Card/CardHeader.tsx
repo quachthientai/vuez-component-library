@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent, SlotsType } from "vue";
 import { Icon } from "@iconify/vue";
 import { IconifyIcon } from "@iconify/types";
 import { CardTitle } from "./CardTitle";
@@ -20,7 +20,6 @@ const vProps = makePropsFactory({
   }
 })
 
-
 export const CardHeader = defineComponent({
   name: 'CardHeader',
   props: vProps,
@@ -37,7 +36,7 @@ export const CardHeader = defineComponent({
           { hasPrepend &&
             ( <div class="card__header-prepend">
                   { props.prependIcon 
-                    ? <Icon icon={ props.prependIcon as IconifyIcon } />
+                    ? <Icon width="1.5rem" height="1.5rem" icon={ props.prependIcon as IconifyIcon } />
                     : slots.prepend?.() }
               </div> )
           }
@@ -62,7 +61,7 @@ export const CardHeader = defineComponent({
           { hasAppend &&
             ( <div class="card__header-append">
                   { props.appendIcon 
-                    ? <Icon icon={ props.appendIcon as IconifyIcon } />
+                    ? <Icon width="1.5rem" height="1.5rem" icon={ props.appendIcon as IconifyIcon } />
                     : slots.append?.() }
               </div> )
           }
