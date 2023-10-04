@@ -1,6 +1,6 @@
 import { defineComponent, computed, useAttrs } from "vue";
 import makePropsFactory from "@/utils/makePropFactory";
-import { CardHeader, CardTitle, CardSubtitle } from './index';
+import { CardHeader } from './index';
 
 const vProps = makePropsFactory({
    title: {
@@ -25,7 +25,7 @@ const vProps = makePropsFactory({
 });
 
 export const Card = defineComponent({
-   name: 'Card',
+   name: 'v-card',
    props: vProps,
    setup(props, {attrs, slots}) {
       const hasDefaultSlot = !!slots.default;
@@ -40,15 +40,22 @@ export const Card = defineComponent({
       });
 
       return() => {
+         console.log(slots.title);
          return (
             <div style="width: 400px; margin:3rem;" class={['card', elevation.value]}>
-               
                {  (hasTitle || hasSubtitle || hasPrepend || hasAppend) && (
                   <CardHeader 
-                     title={props.title ? props.title : slots.title?.()[0].children} 
-                     subtitle={props.subtitle ? props.subtitle : slots.subtitle?.()[0].children} 
-                  />
+                     title={props.title ?? props.title }
+                     appendIcon={props.appendIcon ?? props.appendIcon} 
+                     subtitle={props.subtitle ?? props.subtitle}
+                  >
+                     {{ title: slots.title,
+                        subtitle: slots.subtitle,
+                     }}
+                     
+                  </CardHeader>
                )}
+               
 
                {slots.default?.()}
                

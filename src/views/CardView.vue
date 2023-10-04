@@ -1,6 +1,6 @@
 <script lang="ts">
 import {Card, CardHeader, CardTitle, CardSubtitle, CardText, CardAction} from '@/components/Card/index';
-
+import { Icon } from '@iconify/vue';
 
 export default {
   name: 'CardView',
@@ -10,6 +10,7 @@ export default {
     CardTitle,
     CardSubtitle,
     CardAction,
+    Icon
   },
   data() {
     return {
@@ -21,10 +22,6 @@ export default {
 
 <template>
   <div class="m-5">
-    
-    <!-- <Card :elevation="2" :width="400" title="this is card title"  subtitle="This is subtitle (props)">sss</Card> -->
-    <Card  title="this is title" subtitle="ssss"></Card>
-
     <Card>
       <CardHeader>
         <CardTitle>this is title</CardTitle>
@@ -33,9 +30,26 @@ export default {
     </Card>
 
     <Card>
-      <template v-slot:title>asdas</template>
-      <template v-slot:subtitle>zzz</template>
+      <CardHeader title="this is title" subtitle="this is sub"/>
     </Card>
+
+    <Card>
+      <CardHeader>
+        <template v-slot:title>aaaaa</template>
+        <template v-slot:subtitle>aaaaa</template>
+      </CardHeader>
+    </Card>
+
+    <Card title="this is title(props)" subtitle="this is sub(props)"/>
+
+    <Card>
+      <template v-slot:title>this is title (slots)</template>
+      <template v-slot:subtitle>this is sub (slots)</template>
+    </Card>
+
+
+
+    
 
     
     Pass as props

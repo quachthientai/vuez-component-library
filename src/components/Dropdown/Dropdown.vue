@@ -36,40 +36,8 @@ export default {
       //boolean return
       validator(value) {
         let itemListKey = ['title', 'routerName', 'prependIcon', 'appendIcon']
-
         return keyValidator(itemListKey, value, 'array')
-
-        // for(const i of value) {
-        //    for (const key in i) {
-        //       if(itemListKey.indexOf(key) > -1) {
-        //          continue;
-        //       }
-        //       falseKey.push(key);
-        //    }
-        // }
-
-        // if(falseKey.length > 0) {
-        //    falseKey.forEach(key => {
-        //       console.warn(`[${key}] is not valid key in itemList!`)
-        //    })
-        // }
-
-        // return true;
       }
-      // default: [
-      //    {
-      //       title: 'Action 1',
-      //       routerName: 'radio'
-      //    },
-      //    {
-      //       title: 'Action 2',
-      //       routerName: 'radio'
-      //    },
-      //    {
-      //       title: 'Action 3',
-      //       routerName: 'radio',
-      //    },
-      // ]
     }
   },
   computed: {

@@ -13,20 +13,26 @@
   &__header {
     @apply p-[1.2rem];
     display: grid;
+    flex: none;
     grid-template-areas: "prepend content append";
     grid-template-columns: max-content auto max-content;
 
     &-prepend {
-      @apply self-center justify-center text-[1.4rem];
+      @apply self-center;
       grid-area: prepend;
       margin-right: 1.4rem;
+      > * {
+        @apply inline-block align-middle;
+      }
     }
 
     &-append {
-      @apply self-center text-[1.4rem];
+      @apply self-center;
       grid-area: append;
       margin-left: 1.4rem;
-      
+      > * {
+        @apply inline-block align-middle;
+      }
     }
 
     &-content {
