@@ -23,7 +23,7 @@ Props
 -----
 | Component | Description |
 | - | - |
-| [`<Card>`](@/components/Card/Card.tsx) | Primary Component |
+| [`<Card>`](/src/components/Card/Card.tsx) | Primary Component |
 | [`<CardHeader>`](/api/v-card-item/) | Sub-component used to wrap the Card's `<CardTitle>` and `<CardSubtitle>` components. |
 | [`<CardTitle>`](/api/v-card-title/) | Sub-component used to display the Card's title. Wraps the `#title` slot |
 | [`<CardSubtitle>`](/api/v-card-subtitle/) | Sub-component used to display the Card's subtitle. Wraps the `#subtitle` slot. |
