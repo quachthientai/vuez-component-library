@@ -1,5 +1,6 @@
 <script lang="ts">
 import {Card, CardHeader, CardTitle, CardSubtitle, CardText, CardAction} from '@/components/Card/index';
+import Button from '@/components/Button/Button.vue';
 import { Icon } from '@iconify/vue';
 
 export default {
@@ -10,6 +11,8 @@ export default {
     CardTitle,
     CardSubtitle,
     CardAction,
+    CardText,
+    Button,
     Icon
   },
   data() {
@@ -27,17 +30,25 @@ export default {
         <CardTitle>this is title</CardTitle>
         <CardSubtitle>this is sub</CardSubtitle>
       </CardHeader>
+      <CardText>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, a dolores tenetur consectetur fuga nulla libero quod! Aliquam optio provident ducimus explicabo velit. Corrupti, exercitationem quibusdam.</CardText>
+      <CardAction>
+        <Button btnClass="btn btn-primary" text="Primary" />
+        <Button btnClass="btn btn-plain" text="Primary" />
+      </CardAction>
     </Card>
 
     <Card>
-      <CardHeader title="this is title" subtitle="this is sub"/>
+      <CardHeader appendIcon="mdi:home" title="this is title" subtitle="this is sub"/>
     </Card>
 
     <Card>
+      
       <CardHeader>
+        <template v-slot:append>asd</template>
         <template v-slot:title>aaaaa</template>
         <template v-slot:subtitle>aaaaa</template>
       </CardHeader>
+      
     </Card>
 
     <Card title="this is title(props)" subtitle="this is sub(props)"/>
@@ -45,25 +56,14 @@ export default {
     <Card>
       <template v-slot:title>this is title (slots)</template>
       <template v-slot:subtitle>this is sub (slots)</template>
+      <template v-slot:action>
+        <Button btnClass="btn btn-primary" text="Primary" />
+        <Button btnClass="btn btn-plain" text="Primary" />
+      </template>
     </Card>
 
 
-
-    
-
-    
-    Pass as props
-    <!-- Using slots
-    <Card :elevation="3" :outlined="true" subtitle="subtitle" title="This is titlaaae">
-      
-      <template v-slot:title>This is title</template>
-      <template v-slot:sub-title>This is subtitle</template>
-      <template v-slot:content>This is content</template>
-
-    </Card> -->
-
-    
-    
+  
   </div>
 </template>
 

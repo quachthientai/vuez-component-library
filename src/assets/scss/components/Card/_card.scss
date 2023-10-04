@@ -53,9 +53,12 @@
     @apply p-[1.2rem] text-content-5 text-justify mb-0;
   }
 
-  &__header + &__text, &__header + &__action {
+  &__header + &__text,
+  &__header + &__action,
+  &__text + &__action {
     @apply pt-0;
   }
+  
   
   &__action {
     @apply flex items-center p-[1.2rem];
