@@ -12,7 +12,7 @@ The `<CardText>` component has the following slots:
 
 ## Usage
 To use the `<CardText>` component, you can import it from the `@/components/Card/index` module and use it in your Vue.js templates.
-```vue
+```ts
 import { CardText } from '@/components/Card/index'
 ```
 

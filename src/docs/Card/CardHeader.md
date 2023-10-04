@@ -34,7 +34,6 @@ To use the `<CardHeader>` component, you can import it from the `@/components
 import { CardHeader } from '@/components/Card/index'
 ```
  Here's an example of how you can use the `<CardAction>` component:
-   
 ```vue
 <CardHeader></CardHeader>
 ```

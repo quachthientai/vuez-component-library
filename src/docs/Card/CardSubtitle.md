@@ -12,7 +12,7 @@ The `<CardSubtitle>` component has the following slots:
 
 ## Usage
 To use the `<CardSubtitle>` component, you can import it from the `@/components/Card/index` module and use it in your Vue.js templates.
-```vue
+```ts
 import { CardSubtitle } from '@/components/Card/index'
 ```
 
