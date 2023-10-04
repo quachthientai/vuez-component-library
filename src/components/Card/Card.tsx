@@ -34,11 +34,11 @@ export const Card = defineComponent({
       const hasPrepend = !!(slots.prepend || props.prependIcon);
       const hasTextSlot = !!slots.text;
       const hasActionSlot = !!slots.action;
-
+   
       const elevation = computed(() => {
          return props.elevation as number > 0 ? `elevation-${props.elevation}` : '';
       });
-
+      const a = slots.text?.()
       return() => {
          return (
             <div style="width: 400px; margin:3rem;" class={['card', elevation.value]}>
