@@ -1,14 +1,12 @@
-# Card Header
-- [`Card`](/src/components/Card/Card.tsx)
-- [`CardTitle`](/src/components/Card/CardTitle.ts)
-- [`CardSubtitle`](/src/components/Card/CardSubtitle.ts)
+# CardHeader API
+- [`Card`](./Card.md)
+- [`CardTitle`](./CardTitle.md)
+- [`CardSubtitle`](./CardSubtitle.md)
   
-The `CardHeader` is a sub-component of the [`<Card>`](/src/components/Card/Card.tsx) component. It is used to wrap the Card's `<CardTitle>` and `<CardSubtitle>` components.
-
-<table><tr><td>The quick brown fox jumps over the lazy dog.</td></tr></table>
+The `<CardHeader>` is a sub-component of the [`<Card>`](./Card.md) component. It is used to wrap the Card's [`CardTitle`](./CardTitle.md) and [`CardSubtitle`](./CardSubtitle.md) components.
 
 ## Props
-The `CardHeader` component has the following props:
+The `<CardHeader>` component has the following props:
 
 | Name | Type | Default |
 | - | - | - | 
@@ -18,7 +16,7 @@ The `CardHeader` component has the following props:
 |prependIcon|String|`undefined`|
 
 ## Slots
-The `CardHeader` component has the following slots:
+The `<CardHeader>` component has the following slots:
 
 | Name | Description |
 | - | - |
@@ -31,13 +29,14 @@ The `CardHeader` component has the following slots:
 
 
 ## Usage
-To use the `CardHeader` component, you can import it from the `@/components/Card` module and use it in your Vue.js templates. Here's an example of how you can use the `CardHeader` component:
+To use the `<CardHeader>` component, you can import it from the `@/components/Card/index` module and use it in your Vue.js templates.
+```vue
+import { CardHeader } from '@/components/Card/index'
+```
+ Here's an example of how you can use the `<CardAction>` component:
    
 ```vue
 <CardHeader></CardHeader>
 ```
-Here is a simple footnote[^1].
 
-A footnote can also have multiple lines[^2].  
 
-You can also use words, to fit your writing style more closely[^note].
