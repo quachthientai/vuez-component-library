@@ -1,6 +1,7 @@
-import { defineComponent, computed, useAttrs } from "vue";
+import { defineComponent, computed, useAttrs, isRef } from "vue";
 import makePropsFactory from "@/utils/makePropFactory";
 import { CardHeader, CardText, CardAction  } from '@/components/Card/index';
+import { useDimension } from "@/composable/dimenstion";
 
 const vProps = makePropsFactory({
    title: {
@@ -34,27 +35,31 @@ export const Card = defineComponent({
       const hasPrepend = !!(slots.prepend || props.prependIcon);
       const hasTextSlot = !!slots.text;
       const hasActionSlot = !!slots.action;
-   
+
       const elevation = computed(() => {
          return props.elevation as number > 0 ? `elevation-${props.elevation}` : '';
       });
-      const a = slots.text?.()
+      
+      const dimension  = useDimension({
+         width: props.width as string | number
+      });
+
       return() => {
          return (
-            <div style="width: 400px; margin:3rem;" class={['card', elevation.value]}>
+            <div style={dimension.value} class={['card', elevation.value]}>
                {  (hasTitle || hasSubtitle || hasPrepend || hasAppend) && (
-                  <CardHeader 
-                     title={props.title ?? props.title }
-                     appendIcon={props.appendIcon ?? props.appendIcon}
-                     prependIcon={props.prependIcon ?? props.prependIcon}
-                     subtitle={props.subtitle ?? props.subtitle}
-                  >
-                     {{ title: slots.title,
-                        subtitle: slots.subtitle,
-                        append: slots.append,
-                        prepend: slots.prepend
-                     }}
-                  </CardHeader>
+                     <CardHeader 
+                        title={props.title ?? props.title }
+                        appendIcon={props.appendIcon ?? props.appendIcon}
+                        prependIcon={props.prependIcon ?? props.prependIcon}
+                        subtitle={props.subtitle ?? props.subtitle}
+                     >
+                        {{ title: slots.title,
+                           subtitle: slots.subtitle,
+                           append: slots.append,
+                           prepend: slots.prepend
+                        }}
+                     </CardHeader>
                )}
                { hasTextSlot && (
                   <CardText>

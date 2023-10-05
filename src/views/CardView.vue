@@ -25,7 +25,7 @@ export default {
 
 <template>
   <div class="m-5">
-    <Card>
+    <Card width="400">
       <CardHeader>
         <CardTitle>this is title</CardTitle>
         <CardSubtitle>this is sub</CardSubtitle>
