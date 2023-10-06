@@ -23,9 +23,22 @@ export const InputValidate = {
         warningP.setAttribute("id", "form-warning-text")
 
         //Binding format could include
+        const bindingValues:{
+            statement:string,
+            minLength: number,
+            maxLength: number,
+            condition?: any
+        } = {
+            statement:binding.value.statement,
+            minLength: binding.value.minLength,
+            maxLength: binding.value.maxLength,
+            condition: binding.value.condition
+        }
+
         
-        
-        console.log(binding.value.statement)
+
+
+        console.log(bindingValues)
         switch (el.type) {
             case "text":
                 el.after(warningP)
