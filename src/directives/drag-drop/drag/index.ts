@@ -1,6 +1,8 @@
-import { Event, HandleEventDirective } from "@/directives/type"
+// import { Event, HandleEventDirective } from "@/directives/type"
+
+import { Event, HandleEventDirective } from "../../type";
 import { getOptions } from "./getOptions";
-import { DirectiveBinding, h, render } from "vue";
+import { DirectiveBinding, VNode, h, render } from "vue";
 import { v4 as uuidv4 } from 'uuid';
 
 const defaultOption = getOptions
@@ -18,7 +20,7 @@ const handleMouseOver: HandleEventDirective = (event, element) => {
 
 const handleDragEnd: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
-      if(element.className.indexOf('handle') != -1) {
+      if((event.target as HTMLElement).className.indexOf('handle') != -1) {
          document.body.removeChild(cloneNode)
       }
       element.classList.remove('dragging');
@@ -57,8 +59,13 @@ export const Drag = {
          throw new Error('Argument must be "options"')
       }
    },
-   mounted(el: HTMLElement, binding?: DirectiveBinding) {
+   mounted(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode) {
       
+      if(vnode.props.onVDragStart) {
+         console.log(vnode);
+      }
+
+
       if(binding.value && binding.arg !== 'options') {
          el.setAttribute('data-draggable', JSON.stringify(binding.value));
       }

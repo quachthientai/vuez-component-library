@@ -1,5 +1,6 @@
-import { Event, HandleEventDirective } from "@/directives/type";
-import { eventBus } from "@/utils/eventBus";
+import { Event, HandleEventDirective } from "../../type";
+
+
 import { DirectiveBinding, VNode, callWithAsyncErrorHandling } from "vue";
 
 const isDragEvent = (e: Event) : e is DragEvent => {

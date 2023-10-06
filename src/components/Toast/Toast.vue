@@ -61,7 +61,6 @@ export default {
       let insertPos = this.position.includes('top') ? 'afterbegin' : 'beforeend'
       this.isVisible = true
       const shadowContainer = this.$refs.toastWrapper.parentElement
-      console.log(this.$refs.toastWrapper.parentElement)
       this.computedToastParent.insertAdjacentElement(insertPos,this.$refs.toastWrapper);
 
       shadowContainer.remove()
@@ -245,7 +244,7 @@ export default {
 
   .fade-top-enter-active,
   .fade-bottom-enter-active {
-    transition: all .3s cubic-bezier(0.55, 0, 0.1, 1);
+    transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
   }
 
   .fade-top-leave-to,

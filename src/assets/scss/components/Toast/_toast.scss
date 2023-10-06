@@ -12,12 +12,12 @@
 
 .toast-top-container {
   @include toast-container;
-  @apply top-0;
+  @apply top-0 px-2;
 }
 
 .toast-bottom-container {
   @include toast-container;
-  @apply bottom-0;
+  @apply bottom-0 px-2;
 }
 
 @layer base {

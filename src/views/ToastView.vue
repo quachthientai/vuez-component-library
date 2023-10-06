@@ -15,11 +15,11 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.success('Success!', {timeOut: 5000, position: 'bottom-center', onClickDismiss: true})
-      this.$toast.success('Success!', {timeOut: 4000, position: 'bottom-center', onClickDismiss: true})
-      this.$toast.success('Success!', {timeOut: 3000, position: 'bottom-center', onClickDismiss: true})
-      this.$toast.success('Success!', {timeOut: 2000, position: 'bottom-center', onClickDismiss: true})
-      this.$toast.success('Success!', {timeOut: 1000, position: 'bottom-center', onClickDismiss: true})
+      this.$toast.success('Success!', {timeOut: 2000, position: 'top-center', onClickDismiss: false})
+      this.$toast.warning('Success!', {timeOut: 3000, position: 'top-center', onClickDismiss: true})
+      this.$toast.info('Success!', {timeOut: 4000, position: 'top-center', onClickDismiss: true})
+      this.$toast.error('Success!', {timeOut: 5000, position: 'top-center', onClickDismiss: true, pauseOnHover: true})
+      t
     },
     clearToast() {
       this.$toast.clear()

@@ -7,7 +7,8 @@
       @apply relative;
       
       &.dragging {
-         @apply bg-transparent bg-light dark:bg-dark border border-black border-dashed;
+         text-indent: -9999px;
+         @apply bg-light  dark:bg-dark  border border-black border-dashed;
 
          & > * {
             @apply opacity-0;

@@ -9,7 +9,7 @@ export type HandleEventDirective = (event: Event, element?: HTMLElement, binding
 
 export type HandleRippleFunc = (event: Event, element: HTMLElement) => void;
 
-export type HandleClickOutFunc = (event: Event, element: HTMLElement, binding: Binding) => void;
+export type HandleClickOutFunc = (event: Event, element: HTMLElement, binding: DirectiveBinding) => void;
 
 
 
