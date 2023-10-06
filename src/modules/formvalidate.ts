@@ -12,9 +12,9 @@ class formValidate{
         minLength?:number,
         maxLength?:number,
         format?:RegExp,
-        type:string,
+        type?:string,
         statements?:string,
-        value: string | number| RegExp
+        value?: string | number| RegExp
     }){
         this.minLength = requirements.minLength
         this.maxLength = requirements.maxLength
@@ -41,7 +41,7 @@ class formValidate{
         masterCard: new RegExp('/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/'),
         visa: new RegExp('/^4[0-9]{12}(?:[0-9]{3})?$/')
     }
-    //Will expand later
+    //Set length for the input
     public setMinLength = (value:number):void=>{
         this.minLength = value
     }
@@ -50,6 +50,12 @@ class formValidate{
         this.maxLength = value
     }
 
+    //Setup the output statement
+    public setStatement = (statement:string):void=>{
+        this.statement = statement
+    }
+    
+    
     //Check for min length of input
     public validateMinLength = (value:string):boolean=>{
         if(value.length < 3){

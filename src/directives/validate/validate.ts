@@ -1,16 +1,18 @@
 import {h} from "vue"
 import formValidate from "@/modules/formvalidate"
-const handleValueChange = (e:any)=>{
+// const handleValueChange = (e:any)=>{
 
-    const validateModel = new formValidate({type:e.target.type,value:e.target.value})
-    const warningText = document.getElementById("form-warning-text")
+//     const validateModel = new formValidate({type:e.target.type,value:e.target.value})
+//     const warningText = document.getElementById("form-warning-text")
 
-    if(!validateModel.validateMinLength(e.target.value)){    
-        warningText.classList.add("hidden")
-    }else{
-        warningText.classList.remove("hidden")
-    }
-}
+//     if(!validateModel.validateMinLength(e.target.value)){    
+//         warningText.classList.add("hidden")
+//     }else{
+//         warningText.classList.remove("hidden")
+//     }
+// }
+
+const handleValueChange = (module)
 
 export const InputValidate = {
     mounted(el:HTMLInputElement,binding:any){
@@ -24,7 +26,7 @@ export const InputValidate = {
 
         //Binding format could include
         const bindingValues:{
-            statement:string,
+            statement: string,
             minLength: number,
             maxLength: number,
             condition?: any
@@ -35,9 +37,12 @@ export const InputValidate = {
             condition: binding.value.condition
         }
 
+        //set up the form module based on the input details
+        const formModule = new formValidate({type:el.type, value:el.value})
+        formModule.setMinLength(bindingValues.minLength)
+        formModule.setMaxLength(bindingValues.maxLength)
+        formModule.setStatement(bindingValues.statement)
         
-
-
         console.log(bindingValues)
         switch (el.type) {
             case "text":
