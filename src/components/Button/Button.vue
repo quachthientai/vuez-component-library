@@ -1,11 +1,14 @@
-<script>
+<script lang="ts">
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
-
+import { Ripple } from '@/directives/ripple'
 export default {
   name: 'Button',
   components: {
     Icon
+  },
+  directives: {
+    ripple: Ripple
   },
   props: {
     text: {
@@ -65,7 +68,7 @@ export default {
     type="button"
     tabindex="0"
     role="button"
-    
+    v-ripple
     :class="`
          ${btnClass} ${isUppercase ? 'uppercase' : 'capitalize'}
          ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
@@ -97,7 +100,7 @@ export default {
             :class="this.$slots ? 'flex items-center justify-center' : ''"
           >
             <span>{{ text }}</span>
-            <div class="ml-1 flex items-center">
+            <div class=" flex items-center">
               <slot></slot>
             </div>
           </span>

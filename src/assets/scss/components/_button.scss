@@ -3,35 +3,38 @@
 @tailwind components;
 @tailwind utilities;
 
-//base class
 @layer base {
   .btn {
-    @apply relative font-bold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[40px] px-[15px] overflow-hidden  transition duration-100 ease-out hover:ease-in;
+    @apply relative font-semibold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[35px] px-[14px] transition duration-100 ease-out hover:ease-in;
+
+    // &:not(.badge) {
+    //   @apply overflow-auto
+    // }
+
     a {
-      @apply tracking-wider text-[15px] leading-[24px];
+      @apply tracking-wide text-[14px];
     }
 
     &.btn-sm {
-      @apply h-[30px] px-[13px];
+      @apply h-[27px] px-[13px];
+
       a {
-        @apply tracking-wider text-sm leading-[24px];
+        @apply tracking-wider text-xs leading-[24px];
       }
     }
 
     &.btn-lg {
-      @apply h-[50px] px-[20px];
+      @apply h-[40px] px-[19px];
+
       a {
-        @apply tracking-wider text-lg leading-[24px];
+        @apply tracking-wide text-lg;
       }
     }
   }
 }
 
-//variant class
 @layer utilities {
-  //regular button variant
   @each $variant in variables.$variants {
-    
     @if $variant == 'plain' {
       .btn-plain {
         @apply outline-none border-none 
@@ -50,20 +53,7 @@
       }
     }
   } 
-    
-    
 
-    
-      
-    
-
-      // &:focus {
-      //   @apply ring-2 ring-offset-0 ring-#{$variant}-500/70;
-      // }
-    
-  
-
-  //outline button variants
   @each $variant in variables.$variants {
     .btn-outline-#{$variant} {
       @apply bg-none border-[2px] p-[10px] dark:border-#{$variant}-400/40 border-#{$variant}-500;
@@ -79,19 +69,16 @@
       a {
         @apply dark:text-#{$variant}-400/90 text-#{$variant}-500;
       }
-
-      // &:focus {
-      //   @apply ring-2 ring-offset-0 ring-#{$variant}-500/30;
-      // }
     }
   }
 
-  //button with icon circle shape variants
   .btn-icon-circle {
     @apply p-[12px] rounded-full;
+    
     a > span > svg {
       @apply m-0;
     }
+
     @each $variant in variables.$variants {
       &.btn-#{$variant} {
         &.btn-sm {
@@ -104,7 +91,6 @@
       }
     }
 
-    //button outline size
     @each $variant in variables.$variants {
       &.btn-outline-#{$variant} {
         @apply p-[10px];

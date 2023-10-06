@@ -1,6 +1,6 @@
 <script>
    import { eventBus } from '@/utils/eventBus';
-   import Card from '@/components/Card/Card.vue';
+   import {Card} from '@/components/Card/index'
    export default {
       name: 'DragDropView',
       components: {
@@ -26,7 +26,7 @@
         <div v-drag:options="{handle: true}" class="w-[100px] h-[100px] bg-blue-600">asdasd</div>
 
         <div v-drag:options="{handle: true}" class="w-[100px] h-[100px] bg-green-600"></div>
-
+        
         <div v-drag class="w-[100px] h-[100px] bg-yellow-600"></div>
      </div>
      

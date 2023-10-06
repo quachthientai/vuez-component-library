@@ -15,6 +15,7 @@ export default {
       btnClass="btn btn-primary"
       class="mr-2"
       text="Primary"
+      @click="(e) => console.log(e)"
       appendIcon="ph:envelope-bold"
     ></Button>
     <Button

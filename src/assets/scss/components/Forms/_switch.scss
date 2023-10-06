@@ -80,6 +80,7 @@
         &:before {
           @apply opacity-0 left-[6px] top-[7px] ml-1 content-[attr(data-on)] absolute  transition-all ease-in-out duration-100;
         }
+        
         &:after {
           @apply opacity-100 top-[7px] right-1 mr-1 content-[attr(data-off)] absolute  transition-all ease-in-out duration-100;
         }

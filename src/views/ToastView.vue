@@ -15,26 +15,24 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.success('Success!', {timeOut: 2000, position: 'top-center', onClickDismiss: false})
-      this.$toast.warning('Success!', {timeOut: 3000, position: 'top-center', onClickDismiss: true})
-      this.$toast.info('Success!', {timeOut: 4000, position: 'top-center', onClickDismiss: true})
-      this.$toast.error('Success!', {timeOut: 5000, position: 'top-center', onClickDismiss: true, pauseOnHover: true})
-      t
+      this.$toast.success('Success!', {timeOut: 5000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 4000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 3000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 2000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 1000, position: 'bottom-center', onClickDismiss: true})
     },
     clearToast() {
-      this.$toast.clear()
+      // this.$toast.clear()
+      this.$toast.success('Success!', {timeOut: 5000, position: 'bottom-center', onClickDismiss: true})
     }
-  },
-  created() {}
+  }
 }
 </script>
 
 <template>
   <div>This is toast view</div>
-  <div class="flex flex-row-reverse">
-
+  <div class="flex flex-row-reverse me-3">
     <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast" />
-
     <Button class="ms-3" btnClass="btn btn-danger" @click="clearToast" text="clear toast" />
   </div>
   

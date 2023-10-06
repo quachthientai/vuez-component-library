@@ -24,9 +24,6 @@ export default {
     type: {
       type: String,
       default: 'default',
-      // validator(value) {
-      //   return Object.values(TYPE).includes(value)
-      // }
     },
     text: {
       type: String,
@@ -62,7 +59,6 @@ export default {
       this.isVisible = true
       const shadowContainer = this.$refs.toastWrapper.parentElement
       this.computedToastParent.insertAdjacentElement(insertPos,this.$refs.toastWrapper);
-
       shadowContainer.remove()
     },
     dismissToast() {

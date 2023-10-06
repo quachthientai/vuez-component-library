@@ -20,14 +20,11 @@
       @apply h-[40px] w-[107px] px-[15px] py-[8px] border-primary-500;
     }
 
-    //Pill
-
     &-pill {
       @apply rounded-full;
     }
   }
 
-  //Custom
   .custom {
     > .dropdown__menu {
       @apply rounded-none;
@@ -36,6 +33,7 @@
         @apply ring-0 ring-offset-0;
       }
     }
+
     &:first-of-type {
       @apply rounded-l-lg;
     }
@@ -44,8 +42,7 @@
       @apply rounded-r-lg;
     }
   }
-  + .btnGroup {
-  }
+
 }
 
 @layer utilities {

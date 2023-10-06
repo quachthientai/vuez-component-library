@@ -29,11 +29,10 @@ const handleDragEnd: HandleEventDirective = (event, element) => {
 
 const handleDragStart: HandleEventDirective = (event, element) => {
    if(isDragEvent(event)) {
-      
       event.dataTransfer.effectAllowed = 'move';
       
       if((event.target as HTMLElement).className.indexOf('handle') != -1) {
-         cloneNode  = element.cloneNode(true) as HTMLElement
+         cloneNode = element.cloneNode(true) as HTMLElement
          cloneNode.classList.add('cloneNode');
 
          cloneNode.style.width = `${element.offsetWidth}`;
@@ -41,7 +40,7 @@ const handleDragStart: HandleEventDirective = (event, element) => {
 
          document.body.appendChild(cloneNode)
 
-         event.dataTransfer.setDragImage(cloneNode, 0,0);
+         event.dataTransfer.setDragImage(cloneNode,0,0);
       }
       
       setTimeout(() => {
@@ -49,9 +48,10 @@ const handleDragStart: HandleEventDirective = (event, element) => {
       },0)
       
       event.dataTransfer.setData('DragElement', element.id);
-      
+
    }
 }
+
 
 export const Drag = {
    beforeMount(el: HTMLElement, binding?: DirectiveBinding){
@@ -60,12 +60,6 @@ export const Drag = {
       }
    },
    mounted(el: HTMLElement, binding?: DirectiveBinding, vnode?: VNode) {
-      
-      if(vnode.props.onVDragStart) {
-         console.log(vnode);
-      }
-
-
       if(binding.value && binding.arg !== 'options') {
          el.setAttribute('data-draggable', JSON.stringify(binding.value));
       }
@@ -76,22 +70,17 @@ export const Drag = {
 
       if(binding.arg === 'options') {
          vOption = Object.assign({}, defaultOption, binding.value)
-         
          if(vOption.handle) {
             const v = h('span', {id: `handle-${el.id}`, class: 'handle'});
             render(v, el)
-            
             handleTarget = v.el;
-            
             handleTarget.draggable = true
-
-            handleTarget.addEventListener('dragstart', (ev : Event) => handleDragStart(ev, el))
-            handleTarget.addEventListener('dragend', (ev : Event) => handleDragEnd(ev,el))
+            handleTarget.addEventListener('dragstart', (ev: Event) => handleDragStart(ev, el))
+            handleTarget.addEventListener('dragend', (ev: Event) => handleDragEnd(ev,el))
             
          }
       }else {
          el.draggable = true
-         
          el.addEventListener('mouseover', (ev) => handleMouseOver(ev, el))
          el.addEventListener('dragstart', (ev) => handleDragStart(ev, el))
          el.addEventListener('dragend', (ev) => handleDragEnd(ev,el))
