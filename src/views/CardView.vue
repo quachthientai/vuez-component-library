@@ -1,5 +1,5 @@
 <script lang="ts">
-import {Card, CardHeader, CardTitle, CardSubtitle, CardText, CardAction} from '@/components/Card/index';
+import {Card, CardHeader, CardTitle, CardSubtitle, CardMedia, CardText, CardAction} from '@/components/Card/index';
 import Button from '@/components/Button/Button.vue';
 import { Icon } from '@iconify/vue';
 
@@ -12,6 +12,7 @@ export default {
     CardSubtitle,
     CardAction,
     CardText,
+    CardMedia,
     Button,
     Icon
   },
@@ -25,11 +26,12 @@ export default {
 
 <template>
   <div class="m-5">
-    <Card width="400">
-      <CardHeader>
+    <Card width="400" :elevation="2" class="m-2">
+      <!-- <CardHeader>
         <CardTitle>this is title</CardTitle>
         <CardSubtitle>this is sub</CardSubtitle>
-      </CardHeader>
+      </CardHeader> -->
+      <CardMedia width="400" height="100" src="https://cdn.vuetifyjs.com/docs/images/cards/purple-flowers.jpg"></CardMedia>
       <CardText>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, a dolores tenetur consectetur fuga nulla libero quod! Aliquam optio provident ducimus explicabo velit. Corrupti, exercitationem quibusdam.</CardText>
       <CardAction>
         <Button btnClass="btn btn-primary" text="Primary" />
@@ -37,11 +39,11 @@ export default {
       </CardAction>
     </Card>
 
-    <Card>
+    <Card width="400" class="m-2">
       <CardHeader appendIcon="mdi:home" title="this is title" subtitle="this is sub"/>
     </Card>
 
-    <Card>
+    <Card width="400" class="m-2">
       <CardText>
         <div class="text-content-6 text-slate-500">Word of the day</div>
         <p class="text-h4">
@@ -59,7 +61,8 @@ export default {
       </CardAction>
     </Card>
 
-    <Card title="this is title(props)" subtitle="this is sub(props)">
+    <Card width="400" class="m-2" title="this is title(props)" subtitle="this is sub(props)">
+      
       <template v-slot:text>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque dignissimos ut officia repellat numquam nobis ipsa, temporibus, expedita voluptatibus laudantium blanditiis architecto laboriosam, recusandae iure sit! Facere, temporibus quibusdam.</template>
       <template v-slot:action>
         <Button btnClass="btn btn-primary" text="Primary" />
@@ -67,7 +70,7 @@ export default {
       </template>
     </Card>
 
-    <Card>
+    <Card width="400" class="m-2">
       <template v-slot:title>this is title (slots)</template>
       <template v-slot:subtitle>this is sub (slots)</template>
       <template v-slot:action>
@@ -76,7 +79,7 @@ export default {
       </template>
     </Card>
 
-
+    
   
   </div>
 </template>

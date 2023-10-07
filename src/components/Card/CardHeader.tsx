@@ -3,26 +3,18 @@ import { Icon } from "@iconify/vue";
 import { IconifyIcon } from "@iconify/types";
 import { CardTitle } from "./CardTitle";
 import { CardSubtitle } from "./CardSubtitle";
-import makePropsFactory from "@/utils/makePropFactory";
+import { makePropsFactory } from "@/utils/makePropFactory";
 
-const vProps = makePropsFactory({
-  title: {
-    type: String,
-  },
-  subtitle: {
-    type: String,
-  },
-  appendIcon: {
-    type: String,
-  },
-  prependIcon: {
-    type: String
-  }
+const vCardHeaderProps = makePropsFactory({
+  title: String,
+  subtitle: String,
+  appendIcon: String,
+  prependIcon: String
 })
 
-export const CardHeader = defineComponent({
+const CardHeader = defineComponent({
   name: 'CardHeader',
-  props: vProps,
+  props: vCardHeaderProps,
   setup(props, {slots}) {
     const hasDefaultSlot = !!slots.default;
     const hasTitle = !!(slots.title || props.title);
@@ -71,5 +63,11 @@ export const CardHeader = defineComponent({
   },
 });
 
+type CardHeaderType = InstanceType<typeof CardHeader>;
+
+export {
+  CardHeader,
+  CardHeaderType
+}
 
 
