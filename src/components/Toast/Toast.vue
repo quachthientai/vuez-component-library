@@ -240,7 +240,7 @@ export default {
 
   .fade-top-enter-active,
   .fade-bottom-enter-active {
-    transition: all .3s cubic-bezier(0.55, 0, 0.1, 1);
+    transition: all .5s cubic-bezier(0.55, 0, 0.1, 1);
   }
 
   .fade-top-leave-to,
