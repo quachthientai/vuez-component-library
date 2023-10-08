@@ -20,7 +20,7 @@ const variantProps : variantProps = makePropsFactory({
 
 function useVariants(prefix: string, variant: string) : string {
    const variantStyle = computed(() => {
-      if(prefix === undefined | null) return
+      if(prefix === undefined || null) return
 
       if (variant && isIncluded(predefinedVariants, variant)) {
          return `${prefix}-${variant}`
