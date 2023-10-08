@@ -20,7 +20,6 @@ const CardMedia = defineComponent({
       return () => {
          return (
             <div>
-               asdasd
                <img class="card__img" style={dimension.value} src={props.src as string} />
             </div>
          )

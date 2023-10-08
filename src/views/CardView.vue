@@ -27,14 +27,14 @@ export default {
 <template>
   <div class="m-5">
     <Card width="400" :elevation="2" class="m-2">
-      <!-- <CardHeader>
-        <CardTitle>this is title</CardTitle>
-        <CardSubtitle>this is sub</CardSubtitle>
-      </CardHeader> -->
-      <CardMedia width="400" height="100" src="https://cdn.vuetifyjs.com/docs/images/cards/purple-flowers.jpg"></CardMedia>
-      <CardText>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, a dolores tenetur consectetur fuga nulla libero quod! Aliquam optio provident ducimus explicabo velit. Corrupti, exercitationem quibusdam.</CardText>
+      <CardHeader appendIcon="mdi-dots-vertical">
+        <CardTitle>Shrimp and Chorizo Paella</CardTitle>
+        <CardSubtitle>September 14, 2016</CardSubtitle>
+      </CardHeader>
+      <CardMedia width="400" height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></CardMedia>
+      <CardText>This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.</CardText>
       <CardAction>
-        <Button btnClass="btn btn-primary" text="Primary" />
+        <Button btnClass="btn btn-lg btn-icon-circle btn-success" appendIcon="mdi-dots-vertical"/>
         <Button btnClass="btn btn-plain" text="Primary" />
       </CardAction>
     </Card>

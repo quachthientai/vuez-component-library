@@ -55,6 +55,11 @@ const routes = [
     path: '/drag-and-drop',
     name: 'drag-and-drop',
     component: () => import('@/views/DragDropView.vue')
+  },
+  {
+    path: '/buttontest',
+    name: 'buttontest',
+    component: () => import('@/views/ButtonTestView.vue')
   }
 ]
 

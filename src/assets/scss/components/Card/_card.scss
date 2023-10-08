@@ -67,6 +67,9 @@
     }
   }
 
+  &__img {
+    z-index: -1;
+  }
   // &.outlined {
   //   @apply border dark:border-slate-300/30 border-slate-400/30;
   // }

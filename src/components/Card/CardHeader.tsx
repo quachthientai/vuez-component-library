@@ -1,4 +1,4 @@
-import { defineComponent, SlotsType } from "vue";
+import { defineComponent } from "vue";
 import { Icon } from "@iconify/vue";
 import { IconifyIcon } from "@iconify/types";
 import { CardTitle } from "./CardTitle";

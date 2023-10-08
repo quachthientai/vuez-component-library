@@ -19,7 +19,6 @@ const Card = defineComponent({
    name: 'Card',
    props: vCardProps,
    setup(props, {attrs, slots}) {
-      console.log(props)
       const hasTitle = !!(slots.title || props.title);
       const hasSubtitle = !!(slots.subtitle || props.subtitle);
       const hasAppend = !!(slots.append || props.appendIcon);
