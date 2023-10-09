@@ -23,7 +23,6 @@ const Button = defineComponent({
       'v-ripple': Ripple
    },
    setup(props, {attrs, slots}) {
-      console.log(props.variant);
       const variant = useVariants('btn', props.variant as string);
       const size = useSize('btn', props.size as string);
       const color = useColor('btn', props.color as string);

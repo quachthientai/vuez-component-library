@@ -1,50 +1,69 @@
-@use '../utilities/variables';
-@use '../utilities/mixin';
+@use '../../utilities/utils-variables';
+@use '../../utilities/mixin';
+@use './variables';
+@use 'sass:map';
+@use 'sass:string';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@function map-deep-get($map, $keys) {
+  $value : null;
+  @each $key in $keys {
+    $map: map.get($map, $key);
+  }
+  @return $map;
+}
+
+@mixin get-button-size($size) {
+  $size: map-deep-get(variables.$button-sizes, $size);
+  @each $key in map.keys($size) {
+    @apply #{map.get($size, $key)};
+  }
+}
+
 @layer base {
   .btn {
-    @apply relative font-semibold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[35px] px-[14px] transition duration-100 ease-out hover:ease-in text-[14px];
+    
+    @apply relative font-semibold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[36px] px-[1rem] transition duration-100 ease-out hover:ease-in text-[.85rem];
 
     a {
       @apply tracking-wide text-[14px];
     }
 
     &.btn-sm {
-      @apply h-[27px] px-[13px];
+      @include get-button-size('sm');
 
-      a {
-        @apply tracking-wider text-xs leading-[24px];
-      }
+      // a {
+      //   @apply tracking-wider text-xs leading-[24px];
+      // }
     }
 
     &.btn-lg {
-      @apply h-[40px] px-[19px];
+      @include get-button-size('lg');
+      // @apply h-[40px] px-[19px];
 
-      a {
-        @apply tracking-wide text-lg;
-      }
+      // a {
+      //   @apply tracking-wide text-lg;
+      // }
     }
   }
 }
 
 @layer components {
-  @each $color in variables.$colors {
+  @each $color in utils-variables.$colors {
     .btn-#{$color} {
       @include mixin.get-color($color);
     }
     
-    @each $variant in variables.$variants {
+    @each $variant in utils-variables.$variants {
       .btn-#{$color}.btn-#{$variant} {
         @include mixin.get-variant($variant, $color);
 
         &:not([disabled]):hover {
           @include mixin.get-hover-color($variant, $color);
         };
-        
-
+      
       }
     }
   }

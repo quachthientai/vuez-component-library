@@ -1,4 +1,4 @@
-@use '../utilities/variables';
+@use '../utilities/utils-variables';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +13,7 @@
       @apply bg-#{$color}-600;
    } @else {
       @if $color == 'secondary' {
-         @apply hover:bg-#{$color}-200 
+         @apply hover:bg-#{$color}-200
             dark:hover:bg-#{$color}-700/50;
       } @else {
          @apply hover:bg-#{$color}-100 
