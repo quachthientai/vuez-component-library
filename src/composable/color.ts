@@ -12,8 +12,7 @@ const predefinedColors = [
    'success',
    'danger',
    'warning',
-   'info',
-   'plain'
+   'info'
 ]
 
 const colorProps : colorProps = makePropsFactory({

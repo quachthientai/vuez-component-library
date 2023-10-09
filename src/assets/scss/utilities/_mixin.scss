@@ -3,15 +3,58 @@
 @tailwind components;
 @tailwind utilities;
 
-@function get-color($color) {
-   @if $color == 'plain' {
-      @return 'outline-none border-none';
+@mixin get-text-color($color) {
+   @apply dark:text-#{$color}-400/90 
+      text-#{$color}-500;  
+}
+
+@mixin get-hover-color($variant,$color) {
+   @if($variant == 'solid') {
+      @apply bg-#{$color}-600;
    } @else {
-      @return 'outline-none border-none dark:bg-' + $color + '-500/90 bg-' + $color + '-500';
+      @if $color == 'secondary' {
+         @apply hover:bg-#{$color}-200 
+            dark:hover:bg-#{$color}-700/50;
+      } @else {
+         @apply hover:bg-#{$color}-100 
+            dark:hover:bg-#{$color}-500/10;
+      }
    }
 }
 
-@mixin variant-plain {
-   @apply outline-none border-none;
+/// A mixin that applies styles based on the variant passed as an argument..
+/// @param {string} $variant - The variant to apply styles for
+/// @example: 
+/// .my-element {
+///   @include get-variant('plain');
+/// }
+@mixin get-variant($variant, $color) {
+   @if $variant == 'text' {
+      @include get-text-color($color);
+      @apply bg-transparent;
+   } @else if $variant == 'outlined' {
+      @include get-text-color($color);
+      @apply bg-transparent  
+         border
+         border-#{$color}-500;
+   }
 }
+
+/// A mixin that returns a set of styles based on the given color..
+/// @param {string} $color - The color to apply styles for
+/// @example:
+/// .my-element {
+///  @include get-color('primary');
+/// }
+@mixin get-color($color) {
+   @apply text-light 
+         outline-none
+         border-0
+         dark:bg-#{$color}-500/90 
+         bg-#{$color}-500;
+}
+
+
+
+
 

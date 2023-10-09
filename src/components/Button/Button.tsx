@@ -32,7 +32,7 @@ const Button = defineComponent({
          return (
             <button 
                type="button"
-               class={['btn', variant, size, color]}
+               class={['btn',color, variant, size]}
                tabindex="0" 
                role="button">
                   
