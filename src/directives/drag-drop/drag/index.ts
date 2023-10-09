@@ -1,4 +1,6 @@
-import { Event, HandleEventDirective } from "@/directives/type"
+// import { Event, HandleEventDirective } from "@/directives/type"
+
+import { Event, HandleEventDirective } from "../../type";
 import { getOptions } from "./getOptions";
 import { DirectiveBinding, VNode, h, render } from "vue";
 import { v4 as uuidv4 } from 'uuid';

@@ -1,44 +1,47 @@
-Card Component
-==============
+# Card
+The `<Card>` is a flexible component that can be used to render a content container with many optional options.
 
-The `Card` component is a component that can be used to render a card with an optional elevation and default slot content.
-```jsx
-import Head from 'next/head'
-
-function IndexPage() {
-  return (
-    <div>
-      <Head>
-        <title>My page title</title>
-      </Head>
-      <p>Hello world!</p>
-    </div>
-  )
-}
-
-export default IndexPage
-```
-
-Props
------
+## API
 | Component | Description |
 | - | - |
-| [`<Card>`](/src/components/Card/Card.tsx) | Primary Component |
-| [`<CardHeader>`](/src/components/Card/CardHeader.tsx) | Sub-component used to wrap the Card's `<CardTitle>` and `<CardSubtitle>` components. |
-| [`<CardTitle>`](/api/v-card-title/) | Sub-component used to display the Card's title. Wraps the `#title` slot |
-| [`<CardSubtitle>`](/api/v-card-subtitle/) | Sub-component used to display the Card's subtitle. Wraps the `#subtitle` slot. |
-| [`<CardText>`](/api/v-card-text/) | Sub-component used to display the Card's text. Wraps the `#text` slot. |
-| [`<CardAction>`](/api/v-card-actions/) | Sub-component that modifies the default styling of [v-btn](/components/buttons/). Wraps the `#actions` slot |
-The `Card` component has the following props:
+| [`<Card>`](./Card.md) | Primary Component |
+| [`<CardHeader>`](./CardHeader.md) | Sub-component used to wrap the Card's `<CardTitle>` and `<CardSubtitle>` components. |
+| [`<CardTitle>`](./CardTitle.md) | Sub-component used to display the Card's title. Wraps the `#title` slot |
+| [`<CardSubtitle>`](./CardSubtitle.md) | Sub-component used to display the Card's subtitle. Wraps the `#subtitle` slot. |
+| [`<CardText>`](./CardText.md) | Sub-component used to display the Card's text. Wraps the `#text` slot. |
+| [`<CardAction>`](./CardAction.md) | Sub-component that modifies the default styling of [`<Button>`](../Button/Button.md). Wraps the `#actions` slot |
 
--   `title`: A string that represents the title of the card.
--   `subtitle`: A string that represents the subtitle of the card.
--   `width`: A string or number that represents the width of the card.
--   `appendIcon`: A string that represents the name of the icon to append to the card.
--   `prependIcon`: A string that represents the name of the icon to prepend to the card.
--   `elevation`: A number that represents the elevation of the card. The default value is `0`.
+## Props
+The `<Card>` component has the following props:
 
-Usage
------
+| Name | Type | Default | Description |
+| - | - | - | - |
+|title|String|`undefined`|The title of the card.|
+|subtitle|String|`undefined`|The subtitle of the card.|
+|width|String, Number|`undefined`|The width of the card.|
+|appendIcon|String|`undefined`|The name of the icon to append to the card header.|
+|prependIcon|String|`undefined`|The name of the icon to prepend to the card header.|
+|elevation|Number|`0`|The elevation of the card.|
 
-To use the `Card` component, you can import it from the `@/components/Card` module and use it in your Vue.js templates. Here's an example of how you can use the `Card` component:
+## Slots
+The `<Card>` component has the following slots:
+
+| Name | Description |
+| - | - |
+|`#title`|The title of the card.|
+|`#subtitle`|The subtitle of the card.|
+|`#text`|The text of the card.|
+|`#actions`|The actions of the card; locate at the bottom of the card|
+|`#prepend`|The prepend content of the card; locate at the top of the card|
+|`#append`|The append content of the card; locate at the top of the card|
+
+## Usage
+To use the `<Card>` component, you can import it from the `@/components/Card/index` module and use it in your Vue.js templates.
+```ts
+import { Card } from '@/components/Card/index'
+```
+ Here's an example of how you can use the `<Card>` component:
+   
+```vue
+<Card></Card>
+```

@@ -1,3 +1,10 @@
 import { createFunctional } from "@/utils/createFunctional";
 
-export const CardAction = createFunctional('CardAction', 'div', 'card__action');
+const CardAction = createFunctional('CardAction', 'div', 'card__action');
+
+type CardActionType = InstanceType<typeof CardAction>
+
+export {
+   CardAction,
+   CardActionType
+}
