@@ -1,4 +1,5 @@
 @use '../utilities/variables';
+@use '../utilities/mixin';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,10 +7,6 @@
 @layer base {
   .btn {
     @apply relative font-semibold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[35px] px-[14px] transition duration-100 ease-out hover:ease-in;
-
-    // &:not(.badge) {
-    //   @apply overflow-auto
-    // }
 
     a {
       @apply tracking-wide text-[14px];
@@ -33,79 +30,95 @@
   }
 }
 
-@layer utilities {
-  @each $variant in variables.$variants {
-    @if $variant == 'plain' {
+@layer components {
+  @each $color in variables.$colors {
+    @if $color == 'plain' {
       .btn-plain {
-        @apply outline-none border-none 
+        @include mixin.variant-plain;
       }
     } @else {
-      .btn-#{$variant} {
-        @apply outline-none border-none dark:bg-#{$variant}-500/90 bg-#{$variant}-500;
+      .btn-#{$color} {
+        @apply text-light outline-none border-none dark:bg-#{$color}-500/90 bg-#{$color}-500;
 
-        &:not([disabled]):hover {
-          @apply bg-#{$variant}-600;
-        };
-
-        a {
-          @apply text-light;
-        }
-      }
-    }
-  } 
-
-  @each $variant in variables.$variants {
-    .btn-outline-#{$variant} {
-      @apply bg-none border-[2px] p-[10px] dark:border-#{$variant}-400/40 border-#{$variant}-500;
-
-      &:not([disabled]):hover {
-        @if $variant == 'secondary' {
-          @apply hover:bg-#{$variant}-200 dark:hover:bg-#{$variant}-700/50;
-        } @else {
-          @apply hover:bg-#{$variant}-100 dark:hover:bg-#{$variant}-500/10;
-        }
-      }
-
-      a {
-        @apply dark:text-#{$variant}-400/90 text-#{$variant}-500;
-      }
-    }
-  }
-
-  .btn-icon-circle {
-    @apply p-[12px] rounded-full;
-    
-    a > span > svg {
-      @apply m-0;
-    }
-
-    @each $variant in variables.$variants {
-      &.btn-#{$variant} {
-        &.btn-sm {
-          @apply p-[9px];
-        }
-
-        &.btn-lg {
-          @apply p-[14px];
-        }
-      }
-    }
-
-    @each $variant in variables.$variants {
-      &.btn-outline-#{$variant} {
-        @apply p-[10px];
-
-        &.btn-sm {
-          @apply p-[7px];
-        }
-
-        &.btn-lg {
-          @apply p-[12px];
-        }
       }
     }
   }
 }
+
+// @layer utilities {
+//   @each $color in variables.$colors {
+//     @if $color == 'plain' {
+//       .btn-plain {
+//         @include mixin.variant-plain;
+//       }
+//     } @else {
+//       .btn-#{$color} {
+//         @debug get-color($color);
+//         @apply outline-none border-none dark:bg-#{$color}-500/90 bg-#{$color}-500;
+
+//         &:not([disabled]):hover {
+//           @apply bg-#{$color}-600;
+//         };
+
+//         a {
+//           @apply text-light;
+//         }
+//       }
+//     }
+//   } 
+
+//   @each $color in variables.$colors {
+//     .btn-outline-#{$color} {
+//       @apply bg-none border-[2px] p-[10px] dark:border-#{$color}-400/40 border-#{$color}-500;
+
+//       &:not([disabled]):hover {
+//         @if $color == 'secondary' {
+//           @apply hover:bg-#{$color}-200 dark:hover:bg-#{$color}-700/50;
+//         } @else {
+//           @apply hover:bg-#{$color}-100 dark:hover:bg-#{$color}-500/10;
+//         }
+//       }
+
+//       a {
+//         @apply dark:text-#{$color}-400/90 text-#{$color}-500;
+//       }
+//     }
+//   }
+
+//   .btn-icon-circle {
+//     @apply p-[12px] rounded-full;
+    
+//     a > span > svg {
+//       @apply m-0;
+//     }
+
+//     @each $color in variables.$colors {
+//       &.btn-#{$color} {
+//         &.btn-sm {
+//           @apply p-[9px];
+//         }
+
+//         &.btn-lg {
+//           @apply p-[14px];
+//         }
+//       }
+//     }
+
+//     @each $color in variables.$colors {
+//       &.btn-outline-#{$color} {
+//         @apply p-[10px];
+
+//         &.btn-sm {
+//           @apply p-[7px];
+//         }
+
+//         &.btn-lg {
+//           @apply p-[12px];
+//         }
+//       }
+//     }
+//   }
+// }
 
 .rounded {
   @apply rounded-full;

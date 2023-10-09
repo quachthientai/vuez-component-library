@@ -3,4 +3,7 @@
 // @tailwind components;
 // @tailwind utilities;
 
-$variants: 'primary', 'secondary', 'info', 'warning', 'danger', 'success', 'plain';
+$colors: 'primary', 'secondary', 'info', 'warning', 'danger', 'success', 'plain';
+$variants: 'solid', 'outline', 'text';
+$sizes: 'sm', 'md', 'lg';
+

@@ -6,14 +6,20 @@ interface variantProps {
    variant?: PropOptions<string>
 }
 
-const predefinedVariants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'plain']
+const predefinedVariants = [
+   'text',
+   'outlined',
+   'solid',
+]
+
+// const predefinedVariants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'plain']
 
 const variantProps : variantProps = makePropsFactory({
    variant: {
       type: String,
-      default: 'primary',
-      validator: (val: string) => {
-         return isIncluded(predefinedVariants, val)
+      default: 'solid',
+      validator: (variantVal: string) => {
+         return isIncluded(predefinedVariants, variantVal)
       }
    }
 })

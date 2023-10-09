@@ -1,0 +1,17 @@
+@use '../utilities/variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@function get-color($color) {
+   @if $color == 'plain' {
+      @return 'outline-none border-none';
+   } @else {
+      @return 'outline-none border-none dark:bg-' + $color + '-500/90 bg-' + $color + '-500';
+   }
+}
+
+@mixin variant-plain {
+   @apply outline-none border-none;
+}
+

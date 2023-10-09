@@ -11,7 +11,7 @@ export default {
 
 <template>
    <div class="flex justify-start mt-2">
-      <Button>asd</Button>
+      <Button size="md" color="secondary" variant="outlined">asd</Button>
    </div>
 </template>
 
