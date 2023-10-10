@@ -3,13 +3,13 @@ import formValidate from "@/modules/formvalidate"
 import addWarningText from "@/directives/validate/addWarningText"
 
 //With Text Input
-const handleTextValueChange = (e:any,info:any)=>{
+const handleTextValueChange = (e:any,warningText:HTMLParagraphElement)=>{
     
     
-    const warningTextHolder = addWarningText(e.target,info)
-    e.target.after(warningTextHolder)
+    // const warningTextHolder = addWarningText(e.target,info)
+    // e.target.after(warningTextHolder)
     const validateModel = new formValidate({type:e.target.type,value:e.target.value})
-    const warningText = document.getElementById("form-warning-text")
+    // const warningText = document.getElementById("form-warning-text")
 
     //Check for the min/maxLength 
     if(!validateModel.validateMinLength(e.target.value)){    
@@ -32,11 +32,13 @@ export const InputValidate = {
         //Add the warning text before the test, only reveal when input event start, include add("Hidden")
         const validateModel = new formValidate({type:el.type,value:el.value})
         const warningText = addWarningText(el,binding)
+        el.after(warningText)
+        warningText.classList.add("hidden")
 
         switch (el.type) {
             case "text":
                 // el.after(warningP)
-                el.addEventListener('input', (event)=>handleTextValueChange(event,binding))
+                el.addEventListener('input', (event)=>handleTextValueChange(event,warningText))
                 break
             case "email":
                 el.addEventListener('input',(event)=>handleEmailValueChange(event,binding)) 
