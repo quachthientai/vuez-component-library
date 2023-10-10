@@ -43,7 +43,7 @@ const Button = defineComponent({
          return (
             <button 
                type="button"
-               class={['btn',color, variant, size]}
+               class={['btn',color, variant, size, loader]}
                tabindex="0" 
                role="button"> 
 
@@ -55,11 +55,10 @@ const Button = defineComponent({
                      </div>
                   )}
 
-                  { (hasTextProps || hasDefaultSlots && !loader) && (
+                  { (hasTextProps || hasDefaultSlots) && (
                      <span class="btn__content">
                         { props.text ?? props.text }
-                        { slots.default?.() }
-                        
+                        { hasDefaultSlots && slots.default?.() }
                      </span>
                   )}
 
@@ -70,11 +69,17 @@ const Button = defineComponent({
                            : slots.append?.() }
                      </div>
                   )}
+
+                  { props.loading && (
+                     <span class="btn__loader">
+                        <Icon icon="mingcute:loading-fill"></Icon>
+                     </span>
+                  )}
                
             </button>
          )
       }
-   }
+   } 
 })
 
 type ButtonType = InstanceType<typeof Button>;

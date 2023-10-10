@@ -18,7 +18,7 @@ function useLoader(prefix: string, loading: boolean) : string {
       if(prefix === undefined || null) return
 
       if(loading && prefix !== undefined || null) {
-         return `${prefix}-loader`;
+         return `${prefix}-loading`;
       }
    })
    return loader.value
