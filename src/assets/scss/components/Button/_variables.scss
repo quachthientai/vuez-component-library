@@ -1,21 +1,34 @@
+
+// $button-base: (
+//    position: "relative",
+//    font-weight: "font-semibold",
+//    letter-spacing: "tracking-wide",
+//    display: "flex",
+//    justify-content: "justify-center",
+//    align-items: "items-center",
+//    border-width: "border-2",
+//    border-radius: "rounded-[5px]",
+//    transition: "transition duration-100 ease-out hover:ease-in",
+// )
+
 $button-sizes: (
    sm: (
       "height": "h-[28px]",
       "min-width": "min-w-[50px]",
-      "padding": "py-0 px-[12px]",
+      "padding": "py-0 px-[10px]",
       "font-size": "text-[.75rem]",
    ),
    md: (
       "height": "h-[36px]",
       "min-width": "min-w-[64px]",
-      "padding": "py-0 px-[16px]",
+      "padding": "py-0 px-[14px]",
       "font-size": "text-[.875rem]",
    ),
    lg: (
       "height": "h-[44px]",
       "min-width": "min-w-[78px]",
-      "padding": "py-0 px-[20px]",
+      "padding": "py-0 px-[18px]",
       "font-size": "text-[1rem]",
    ),
-)
+);
 

@@ -1,74 +1,113 @@
 @use '../../utilities/utils-variables';
-@use '../../utilities/mixin';
-@use './variables';
+@use '../../utilities/utils-mixin';
+@use '../Button/mixin' as btn-mixins;
+@use '../../utilities/utils-functions';
 @use 'sass:map';
-@use 'sass:string';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@function map-deep-get($map, $keys) {
-  $value : null;
-  @each $key in $keys {
-    $map: map.get($map, $key);
-  }
-  @return $map;
-}
+//       relative 
+//       font-semibold 
+//       tracking-wide 
+//       flex
+//       gap-1
+//       justify-center 
+//       items-center 
 
-@mixin get-button-size($size) {
-  $size: map-deep-get(variables.$button-sizes, $size);
-  @each $key in map.keys($size) {
-    @apply #{map.get($size, $key)};
-  }
-}
+    // @apply relative rounded-[5px] font-semibold tracking-wide 
+    //   transition duration-100 ease-out hover:ease-in;
 
 @layer base {
   .btn {
-    
-    @apply relative font-semibold tracking-wide flex justify-center items-center border-2 rounded-[5px] h-[36px] px-[1rem] transition duration-100 ease-out hover:ease-in text-[.85rem];
+    @apply relative 
+      rounded-[5px] 
+      font-semibold 
+      tracking-wide 
+      transition duration-100 ease-out hover:ease-in;
+
+    display: grid;
+    flex: none;
+    grid-template-areas: "prepend content append";
+    grid-template-columns: max-content auto max-content;
+
+    &__prepend {
+      @apply self-center;
+      margin-right: .2em;
+      display: flex;
+      grid-area: prepend;
+      > * {
+        @apply inline-block align-middle;
+      }
+    }
+
+    &__content {
+      grid-area: content;
+      @apply self-center;
+    }
+
+    &__append {
+      @apply self-center;
+      margin-left: .2em;
+      display: flex;
+      grid-area: append;
+      > * {
+        @apply inline-block align-middle;
+      }
+    }
 
     a {
       @apply tracking-wide text-[14px];
     }
 
     &.btn-sm {
-      @include get-button-size('sm');
+      @include btn-mixins.get-button-size('sm');
+    }
 
-      // a {
-      //   @apply tracking-wider text-xs leading-[24px];
-      // }
+    &.btn-md {
+      @include btn-mixins.get-button-size('md');
     }
 
     &.btn-lg {
-      @include get-button-size('lg');
-      // @apply h-[40px] px-[19px];
-
-      // a {
-      //   @apply tracking-wide text-lg;
-      // }
+      @include btn-mixins.get-button-size('lg');
     }
   }
 }
+:root {
+  --var-icon-size: .85;
+}
+.btn__prepend-icon,
+.btn__append-icon {
+  font-size: calc(var(--var-icon-size) * 1.5em);
+}
+
+// .btn-md .btn__prepend-icon,
+// .btn-md .btn__append-icon {
+//   font-size: calc(var(--var-icon-size) * 1.5em);
+// }
+
+// .btn-lg .btn__prepend-icon,
+// .btn-lg .btn__append-icon {
+//   font-size: calc(var(--var-icon-size) * 1.5em);
+// }
 
 @layer components {
   @each $color in utils-variables.$colors {
     .btn-#{$color} {
-      @include mixin.get-color($color);
+      @include utils-mixin.get-color($color);
     }
     
     @each $variant in utils-variables.$variants {
       .btn-#{$color}.btn-#{$variant} {
-        @include mixin.get-variant($variant, $color);
+        @include utils-mixin.get-variant($variant, $color);
 
         &:not([disabled]):hover {
-          @include mixin.get-hover-color($variant, $color);
+          @include utils-mixin.get-hover-color($variant, $color);
         };
       
       }
     }
   }
-
-  
 }
 
 // @layer utilities {

@@ -1,9 +1,9 @@
 import { computed } from "vue";
 import { isIncluded } from "@/utils/helpers";
-import { PropsOptions, makePropsFactory } from "@/utils/makePropFactory";
+import { PropOptions, makePropsFactory } from "@/utils/makePropFactory";
 
 interface sizeProps {
-   size?: PropsOptions<string>
+   size?: PropOptions<string>
 }
 
 const predefinedSizes = ['sm', 'md', 'lg'];
