@@ -8,8 +8,7 @@
 span.ripple__effect {
   @apply absolute rounded-[50%] animate-ripple ;
   transform: scale(0);
-  @apply bg-ripple-success;
-  // background-color: rgb(222 219 219 / 0.485);
+
 }
 
 div.ripple {

@@ -16,12 +16,12 @@ module.exports =  {
     },
     extend: {
       backgroundColor: {
-        'ripple-primary': 'rgb(56 189 248 / 0.3)',
-        'ripple-secondary': 'rgb(148 163 184 / 0.3)',
-        'ripple-success': 'rgb(74 222 128 / 0.3)',
-        'ripple-warning': 'rgb(251 191 36 / 0.3)',
-        'ripple-danger': 'rgb(248 113 113 / 0.3)',
-        'ripple-info': 'rgb(96 165 250 / 0.3)',
+        'ripple-primary': 'rgb(56 189 248 / 0.2)',
+        'ripple-secondary': 'rgb(148 163 184 / 0.2)',
+        'ripple-success': 'rgb(74 222 128 / 0.2)',
+        'ripple-warning': 'rgb(251 191 36 / 0.2)',
+        'ripple-danger': 'rgb(248 113 113 / 0.2)',
+        'ripple-info': 'rgb(96 165 250 / 0.2)',
       },
       boxShadow: {
         'elevation-1': '0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)',
@@ -133,7 +133,6 @@ module.exports =  {
           900: '#0f172a',
         },
         ...defaultTheme.colors
-        
       },
       textColor:{
         'light': '#E2E8F0',
@@ -159,6 +158,16 @@ module.exports =  {
     },
   },
   plugins: [
+    plugin(function({matchUtilities, theme}) {
+      matchUtilities({
+        elevation: (value) => ({
+          elevationValue : value
+        })
+      },
+      {
+        values: theme('boxShadow')
+      })
+    })
   ],
 };
 
