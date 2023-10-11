@@ -1,9 +1,9 @@
 import { computed } from "vue";
 import { isIncluded } from "@/utils/helpers";
-import { PropsOptions, makePropsFactory } from "@/utils/makePropFactory";
+import { PropOptions, makePropsFactory } from "@/utils/makePropFactory";
 
 interface colorProps {
-   color?: PropsOptions<string>
+   color?: PropOptions<string>
 }
 
 const predefinedColors = [
@@ -12,8 +12,7 @@ const predefinedColors = [
    'success',
    'danger',
    'warning',
-   'info',
-   'plain'
+   'info'
 ]
 
 const colorProps : colorProps = makePropsFactory({

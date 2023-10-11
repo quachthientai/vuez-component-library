@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 // import Toast from '@/components/Toast/Toast.vue';
 import Button from '@/components/Button/Button.vue'
 
