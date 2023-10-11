@@ -12,7 +12,7 @@
     @apply relative 
       rounded-[5px] 
       font-semibold 
-      tracking-wide 
+      tracking-wide
       transition duration-100 ease-out hover:ease-in;
 
     display: grid;
@@ -85,6 +85,12 @@
     }
   }
 }
+
+@for $i from 1 through 5 {
+  .btn-solid.elevation-#{$i} {
+    @apply shadow-elevation-#{$i};
+  };
+};
 
 .btn__prepend-icon,
 .btn__append-icon,

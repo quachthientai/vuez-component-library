@@ -20,7 +20,7 @@ function useLoader(prefix: string, loading: boolean) : string {
          return `${prefix}-loading`;
       }
    })
-   return loader
+   return loader.value;
 }
 
 export {

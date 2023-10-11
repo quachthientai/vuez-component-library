@@ -49,9 +49,9 @@ export default {
    </div>
 
    <div class="flex justify-start mt-2">
-      <Button size="sm" class="mr-2" color="primary">SMALL BUTTON</Button>
-      <Button size="md" class="mr-2" color="secondary">REGULAR BUTTON</Button>
-      <Button size="lg"  class="mr-2" color="success">LARGE BUTTON</Button>
+      <Button size="sm"  class="mr-2" color="primary">SMALL BUTTON</Button>
+      <Button size="md" :elevation="3" class="mr-2" color="secondary">REGULAR BUTTON</Button>
+      <Button size="lg" class="mr-2" color="success">LARGE BUTTON</Button>
       <Button size="md" class="mr-2" color="danger">BUTTON</Button>
       <Button size="md" class="mr-2" color="warning">BUTTON</Button>
       <Button size="md" class="mr-2" color="info">BUTTON</Button>

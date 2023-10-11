@@ -1,4 +1,4 @@
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { Ripple } from "@/directives/ripple";
 import { useVariants, variantProps } from "@/composable/variants";
@@ -6,6 +6,7 @@ import { useSize, sizeProps } from "@/composable/size";
 import { useColor, colorProps } from "@/composable/color";
 import { useIcon, iconProps, Icon } from "@/composable/icon";
 import { useLoader, loaderProps } from "@/composable/loader";
+import { useElevation, elevationProps } from "@/composable/elevation";
 
 const vButtonProps = makePropsFactory({
    block: Boolean,
@@ -16,7 +17,8 @@ const vButtonProps = makePropsFactory({
    ...variantProps,
    ...sizeProps,
    ...colorProps,
-   ...loaderProps
+   ...loaderProps,
+   ...elevationProps,
 });
 
 const Button = defineComponent({
@@ -31,7 +33,8 @@ const Button = defineComponent({
          const variant = useVariants('btn', props.variant as string);
          const size = useSize('btn', props.size as string);
          const color = useColor('btn', props.color as string);
-
+         const elevation = useElevation(props.elevation as number)
+         
          const prependIcon = props.prependIcon as Icon;
          const appendIcon = props.appendIcon as Icon;
 
@@ -43,14 +46,13 @@ const Button = defineComponent({
             <button 
                type="button"
                v-ripple
-               class={['btn',color, variant, size, loader.value]}
-               disabled={props.disabled || props.loading}
+               class={['btn',color, variant, size, loader, elevation]}
+               disabled={props.disabled as boolean || props.loading as boolean}
                tabindex="0" 
                role="button"> 
-
                   {hasPrepend && (
                      <div class="btn__prepend">
-                        { props.prependIcon 
+                        { props.prependIcon
                            ? <Icon 
                                  class="btn__prepend-icon" 
                                  color={prependIcon.color} 
@@ -88,11 +90,10 @@ const Button = defineComponent({
                         <Icon icon="mingcute:loading-fill"></Icon>
                      </span>
                   )}
-               
             </button>
          )
       }
-   } 
+   },
 })
 
 type ButtonType = InstanceType<typeof Button>;
