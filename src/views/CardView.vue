@@ -25,7 +25,7 @@ export default {
 
 <template>
   <div class="m-5">
-    <Card width="400">
+    <Card width="400" class="mb-3">
       <CardHeader>
         <CardTitle>this is title</CardTitle>
         <CardSubtitle>this is sub</CardSubtitle>
@@ -37,12 +37,12 @@ export default {
       </CardAction>
     </Card>
 
-    <Card>
+    <Card width="400" class="mb-3">
       <CardHeader appendIcon="mdi:home" title="this is title" subtitle="this is sub"/>
     </Card>
 
-    <Card>
-      <CardText>
+    <Card width="400" class="mb-3">
+      <CardText width="400">
         <div class="text-content-6 text-slate-500">Word of the day</div>
         <p class="text-h4">
           el·ee·mos·y·nar·y
@@ -59,7 +59,7 @@ export default {
       </CardAction>
     </Card>
 
-    <Card title="this is title(props)" subtitle="this is sub(props)">
+    <Card title="this is title(props)" width="400" class="mb-3" subtitle="this is sub(props)">
       <template v-slot:text>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque dignissimos ut officia repellat numquam nobis ipsa, temporibus, expedita voluptatibus laudantium blanditiis architecto laboriosam, recusandae iure sit! Facere, temporibus quibusdam.</template>
       <template v-slot:action>
         <Button btnClass="btn btn-primary" text="Primary" />
@@ -67,7 +67,7 @@ export default {
       </template>
     </Card>
 
-    <Card>
+    <Card width="400" class="mb-3">
       <template v-slot:title>this is title (slots)</template>
       <template v-slot:subtitle>this is sub (slots)</template>
       <template v-slot:action>
