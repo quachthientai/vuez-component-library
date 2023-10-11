@@ -1,33 +1,23 @@
-import { defineComponent, computed, useAttrs, isRef } from "vue";
-import makePropsFactory from "@/utils/makePropFactory";
+import { defineComponent, computed, defineProps } from "vue";
+import { makePropsFactory } from "@/utils/makePropFactory";
 import { CardHeader, CardText, CardAction  } from '@/components/Card/index';
-import { useDimension } from "@/composable/dimenstion";
+import { useDimension, dimensionProps } from "@/composable/dimenstion";
 
-const vProps = makePropsFactory({
-   title: {
-      type: String,
-   },
-   subtitle: {
-      type: String,
-   },
-   width: {
-      type: [String, Number],
-   },
-   appendIcon: {
-      type: String,
-   },
-   prependIcon: {
-      type: String
-   },
+const vCardProps = makePropsFactory({
+   title: String,
+   subtitle: String,
+   appendIcon: String,
+   prependIcon: String,
    elevation: {
       type: Number,
       default: 0
-   }
-});
+   },
+   ...dimensionProps
+})
 
-export const Card = defineComponent({
+const Card = defineComponent({
    name: 'Card',
-   props: vProps,
+   props: vCardProps,
    setup(props, {attrs, slots}) {
       const hasTitle = !!(slots.title || props.title);
       const hasSubtitle = !!(slots.subtitle || props.subtitle);
@@ -35,15 +25,12 @@ export const Card = defineComponent({
       const hasPrepend = !!(slots.prepend || props.prependIcon);
       const hasTextSlot = !!slots.text;
       const hasActionSlot = !!slots.action;
+      const dimension = useDimension(props);
 
       const elevation = computed(() => {
          return props.elevation as number > 0 ? `elevation-${props.elevation}` : '';
       });
       
-      const dimension  = useDimension({
-         width: props.width as string | number
-      });
-
       return() => {
          return (
             <div style={dimension.value} class={['card', elevation.value]}>
@@ -79,4 +66,11 @@ export const Card = defineComponent({
       }
    }
 });
+
+type CardType = InstanceType<typeof Card>;
+
+export {
+   Card,
+   CardType
+}
 

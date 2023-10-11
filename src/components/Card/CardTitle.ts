@@ -1,6 +1,11 @@
 import { createFunctional } from "../../utils/createFunctional"
 
-export const CardTitle = createFunctional('CardTitle', 'div', 'card__title')
+const CardTitle = createFunctional('CardTitle', 'div', 'card__title')
 
+type CardTitleType = InstanceType<typeof CardTitle>
 
+export {
+   CardTitle,
+   CardTitleType
+}
 

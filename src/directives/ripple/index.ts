@@ -9,10 +9,10 @@ const handleRipple : HandleRippleFunc = (event, element) => {
    const effect = createVNode(
       'span',
       container, { 
-         height: `${diameter}px`,
-         width: `${diameter}px`,
-         top: `${event.clientY - (element.offsetTop + radius)}px`,
-         left: `${event.clientX - (element.offsetLeft + radius)}px`
+         height:  `${diameter}px`,
+         width:   `${diameter}px`,
+         top:     `${event.clientY - (element.offsetTop + radius)}px`,
+         left:    `${event.clientX - (element.offsetLeft + radius)}px`
       },
       null,
       'ripple__effect'
