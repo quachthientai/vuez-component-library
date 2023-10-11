@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@mixin get-rgb-ripple-color($color) {
+   @apply bg-ripple-#{$color};
+}
+
 @mixin get-text-color($color) {
    @apply dark:text-#{$color}-400/90 
       text-#{$color}-500;  

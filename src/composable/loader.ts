@@ -1,4 +1,4 @@
-import { computed } from "vue";
+import { computed, isRef } from "vue";
 import { PropOptions, makePropsFactory } from "@/utils/makePropFactory";
 
 interface loaderProps {
@@ -13,7 +13,6 @@ const loaderProps : loaderProps = makePropsFactory({
 });
 
 function useLoader(prefix: string, loading: boolean) : string {
-   
    const loader = computed(() => {
       if(prefix === undefined || null) return
 
@@ -21,7 +20,7 @@ function useLoader(prefix: string, loading: boolean) : string {
          return `${prefix}-loading`;
       }
    })
-   return loader.value
+   return loader
 }
 
 export {

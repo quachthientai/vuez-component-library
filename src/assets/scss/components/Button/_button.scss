@@ -7,17 +7,6 @@
 @tailwind components;
 @tailwind utilities;
 
-//       relative 
-//       font-semibold 
-//       tracking-wide 
-//       flex
-//       gap-1
-//       justify-center 
-//       items-center 
-
-    // @apply relative rounded-[5px] font-semibold tracking-wide 
-    //   transition duration-100 ease-out hover:ease-in;
-
 @layer base {
   .btn {
     @apply relative 
@@ -32,7 +21,7 @@
     grid-template-columns: max-content auto max-content;
 
     &__loader {
-      @apply animate-spin;
+      @apply animate-spin transition-all duration-150 ease-out;
       align-items: center;
       display: flex;
       height: 100%;
@@ -41,10 +30,11 @@
       position: absolute;
       top: 0;
       width: 100%;
+      
     }
 
     &__prepend {
-      @apply self-center;
+      @apply self-center transition-all duration-150 ease-out;
       margin-right: .2em;
       display: flex;
       grid-area: prepend;
@@ -55,11 +45,11 @@
 
     &__content {
       grid-area: content;
-      @apply self-center;
+      @apply self-center transition-all duration-150 ease-out;
     }
 
     &__append {
-      @apply self-center;
+      @apply self-center transition-all duration-150 ease-out;
       margin-left: .2em;
       display: flex;
       grid-area: append;
@@ -83,31 +73,33 @@
     &.btn-lg {
       @include btn-mixins.get-button-size('lg');
     }
+
+    &.btn-loading {
+      @apply cursor-not-allowed;
+    
+      .btn__content,
+      .btn__prepend,
+      .btn__append {
+        @apply opacity-0;
+      }
+    }
   }
 }
-:root {
-  --var-icon-size: .85;
-}
+
 .btn__prepend-icon,
 .btn__append-icon,
 .btn__loader {
-  font-size: calc(var(--var-icon-size) * 1.5em);
-}
-
-.btn-loading {
-  @apply cursor-not-allowed;
-
-  .btn__content,
-  .btn__prepend,
-  .btn__append {
-    @apply opacity-0;
-  }
+  font-size: (0.85 * 1.5em);
 }
 
 @layer components {
   @each $color in utils-variables.$colors {
     .btn-#{$color} {
       @include utils-mixin.get-color($color);
+      
+      > .ripple .ripple__effect {
+        @include utils-mixin.get-rgb-ripple-color($color);
+      }
     }
     
     @each $variant in utils-variables.$variants {
