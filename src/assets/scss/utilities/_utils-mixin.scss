@@ -34,8 +34,11 @@
 ///  @include get-text-color('primary');
 /// }
 @mixin get-text-color($color) {
-   @apply dark:text-#{$color}-400/90 
-      text-#{$color}-500;  
+   @if($color == 'plain') {
+      @apply text-dark dark:text-light;
+   } @else {
+      @apply dark:text-#{$color}-400/90 text-#{$color}-500; 
+   }
 }
 
 
@@ -89,11 +92,19 @@
 /// }
 @mixin get-hover-color($variant,$color) {
    @if($variant == 'solid') {
-      @apply bg-#{$color}-600;
+      @if($color == 'plain') {
+         @apply hover:bg-gray-400/70 dark:hover:bg-gray-600;
+      } @else {
+         @apply bg-#{$color}-600;
+      }
+      
    } @else {
       @if $color == 'secondary' {
          @apply hover:bg-#{$color}-200
             dark:hover:bg-#{$color}-700/50;
+      } @else if ($color == 'plain') {
+         @apply hover:bg-#{$color}-200 
+            dark:hover:bg-#{$color}-200/10;
       } @else {
          @apply hover:bg-#{$color}-100 
             dark:hover:bg-#{$color}-500/10;
@@ -112,7 +123,7 @@
 @mixin get-variant($variant, $color) {
    @if $variant == 'text' {
       @include get-text-color($color);
-      @apply bg-transparent;
+      @apply bg-transparent border-none;
    } @else if $variant == 'outlined' {
       @include get-text-color($color);
       @apply bg-transparent  
@@ -129,11 +140,15 @@
 ///  @include get-color('primary');
 /// }
 @mixin get-color($color) {
-   @apply text-light 
-         outline-none
-         border-0
-         dark:bg-#{$color}-500/90 
-         bg-#{$color}-500;
+   @if($color == 'plain') {
+      @apply text-dark dark:text-light outline-none dark:bg-gray-500 bg-gray-300;
+   } @else {
+      @apply text-light 
+      outline-none
+      border-0
+      dark:bg-#{$color}-500/90 
+      bg-#{$color}-500;
+   }
 }
 
 

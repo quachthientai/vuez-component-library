@@ -33,3 +33,12 @@ $button-sizes: (
    ),
 );
 
+$button-icon-sizes: (
+   sm: (
+      "height": "h-[30px]",
+      "max-width": "max-w-[30px]",
+      "padding": "py-0 px-0",
+      "font-size": "text-[.75rem]",
+   ),
+)
+

@@ -1,11 +1,13 @@
 <script >
 import { Button } from '@/components/Button/Button';
 import { ref } from 'vue';
+import { Icon } from '@iconify/vue';
 
 export default {
   name: 'ButtonView',
   components: {
-    Button
+    Button,
+    Icon
   },
   data() {
    return {
@@ -33,7 +35,7 @@ export default {
          class="mr-2" 
          variant="outlined" 
          color="primary"
-      >
+      > 
          BUTTON
       </Button>
       
@@ -46,15 +48,17 @@ export default {
       <Button size="md" class="mr-2" variant="outlined" color="danger">BUTTON</Button>
       <Button size="md" class="mr-2" variant="outlined" color="warning">BUTTON</Button>
       <Button size="md" class="mr-2" variant="outlined" color="info">BUTTON</Button>
+      <Button size="md" :elevation="3" variant="outlined" class="mr-2" color="plain">BUTTON</Button>
    </div>
 
    <div class="flex justify-start mt-2">
-      <Button size="sm"  class="mr-2" color="primary">SMALL BUTTON</Button>
+      <Button size="sm" :elevation="3" class="mr-2" color="primary">SMALL BUTTON</Button>
       <Button size="md" :elevation="3" class="mr-2" color="secondary">REGULAR BUTTON</Button>
-      <Button size="lg" class="mr-2" color="success">LARGE BUTTON</Button>
-      <Button size="md" class="mr-2" color="danger">BUTTON</Button>
-      <Button size="md" class="mr-2" color="warning">BUTTON</Button>
-      <Button size="md" class="mr-2" color="info">BUTTON</Button>
+      <Button size="lg" href="" :elevation="3" class="mr-2" color="success">LARGE BUTTON</Button>
+      <Button size="md" :elevation="3" class="mr-2" color="danger">BUTTON</Button>
+      <Button size="md" :elevation="3" class="mr-2" color="warning">BUTTON</Button>
+      <Button size="md" :elevation="3" class="mr-2" color="info">BUTTON</Button>
+      <Button :elevation="1" class="mr-2" >BUTTON</Button>
    </div>
 
    <div class="flex justify-start mt-2">
@@ -64,6 +68,14 @@ export default {
       <Button size="md" class="mr-2" variant="text" color="danger">BUTTON</Button>
       <Button size="md" class="mr-2" variant="text" color="warning">BUTTON</Button>
       <Button size="md" class="mr-2" variant="text" color="info">BUTTON</Button>
+      <Button size="md"  class="mr-2" variant="text" color="plain">BUTTON</Button>
+
+      
+   </div>
+
+   <div class="flex justify-start mt-2">
+      <Button size="sm" class="mr-2" :icon="{icon: 'mdi-account'}" color="primary">a</Button>
+      
    </div>
 </template>
 

@@ -36,10 +36,6 @@
       @apply flex ml-[.2em] transition-all duration-150 ease-out;
     }
 
-    a {
-      @apply tracking-wide text-[14px];
-    }
-
     &.btn-sm {
       @include btn-mixins.get-button-size('sm');
     }
@@ -52,6 +48,10 @@
       @include btn-mixins.get-button-size('lg');
     }
 
+    &.btn-block {
+      @apply block w-full;
+    }
+
     &.btn-loading {
       @apply cursor-not-allowed;
     
@@ -61,6 +61,16 @@
         @apply opacity-0;
       }
     }
+  }
+
+  .btn-icon {
+    @apply relative
+      rounded-full
+      border
+      text-[.77rem]
+      w-[30px]
+      h-[30px]
+      transition duration-100 ease-out hover:ease-in;
   }
 }
 
