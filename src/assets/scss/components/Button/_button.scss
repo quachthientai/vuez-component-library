@@ -18,6 +18,10 @@
 
     @include utils-mixin.get-grid-append-prepend-setup;
 
+    &:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
     &__loader {
       @include utils-mixin.get-loader;
     }
@@ -65,10 +69,14 @@
   }
 
   .btn-icon {
-    @apply relative rounded-full;
+    @apply relative flex justify-center rounded-full;
 
     > .ripple {
       @apply rounded-full;
+    }
+
+    &:disabled {
+      @apply opacity-50 cursor-not-allowed;
     }
 
     .btn__content {
@@ -85,6 +93,16 @@
 
     &.btn-lg {
       @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'lg');
+    }
+
+    &.btn-loading {
+      @apply cursor-not-allowed;
+    
+      .btn__content,
+      .btn__prepend,
+      .btn__append {
+        @apply opacity-0;
+      }
     }
   }
 }

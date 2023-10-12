@@ -86,7 +86,6 @@ const Button = defineComponent({
 
                   {(hasTextProps || hasDefaultSlots || hasIconProps) && (
                      <span class="btn__content">
-                        
                         { hasIconProps && (
                            <Icon 
                               class="btn__icon" 
@@ -96,7 +95,7 @@ const Button = defineComponent({
                               icon={ iconProps.icon } 
                            />
                         )}
-                        { props.text ?? props.text }
+                        { (hasTextProps && !hasIconProps) && props.text }
                         { (hasDefaultSlots && !hasIconProps) && slots.default?.() }
                         
                         
