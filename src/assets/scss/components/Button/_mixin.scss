@@ -2,8 +2,8 @@
 @use '../../utilities/utils-functions';
 @use 'sass:map';
 
-@mixin get-button-size($size) {
-   $size: utils-functions.map-deep-get(variables.$button-sizes, $size);
+@mixin get-button-size($variable, $size) {
+   $size: utils-functions.map-deep-get($variable, $size);
    @each $key in map.keys($size) {
      @apply #{map.get($size, $key)};
    }

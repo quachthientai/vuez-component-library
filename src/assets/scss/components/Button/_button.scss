@@ -2,6 +2,7 @@
 @use '../../utilities/utils-mixin';
 @use '../Button/mixin' as btn-mixins;
 @use '../../utilities/utils-functions';
+@use './variables' as btn-variables;
 @use 'sass:map';
 @tailwind base;
 @tailwind components;
@@ -37,15 +38,15 @@
     }
 
     &.btn-sm {
-      @include btn-mixins.get-button-size('sm');
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'sm');
     }
 
     &.btn-md {
-      @include btn-mixins.get-button-size('md');
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'md');
     }
 
     &.btn-lg {
-      @include btn-mixins.get-button-size('lg');
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'lg');
     }
 
     &.btn-block {
@@ -64,13 +65,27 @@
   }
 
   .btn-icon {
-    @apply relative
-      rounded-full
-      border
-      text-[.77rem]
-      w-[30px]
-      h-[30px]
-      transition duration-100 ease-out hover:ease-in;
+    @apply relative rounded-full;
+
+    > .ripple {
+      @apply rounded-full;
+    }
+
+    .btn__content {
+      @apply flex justify-center transition-all duration-150 ease-out;
+    }
+
+    &.btn-sm {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'sm');
+    }
+
+    &.btn-md {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'md');
+    }
+
+    &.btn-lg {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'lg');
+    }
   }
 }
 

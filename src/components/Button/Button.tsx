@@ -44,6 +44,7 @@ const Button = defineComponent({
          
          const prependIcon = props.prependIcon as IconType;
          const appendIcon = props.appendIcon as IconType;
+         const iconProps = props.icon as IconType;
 
          const hasIconProps = !!props.icon;
          const hasTextProps = !!props.text;
@@ -85,8 +86,21 @@ const Button = defineComponent({
 
                   {(hasTextProps || hasDefaultSlots || hasIconProps) && (
                      <span class="btn__content">
+                        
+                        { hasIconProps && (
+                           <Icon 
+                              class="btn__icon" 
+                              color={ iconProps.color } 
+                              width={ iconProps.width } 
+                              height={ iconProps.height } 
+                              icon={ iconProps.icon } 
+                           />
+                        )}
                         { props.text ?? props.text }
-                        { hasDefaultSlots && slots.default?.() }
+                        { (hasDefaultSlots && !hasIconProps) && slots.default?.() }
+                        
+                        
+
                      </span>
                   )}
 
