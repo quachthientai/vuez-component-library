@@ -1,5 +1,4 @@
 export function convertUnit(value: number | string, unit?: string) : string | undefined
-
 export function convertUnit(value: number | string, unit = 'px') : string | undefined {
    if(value === undefined) return undefined
    

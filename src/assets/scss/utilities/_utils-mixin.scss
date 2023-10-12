@@ -3,22 +3,108 @@
 @tailwind components;
 @tailwind utilities;
 
+@mixin get-loader {
+   @apply animate-spin transition-all duration-150 ease-out;
+   align-items: center;
+   display: flex;
+   height: 100%;
+   justify-content: center;
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+}
+
+
+/// A mixin that returns a ripple color based on the given color..
+/// @param {string} $color - The color to apply styles for
+/// @example:
+/// .my-element {
+///   @include get-ripple-color('primary');
+/// }
 @mixin get-rgb-ripple-color($color) {
    @apply bg-ripple-#{$color};
 }
 
+
+/// A mixin that returns text color based on the given color..
+/// @param {string} $color - The color to apply styles for
+/// @example:
+/// .my-element {
+///  @include get-text-color('primary');
+/// }
 @mixin get-text-color($color) {
-   @apply dark:text-#{$color}-400/90 
-      text-#{$color}-500;  
+   @if($color == 'plain') {
+      @apply text-dark dark:text-light;
+   } @else {
+      @apply dark:text-#{$color}-400/90 text-#{$color}-500; 
+   }
 }
 
+
+/// A mixin sets up a grid container with three columns: prepend, content, and append.
+/// The prepend and append columns are sized to their content, while the content column takes up the remaining space.
+/// @example:
+/// .my-element {
+///   @include get-grid-append-prepend-setup;
+/// }
+@mixin get-grid-append-prepend-setup {
+   display: grid;
+   flex: none;
+   grid-template-areas: "prepend content append";
+   grid-template-columns: max-content auto max-content;
+}
+
+
+/// A mixin that generate grid template styles based on the provided template parameter
+/// @param {string} $template - The template type to generate styles for
+/// Can be 'prepend', 'append', or 'content'.
+/// @example:
+/// .my-element {
+///   @include get-grid-template('prepend');
+/// }
+@mixin get-grid-template($template) {
+   @if $template == 'prepend' {
+      @apply flex self-center;
+      grid-area: prepend;
+      > * {
+         @apply inline-block align-middle;
+      }
+   } @else if $template == 'append' {
+      @apply flex self-center;
+      grid-area: append;
+      > * {
+         @apply inline-block align-middle;
+      }
+   } @else if $template == 'content' {
+      @apply self-center;
+      grid-area: content;
+   }
+}
+
+
+/// A mixin that returns a hover behavior based on the given variant and color..
+/// @param {string} $variant - The variant to apply styles for
+/// @param {string} $color - The color to apply styles for
+/// @example:
+/// .my-element {
+///   @include get-hover-color('solid','primary');
+/// }
 @mixin get-hover-color($variant,$color) {
    @if($variant == 'solid') {
-      @apply bg-#{$color}-600;
+      @if($color == 'plain') {
+         @apply hover:bg-gray-400/70 dark:hover:bg-gray-600;
+      } @else {
+         @apply bg-#{$color}-600;
+      }
+      
    } @else {
       @if $color == 'secondary' {
          @apply hover:bg-#{$color}-200
             dark:hover:bg-#{$color}-700/50;
+      } @else if ($color == 'plain') {
+         @apply hover:bg-#{$color}-200 
+            dark:hover:bg-#{$color}-200/10;
       } @else {
          @apply hover:bg-#{$color}-100 
             dark:hover:bg-#{$color}-500/10;
@@ -26,8 +112,10 @@
    }
 }
 
+
 /// A mixin that applies styles based on the variant passed as an argument..
 /// @param {string} $variant - The variant to apply styles for
+/// @param {string} $color - The color to apply styles for
 /// @example: 
 /// .my-element {
 ///   @include get-variant('plain');
@@ -35,7 +123,7 @@
 @mixin get-variant($variant, $color) {
    @if $variant == 'text' {
       @include get-text-color($color);
-      @apply bg-transparent;
+      @apply bg-transparent border-none;
    } @else if $variant == 'outlined' {
       @include get-text-color($color);
       @apply bg-transparent  
@@ -44,6 +132,7 @@
    }
 }
 
+
 /// A mixin that returns a set of styles based on the given color..
 /// @param {string} $color - The color to apply styles for
 /// @example:
@@ -51,11 +140,15 @@
 ///  @include get-color('primary');
 /// }
 @mixin get-color($color) {
-   @apply text-light 
-         outline-none
-         border-0
-         dark:bg-#{$color}-500/90 
-         bg-#{$color}-500;
+   @if($color == 'plain') {
+      @apply text-dark dark:text-light outline-none dark:bg-gray-500 bg-gray-300;
+   } @else {
+      @apply text-light 
+      outline-none
+      border-0
+      dark:bg-#{$color}-500/90 
+      bg-#{$color}-500;
+   }
 }
 
 

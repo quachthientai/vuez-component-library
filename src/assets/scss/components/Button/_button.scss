@@ -2,6 +2,7 @@
 @use '../../utilities/utils-mixin';
 @use '../Button/mixin' as btn-mixins;
 @use '../../utilities/utils-functions';
+@use './variables' as btn-variables;
 @use 'sass:map';
 @tailwind base;
 @tailwind components;
@@ -12,66 +13,44 @@
     @apply relative 
       rounded-[5px] 
       font-semibold 
-      tracking-wide 
+      tracking-wide
       transition duration-100 ease-out hover:ease-in;
 
-    display: grid;
-    flex: none;
-    grid-template-areas: "prepend content append";
-    grid-template-columns: max-content auto max-content;
+    @include utils-mixin.get-grid-append-prepend-setup;
 
     &__loader {
-      @apply animate-spin transition-all duration-150 ease-out;
-      align-items: center;
-      display: flex;
-      height: 100%;
-      justify-content: center;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      
+      @include utils-mixin.get-loader;
     }
 
     &__prepend {
-      @apply self-center transition-all duration-150 ease-out;
-      margin-right: .2em;
-      display: flex;
-      grid-area: prepend;
-      > * {
-        @apply inline-block align-middle;
-      }
+      @include utils-mixin.get-grid-template('prepend');
+      @apply flex mr-[.2em] transition-all duration-150 ease-out;
     }
 
     &__content {
-      grid-area: content;
-      @apply self-center transition-all duration-150 ease-out;
+      @include utils-mixin.get-grid-template('content');
+      @apply transition-all duration-150 ease-out;
     }
 
     &__append {
-      @apply self-center transition-all duration-150 ease-out;
-      margin-left: .2em;
-      display: flex;
-      grid-area: append;
-      > * {
-        @apply inline-block align-middle;
-      }
-    }
-
-    a {
-      @apply tracking-wide text-[14px];
+      @include utils-mixin.get-grid-template('append');
+      @apply flex ml-[.2em] transition-all duration-150 ease-out;
     }
 
     &.btn-sm {
-      @include btn-mixins.get-button-size('sm');
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'sm');
     }
 
     &.btn-md {
-      @include btn-mixins.get-button-size('md');
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'md');
     }
 
     &.btn-lg {
-      @include btn-mixins.get-button-size('lg');
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'lg');
+    }
+
+    &.btn-block {
+      @apply block w-full;
     }
 
     &.btn-loading {
@@ -84,12 +63,42 @@
       }
     }
   }
+
+  .btn-icon {
+    @apply relative rounded-full;
+
+    > .ripple {
+      @apply rounded-full;
+    }
+
+    .btn__content {
+      @apply flex justify-center transition-all duration-150 ease-out;
+    }
+
+    &.btn-sm {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'sm');
+    }
+
+    &.btn-md {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'md');
+    }
+
+    &.btn-lg {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'lg');
+    }
+  }
 }
+
+@for $i from 1 through 5 {
+  .btn-solid.elevation-#{$i} {
+    @apply shadow-elevation-#{$i};
+  };
+};
 
 .btn__prepend-icon,
 .btn__append-icon,
 .btn__loader {
-  font-size: (0.85 * 1.5em);
+  font-size: (utils-variables.$icon-multiplier * 1.5em);
 }
 
 @layer components {
@@ -113,83 +122,4 @@
       }
     }
   }
-}
-
-// @layer utilities {
-//   @each $color in variables.$colors {
-//     @if $color == 'plain' {
-//       .btn-plain {
-//         @include mixin.variant-plain;
-//       }
-//     } @else {
-//       .btn-#{$color} {
-//         @debug get-color($color);
-//         @apply outline-none border-none dark:bg-#{$color}-500/90 bg-#{$color}-500;
-
-//         &:not([disabled]):hover {
-//           @apply bg-#{$color}-600;
-//         };
-
-//         a {
-//           @apply text-light;
-//         }
-//       }
-//     }
-//   } 
-
-//   @each $color in variables.$colors {
-//     .btn-outline-#{$color} {
-//       @apply bg-none border-[2px] p-[10px] dark:border-#{$color}-400/40 border-#{$color}-500;
-
-//       &:not([disabled]):hover {
-//         @if $color == 'secondary' {
-//           @apply hover:bg-#{$color}-200 dark:hover:bg-#{$color}-700/50;
-//         } @else {
-//           @apply hover:bg-#{$color}-100 dark:hover:bg-#{$color}-500/10;
-//         }
-//       }
-
-//       a {
-//         @apply dark:text-#{$color}-400/90 text-#{$color}-500;
-//       }
-//     }
-//   }
-
-//   .btn-icon-circle {
-//     @apply p-[12px] rounded-full;
-    
-//     a > span > svg {
-//       @apply m-0;
-//     }
-
-//     @each $color in variables.$colors {
-//       &.btn-#{$color} {
-//         &.btn-sm {
-//           @apply p-[9px];
-//         }
-
-//         &.btn-lg {
-//           @apply p-[14px];
-//         }
-//       }
-//     }
-
-//     @each $color in variables.$colors {
-//       &.btn-outline-#{$color} {
-//         @apply p-[10px];
-
-//         &.btn-sm {
-//           @apply p-[7px];
-//         }
-
-//         &.btn-lg {
-//           @apply p-[12px];
-//         }
-//       }
-//     }
-//   }
-// }
-
-.rounded {
-  @apply rounded-full;
 }

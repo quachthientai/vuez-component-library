@@ -1,6 +1,5 @@
 import { render, h, defineComponent, VNode } from 'vue'
 
-
 export const createShadowComponent = (component, option, root, container) => {
   var vContainer = document.createElement('div')
   vContainer.classList.add(container)

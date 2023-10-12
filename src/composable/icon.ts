@@ -10,7 +10,7 @@ interface iconProps {
    appendIcon?: PropOptions<IconifyIconProps>  
 }
 
-interface Icon {
+interface IconType {
    icon: string,
    color?: string,
    height?: string | number,
@@ -20,18 +20,18 @@ interface Icon {
 
 const iconProps = makePropsFactory({
    prependIcon: {
-      type: Object as PropType<Icon>,
-      validator: (iconVal: Icon) => {
+      type: Object as PropType<IconType>,
+      validator: (iconVal: IconType) => {
          const validKeyNames = ['icon', 'color', 'height', 'width'];
          return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
       }
    },
    appendIcon: {
-      type: Object as PropType<Icon>,
+      type: Object as PropType<IconType>,
    }
 });
 
-function useIcon(icon: Icon) { 
+function useIcon(icon: IconType) { 
    console.log(icon);
 }
 
@@ -40,7 +40,7 @@ function useIcon(icon: Icon) {
 export {
    iconProps,
    useIcon,
-   Icon
+   IconType
 }
 
 

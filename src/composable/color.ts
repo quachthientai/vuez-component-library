@@ -12,13 +12,14 @@ const predefinedColors = [
    'success',
    'danger',
    'warning',
-   'info'
+   'info',
+   'plain'
 ]
 
 const colorProps : colorProps = makePropsFactory({
    color: {
       type: String,
-      default: 'primary',
+      default: 'plain',
       validator: (colorVal: string) => {
          return isIncluded(predefinedColors, colorVal)
       }
