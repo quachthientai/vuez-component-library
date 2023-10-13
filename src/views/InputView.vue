@@ -10,6 +10,9 @@ export default defineComponent({
 
 
 <template>
+    <p>Text Input</p>
+    <input v-validate="{statement:'Hello there',minLength:3, maxLength:100}" class="input_test border border-slate-800" name="email"  type="text" />
+    <p>Email Input</p>
     <input v-validate="{statement:'Hello there',minLength:3, maxLength:100}" class="input_test border border-slate-800" name="email"  type="text" />
 </template>
 

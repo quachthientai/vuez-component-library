@@ -24,7 +24,7 @@ class formValidate{
         this.value = requirements.value
     }
 
-    private emailFormat:RegExp = new RegExp('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')
+    private emailFormat:RegExp = new RegExp("^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
     private zipCodeFormat:RegExp = new RegExp('^\d{5}(?:[-\s]\d{4})?$')
     
     
@@ -77,7 +77,8 @@ class formValidate{
 
     //Check for the format of email
     public validateEmail = (value:string):boolean=>{
-        if(this.emailFormat.test(value)){
+        
+        if(value.match(this.emailFormat)){
             return true
         }else{
             return false

@@ -5,13 +5,9 @@ import addWarningText from "@/directives/validate/addWarningText"
 //With Text Input
 const handleTextValueChange = (e:any,warningText:HTMLParagraphElement)=>{
     
-    
-    // const warningTextHolder = addWarningText(e.target,info)
-    // e.target.after(warningTextHolder)
-    const validateModel = new formValidate({type:e.target.type,value:e.target.value})
-    // const warningText = document.getElementById("form-warning-text")
 
-    //Check for the min/maxLength 
+    const validateModel = new formValidate({type:e.target.type,value:e.target.value})
+    
     if(!validateModel.validateMinLength(e.target.value)){    
         warningText.classList.add("hidden")
     }else{
@@ -20,8 +16,16 @@ const handleTextValueChange = (e:any,warningText:HTMLParagraphElement)=>{
 }
 
 //With Email Input
-const handleEmailValueChange = (e:any,info:any)=>{
-    const warningTextHolder = addWarningText(e.target,info)
+const handleEmailValueChange = (e:any,warningText:HTMLParagraphElement)=>{
+    const validateModel = new formValidate({type:e.target.type,value:e.target.value})
+
+    if(validateModel.validateEmail(e.target.value)){
+        warningText.classList.add("hidden")
+    }else{
+        warningText.classList.remove("hidden")
+    }
+    console.log(validateModel.validateEmail(e.target.value))
+
     
 }
 
@@ -30,7 +34,7 @@ export const InputValidate = {
     mounted(el:HTMLInputElement,binding:any){
 
         //Add the warning text before the test, only reveal when input event start, include add("Hidden")
-        const validateModel = new formValidate({type:el.type,value:el.value})
+        // const validateModel = new formValidate({type:el.type,value:el.value})
         const warningText = addWarningText(el,binding)
         el.after(warningText)
         warningText.classList.add("hidden")
@@ -41,7 +45,7 @@ export const InputValidate = {
                 el.addEventListener('input', (event)=>handleTextValueChange(event,warningText))
                 break
             case "email":
-                el.addEventListener('input',(event)=>handleEmailValueChange(event,binding)) 
+                el.addEventListener('input',(event)=>handleEmailValueChange(event,warningText)) 
                 break;
             case "date":
                 break;

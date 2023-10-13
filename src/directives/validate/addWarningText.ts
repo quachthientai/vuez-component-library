@@ -39,15 +39,13 @@ const addWarningText = (el:HTMLInputElement,binding:any)=>{
             break
         case "email":
             //Add the text (for email validation) into warning <p> tag   
-            warningPText = document.createTextNode(formModule.statement)
+            warningPText = document.createTextNode("Wrong format")
             warningP.appendChild(warningPText)
             
             //break
             break
     }
     
-    
-
     return warningP
 }
 
