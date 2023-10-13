@@ -28,6 +28,10 @@ const iconProps = makePropsFactory({
    },
    appendIcon: {
       type: Object as PropType<IconType>,
+      validator: (iconVal: IconType) => {
+         const validKeyNames = ['icon', 'color', 'height', 'width'];
+         return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
+      }
    }
 });
 

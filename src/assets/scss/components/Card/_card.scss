@@ -67,6 +67,14 @@
     }
   }
 
+  &__action:has( > .btn-icon) {
+    @apply px-2;
+  }
+
+  &__action:has( > .btn-plain) {
+    @apply px-2;
+  }
+
   &__img {
     z-index: -1;
   }

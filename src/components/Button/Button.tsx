@@ -77,8 +77,7 @@ const Button = defineComponent({
                      <div class="btn__prepend">
                         { props.prependIcon
                            ? <Icon 
-                                 class="btn__prepend-icon" 
-                                 color={ prependIcon.color } 
+                                 class={["btn__prepend-icon", prependIcon.color]} 
                                  width={ prependIcon.width } 
                                  height={ prependIcon.height } 
                                  icon={ prependIcon.icon } 
@@ -91,8 +90,7 @@ const Button = defineComponent({
                      <span class="btn__content">
                         { hasIconProps && (
                            <Icon 
-                              class="btn__icon" 
-                              color={ iconProps.color } 
+                              class={["btn__icon", iconProps.color]} 
                               width={ iconProps.width } 
                               height={ iconProps.height } 
                               icon={ iconProps.icon } 
@@ -108,8 +106,7 @@ const Button = defineComponent({
                      <div class="btn__append">
                         { props.appendIcon 
                            ? <Icon 
-                                 class="btn__append-icon"
-                                 color={appendIcon.color}
+                                 class={["btn__append-icon", appendIcon.color]} 
                                  width={appendIcon.width}
                                  height={appendIcon.height}
                                  icon={appendIcon.icon}
