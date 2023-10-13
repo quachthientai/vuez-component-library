@@ -9,16 +9,17 @@ import { useColor, colorProps } from "@/composable/color";
 import { useIcon, iconProps, IconType } from "@/composable/icon";
 import { useLoader, loaderProps } from "@/composable/loader";
 import { useElevation, elevationProps } from "@/composable/elevation";
-import { has } from "lodash";
+import { useDimension, dimensionProps } from "@/composable/dimension";
 
 const vButtonProps = makePropsFactory({
    block: Boolean,
    text: String,
    disabled: Boolean,
+   href: String,
    icon: {
       type: Object as PropType<IconType>,
    },
-   href: String,
+   ...dimensionProps,
    ...iconProps,
    ...variantProps,
    ...sizeProps,
@@ -41,6 +42,7 @@ const Button = defineComponent({
          const size = useSize('btn', props.size as string);
          const color = useColor('btn', props.color as string);
          const elevation = useElevation(props.elevation as number);
+         const dimension = useDimension(props);
          
          const prependIcon = props.prependIcon as IconType;
          const appendIcon = props.appendIcon as IconType;
@@ -58,6 +60,7 @@ const Button = defineComponent({
          return (
             <DynamicTag 
                type={ hasLinkProps ? 'a' : 'button' }
+               style={ !hasIconProps ? dimension : undefined }
                href={ props.href ? props.href : undefined }
                v-ripple
                class={[hasIconProps ? 'btn-icon' : 'btn',
@@ -98,8 +101,6 @@ const Button = defineComponent({
                         { (hasTextProps && !hasIconProps) && props.text }
                         { (hasDefaultSlots && !hasIconProps) && slots.default?.() }
                         
-                        
-
                      </span>
                   )}
 

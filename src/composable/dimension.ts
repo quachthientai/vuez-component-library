@@ -31,7 +31,7 @@ function useDimension (props: ComponentObjectPropsOptions) {
       maxHeight: convertUnit(props.maxHeight as string | number),
    }))
 
-   return dimensionStyles
+   return dimensionStyles.value
 }
 
 export {

@@ -1,6 +1,6 @@
 import { defineComponent, computed} from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { useDimension, dimensionProps } from "@/composable/dimenstion";
+import { useDimension, dimensionProps } from "@/composable/dimension";
 
 const vCardMediaProps = makePropsFactory({
    src: String,
