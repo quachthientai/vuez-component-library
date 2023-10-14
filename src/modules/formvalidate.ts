@@ -24,7 +24,7 @@ class formValidate{
         this.value = requirements.value
     }
 
-    private emailFormat:RegExp = new RegExp("^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")
+    private emailFormat:RegExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
     private zipCodeFormat:RegExp = new RegExp('^\d{5}(?:[-\s]\d{4})?$')
     
     
@@ -35,11 +35,11 @@ class formValidate{
         masterCard:RegExp,
         visa:RegExp,
     } = {
-        americanExpress:new RegExp('/^3[47][0-9]{13}$/'),
-        discover: new RegExp('/^6(?:011|5[0-9]{2})[0-9]{12}$/'),
-        JCB: new RegExp('/^(?:2131|1800|35\d{3})\d{11}$/'),
-        masterCard: new RegExp('/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/'),
-        visa: new RegExp('/^4[0-9]{12}(?:[0-9]{3})?$/')
+        americanExpress:/^3[47][0-9]{13}$/,
+        discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+        JCB: /^(?:2131|1800|35\d{3})\d{11}$/,
+        masterCard:/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/,
+        visa: /^4[0-9]{12}(?:[0-9]{3})?$/
     }
     //Set length for the input
     public setMinLength = (value:number):void=>{
@@ -77,8 +77,8 @@ class formValidate{
 
     //Check for the format of email
     public validateEmail = (value:string):boolean=>{
-        
-        if(value.match(this.emailFormat)){
+        console.log(value)
+        if(this.emailFormat.test(value)){
             return true
         }else{
             return false

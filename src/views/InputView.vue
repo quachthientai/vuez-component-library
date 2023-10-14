@@ -13,7 +13,7 @@ export default defineComponent({
     <p>Text Input</p>
     <input v-validate="{statement:'Hello there',minLength:3, maxLength:100}" class="input_test border border-slate-800" name="email"  type="text" />
     <p>Email Input</p>
-    <input v-validate="{statement:'Hello there',minLength:3, maxLength:100}" class="input_test border border-slate-800" name="email"  type="text" />
+    <input v-validate="{statement:'Hello there',minLength:3, maxLength:100}" class="input_test border border-slate-800"  type="email" />
 </template>
 
 <style lang="scss">

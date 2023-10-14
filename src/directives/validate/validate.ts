@@ -24,9 +24,6 @@ const handleEmailValueChange = (e:any,warningText:HTMLParagraphElement)=>{
     }else{
         warningText.classList.remove("hidden")
     }
-    console.log(validateModel.validateEmail(e.target.value))
-
-    
 }
 
 
@@ -38,7 +35,7 @@ export const InputValidate = {
         const warningText = addWarningText(el,binding)
         el.after(warningText)
         warningText.classList.add("hidden")
-
+        
         switch (el.type) {
             case "text":
                 // el.after(warningP)
