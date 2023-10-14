@@ -5,7 +5,7 @@ class formValidate{
     format:RegExp
     type:string
     statement:string
-    private value: string | number | RegExp
+    value: any
 
     private required:boolean
     constructor(requirements:{

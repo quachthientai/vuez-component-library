@@ -1,7 +1,7 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import Button from './components/Button/Button.vue'
-import Radio from './components/Forms/Radio'
+import Radio from './components/Forms/Radio.vue'
 
 export default {
   data() {
