@@ -115,8 +115,6 @@ class formValidate{
                 break
             default:
                 window.alert('Invalid Card')
-                console.log('Invalid Card')
-            
         }
     }
 

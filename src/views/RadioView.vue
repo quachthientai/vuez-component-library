@@ -1,5 +1,5 @@
 <script>
-import Radio from '@/components/Forms/Radio.vue'
+import Radio from '@/components/Forms/Radio'
 export default {
   name: 'RadioView',
   components: {
