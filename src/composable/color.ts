@@ -16,15 +16,17 @@ const predefinedColors = [
    'plain'
 ]
 
-const colorProps : colorProps = makePropsFactory({
-   color: {
-      type: String,
-      default: 'plain',
-      validator: (colorVal: string) => {
-         return isIncluded(predefinedColors, colorVal)
+function makeColorProp(colors: Array<String> = predefinedColors, defaultVal? : string) : colorProps {
+   return makePropsFactory({
+      color: {
+         type: String,
+         default: !defaultVal ? 'plain' : defaultVal,
+         validator: (colorVal: string) => {
+            return isIncluded(colors, colorVal)
+         }
       }
-   }
-})
+   })
+}
 
 const useColor = (prefix: string, color: string) => {
    const colorStyle = computed(() => {
@@ -39,5 +41,5 @@ const useColor = (prefix: string, color: string) => {
 
 export {
    useColor,
-   colorProps
+   makeColorProp
 }

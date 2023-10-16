@@ -1,6 +1,6 @@
 import { defineComponent, computed} from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { useDimension, dimensionProps } from "@/composable/dimension";
+import { useDimension, makeDimensionProp } from "@/composable/dimension";
 
 const vCardMediaProps = makePropsFactory({
    src: String,
@@ -9,7 +9,7 @@ const vCardMediaProps = makePropsFactory({
       type: String,
       default: 'cover'
    },
-   ...dimensionProps
+   ...makeDimensionProp()
 });
 
 const CardMedia = defineComponent({
@@ -20,7 +20,7 @@ const CardMedia = defineComponent({
       return () => {
          return (
             <div>
-               <img class="card__img" style={dimension.value} src={props.src as string} />
+               <img class="card__img" style={dimension} src={props.src as string} />
             </div>
          )
       }

@@ -33,7 +33,7 @@
 
     &__content {
       @include utils-mixin.get-grid-template('content');
-      @apply transition-all duration-150 ease-out;
+      @apply flex items-center gap-1 justify-center transition-all duration-150 ease-out;
     }
 
     &__append {
@@ -129,7 +129,7 @@
       }
     }
     
-    @each $variant in utils-variables.$variants {
+    @each $variant in btn-variables.$button-variants {
       .btn-#{$color}.btn-#{$variant} {
         @include utils-mixin.get-variant($variant, $color);
 

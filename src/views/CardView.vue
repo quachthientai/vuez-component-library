@@ -18,7 +18,8 @@ export default {
   },
   data() {
     return {
-      show: false
+      show: false,
+      fav: false
     }
   },
   methods: {
@@ -44,7 +45,7 @@ export default {
       <CardText>This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.</CardText>
       <CardAction class="justify-between" >
         <div class="flex gap-1">
-          <Button size="lg" :icon="{icon: 'mdi:heart', color:'text-red-500 dark:text-blue-500', width:'1.7rem', height: '1.7rem'}" variant="text" />
+          <Button size="lg" @click="this.fav = !this.fav" :icon="{icon: 'mdi:heart', color:`${this.fav ? 'text-red-500' : ''}`, width:'1.7rem', height: '1.7rem'}" variant="text" />
           <Button size="lg" :icon="{icon: 'material-symbols:share', width:'1.7rem', height: '1.7rem'}" variant="text" />
         </div>
         

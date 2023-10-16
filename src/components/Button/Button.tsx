@@ -3,13 +3,13 @@ import { makePropsFactory } from "@/utils/makePropFactory";
 import { DynamicTag } from "@/utils/test";
 import { Ripple } from "@/directives/ripple";
 import { Icon } from "@iconify/vue";
-import { useVariants, variantProps } from "@/composable/variants";
-import { useSize, sizeProps } from "@/composable/size";
-import { useColor, colorProps } from "@/composable/color";
-import { useIcon, iconProps, IconType } from "@/composable/icon";
-import { useLoader, loaderProps } from "@/composable/loader";
-import { useElevation, elevationProps } from "@/composable/elevation";
-import { useDimension, dimensionProps } from "@/composable/dimension";
+import { useVariants, makeVariantProp } from "@/composable/variants";
+import { useSize, makeSizeProp } from "@/composable/size";
+import { useColor, makeColorProp } from "@/composable/color";
+import { useIcon, makeIconProps, IconType } from "@/composable/icon";
+import { useLoader, makeLoaderProp } from "@/composable/loader";
+import { useElevation, makeElevationProp } from "@/composable/elevation";
+import { useDimension, makeDimensionProp } from "@/composable/dimension";
 
 const vButtonProps = makePropsFactory({
    block: Boolean,
@@ -19,13 +19,13 @@ const vButtonProps = makePropsFactory({
    icon: {
       type: Object as PropType<IconType>,
    },
-   ...dimensionProps,
-   ...iconProps,
-   ...variantProps,
-   ...sizeProps,
-   ...colorProps,
-   ...loaderProps,
-   ...elevationProps,
+   ...makeDimensionProp(),
+   ...makeVariantProp(),
+   ...makeIconProps(),
+   ...makeSizeProp(),
+   ...makeColorProp(),
+   ...makeLoaderProp(),
+   ...makeElevationProp(),
 });
 
 const Button = defineComponent({

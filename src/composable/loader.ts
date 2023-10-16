@@ -5,12 +5,14 @@ interface loaderProps {
    loading?: PropOptions<boolean>
 }
 
-const loaderProps : loaderProps = makePropsFactory({
-   loading: {
-      type: Boolean,
-      default: false,
-   }
-});
+function makeLoaderProp(defaultVal? : boolean) : loaderProps {
+   return makePropsFactory({
+      loading: {
+         type: Boolean,
+         default: !defaultVal ? false : defaultVal,
+      }
+   })
+}
 
 function useLoader(prefix: string, loading: boolean) : string {
    const loader = computed(() => {
@@ -25,5 +27,5 @@ function useLoader(prefix: string, loading: boolean) : string {
 
 export {
    useLoader,
-   loaderProps
+   makeLoaderProp
 }

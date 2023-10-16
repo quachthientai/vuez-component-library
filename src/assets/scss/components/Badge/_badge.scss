@@ -1,0 +1,77 @@
+@use './variables' as badge-variables;
+@use '../../utilities/utils-variables';
+@use '../../utilities/utils-mixin';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .badge {
+    @apply inline-block;
+  }
+  
+  .badge__content {
+    @apply relative flex;
+  }
+  
+  .btn {
+    + .badge__content-badge {
+      
+      left: calc(100% - 9px);
+      bottom: calc(100% - 9px);
+    }
+  }
+  .badge--inline {
+    .badge__content-badge {
+      @apply relative left-0 bottom-0;
+    }
+  }
+
+  .badge__content-badge {
+    z-index: 9999;
+    left: calc(100% - 8px);
+    bottom: calc(100% - 7px);
+    
+    @apply rounded-sm
+      indent-0
+      absolute
+      inline-flex
+      text-[.6rem]
+      font-semibold
+      pointer-events-auto
+      items-center 
+      h-4 min-w-[1rem] 
+      justify-center 
+      px-[4px] py-[6px];
+    
+    &-dot:not(.badge-rounded) {
+      @apply p-0 h-[9px] rounded-full min-w-0 w-[9px];
+    }
+    
+    &-rounded {
+      @apply rounded-full;
+    }
+  }
+}
+
+@each $color in utils-variables.$colors {
+  .badge-#{$color} {
+    @include utils-mixin.get-color($color);
+  }
+}
+
+
+// @layer utilities {
+//   @each $variant in variables.$variants {
+//     .badge-#{$variant} {
+//       @apply bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
+//     }
+//     .badge-pill-#{$variant} {
+//       @apply rounded-full bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
+//     }
+//   }
+
+//   // .badgeSlot-sm > * {
+//   //   @apply px-[4px] py-[2px] text-[10px];
+//   // }
+// }

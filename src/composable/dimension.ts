@@ -11,15 +11,34 @@ interface dimensionProps {
    maxHeight?: PropOptions<number|string>,
 }
 
-const dimensionProps : dimensionProps = makePropsFactory({
-   minWidth: [String, Number],
-   maxWidth: [String, Number],
-   width: [String, Number],
-   height: [String, Number],
-   minHeight: [String, Number],
-   maxHeight: [String, Number]
-})
-
+function makeDimensionProp(defaultVal? : string) : dimensionProps {
+   return makePropsFactory({
+      minWidth: {
+         type: [String, Number],
+         default: !defaultVal ? undefined : defaultVal
+      },
+      maxWidth: {
+         type: [String, Number],
+         default: !defaultVal ? undefined : defaultVal
+      },
+      width: {
+         type: [String, Number],
+         default: !defaultVal ? undefined : defaultVal
+      },
+      height: {
+         type: [String, Number],
+         default: !defaultVal ? undefined : defaultVal
+      },
+      minHeight: {
+         type: [String, Number],
+         default: !defaultVal ? undefined : defaultVal
+      },
+      maxHeight: {
+         type: [String, Number],
+         default: !defaultVal ? undefined : defaultVal
+      }
+   })
+}
 
 function useDimension (props: ComponentObjectPropsOptions) {
    const dimensionStyles = computed(() => ({
@@ -36,5 +55,5 @@ function useDimension (props: ComponentObjectPropsOptions) {
 
 export {
    useDimension,
-   dimensionProps,
+   makeDimensionProp
 }

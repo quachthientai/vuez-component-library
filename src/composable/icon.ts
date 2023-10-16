@@ -17,23 +17,41 @@ interface IconType {
    width?: string | number
 }
 
+function makeIconProps() : iconProps {
+   return makePropsFactory({
+      prependIcon: {
+         type: Object as PropType<IconType>,
+         validator: (iconVal: IconType) => {
+            const validKeyNames = ['icon', 'color', 'height', 'width'];
+            return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
+         }
+      },
+      appendIcon: {
+         type: Object as PropType<IconType>,
+         validator: (iconVal: IconType) => {
+            const validKeyNames = ['icon', 'color', 'height', 'width'];
+            return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
+         }
+      }
+   })
+}
 
-const iconProps = makePropsFactory({
-   prependIcon: {
-      type: Object as PropType<IconType>,
-      validator: (iconVal: IconType) => {
-         const validKeyNames = ['icon', 'color', 'height', 'width'];
-         return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
-      }
-   },
-   appendIcon: {
-      type: Object as PropType<IconType>,
-      validator: (iconVal: IconType) => {
-         const validKeyNames = ['icon', 'color', 'height', 'width'];
-         return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
-      }
-   }
-});
+// const iconProps = makePropsFactory({
+//    prependIcon: {
+//       type: Object as PropType<IconType>,
+//       validator: (iconVal: IconType) => {
+//          const validKeyNames = ['icon', 'color', 'height', 'width'];
+//          return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
+//       }
+//    },
+//    appendIcon: {
+//       type: Object as PropType<IconType>,
+//       validator: (iconVal: IconType) => {
+//          const validKeyNames = ['icon', 'color', 'height', 'width'];
+//          return Object.keys(iconVal).every((key) => validKeyNames.includes(key));
+//       }
+//    }
+// });
 
 function useIcon(icon: IconType) { 
    console.log(icon);
@@ -42,8 +60,8 @@ function useIcon(icon: IconType) {
 
 
 export {
-   iconProps,
    useIcon,
+   makeIconProps,
    IconType
 }
 

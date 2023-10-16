@@ -8,15 +8,17 @@ interface sizeProps {
 
 const predefinedSizes = ['sm', 'md', 'lg'];
 
-const sizeProps : sizeProps = makePropsFactory({
-   size: {
-      type: String, 
-      default: 'md',
-      validator: (sizeVal: string) => {
-         return isIncluded(predefinedSizes, sizeVal)
+function makeSizeProp(sizes: Array<String> = predefinedSizes, defaultVal? : string) : sizeProps {
+   return makePropsFactory({
+      size: {
+         type: String,
+         default: !defaultVal ? 'md' : defaultVal,
+         validator: (sizeVal: string) => {
+            return isIncluded(sizes, sizeVal)
+         }
       }
-   }
-});
+   })
+}
 
 function useSize(prefix: string, size: string) : string {
    const sizeStyle = computed(() => {
@@ -31,5 +33,5 @@ function useSize(prefix: string, size: string) : string {
 
 export {
    useSize,
-   sizeProps
+   makeSizeProp
 }

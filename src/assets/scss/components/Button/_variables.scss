@@ -1,16 +1,4 @@
-
-// $button-base: (
-//    position: "relative",
-//    font-weight: "font-semibold",
-//    letter-spacing: "tracking-wide",
-//    display: "flex",
-//    justify-content: "justify-center",
-//    align-items: "items-center",
-//    border-width: "border-2",
-//    border-radius: "rounded-[5px]",
-//    transition: "transition duration-100 ease-out hover:ease-in",
-// )
-
+$button-variants: 'solid', 'outlined', 'text';
 
 $button-sizes: (
    sm: (
