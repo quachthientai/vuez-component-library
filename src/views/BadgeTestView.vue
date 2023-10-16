@@ -35,6 +35,18 @@ export default {
     <Badge inline color="danger" content="1" />
   </Button>
 
+  <Button color="plain" size="md" variant="text">
+    <template v-slot:icon>
+      <Badge color="danger" rounded content="9" >
+        <Icon icon="mdi:bell-outline" class="animate-tada" width="1.5rem" height="1.5rem" />
+      </Badge>
+    </template>
+  </Button>
+
+  <Button color="plain" size="md" class="animate-tada" :icon="{icon: 'mdi:bell-outline', width: '1.5rem', height: '1.5rem'}" variant="text">
+    asd
+  </Button>
+
    <Badge class="mr-2" dot color="danger" rounded>
       <Icon icon="mdi-home-outline" width="1.5rem" height="1.5rem" />
    </Badge>
