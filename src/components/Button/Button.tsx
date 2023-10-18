@@ -100,8 +100,7 @@ const Button = defineComponent({
                                     /> 
                                  : slots.icon?.()
                               }
-                           </div>
-                           
+                           </div> 
                         )}
                         { (hasTextProps && !hasIcon) && props.text }
                         { (hasDefaultSlots && !hasIcon) && slots.default?.() }

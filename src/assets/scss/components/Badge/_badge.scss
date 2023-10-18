@@ -8,49 +8,77 @@
 @layer base {
   .badge {
     @apply inline-block;
-  }
-  
-  .badge__content {
-    @apply relative flex;
+    z-index: 9999;
+    line-height: 1;
   }
   
   .btn {
-    + .badge__content-badge {
-      
-      left: calc(100% - 9px);
-      bottom: calc(100% - 9px);
+    .badge-overlay-top-right .badge__content-badge {
+      @apply top-[-8px] right-[-6px];
+      // left: calc(100% - 12px);
+      // bottom: calc(100% - 9px);
     }
-  }
-  .badge--inline {
-    .badge__content-badge {
-      @apply relative left-0 bottom-0;
+
+    .badge-dot.badge-overlay-top-right .badge__content-badge {
+      left: calc(100% - 6px);
+      bottom: calc(100% - 5px);
     }
   }
 
+  .btn-icon {
+    &.btn-sm .badge-overlay-top-right .badge__content-badge {
+      left: calc(100% - 13px);
+      bottom: calc(100% - 12px);
+    }
+
+    .badge-overlay-top-right .badge__content-badge {
+      left: calc(100% - 17px);
+      bottom: calc(100% - 14px);
+    }
+
+    &.btn-sm .badge-dot.badge-overlay-top-right .badge__content-badge {
+      left: calc(100% - 12px);
+      bottom: calc(100% - 9px);
+    }
+
+    &.btn-lg .badge-dot.badge-overlay-top-right .badge__content-badge {
+      left: calc(100% - 19px);
+      bottom: calc(100% - 13px);
+    }
+
+    .badge-dot.badge-overlay-top-right .badge__content-badge {
+      left: calc(100% - 13px);
+      bottom: calc(100% - 10px);
+    }
+  }
+
+  .badge__content {
+    @apply flex;
+  }
+
+  .badge-inline .badge__content-badge {
+    @apply relative;
+  }
+
+  .badge-dot .badge__content-badge {
+    @apply p-0 h-[9px] rounded-full min-w-0 w-[9px];
+  }
+
+  .badge-rounded .badge__content-badge {
+    @apply rounded-full;
+  }
+
   .badge__content-badge {
-    z-index: 9999;
-    left: calc(100% - 8px);
-    bottom: calc(100% - 7px);
-    
-    @apply rounded-sm
-      indent-0
+      @apply rounded-sm
       absolute
-      inline-flex
-      text-[.6rem]
+      flex
+      text-[.7rem]
       font-semibold
       pointer-events-auto
       items-center 
       h-4 min-w-[1rem] 
       justify-center 
       px-[4px] py-[6px];
-    
-    &-dot:not(.badge-rounded) {
-      @apply p-0 h-[9px] rounded-full min-w-0 w-[9px];
-    }
-    
-    &-rounded {
-      @apply rounded-full;
-    }
   }
 }
 
@@ -59,19 +87,3 @@
     @include utils-mixin.get-color($color);
   }
 }
-
-
-// @layer utilities {
-//   @each $variant in variables.$variants {
-//     .badge-#{$variant} {
-//       @apply bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
-//     }
-//     .badge-pill-#{$variant} {
-//       @apply rounded-full bg-#{$variant}-500 dark:bg-#{$variant}-500/90;
-//     }
-//   }
-
-//   // .badgeSlot-sm > * {
-//   //   @apply px-[4px] py-[2px] text-[10px];
-//   // }
-// }

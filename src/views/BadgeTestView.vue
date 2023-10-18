@@ -27,12 +27,45 @@ export default {
 </script>
 
 <template>
+  <Button size="md" class="mt-3" color="success">
+    BUTTON
+    <Badge :overlay="{vertical: 'top', horizontal: 'right'}" color="danger" content="11" />
+  </Button>
+  <Button size="md" class="mt-3" color="success">
+    BUTTON
+    <Badge :overlay="{vertical: 'top', horizontal: 'right'}" color="danger" content="11" />
+  </Button>
+
   
 
   
+
+  <Button size="md" class="mt-3" color="success">
+    BUTTON
+    <Badge inline rounded color="danger" content="11" />
+  </Button>
+
+
+  <Button color="plain" class="mt-2" size="md" variant="text">
+    <template v-slot:icon>
+      <Badge rounded :overlay="{vertical: 'top', horizontal: 'right'}" color="danger" content="1"/>
+      <Icon icon="mdi:bell-outline" 
+        width="1.3rem" 
+        height="1.3rem"
+      />
+    </template>
+  </Button>
+<!--
   <Button color="success">
     asd
     <Badge inline color="danger" content="1" />
+  </Button>
+
+  <Button color="plain" size="md" variant="text">
+    <template v-slot:icon>
+      <Icon icon="mdi:bell-outline" class="animate-tada" width="1.5rem" height="1.5rem" />
+      <Badge rounded color="danger" content="1" />
+    </template>
   </Button>
 
   <Button color="plain" size="md" variant="text">
@@ -55,13 +88,14 @@ export default {
       <Button color="success">asd</Button>
    </Badge>
 
+   <Button color="success" class="m-2">
+    asd
+    <Badge color="danger" class="absolute top-1 right-1" rounded content="9" />
 
-   <Badge class="mr-2" color="secondary" text="Secondary"></Badge>
-   <Badge class="mr-2" color="success" text="Success"></Badge>
-   <Badge class="mr-2" color="warning" text="Warning"></Badge>
-   <Badge class="mr-2" color="danger" text="Danger"></Badge>
-   <Badge class="mr-2" color="info" text="Info"></Badge>
-   <Badge class="mr-2" color="plain" text="Plain"></Badge>
+   </Button>
+
+   <Badge color="danger"  content="11111" /> -->
+
 
 </template>
 

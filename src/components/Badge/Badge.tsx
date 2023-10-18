@@ -1,44 +1,36 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { defineComponent } from "vue";
 import { makeColorProp, useColor } from "@/composable/color";
-import { makeIconProps } from "@/composable/icon";
-import { makeSizeProp } from "@/composable/size";
-import { makeVariantProp, useVariants } from "@/composable/variants";
+import { makeOverlayProp, useOverlay, OverlayType } from "@/composable/overlay";
 
 const vBadgeProps = makePropsFactory({
    content: String,
    dot: Boolean,
    rounded: Boolean,
    inline: Boolean,
+   ...makeOverlayProp(),
    ...makeColorProp(),
 });
+
 
 const Badge = defineComponent({
    name: 'Badge',
    props: vBadgeProps,
    setup(props, {slots, attrs}) {
-      const dot = props.dot ? 'badge__content-badge-dot' : undefined;
-      const rounded = props.rounded ? 'badge__content-badge-rounded' : undefined;
-      const inline = props.inline ? 'badge--inline' : undefined;
+      const dot = (props.dot && !props.rounded) ? 'badge-dot' : undefined;
+      const rounded = (props.rounded && !props.dot) ? 'badge-rounded' : undefined;
+      const inline = (props.inline && !props.overlay) ? 'badge-inline' : undefined;
       const color = useColor('badge', props.color as string);
-
-      const hasDefaultSlots = !!slots.default;
-      const hasContentSlots = !!slots.content;
+      const overlay = useOverlay('badge', props.overlay as OverlayType)
+      
       return () => {
          return (
-            <div class={['badge', inline]}>
+            <div class={['badge', inline, dot, rounded, overlay]}>
                <div class='badge__content'>
-                  {slots.default?.()}
-                  <span class={['badge__content-badge', color, dot, rounded]}>
-                     {props.content}
+                  <span class={['badge__content-badge', color]}>
+                     {dot ? undefined : props.content}
                   </span>
                </div>
-               {/* {(hasDefaultSlots || hasContentSlots) && (
-                  <div class='badge__content'>
-                     <div class='badge__content-badge'></div>
-                  </div>
-               )} */}
-               
             </div>
          );
       }
