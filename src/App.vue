@@ -36,6 +36,7 @@ export default {
     <router-link to="/card">Card</router-link> |
     <router-link to="/drag-and-drop">Drag and Drop</router-link> |
     <router-link to="/buttontest">ButtonTest</router-link> |
+    <router-link to="/badgetest">BadgeTest</router-link> |
   </div>
 
   <router-view />

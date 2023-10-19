@@ -12,17 +12,17 @@ const predefinedVariants = [
    'solid',
 ]
 
-// const predefinedVariants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'plain']
-
-const variantProps : variantProps = makePropsFactory({
-   variant: {
-      type: String,
-      default: 'solid',
-      validator: (variantVal: string) => {
-         return isIncluded(predefinedVariants, variantVal)
+function makeVariantProp(variants: Array<String> = predefinedVariants, defaultVal? : string) : variantProps {
+   return makePropsFactory({
+      variant: {
+         type: String,
+         default: !defaultVal ? 'solid' : defaultVal,
+         validator: (variantVal: string) => {
+            return isIncluded(variants, variantVal)
+         }
       }
-   }
-})
+   })
+}
 
 function useVariants(prefix: string, variant: string) : string {
    const variantStyle = computed(() => {
@@ -37,5 +37,5 @@ function useVariants(prefix: string, variant: string) : string {
 
 export {
    useVariants,
-   variantProps
+   makeVariantProp
 }

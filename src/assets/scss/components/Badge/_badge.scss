@@ -1,0 +1,169 @@
+@use './variables' as badge-variables;
+@use './mixin' as badge-mixins;
+@use '../../utilities/utils-variables';
+@use '../../utilities/utils-mixin';
+@use '../../utilities/utils-functions';
+@use "sass:map";
+@use "sass:meta";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .btn {
+    .badge-overlay .badge__content-badge {
+      @include badge-mixins.get-overlay-position(
+        badge-variables.$badge-overlay-position, 
+        'badge', 
+        'btn'
+      );
+    }
+
+    .badge-dot.badge-overlay .badge__content-badge {
+      @include badge-mixins.get-overlay-position(
+        badge-variables.$badge-overlay-position, 
+        'badge-dot', 
+        'btn'
+      );
+    }
+  }
+
+  .btn-icon {
+    &.btn-sm {
+      .badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge', 
+          'btn-icon', 
+          'btn-sm'
+        );
+      }
+
+      .badge-rounded.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-rounded', 
+          'btn-icon', 
+          'btn-sm'
+        );
+      }
+
+      .badge-dot.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-dot', 
+          'btn-icon', 
+          'btn-sm'
+        );
+      }
+    } 
+
+    &.btn-md {
+      .badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge', 
+          'btn-icon', 
+          'btn-md'
+        );
+      }
+
+      .badge-rounded.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-rounded', 
+          'btn-icon', 
+          'btn-md'
+        );
+      }
+
+      .badge-dot.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-dot', 
+          'btn-icon', 
+          'btn-md'
+        );
+      }
+    }
+
+    &.btn-lg {
+      .badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge', 
+          'btn-icon', 
+          'btn-lg'
+        );
+      }
+
+      .badge-rounded.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-rounded', 
+          'btn-icon', 
+          'btn-lg'
+        );
+      }
+
+      .badge-dot.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-dot', 
+          'btn-icon', 
+          'btn-lg'
+        );
+      }
+    }
+  }
+
+  .badge {
+    @apply inline-block;
+    z-index: 9999;
+    line-height: 1;
+
+    &__content {
+      @apply flex;
+
+      &-badge {
+        @apply rounded-sm
+        absolute
+        inline-flex
+        text-[.7rem]
+        font-semibold
+        pointer-events-auto
+        items-center
+        whitespace-nowrap
+        indent-0
+        text-center
+        h-4 min-w-[1rem]
+        px-[5px] py-[9px]
+        justify-center;
+        transition: 0.225s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+
+  }
+
+  .badge-inline .badge__content-badge {
+    @apply relative;
+  }
+
+  .badge-dot .badge__content-badge {
+    @apply p-0 h-[9px] rounded-full min-w-0 w-[9px];
+  }
+
+  .badge-rounded .badge__content-badge {
+    @apply rounded-full
+      h-5 min-w-[20px]
+      px-[6px] py-[4px];
+  }
+
+  
+}
+
+@each $color in utils-variables.$colors {
+  .badge-#{$color} .badge__content-badge {
+    @include utils-mixin.get-color($color);
+  }
+}

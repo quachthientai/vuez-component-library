@@ -1,0 +1,18 @@
+@use './variables';
+@use '../../utilities/utils-functions';
+@use 'sass:map';
+
+// @mixin get-button-size($variable, $size) {
+//    $size: utils-functions.map-deep-get($variable, $size);
+//    @each $key in map.keys($size) {
+//      @apply #{map.get($size, $key)};
+//    }
+// };
+
+@mixin get-overlay-position($map, $keys...) {
+   $position: utils-functions.map-deep-get($map, $keys...);
+   @apply #{$position};
+};
+
+
+

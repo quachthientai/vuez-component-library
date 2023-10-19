@@ -1,6 +1,7 @@
 <script>
 import { Icon } from '@iconify/vue'
-import Button from '../../components/Button/Button.vue'
+import { Button } from '@/components/Button/Button'
+// import Button from '../../components/Button/Button.vue'
 import { eventBus } from '../../utils/eventBus'
 import { POSITION, TYPE } from '@/plugins/ToastPlugin/constant'
 
@@ -215,11 +216,8 @@ export default {
           </span>
         </div>
         <div class="toast__dismiss" :class="[hideCloseButton ? 'opacity-0' : '']">
-          <Button
-            btnClass="btn-icon-circle"
-            appendIcon="iconamoon:close-bold"
-            @click="dismissToast"
-          />
+          <Button variant="text" :icon="{icon: 'iconamoon:close-bold'}" color="success" @click="dismissToast"/>
+
         </div>
         <div ref="progress" v-if="this.timeOut > 0" class="toast__progress"></div>
       </div>

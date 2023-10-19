@@ -60,6 +60,11 @@ const routes = [
     path: '/buttontest',
     name: 'buttontest',
     component: () => import('@/views/ButtonTestView.vue')
+  },
+  {
+    path: '/badgetest',
+    name: 'badgetest',
+    component: () => import('@/views/BadgeTestView.vue')
   }
 ]
 

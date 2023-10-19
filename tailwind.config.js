@@ -33,6 +33,7 @@ module.exports =  {
       },
       animation: {
         'ripple' : 'ripple 700ms linear',
+        'tada' : 'tada 1s ease-in-out infinite'
       },
       transitionProperty: {
         'max-height': 'max-height',
@@ -44,6 +45,13 @@ module.exports =  {
         },
         ripple: {
           '100%' : { transform: 'scale(4)', opacity: '0'},
+        },
+        tada: {
+          '0' : { transform: 'scaleZ(1)'},
+          '10%, 20%' : { transform: 'scaleZ(.95) rotate3d(0,0,1,-10deg)'},
+          '30%, 50%, 70%, 90%' : { transform: 'scaleZ(1) rotate3d(0,0,1,10deg)'},
+          '40%, 60%, 80%' : { transform: 'rotate3d(0,0,1,-10deg)'},
+          'to' : { transform: 'scaleZ(1)'},
         }
       },
       colors: {

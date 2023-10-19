@@ -3,28 +3,29 @@ import { makePropsFactory } from "@/utils/makePropFactory";
 import { DynamicTag } from "@/utils/test";
 import { Ripple } from "@/directives/ripple";
 import { Icon } from "@iconify/vue";
-import { useVariants, variantProps } from "@/composable/variants";
-import { useSize, sizeProps } from "@/composable/size";
-import { useColor, colorProps } from "@/composable/color";
-import { useIcon, iconProps, IconType } from "@/composable/icon";
-import { useLoader, loaderProps } from "@/composable/loader";
-import { useElevation, elevationProps } from "@/composable/elevation";
-import { has } from "lodash";
+import { useVariants, makeVariantProp } from "@/composable/variants";
+import { useSize, makeSizeProp } from "@/composable/size";
+import { useColor, makeColorProp } from "@/composable/color";
+import { useIcon, makeIconProps, IconType } from "@/composable/icon";
+import { useLoader, makeLoaderProp } from "@/composable/loader";
+import { useElevation, makeElevationProp } from "@/composable/elevation";
+import { useDimension, makeDimensionProp } from "@/composable/dimension";
 
 const vButtonProps = makePropsFactory({
    block: Boolean,
    text: String,
    disabled: Boolean,
+   href: String,
    icon: {
       type: Object as PropType<IconType>,
    },
-   href: String,
-   ...iconProps,
-   ...variantProps,
-   ...sizeProps,
-   ...colorProps,
-   ...loaderProps,
-   ...elevationProps,
+   ...makeDimensionProp(),
+   ...makeVariantProp(),
+   ...makeIconProps(),
+   ...makeSizeProp(),
+   ...makeColorProp(),
+   ...makeLoaderProp(),
+   ...makeElevationProp(),
 });
 
 const Button = defineComponent({
@@ -41,12 +42,14 @@ const Button = defineComponent({
          const size = useSize('btn', props.size as string);
          const color = useColor('btn', props.color as string);
          const elevation = useElevation(props.elevation as number);
+         const dimension = useDimension(props);
          
          const prependIcon = props.prependIcon as IconType;
          const appendIcon = props.appendIcon as IconType;
          const iconProps = props.icon as IconType;
 
-         const hasIconProps = !!props.icon;
+         const hasIcon = !!(slots.icon ||props.icon);
+
          const hasTextProps = !!props.text;
          const hasLinkProps = !!props.href;
          const hasBlockProps = !!props.block;
@@ -58,9 +61,10 @@ const Button = defineComponent({
          return (
             <DynamicTag 
                type={ hasLinkProps ? 'a' : 'button' }
+               style={ !hasIcon ? dimension : undefined }
                href={ props.href ? props.href : undefined }
                v-ripple
-               class={[hasIconProps ? 'btn-icon' : 'btn',
+               class={[hasIcon ? 'btn-icon' : 'btn',
                   color,
                   variant,
                   size,
@@ -70,12 +74,11 @@ const Button = defineComponent({
                disabled={ isDisabled ? 'disabled' : undefined }
                tabindex="0" 
                role="button"> 
-                  { (hasPrepend && !hasIconProps) && (
+                  { (hasPrepend && !hasIcon) && (
                      <div class="btn__prepend">
                         { props.prependIcon
                            ? <Icon 
-                                 class="btn__prepend-icon" 
-                                 color={ prependIcon.color } 
+                                 class={["btn__prepend-icon", prependIcon.color]} 
                                  width={ prependIcon.width } 
                                  height={ prependIcon.height } 
                                  icon={ prependIcon.icon } 
@@ -84,32 +87,32 @@ const Button = defineComponent({
                      </div>
                   )}
 
-                  {(hasTextProps || hasDefaultSlots || hasIconProps) && (
+                  {(hasTextProps || hasDefaultSlots || hasIcon) && (
                      <span class="btn__content">
-                        
-                        { hasIconProps && (
-                           <Icon 
-                              class="btn__icon" 
-                              color={ iconProps.color } 
-                              width={ iconProps.width } 
-                              height={ iconProps.height } 
-                              icon={ iconProps.icon } 
-                           />
+                        { (hasIcon) && (
+                           <div class="flex align-middle">
+                              { props.icon 
+                                 ? <Icon 
+                                    class={ iconProps.color } 
+                                    width={ iconProps.width } 
+                                    height={ iconProps.height } 
+                                    icon={ iconProps.icon } 
+                                    /> 
+                                 : slots.icon?.()
+                              }
+                           </div> 
                         )}
-                        { props.text ?? props.text }
-                        { (hasDefaultSlots && !hasIconProps) && slots.default?.() }
+                        { (hasTextProps && !hasIcon) && props.text }
+                        { (hasDefaultSlots && !hasIcon) && slots.default?.() }
                         
-                        
-
                      </span>
                   )}
 
-                  { (hasAppend && !hasIconProps) && (
+                  { (hasAppend && !hasIcon) && (
                      <div class="btn__append">
                         { props.appendIcon 
                            ? <Icon 
-                                 class="btn__append-icon"
-                                 color={appendIcon.color}
+                                 class={["btn__append-icon", appendIcon.color]} 
                                  width={appendIcon.width}
                                  height={appendIcon.height}
                                  icon={appendIcon.icon}
