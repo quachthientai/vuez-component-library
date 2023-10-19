@@ -6,6 +6,8 @@ class formValidate{
     type:string
     statement:string
     value: any
+    minDate:string
+    maxDate:string
 
     private required:boolean
     constructor(requirements:{
@@ -15,6 +17,8 @@ class formValidate{
         type?:string,
         statements?:string,
         value?: string | number| RegExp
+        minDate?: string,
+        maxDate?:string
     }){
         this.minLength = requirements.minLength
         this.maxLength = requirements.maxLength
@@ -56,7 +60,7 @@ class formValidate{
     }
     
     
-    //Check for min length of input
+    //Check for min length of input !!10-18-23 Besure to combine 2 of them
     public validateMinLength = (value:string):boolean=>{
         if(value.length < 3){
             return true
@@ -77,8 +81,16 @@ class formValidate{
 
     //Check for the format of email
     public validateEmail = (value:string):boolean=>{
-        console.log(value)
         if(this.emailFormat.test(value)){
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    //Set the maximum Date
+    public validateDateValue = (value:string):boolean=>{
+        if(Date.parse(value) >= Date.parse(this.minDate) || Date.parse(value) <= Date.parse(value) ){
             return true
         }else{
             return false

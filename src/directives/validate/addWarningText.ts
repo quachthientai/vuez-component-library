@@ -44,6 +44,10 @@ const addWarningText = (el:HTMLInputElement,binding:any)=>{
             
             //break
             break
+        case "date":
+            warningPText = document.createTextNode("Invalid Date")
+            warningP.appendChild(warningPText)
+            break
     }
     
     return warningP
