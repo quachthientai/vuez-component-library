@@ -27,74 +27,87 @@ export default {
 </script>
 
 <template>
-  <Button size="md" class="mt-3" color="success">
-    BUTTON
-    <Badge :overlay="{vertical: 'top', horizontal: 'right'}" color="danger" content="11" />
-  </Button>
-  <Button size="md" class="mt-3" color="success">
-    BUTTON
-    <Badge :overlay="{vertical: 'top', horizontal: 'right'}" color="danger" content="11" />
-  </Button>
+  <div class="flex">
+    <Button size="md" elevation="3" class="m-3" color="plain">
+      BUTTON
+      <Badge inline rounded color="danger" content="9" />
+    </Button>
+
+    <Button size="md" elevation="3" class="m-3" color="plain">
+      BUTTON
+      <Badge inline color="danger" content="11" />
+    </Button>
+
+    <Button size="md" elevation="3" class="m-3" color="plain">
+      BUTTON
+      <Badge inline dot color="danger" content="11" />
+    </Button>
+  </div>
 
   
+  <div  class="mt-3 flex">
+    <Button size="md" elevation="3" class="m-3" color="plain">
+      BUTTON
+      <Badge overlay rounded color="danger" content="11" />
+    </Button>
 
-  
+    <Button size="md" elevation="3" class="m-3" color="plain">
+      BUTTON
+      <Badge overlay color="danger" content="11" />
+    </Button>
 
-  <Button size="md" class="mt-3" color="success">
-    BUTTON
-    <Badge inline rounded color="danger" content="11" />
-  </Button>
+    <Button size="md" elevation="3" class="m-3" color="plain">
+      BUTTON
+      <Badge overlay dot color="danger" content="11" />
+    </Button>
 
+  </div>
 
-  <Button color="plain" class="mt-2" size="md" variant="text">
-    <template v-slot:icon>
-      <Badge rounded :overlay="{vertical: 'top', horizontal: 'right'}" color="danger" content="1"/>
-      <Icon icon="mdi:bell-outline" 
-        width="1.3rem" 
-        height="1.3rem"
-      />
-    </template>
-  </Button>
-<!--
-  <Button color="success">
-    asd
-    <Badge inline color="danger" content="1" />
-  </Button>
+  <div class="mt-3 flex">
+    <Button color="plain" size="sm" class="m-3" variant="text">
+      <template v-slot:icon>
+        <Icon icon="mdi:bell-outline" class="animate-tada" width="1rem" height="1rem" />
+        <Badge overlay dot color="danger" content="1" />
+      </template>
+    </Button>
 
-  <Button color="plain" size="md" variant="text">
-    <template v-slot:icon>
-      <Icon icon="mdi:bell-outline" class="animate-tada" width="1.5rem" height="1.5rem" />
-      <Badge rounded color="danger" content="1" />
-    </template>
-  </Button>
+    <Button color="plain" size="md" class="m-3" variant="text">
+      <template v-slot:icon>
+        <Icon icon="mdi:bell-outline" class="animate-tada" width="1.3rem" height="1.3rem" />
+        <Badge overlay dot color="danger" content="1" />
+      </template>
+    </Button>
 
-  <Button color="plain" size="md" variant="text">
-    <template v-slot:icon>
-      <Badge color="danger" rounded content="9" >
+    <Button color="plain" size="lg" class="m-3" variant="text">
+      <template v-slot:icon>
         <Icon icon="mdi:bell-outline" class="animate-tada" width="1.5rem" height="1.5rem" />
-      </Badge>
-    </template>
-  </Button>
+        <Badge overlay dot color="danger" content="1" />
+      </template>
+    </Button>
+  </div>
 
-  <Button color="plain" size="md" class="animate-tada" :icon="{icon: 'mdi:bell-outline', width: '1.5rem', height: '1.5rem'}" variant="text">
-    asd
-  </Button>
+  <div class="mt-3 flex">
+    <Button color="plain" size="sm" class="m-3" variant="text">
+      <template v-slot:icon>
+        <Icon icon="mdi:bell-outline" class="animate-tada" width="1rem" height="1rem" />
+        <Badge overlay rounded color="danger" content="1" />
+      </template>
+    </Button>
 
-   <Badge class="mr-2" dot color="danger" rounded>
-      <Icon icon="mdi-home-outline" width="1.5rem" height="1.5rem" />
-   </Badge>
+    <Button color="plain" size="md" class="m-3" variant="text">
+      <template v-slot:icon>
+        <Icon icon="mdi:bell-outline" class="animate-tada" width="1.3rem" height="1.3rem" />
+        <Badge overlay rounded color="danger" content="1" />
+      </template>
+    </Button>
 
-   <Badge class="mr-2" rounded color="danger" content="">
-      <Button color="success">asd</Button>
-   </Badge>
-
-   <Button color="success" class="m-2">
-    asd
-    <Badge color="danger" class="absolute top-1 right-1" rounded content="9" />
-
-   </Button>
-
-   <Badge color="danger"  content="11111" /> -->
+    <Button color="plain" size="lg" class="m-3" variant="text">
+      <template v-slot:icon>
+        <Icon icon="mdi:bell-outline" class="animate-tada" width="1.5rem" height="1.5rem" />
+        <Badge overlay rounded color="danger" content="1" />
+      </template>
+    </Button>
+  </div>
 
 
 </template>

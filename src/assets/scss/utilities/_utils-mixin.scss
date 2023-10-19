@@ -15,6 +15,13 @@
    width: 100%;
 }
 
+@mixin get-overlay-position($top, $right, $bottom, $left){
+   top: $top;
+   bottom: $bottom;
+   right: $right;
+   left: $left;
+};
+
 
 /// A mixin that returns a ripple color based on the given color..
 /// @param {string} $color - The color to apply styles for

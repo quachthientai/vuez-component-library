@@ -1,59 +1,148 @@
 @use './variables' as badge-variables;
+@use './mixin' as badge-mixins;
 @use '../../utilities/utils-variables';
 @use '../../utilities/utils-mixin';
+@use '../../utilities/utils-functions';
+@use "sass:map";
+@use "sass:meta";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  .badge {
-    @apply inline-block;
-    z-index: 9999;
-    line-height: 1;
-  }
-  
   .btn {
-    .badge-overlay-top-right .badge__content-badge {
-      @apply top-[-8px] right-[-6px];
-      // left: calc(100% - 12px);
-      // bottom: calc(100% - 9px);
+    .badge-overlay .badge__content-badge {
+      @include badge-mixins.get-overlay-position(
+        badge-variables.$badge-overlay-position, 
+        'badge', 
+        'btn'
+      );
     }
 
-    .badge-dot.badge-overlay-top-right .badge__content-badge {
-      left: calc(100% - 6px);
-      bottom: calc(100% - 5px);
+    .badge-dot.badge-overlay .badge__content-badge {
+      @include badge-mixins.get-overlay-position(
+        badge-variables.$badge-overlay-position, 
+        'badge-dot', 
+        'btn'
+      );
     }
   }
 
   .btn-icon {
-    &.btn-sm .badge-overlay-top-right .badge__content-badge {
-      left: calc(100% - 13px);
-      bottom: calc(100% - 12px);
+    &.btn-sm {
+      .badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge', 
+          'btn-icon', 
+          'btn-sm'
+        );
+      }
+
+      .badge-rounded.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-rounded', 
+          'btn-icon', 
+          'btn-sm'
+        );
+      }
+
+      .badge-dot.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-dot', 
+          'btn-icon', 
+          'btn-sm'
+        );
+      }
+    } 
+
+    &.btn-md {
+      .badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge', 
+          'btn-icon', 
+          'btn-md'
+        );
+      }
+
+      .badge-rounded.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-rounded', 
+          'btn-icon', 
+          'btn-md'
+        );
+      }
+
+      .badge-dot.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-dot', 
+          'btn-icon', 
+          'btn-md'
+        );
+      }
     }
 
-    .badge-overlay-top-right .badge__content-badge {
-      left: calc(100% - 17px);
-      bottom: calc(100% - 14px);
-    }
+    &.btn-lg {
+      .badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge', 
+          'btn-icon', 
+          'btn-lg'
+        );
+      }
 
-    &.btn-sm .badge-dot.badge-overlay-top-right .badge__content-badge {
-      left: calc(100% - 12px);
-      bottom: calc(100% - 9px);
-    }
+      .badge-rounded.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-rounded', 
+          'btn-icon', 
+          'btn-lg'
+        );
+      }
 
-    &.btn-lg .badge-dot.badge-overlay-top-right .badge__content-badge {
-      left: calc(100% - 19px);
-      bottom: calc(100% - 13px);
-    }
-
-    .badge-dot.badge-overlay-top-right .badge__content-badge {
-      left: calc(100% - 13px);
-      bottom: calc(100% - 10px);
+      .badge-dot.badge-overlay .badge__content-badge {
+        @include badge-mixins.get-overlay-position(
+          badge-variables.$badge-overlay-position, 
+          'badge-dot', 
+          'btn-icon', 
+          'btn-lg'
+        );
+      }
     }
   }
 
-  .badge__content {
-    @apply flex;
+  .badge {
+    @apply inline-block;
+    z-index: 9999;
+    line-height: 1;
+
+    &__content {
+      @apply flex;
+
+      &-badge {
+        @apply rounded-sm
+        absolute
+        inline-flex
+        text-[.7rem]
+        font-semibold
+        pointer-events-auto
+        items-center
+        whitespace-nowrap
+        indent-0
+        text-center
+        h-4 min-w-[1rem]
+        px-[5px] py-[9px]
+        justify-center;
+        transition: 0.225s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+
   }
 
   .badge-inline .badge__content-badge {
@@ -65,25 +154,16 @@
   }
 
   .badge-rounded .badge__content-badge {
-    @apply rounded-full;
+    @apply rounded-full
+      h-5 min-w-[20px]
+      px-[6px] py-[4px];
   }
 
-  .badge__content-badge {
-      @apply rounded-sm
-      absolute
-      flex
-      text-[.7rem]
-      font-semibold
-      pointer-events-auto
-      items-center 
-      h-4 min-w-[1rem] 
-      justify-center 
-      px-[4px] py-[6px];
-  }
+  
 }
 
 @each $color in utils-variables.$colors {
-  .badge-#{$color} {
+  .badge-#{$color} .badge__content-badge {
     @include utils-mixin.get-color($color);
   }
 }

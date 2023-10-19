@@ -1,5 +1,32 @@
 $badge-variants: 'solid', 'outlined';
 
-$badge-overlay-position: 'top-left', 'top-right', 'bottom-left', 'bottom-right';
+$badge-overlay-position: (
+   badge: (
+      btn: 'top-[-8px] right-[-6px]',
+      btn-icon: (
+         btn-sm: 'top-[-6px] right-[-2px]',
+         btn-md: 'top-[-3px] right-[-2px]',
+         btn-lg: 'top-[-1px] right-[1px]'
+      )
+   ),
+   badge-rounded: (
+      btn-icon: (
+         // btn-sm: 'top-[-6px] right-[-2px] text-[10px] py-1 h-[11px] min-w-[.7rem]',
+         btn-sm: 'top-[-6px] right-[-2px] h-4 text-[10px] min-w-[1rem]',
+         btn-md: 'top-[-3px] right-[-2px] h-4 text-[11px] min-w-[1rem]',
+         btn-lg: 'top-[-1px] right-[1px] h-4 text-[11px] min-w-[1rem]'
+      )
+   ),
+   badge-dot: (
+      btn: 'top-[-5px] right-[-3px]',
+      btn-icon: (
+         btn-sm: 'top-[0px] right-[2px]',
+         btn-md: 'top-[0px] right-[5px]',
+         btn-lg: 'top-[6px] right-[9px]',
+      )
+   )
+)
+
+
 
 
