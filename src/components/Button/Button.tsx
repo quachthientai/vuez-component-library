@@ -1,4 +1,4 @@
-import { PropType, defineComponent, ref } from "vue";
+import { PropType, defineComponent } from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { DynamicTag } from "@/utils/test";
 import { Ripple } from "@/directives/ripple";
@@ -36,7 +36,6 @@ const Button = defineComponent({
    },
    setup(props, {attrs, slots}) {
       return () => {
-
          const loader = useLoader('btn', props.loading as boolean);
          const variant = useVariants('btn', props.variant as string);
          const size = useSize('btn', props.size as string);

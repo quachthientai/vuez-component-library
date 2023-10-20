@@ -65,6 +65,11 @@ const routes = [
     path: '/badgetest',
     name: 'badgetest',
     component: () => import('@/views/BadgeTestView.vue')
+  },
+  {
+    path: '/menu',
+    name: 'menu',
+    component: () => import('@/views/MenuView.vue')
   }
 ]
 

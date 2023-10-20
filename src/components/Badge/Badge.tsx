@@ -24,7 +24,13 @@ const Badge = defineComponent({
       
       return () => {
          return (
-            <div class={['badge', inline, dot, rounded, overlay, color]}>
+            <div class={['badge', 
+               inline, 
+               dot, 
+               rounded, 
+               overlay, 
+               color]}
+            >
                <div class='badge__content'>
                   <span class={['badge__content-badge']}>
                      {dot ? undefined : props.content}
