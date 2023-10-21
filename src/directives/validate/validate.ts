@@ -1,10 +1,13 @@
-import {h} from "vue"
+import {h,DirectiveBinding} from "vue"
 import formValidate from "@/modules/formvalidate"
 import addWarningText from "@/directives/validate/addWarningText"
+//10-20-23 *Refactor* add validate function =
+//10-20-23 *Fix* Type checking for event
+// (e.target as HTML Input Element)
 
 //With Text Input
 const handleTextValueChange = (e:any,warningText:HTMLParagraphElement)=>{
-    
+    console.log(typeof e)
     const validateModel = new formValidate({type:e.target.type,value:e.target.value})
     
     if(!validateModel.validateMinLength(e.target.value)){    
@@ -29,16 +32,16 @@ const handleEmailValueChange = (e:any,warningText:HTMLParagraphElement)=>{
 
 const handleDateValueChange = (e:any,warningText?:HTMLParagraphElement)=>{
     const validateModel = new formValidate({type:e.target})
-
+    console.log(e.target.value)
 
 }
 
 
 export const InputValidate = {
-    mounted(el:HTMLInputElement,binding:any){
+    mounted(el:HTMLInputElement,binding:DirectiveBinding){
 
         //Conisder if we should pass binding into event listener
-        console.log(el.type)
+        
         const warningText = addWarningText(el,binding)
         el.after(warningText)
         warningText.classList.add("hidden")

@@ -1,6 +1,7 @@
 import formValidate from "../../modules/formvalidate"
+import { DirectiveBinding } from "vue"
 
-const addWarningText = (el:HTMLInputElement,binding:any)=>{
+const addWarningText = (el:HTMLInputElement,binding:DirectiveBinding)=>{
 
     //create warning <p> tag
     const warningP = document.createElement("p")

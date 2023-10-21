@@ -10,6 +10,7 @@ class formValidate{
     maxDate:string
 
     private required:boolean
+    //10-20-23 *Refactor* make file "type.d.ts"
     constructor(requirements:{
         minLength?:number,
         maxLength?:number,
@@ -45,6 +46,7 @@ class formValidate{
         masterCard:/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/,
         visa: /^4[0-9]{12}(?:[0-9]{3})?$/
     }
+
     //Set length for the input
     public setMinLength = (value:number):void=>{
         this.minLength = value
@@ -96,7 +98,7 @@ class formValidate{
             return false
         }
     }
-
+    
     //Check for the format of credit/debit card:
     public validateCard = (value:string, type:string):boolean=>{
         switch(type.toLowerCase()){
@@ -126,6 +128,7 @@ class formValidate{
                 }
                 break
             default:
+                //10-20-23 *Add toast*
                 window.alert('Invalid Card')
         }
     }
