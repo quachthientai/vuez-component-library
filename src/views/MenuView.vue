@@ -13,7 +13,10 @@ export default {
   data() {
     return {
       items: [
-        {content: 'asd'}
+        {content: 'asd',
+        prependIcon: {
+          icon: 'mdi:account-outline'
+        },}
         
       ]
     }
@@ -21,21 +24,46 @@ export default {
 }
 </script>
 <template>
-  
+<!--   
   <Menu :model="items">
     <template v-slot:append>
       <Badge inline content="9" color="danger" />
     </template>
+  </Menu> -->
+
+  <Menu>
+    <MenuItem type="header" content="Options" />
+    <MenuItem type="item" content="Profile">
+      <template v-slot:prepend>
+        <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem" />
+      </template>
+      
+    </MenuItem>
+    <MenuItem type="item" content="Setting">
+      <template v-slot:prepend>
+        <Icon icon="mdi:cog-outline" width="1.3rem" height="1.3rem" />
+      </template>
+      <template v-slot:append>
+        <Badge inline rounded content="1" color="danger" />
+      </template>
+    </MenuItem>
+    <hr/>
+    <MenuItem type="header" content="Navigation" />
+    <MenuItem type="item" content="Website">
+      <template v-slot:prepend>
+        <Icon icon="mdi:link-variant" width="1.3rem" height="1.3rem" />
+      </template>
+    </MenuItem>
+    <MenuItem type="item" content="Upload">
+      <template v-slot:prepend>
+        <Icon icon="mdi:tray-arrow-up" width="1.3rem" height="1.3rem" />
+      </template>
+    </MenuItem>
   </Menu>
-
-
   <!-- <MenuItem 
-    :prependIcon="{
-      icon: 'mdi:account-outline'
-    }" 
-    content
+    type="title"
+    content="Menu"
     class="m-3"
-    divider
     tag="a">
   </MenuItem> -->
   <!-- <div style="border: red 1px solid; height: 70px;" class="relative">

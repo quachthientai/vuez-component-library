@@ -10,8 +10,8 @@ import { MenuItem } from "./MenuItem";
 
 
 interface Item {
-   content: string | (() => JSX.Element);
-   href?: string;
+   content: string;
+   href?: string; 
    divider?: boolean;
    tag?: string;
    prependIcon?: IconType;
@@ -37,7 +37,9 @@ const Menu = defineComponent({
          return (
             <div class="vz-menu">
                <ul class="vz-menu-list">
-                  {
+                  {slots.default?.()}
+
+                  {/* {
                      (props.model as Item[])?.map((item, index) => {
                         return (
                            h(MenuItem, {
@@ -50,7 +52,7 @@ const Menu = defineComponent({
                            })
                         )
                      })
-                  }
+                  } */}
                   {/* {
                      (props.model as Item[])?.map((item, index) => {
                         return (
