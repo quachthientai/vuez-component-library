@@ -1,12 +1,11 @@
 <script >
-import { Button } from '@/components/Button/Button';
+// import { Button } from '@/components/Button/Button';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 
 export default {
   name: 'ButtonView',
   components: {
-    Button,
     Icon
   },
   data() {
@@ -32,7 +31,7 @@ export default {
          @click="load"
          class="mr-2" 
          variant="outlined" 
-         color="primary" 
+         color="primary"
       >
          BUTTON
       </Button>
@@ -126,7 +125,7 @@ export default {
 
    <div class="flex justify-start mt-3">
       <Button size="sm" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="outlined" >SMALL BUTTON</Button>
-      <Button size="md" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="outlined" >REGULAR BUTTON</Button>
+      <Button size="md" :prependIcon="{icon: 'mdi-check-circle' }" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="outlined" >REGULAR BUTTON</Button>
       <Button size="lg" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="outlined" >LARGE BUTTON</Button>
 
       <Button size="lg" class="mr-2" :elevation="3" variant="outlined" :icon="{icon: 'mdi-account'}" color="primary" >SMALL BUTTON</Button>

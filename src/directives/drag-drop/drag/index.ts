@@ -1,5 +1,4 @@
 // import { Event, HandleEventDirective } from "@/directives/type"
-
 import { Event, HandleEventDirective } from "../../type";
 import { getOptions } from "./getOptions";
 import { DirectiveBinding, VNode, h, render } from "vue";
@@ -53,6 +52,7 @@ const handleDragStart: HandleEventDirective = (event, element) => {
 }
 
 
+
 export const Drag = {
    beforeMount(el: HTMLElement, binding?: DirectiveBinding){
       if(binding.arg && binding.arg !== 'options') {
@@ -77,7 +77,6 @@ export const Drag = {
             handleTarget.draggable = true
             handleTarget.addEventListener('dragstart', (ev: Event) => handleDragStart(ev, el))
             handleTarget.addEventListener('dragend', (ev: Event) => handleDragEnd(ev,el))
-            
          }
       }else {
          el.draggable = true

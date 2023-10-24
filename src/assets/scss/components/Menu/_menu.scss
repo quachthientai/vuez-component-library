@@ -7,29 +7,14 @@
 @layer base {
    .vz-menu {
       margin: 1rem;
-      @apply absolute bg-light text-dark dark:bg-slate-700 dark:text-light overflow-auto rounded-[5px] overflow-auto dark:shadow-elevation-4 shadow-elevation-2 py-1;
+      @apply absolute bg-light text-dark dark:bg-slate-700 dark:text-light rounded-[5px] overflow-auto dark:shadow-elevation-4 shadow-elevation-2 py-1;
 
       &-list {
          width: 100%;
       }
 
-      &-item {
-         @apply py-1 text-sm font-semibold px-4 relative text-gray-600;
-         align-items: center;
-         min-height: 48px;
-         width: 100%;
-         cursor: pointer;
-         @apply gap-2;
-         display: grid;
-         grid-template-areas: "prepend content append";
-         grid-template-columns: max-content 1fr auto;
-         &:hover {
-            @include utils-mixin.get-hover-color('text', 'plain');
-         }
-
-         &__content {
-            grid-area: content;
-         }
-      }
+      // &-item {
+         
+      // }
    }
 }

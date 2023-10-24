@@ -35,12 +35,12 @@ export default {
 
     <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
-      <Badge inline color="danger" content="11" />
+      <Badge inline color="danger" content="11+" />
     </Button>
 
     <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
-      <Badge inline dot color="danger" content="11" />
+      <Badge inline dot color="success" content="11" />
     </Button>
   </div>
 

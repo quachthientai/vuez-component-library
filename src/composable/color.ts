@@ -30,8 +30,9 @@ function makeColorProp(colors: Array<String> = predefinedColors, defaultVal? : s
 
 const useColor = (prefix: string, color: string) => {
    const colorStyle = computed(() => {
-      if(prefix === undefined || null) return
+      if(prefix === undefined || null) return []
 
+      // refactor condition to check if user using their own color scheme
       if(color && isIncluded(predefinedColors, color)) {
          return `${prefix}-${color}`
       }

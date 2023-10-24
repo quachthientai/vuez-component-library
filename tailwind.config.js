@@ -14,7 +14,7 @@ module.exports =  {
       'xs': {'max': '475px'},
       ...defaultTheme.screens
     },
-    extend: {
+    extend: { 
       backgroundColor: {
         'ripple-primary': 'rgb(56 189 248 / 0.4)',
         'ripple-secondary': 'rgb(148 163 184 / 0.4)',
@@ -167,6 +167,7 @@ module.exports =  {
     },
   },
   plugins: [
+    require('@tailwindcss/forms'),
     plugin(function({matchUtilities, theme}) {
       matchUtilities({
         elevation: (value) => ({

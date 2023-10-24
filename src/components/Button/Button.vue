@@ -75,6 +75,8 @@ export default {
          ${isLoading && !btnClass.includes('btn-icon-circle') ? 'pointer-events-none' : ''}`"
     :disabled="isDisabled"
   >
+    
+
     <a :href="externalLink" :class="`${isDisabled ? 'cursor-no-drop' : ''}`">
       <template v-if="isLoading && !btnClass.includes('btn-icon-circle')">
         <span class="no-underline flex justify-center items-center">

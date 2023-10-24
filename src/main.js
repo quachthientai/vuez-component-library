@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import App from '../src/App.vue'
 import { ClickOut } from './directives/click-outside'
 import { Icon } from '@iconify/vue'
+import {Button} from './components/Button/Button.tsx'
 
 import { ToastPlugin } from '@/plugins/ToastPlugin/index.js'
 import { Drag } from './directives/drag-drop/drag'
@@ -15,6 +16,7 @@ const app = createApp(App)
 app.use(createPinia())
   .use(ToastPlugin)
   .use(router)
+  .component('Button', Button)
   .component('Icon', Icon)
   .directive('click-outside', ClickOut)
   .directive('drag', Drag)

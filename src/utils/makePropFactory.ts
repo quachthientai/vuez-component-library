@@ -15,15 +15,6 @@ function makePropsFactory(vProps: PropsOptions<object>) : ComponentObjectPropsOp
    return vProps as ComponentObjectPropsOptions;
 }
 
-// function makePropsFactory<T extends Record<string, any>>(propsDef: T) {
-//    type Props = { [K in keyof T]: T[K]['type'] };
-//    const props: Props = {} as Props;
-//    for (const key in propsDef) {
-//       props[key] = propsDef[key]['type'];
-//    }
-//    return props;
-// }
-
 export {
    PropOptions,
    PropsOptions,
