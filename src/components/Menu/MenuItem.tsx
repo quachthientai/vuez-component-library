@@ -8,12 +8,14 @@ import { Icon } from "@iconify/vue";
 
 const vMenuItemProps = makePropsFactory({
    content: String,
+   disabled: Boolean,
    href: String,
+   divider: Boolean,
    type: {
       type: String,
       default: 'item',
       validator: (value: string) => {
-         return isIncluded(['item', 'divider', 'header'], value);
+         return isIncluded(['item', 'header'], value);
       }
    },
    tag: {

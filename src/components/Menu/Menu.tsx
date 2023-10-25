@@ -4,24 +4,28 @@ import { useDimension, makeDimensionProp } from "@/composable/dimension";
 import { useColor, makeColorProp } from "@/composable/color";
 import { IconType } from "@/composable/icon";
 
-import { Badge } from "../Badge/Badge";
+import { Badge, BadgeType, BadgePropType } from "../Badge/Badge";
 import { Icon } from "@iconify/vue";
 import { MenuItem } from "./MenuItem";
 
 
-interface Item {
+
+interface MenuItemModel {
    content: string;
+   disabled?: boolean;
    href?: string; 
    divider?: boolean;
+   type?: 'item' | 'header';
    tag?: string;
-   prependIcon?: IconType;
-   appendIcon?: IconType;
+   badge?: BadgePropType;
+   // prependIcon?: IconType;
+   // appendIcon?: IconType;
 }
 
 const vMenuProps = makePropsFactory({
    toggler: String,
    model: {
-      type: Array as PropType<Item[]>,
+      type: Array as PropType<MenuItemModel[]>,
       default: () => [],
    },
    ...makeDimensionProp(),
@@ -31,42 +35,45 @@ const vMenuProps = makePropsFactory({
 const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
-
+   
    setup(props, {slots, attrs}) {
       return () => {
          return (
             <div class="vz-menu">
                <ul class="vz-menu-list">
+                  
                   {slots.default?.()}
 
+                  { (props.model as MenuItemModel[])?.map((item, index) => {
+                     return (
+                        <MenuItem
+                           content={item.content}
+                           type={item.type}
+                           tag={item.tag}
+                           href={item.href}
+                           disabled={item.disabled}
+                           divider={item.divider}
+                        >
+                           {{ append: () => item.badge && (<Badge {...item.badge} />) }}
+                        </MenuItem>
+                     )
+                  })}
                   {/* {
-                     (props.model as Item[])?.map((item, index) => {
+                     (props.model as MenuItemModel[])?.map((item, index) => {
                         return (
                            h(MenuItem, {
                               content: item.content,
                               href: item.href,
                               divider: item.divider,
                               tag: item.tag,
-                              prependIcon: item.prependIcon,
-                              appendIcon: item.appendIcon,
+                              type: item.type
+                              // prependIcon: item.prependIcon,
+                              // appendIcon: item.appendIcon,
                            })
                         )
                      })
                   } */}
-                  {/* {
-                     (props.model as Item[])?.map((item, index) => {
-                        return (
-                           <MenuItem 
-                              content={item.content} 
-                              href={item.href} 
-                              divider={item.divider} 
-                              tag={item.tag} 
-                              prependIcon={item.prependIcon}
-                              appendIcon={item.appendIcon}
-                           />
-                        )
-                     })
-                  } */}
+
                   
                   {/* <MenuItem divider prependIcon={{icon: 'mdi:account-outline'}}>
                      Profile                 
@@ -112,6 +119,7 @@ type MenuType = InstanceType<typeof Menu>;
 export {
    Menu,
    MenuType,
+   MenuItemModel
 }
 
 

@@ -7,14 +7,14 @@
 @layer base {
    .vz-menu-item {
       @include utils-mixin.get-grid-append-prepend-setup;
-      @apply py-1 text-sm  px-4 relative text-gray-600 dark:text-gray-200;
+      @apply py-1 text-sm px-4 relative text-gray-600 dark:text-gray-200;
          align-items: center;
-         min-height: 43px;
+         min-height: 40px;
          width: 100%;
          cursor: pointer;
          @apply gap-2;
          display: grid;
-
+         
       &:hover {
          @include utils-mixin.get-hover-color('text', 'plain');
       }
@@ -34,11 +34,9 @@
    }
 
    .vz-menu-item.vz-menu-item--header {
-      @apply min-h-[40px];
+      @apply min-h-[43px];
       .vz-menu-item__content {
-         @apply font-bold;
-
-         
+         @apply font-bold;        
       }
       &:hover {
          @apply bg-light cursor-default;

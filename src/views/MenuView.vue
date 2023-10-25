@@ -1,37 +1,47 @@
 <script lang="ts">
-import { Menu } from '@/components/Menu/Menu'
+import { Menu, MenuItemModel } from '@/components/Menu/Menu'
 import { MenuItem } from '@/components/Menu/MenuItem'
 import { Badge } from '@/components/Badge/Badge';
+
+
 
 export default {
   name: 'MenuView',
   components: {
-   Menu,
-   MenuItem,
-   Badge
+    Menu,
+    MenuItem,
+    Badge
   },
   data() {
-    return {
-      items: [
-        {content: 'asd',
-        prependIcon: {
-          icon: 'mdi:account-outline'
-        },}
+    const items: MenuItemModel[] = [
+      { content: 'Options', type: 'header', badge: {
+          content: '1',
+          color: 'danger',
+          inline: true,
+          rounded: true
+        } },
+      { content: 'Profile',
         
-      ]
+        badge: {
+          content: '1',
+          color: 'danger',
+          inline: true,
+          rounded: true
+        },
+      }
+      
+    ]
+    return {
+      items
     }
   }
 }
 </script>
 <template>
-<!--   
+  
   <Menu :model="items">
-    <template v-slot:append>
-      <Badge inline content="9" color="danger" />
-    </template>
-  </Menu> -->
-
-  <Menu>
+  </Menu>
+  <!-- <Menu>
     <MenuItem type="header" content="Options" />
     <MenuItem type="item" content="Profile">
       <template v-slot:prepend>
@@ -47,29 +57,25 @@ export default {
         <Badge inline rounded content="1" color="danger" />
       </template>
     </MenuItem>
+
     <hr/>
+
     <MenuItem type="header" content="Navigation" />
+
     <MenuItem type="item" content="Website">
       <template v-slot:prepend>
         <Icon icon="mdi:link-variant" width="1.3rem" height="1.3rem" />
       </template>
     </MenuItem>
+
     <MenuItem type="item" content="Upload">
       <template v-slot:prepend>
         <Icon icon="mdi:tray-arrow-up" width="1.3rem" height="1.3rem" />
       </template>
     </MenuItem>
-  </Menu>
-  <!-- <MenuItem 
-    type="title"
-    content="Menu"
-    class="m-3"
-    tag="a">
-  </MenuItem> -->
-  <!-- <div style="border: red 1px solid; height: 70px;" class="relative">
-    
-    
-  </div> -->
+
+  </Menu> -->
+
 
   
 </template>

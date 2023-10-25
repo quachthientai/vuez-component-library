@@ -43,8 +43,10 @@ const Badge = defineComponent({
 });
 
 type BadgeType = InstanceType<typeof Badge>;
+type BadgePropType = InstanceType<typeof Badge>['$props']
 
 export {
    Badge,
    BadgeType,
+   BadgePropType
 }
