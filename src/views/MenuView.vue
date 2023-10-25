@@ -2,8 +2,16 @@
 import { Menu, MenuItemModel } from '@/components/Menu/Menu'
 import { MenuItem } from '@/components/Menu/MenuItem'
 import { Badge } from '@/components/Badge/Badge';
+import { h } from 'vue';
 
-
+const test = () => {
+  return h(Badge, {
+    inline: true,
+    rounded: true,
+    color: 'primary',
+    content: '1'
+  })
+}
 
 export default {
   name: 'MenuView',
@@ -14,21 +22,33 @@ export default {
   },
   data() {
     const items: MenuItemModel[] = [
-      { content: 'Options', type: 'header', badge: {
-          content: '1',
-          color: 'danger',
-          inline: true,
-          rounded: true
-        } },
+      { content: 'Options', type: 'header' },
       { content: 'Profile',
-        
-        badge: {
-          content: '1',
-          color: 'danger',
-          inline: true,
-          rounded: true
+        divider: true,
+        badge: () => {
+          return h(Badge, {
+            inline: true,
+            rounded: true,
+            color: 'danger',
+            content: '1'
+          })
         },
-      }
+      
+
+
+      },
+      // { content: 'Profile',
+      //   divider: true,
+      //   badge: {
+      //     content: '1',
+      //     color: 'danger',
+      //     inline: true,
+      //     rounded: true
+      //   },
+      //   prependIcon: {
+      //     icon: 'mdi:account-outline'
+      //   }
+      // }
       
     ]
     return {

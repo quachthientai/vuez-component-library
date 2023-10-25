@@ -1,5 +1,5 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent, PropType, h } from "vue";
+import { defineComponent, PropType, h, VNode, RendererNode, RendererElement } from "vue";
 import { useDimension, makeDimensionProp } from "@/composable/dimension";
 import { useColor, makeColorProp } from "@/composable/color";
 import { IconType } from "@/composable/icon";
@@ -8,7 +8,7 @@ import { Badge, BadgeType, BadgePropType } from "../Badge/Badge";
 import { Icon } from "@iconify/vue";
 import { MenuItem } from "./MenuItem";
 
-
+type MenuItemModelIcon = Pick<IconType, 'icon'>
 
 interface MenuItemModel {
    content: string;
@@ -17,9 +17,9 @@ interface MenuItemModel {
    divider?: boolean;
    type?: 'item' | 'header';
    tag?: string;
-   badge?: BadgePropType;
-   // prependIcon?: IconType;
-   // appendIcon?: IconType;
+   badge?: BadgePropType | (() => VNode<RendererNode, RendererElement>);
+   prependIcon?: MenuItemModelIcon;
+   appendIcon?: MenuItemModelIcon;
 }
 
 const vMenuProps = makePropsFactory({
@@ -38,10 +38,11 @@ const Menu = defineComponent({
    
    setup(props, {slots, attrs}) {
       return () => {
+         console.log((props.model as MenuItemModel[])[1].badge)
          return (
             <div class="vz-menu">
                <ul class="vz-menu-list">
-                  
+
                   {slots.default?.()}
 
                   { (props.model as MenuItemModel[])?.map((item, index) => {
@@ -53,8 +54,12 @@ const Menu = defineComponent({
                            href={item.href}
                            disabled={item.disabled}
                            divider={item.divider}
+                           prependIcon={item.prependIcon}
+                           appendIcon={item.appendIcon}
                         >
-                           {{ append: () => item.badge && (<Badge {...item.badge} />) }}
+                           {/* {{ append: () => item.badge && (<Badge {...item.badge} />) }} */}
+
+                           {{ append: () => typeof item.badge === 'function' && item.badge() }}
                         </MenuItem>
                      )
                   })}
