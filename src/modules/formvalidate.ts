@@ -27,6 +27,8 @@ class formValidate{
         this.type = requirements.type
         this.statement = requirements.statements
         this.value = requirements.value
+        this.minDate = requirements.minDate
+        this.maxDate = requirements.maxDate
     }
 
     private emailFormat:RegExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
