@@ -1,38 +1,35 @@
 import {h,DirectiveBinding} from "vue"
 import formValidate from "@/modules/formvalidate"
 import addWarningText from "@/directives/validate/addWarningText"
-//10-20-23 *Refactor* add validate function =
+
+
 //10-20-23 *Fix* Type checking for event
 // (e.target as HTML Input Element)
 
-//With Text Input
-const handleTextValueChange = (e:any,warningText:HTMLParagraphElement)=>{
-    console.log(typeof e)
-    const validateModel = new formValidate({type:e.target.type,value:e.target.value})
-    
-    if(!validateModel.validateMinLength(e.target.value)){    
+const visualControl = (condition:boolean, warningText:HTMLParagraphElement) => {
+    if(condition){
         warningText.classList.add("hidden")
     }else{
         warningText.classList.remove("hidden")
     }
+}
 
-    
+//With Text Input
+const handleTextValueChange = (e:InputEvent,warningText:HTMLParagraphElement)=>{
+    const validateModel = new formValidate({type:(e.target as HTMLInputElement).type,value:(e.target as HTMLInputElement).value})
+
+    visualControl(!validateModel.validateMinLength((e.target as HTMLInputElement).value), warningText)
 }
 
 //With Email Input
-const handleEmailValueChange = (e:any,warningText:HTMLParagraphElement)=>{
-    const validateModel = new formValidate({type:e.target.type,value:e.target.value})
+const handleEmailValueChange = (e:InputEvent,warningText:HTMLParagraphElement)=>{
+    const validateModel = new formValidate({type:(e.target as HTMLInputElement).type,value:(e.target as HTMLInputElement).value})
 
-    if(validateModel.validateEmail(e.target.value)){
-        warningText.classList.add("hidden")
-    }else{
-        warningText.classList.remove("hidden")
-    }
+    visualControl(validateModel.validateEmail((e.target as HTMLInputElement).value), warningText)
 }
 
-const handleDateValueChange = (e:any,warningText?:HTMLParagraphElement)=>{
-    const validateModel = new formValidate({type:e.target})
-    console.log(e.target.value)
+const handleDateValueChange = (e:InputEvent,warningText?:HTMLParagraphElement)=>{
+    
 
 }
 
@@ -49,13 +46,13 @@ export const InputValidate = {
         switch (el.type) {
             case "text":
                 // el.after(warningP)
-                el.addEventListener('input', (event)=>handleTextValueChange(event,warningText))
+                el.addEventListener('input', (event)=>handleTextValueChange(event as InputEvent,warningText))
                 break
             case "email":
-                el.addEventListener('input',(event)=>handleEmailValueChange(event,warningText)) 
+                el.addEventListener('input',(event)=>handleEmailValueChange(event as InputEvent,warningText)) 
                 break;
             case "date":
-                el.addEventListener('input',(event)=>handleDateValueChange(event,warningText))                
+                el.addEventListener('input',(event)=>handleDateValueChange(event as InputEvent,warningText))                
                 break;
             case "datetime":
                 break;
