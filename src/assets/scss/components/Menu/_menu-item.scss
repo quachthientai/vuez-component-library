@@ -19,15 +19,15 @@
          @include utils-mixin.get-hover-color('text', 'plain');
       }
 
-      &__prepend {
+      &__icon {
          @include utils-mixin.get-grid-template('prepend');
       }
 
-      &__content {
+      &__label {
          @include utils-mixin.get-grid-template('content');
       }
 
-      &__append {
+      &__badge {
          @apply flex;
          @include utils-mixin.get-grid-template('append');
       }
@@ -35,7 +35,7 @@
 
    .vz-menu-item.vz-menu-item--header {
       @apply min-h-[43px];
-      .vz-menu-item__content {
+      .vz-menu-item__label {
          @apply font-bold;        
       }
       &:hover {

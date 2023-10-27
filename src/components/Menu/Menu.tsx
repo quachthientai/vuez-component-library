@@ -6,16 +6,16 @@ import { IconType } from "@/composable/icon";
 
 import { Badge, BadgeType, BadgePropType } from "../Badge/Badge";
 import { Icon } from "@iconify/vue";
-import { MenuItem } from "./MenuItem";
+import { MenuItem } from "./MenuItem/MenuItem";
 
 type MenuItemModelIcon = Pick<IconType, 'icon'>
 
-interface MenuItemModel {
+type MenuItemModel = {
    content: string;
    disabled?: boolean;
    href?: string; 
    divider?: boolean;
-   type?: 'item' | 'header';
+   type?: 'item' | 'header' | 'footer';
    tag?: string;
    badge?: BadgePropType | (() => VNode<RendererNode, RendererElement>);
    prependIcon?: MenuItemModelIcon;

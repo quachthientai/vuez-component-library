@@ -1,5 +1,5 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent } from "vue";
+import { ExtractPropTypes, defineComponent } from "vue";
 import { makeColorProp, useColor } from "@/composable/color";
 
 const vBadgeProps = makePropsFactory({
@@ -43,7 +43,7 @@ const Badge = defineComponent({
 });
 
 type BadgeType = InstanceType<typeof Badge>;
-type BadgePropType = InstanceType<typeof Badge>['$props']
+type BadgePropType = ExtractPropTypes<typeof vBadgeProps>;
 
 export {
    Badge,

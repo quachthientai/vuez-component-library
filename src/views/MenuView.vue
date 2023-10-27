@@ -1,17 +1,10 @@
 <script lang="ts">
 import { Menu, MenuItemModel } from '@/components/Menu/Menu'
-import { MenuItem } from '@/components/Menu/MenuItem'
+import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
 import { Badge } from '@/components/Badge/Badge';
 import { h } from 'vue';
 
-const test = () => {
-  return h(Badge, {
-    inline: true,
-    rounded: true,
-    color: 'primary',
-    content: '1'
-  })
-}
+
 
 export default {
   name: 'MenuView',
@@ -21,8 +14,9 @@ export default {
     Badge
   },
   data() {
+    
     const items: MenuItemModel[] = [
-      { content: 'Options', type: 'header' },
+      { content: 'Options', type: 'header', divider: true },
       { content: 'Profile',
         divider: true,
         badge: () => {
@@ -54,13 +48,28 @@ export default {
     return {
       items
     }
+  },
+  methods: {
+    test() {
+      return h(Badge, {
+        inline: true,
+        rounded: true,
+        color: 'primary',
+        content: '1'
+      })
+    }
+
   }
 }
 </script>
 <template>
-  
-  <Menu :model="items">
-  </Menu>
+  <MenuItem type="item" 
+    :icon="{icon: 'mdi:account-outline' }" 
+    :badge="this.test"
+    label="Navigation" 
+  />
+  <!-- <Menu :model="items"> -->
+
   <!-- <Menu>
     <MenuItem type="header" content="Options" />
     <MenuItem type="item" content="Profile">
@@ -101,3 +110,4 @@ export default {
 </template>
 
 <style lang="scss"></style>
+@/components/Menu/MenuItem/MenuItem
