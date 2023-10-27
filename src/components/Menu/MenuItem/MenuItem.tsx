@@ -7,40 +7,20 @@ import {
    RendererNode,
    VNode
 } from "vue";
-
 import { isIncluded } from "@/utils/helpers";
 import { Ripple } from "@/directives/ripple";
 import { DynamicTag } from "../../DynamicTag/DynamicTag";
 import { MenuItemModelIcon } from "./MenuItemType";
 import { Icon } from "@iconify/vue";
-import { BadgePropType } from "@/components/Badge/Badge";
-
-type MenuItemModel = {
-   label: {
-      type: string,
-      required: true,
-   }
-   disabled?: boolean;
-   href?: string; 
-   divider?: boolean;
-   type?: 'item' | 'header' | 'footer';
-   tag?: string;
-   badge?: BadgePropType | (() => VNode<RendererNode, RendererElement>);
-   prependIcon?: MenuItemModelIcon;
-   appendIcon?: MenuItemModelIcon;
-}
+import { BadgePropType, Badge } from "@/components/Badge/Badge";
 
 const vMenuItemProps = makePropsFactory({
    /**
     * The label for the menu item.
     * @type {string}
-    * @required
     * @name label
     */
-   label: {
-      type: String,
-      required: true,
-   },
+   label: String,
    /**
     * Whether the menu item is disabled or not.
     * @type {boolean}
@@ -56,7 +36,7 @@ const vMenuItemProps = makePropsFactory({
     */
    href: String,
    /**
-    * Whether the menu item is a divider or not.
+    * Whether the menu item has a divider or not.
     * @type {boolean}
     * @default false
     * @name divider
@@ -71,7 +51,7 @@ const vMenuItemProps = makePropsFactory({
    icon: Object as PropType<MenuItemModelIcon>,
    /**
     * The badge for the menu item.
-    * @type {(BadgePropType | Function(): VNode)}
+    * @type {BadgePropType | Function(): VNode}
     * @default undefined
     * @name badge
     */
@@ -92,7 +72,7 @@ const vMenuItemProps = makePropsFactory({
       }
    },
    /**
-    * The tag for the menu item.
+    * Specify the tag for root element.
     * @type {string}
     * @default 'li'
     * @name tag
@@ -125,9 +105,6 @@ const MenuItem = defineComponent({
       const hasDivider = !!props.divider;
 
       return () => {
-         if(typeof props.badge === 'function') {
-            console.log('yes, its a function')
-         }
          return (
             <>
                <DynamicTag
@@ -145,7 +122,8 @@ const MenuItem = defineComponent({
                                  width="1.3rem" 
                                  height="1.3rem" 
                               />
-                           : slots.icon?.() }
+                           : slots.icon?.() 
+                        }
                      </div>
                   )}
                   
@@ -154,13 +132,16 @@ const MenuItem = defineComponent({
                         { props.label ? props.label : slots.default?.() }
                      </div>
                   )}
-
-                  { hasBadge && (
+               
+                  { (hasBadge && props.type === 'item') && (
                      <div class="vz-menu-item__badge">
                         <div class="w-9"></div>
-                        { typeof props.badge === 'function' 
-                           ? props?.badge() 
-                           : slots.badge?.() }
+                        { props.badge 
+                           ? typeof props.badge === 'function'
+                              ? props.badge()
+                              : <Badge {...props.badge as PropType<BadgePropType>} />
+                           : slots.badge?.()
+                        }
                      </div>
                   )}
                </DynamicTag>
