@@ -22,8 +22,8 @@ export default {
       // this.$toast.success('Success!', {timeOut: 1000, position: 'bottom-center', onClickDismiss: true})
     },
     clearToast() {
-      // this.$toast.clear()
-      this.$toast.success('Success!', {timeOut: 5000, position: 'bottom-center', onClickDismiss: true})
+      this.$toast.clear()
+      // this.$toast.success('Success!', {timeOut: 5000, position: 'bottom-center', onClickDismiss: true})
     }
   }
 }

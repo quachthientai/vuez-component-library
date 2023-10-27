@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Button from './components/Button/Button.vue'
 import Radio from './components/Forms/Radio.vue'
@@ -37,6 +37,7 @@ export default {
     <router-link to="/drag-and-drop">Drag and Drop</router-link> |
     <router-link to="/buttontest">ButtonTest</router-link> |
     <router-link to="/badgetest">BadgeTest</router-link> |
+    <router-link to="/menu">Menu</router-link> |
   </div>
 
   <router-view />

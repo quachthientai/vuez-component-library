@@ -1,0 +1,46 @@
+@use '../../utilities/utils-functions';
+@use '../../utilities/utils-mixin';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   .vz-menu-item {
+      @include utils-mixin.get-grid-append-prepend-setup;
+      @apply py-1 text-sm px-4 relative text-gray-600 dark:text-gray-200;
+         align-items: center;
+         min-height: 40px;
+         width: 100%;
+         cursor: pointer;
+         @apply gap-2;
+         display: grid;
+         
+      &:hover {
+         @include utils-mixin.get-hover-color('text', 'plain');
+      }
+
+      &__icon {
+         @include utils-mixin.get-grid-template('prepend');
+      }
+
+      &__label {
+         @include utils-mixin.get-grid-template('content');
+      }
+
+      &__badge {
+         @apply flex;
+         @include utils-mixin.get-grid-template('append');
+      }
+   }
+
+   .vz-menu-item.vz-menu-item--header {
+      @apply min-h-[43px];
+      .vz-menu-item__label {
+         @apply font-bold;        
+      }
+      &:hover {
+         @apply bg-light cursor-default;
+      }
+   }
+}
+

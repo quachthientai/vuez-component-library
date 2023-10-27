@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
@@ -65,6 +65,11 @@ const routes = [
     path: '/badgetest',
     name: 'badgetest',
     component: () => import('@/views/BadgeTestView.vue')
+  },
+  {
+    path: '/menu',
+    name: 'menu',
+    component: () => import('@/views/MenuView.vue')
   }
 ]
 

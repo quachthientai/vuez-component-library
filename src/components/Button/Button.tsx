@@ -1,6 +1,6 @@
-import { PropType, defineComponent, ref } from "vue";
+import { PropType, defineComponent } from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { DynamicTag } from "@/utils/test";
+import { DynamicTag } from "@/components/DynamicTag/DynamicTag";
 import { Ripple } from "@/directives/ripple";
 import { Icon } from "@iconify/vue";
 import { useVariants, makeVariantProp } from "@/composable/variants";
@@ -13,7 +13,7 @@ import { useDimension, makeDimensionProp } from "@/composable/dimension";
 
 const vButtonProps = makePropsFactory({
    block: Boolean,
-   text: String,
+   content: String,
    disabled: Boolean,
    href: String,
    icon: {
@@ -36,7 +36,6 @@ const Button = defineComponent({
    },
    setup(props, {attrs, slots}) {
       return () => {
-
          const loader = useLoader('btn', props.loading as boolean);
          const variant = useVariants('btn', props.variant as string);
          const size = useSize('btn', props.size as string);
@@ -50,9 +49,9 @@ const Button = defineComponent({
 
          const hasIcon = !!(slots.icon ||props.icon);
 
-         const hasTextProps = !!props.text;
-         const hasLinkProps = !!props.href;
-         const hasBlockProps = !!props.block;
+         const hasContentProp = !!props.content;
+         const hasLinkProp = !!props.href;
+         const hasBlockProp = !!props.block;
          const isDisabled = !!(props.disabled || props.loading);
          const hasDefaultSlots = !!slots.default;
          const hasAppend = !!(slots.append || props.appendIcon);
@@ -60,7 +59,7 @@ const Button = defineComponent({
 
          return (
             <DynamicTag 
-               type={ hasLinkProps ? 'a' : 'button' }
+               type={ hasLinkProp ? 'a' : 'button' }
                style={ !hasIcon ? dimension : undefined }
                href={ props.href ? props.href : undefined }
                v-ripple
@@ -70,7 +69,7 @@ const Button = defineComponent({
                   size,
                   loader,
                   elevation,
-                  hasBlockProps && 'btn-block']}
+                  hasBlockProp && 'btn-block']}
                disabled={ isDisabled ? 'disabled' : undefined }
                tabindex="0" 
                role="button"> 
@@ -87,7 +86,7 @@ const Button = defineComponent({
                      </div>
                   )}
 
-                  {(hasTextProps || hasDefaultSlots || hasIcon) && (
+                  {(hasContentProp || hasDefaultSlots || hasIcon) && (
                      <span class="btn__content">
                         { (hasIcon) && (
                            <div class="flex align-middle">
@@ -102,7 +101,7 @@ const Button = defineComponent({
                               }
                            </div> 
                         )}
-                        { (hasTextProps && !hasIcon) && props.text }
+                        { (hasContentProp && !hasIcon) && props.text }
                         { (hasDefaultSlots && !hasIcon) && slots.default?.() }
                         
                      </span>
@@ -123,7 +122,7 @@ const Button = defineComponent({
 
                   { props.loading && (
                      <span class="btn__loader">
-                        <Icon icon="mingcute:loading-fill"></Icon>
+                        <Icon icon="mdi:loading"></Icon>
                      </span>
                   )}
             </DynamicTag>

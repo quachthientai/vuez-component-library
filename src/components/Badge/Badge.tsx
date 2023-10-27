@@ -1,5 +1,5 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent } from "vue";
+import { ExtractPropTypes, defineComponent } from "vue";
 import { makeColorProp, useColor } from "@/composable/color";
 
 const vBadgeProps = makePropsFactory({
@@ -24,7 +24,13 @@ const Badge = defineComponent({
       
       return () => {
          return (
-            <div class={['badge', inline, dot, rounded, overlay, color]}>
+            <div class={['badge', 
+               inline, 
+               dot, 
+               rounded, 
+               overlay, 
+               color]}
+            >
                <div class='badge__content'>
                   <span class={['badge__content-badge']}>
                      {dot ? undefined : props.content}
@@ -37,8 +43,10 @@ const Badge = defineComponent({
 });
 
 type BadgeType = InstanceType<typeof Badge>;
+type BadgePropType = ExtractPropTypes<typeof vBadgeProps>;
 
 export {
    Badge,
    BadgeType,
+   BadgePropType
 }

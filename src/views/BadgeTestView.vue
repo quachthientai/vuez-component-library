@@ -7,8 +7,8 @@ export default {
   name: 'ButtonView',
   components: {
     Badge,
-    Button,
-    Icon
+    Icon,
+    Button
   },
   data() {
    return {
@@ -28,35 +28,35 @@ export default {
 
 <template>
   <div class="flex">
-    <Button size="md" elevation="3" class="m-3" color="plain">
+    <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
       <Badge inline rounded color="danger" content="9" />
     </Button>
 
-    <Button size="md" elevation="3" class="m-3" color="plain">
+    <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
-      <Badge inline color="danger" content="11" />
+      <Badge inline color="danger" content="11+" />
     </Button>
 
-    <Button size="md" elevation="3" class="m-3" color="plain">
+    <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
-      <Badge inline dot color="danger" content="11" />
+      <Badge inline dot color="success" content="11" />
     </Button>
   </div>
 
   
   <div  class="mt-3 flex">
-    <Button size="md" elevation="3" class="m-3" color="plain">
+    <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
       <Badge overlay rounded color="danger" content="11" />
     </Button>
 
-    <Button size="md" elevation="3" class="m-3" color="plain">
+    <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
       <Badge overlay color="danger" content="11" />
     </Button>
 
-    <Button size="md" elevation="3" class="m-3" color="plain">
+    <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
       <Badge overlay dot color="danger" content="11" />
     </Button>

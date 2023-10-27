@@ -17,6 +17,7 @@ interface IconType {
    width?: string | number
 }
 
+
 function makeIconProps() : iconProps {
    return makePropsFactory({
       prependIcon: {

@@ -63,7 +63,7 @@
   @each $variant in utils-variables.$colors {
     .toast-#{$variant} {
       @apply bg-#{$variant}-200;
-
+      
       > div {
         @apply text-#{$variant}-600;
       }
