@@ -21,21 +21,22 @@ export default {
         icon: {icon:'mdi:account-outline'}, 
         divider: true 
       },
-      { label: 'Profile',
+      { label: 'test',
+        disabled: true,
         divider: true,
         badge: () => {
           return h(Badge, {
             inline: true,
             rounded: true,
             color: 'danger',
-            label: '1'
+            content: '1'
           })
         },
       },
       { label: 'Profile',
         divider: true,
         badge: {
-          label: '1',
+          content: '1',
           color: 'primary',
           inline: true,
           rounded: true
@@ -44,7 +45,7 @@ export default {
       { label: 'Profile',
         divider: true,
         badge: (() => {
-          return this.test()
+          return this.test();
         }),
       }
       
@@ -59,18 +60,18 @@ export default {
         inline: true,
         rounded: true,
         color: 'primary',
-        label: '1'
+        content: '1'
       })
     }
   }
 }
 </script>
 <template>
-  <!-- <MenuItem type="item" 
+  <MenuItem type="item" 
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"
     label="Navigation"
-    divider 
+    
   />
 
   <MenuItem type="item">
@@ -79,24 +80,25 @@ export default {
     </template>
     asd
     <template v-slot:badge>
-      <Badge inline rounded label="1" color="danger" />
+      <Badge inline rounded content="1" color="danger" />
     </template>
-  </MenuItem> -->
-  <!-- <Menu :model="items" class="ml-[500px]" />
+  </MenuItem>
+  <!-- <Menu :model="items" /> -->
   
-  <Menu>
+  <!-- <Menu>
     <MenuItem v-for="item in items" 
       :type="item.type"
       :icon="item.icon"
       :badge="item.badge"
       :divider="item.divider"
-      :label="item.label"  
+      :label="item.label"
+      :disabled="item.disabled"
     />
   </Menu> -->
 
-  <Menu>
+  <!-- <Menu>
     <MenuItem type="header" label="Options" />
-    <MenuItem type="item" label="Profile">
+    <MenuItem type="item" disabled label="Profile">
       <template v-slot:icon>
         <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem" />
       </template>
@@ -127,7 +129,7 @@ export default {
       </template>
     </MenuItem>
 
-  </Menu>
+  </Menu> -->
 
 
   

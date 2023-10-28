@@ -7,16 +7,22 @@
 @layer base {
    .vz-menu-item {
       @include utils-mixin.get-grid-append-prepend-setup;
+      
       @apply py-1 text-sm px-4 relative text-gray-600 dark:text-gray-200;
-         align-items: center;
-         min-height: 40px;
-         width: 100%;
-         cursor: pointer;
-         @apply gap-2;
-         display: grid;
+      align-items: center;
+      min-height: 40px;
+      width: 100%;
+      cursor: pointer;
+      
+      @apply gap-2;
+      display: grid;
          
       &:hover {
          @include utils-mixin.get-hover-color('text', 'plain');
+      }
+
+      & ~ &--disabled {
+         @apply opacity-50 cursor-not-allowed;
       }
 
       &__icon {
@@ -42,5 +48,9 @@
          @apply bg-light cursor-default;
       }
    }
+
+   // .vz-menu-item.vz-menu-item--disabled {
+   //    @apply opacity-50 cursor-not-allowed;
+   // }
 }
 

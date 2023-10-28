@@ -14,6 +14,7 @@ import { MenuItemModelIcon } from "./MenuItemType";
 import { Icon } from "@iconify/vue";
 import { BadgePropType, Badge } from "@/components/Badge/Badge";
 
+const NAMESPACE = 'vz-menu-item';
 const vMenuItemProps = makePropsFactory({
    /**
     * The label for the menu item.
@@ -71,6 +72,9 @@ const vMenuItemProps = makePropsFactory({
          return isIncluded(['item', 'header'], value);
       }
    },
+   action: {
+      type: Function as PropType<(event: Event) => void>,
+   },
    /**
     * Specify the tag for root element.
     * @type {string}
@@ -86,32 +90,40 @@ const vMenuItemProps = makePropsFactory({
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
+   emits: ['item-action'],
    directives: {
       'ripple': Ripple
    },
-   setup(props, {slots}) {
+   setup(props, {slots, emit}) {
+      console.log(props)
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
-      const type = computed(() => {
-         if(props.type === 'item') {
-            return undefined
+
+      const disabled = computed(() => {
+         if(props.type === 'header'){
+            return undefined;
          }
-         return `vz-menu-item--${props.type as string}`;
+         return NAMESPACE + '--disabled'
+      })
+      const type = computed(() => {
+         return NAMESPACE + `--${props.type as string}`;
       })
 
       const hasLabel = !!(slots.default || props.label);
       const hasIcon = !!(slots.icon || props.icon);
       const hasBadge = !!(slots.badge || props.badge);
       const hasDivider = !!props.divider;
-
+      const hasDisabled = !!props.disabled;
+      
       return () => {
          return (
             <>
                <DynamicTag
                   v-ripple={props.type === 'item'}
                   type={tag}
-                  class={["vz-menu-item",
-                     type.value
+                  class={[ NAMESPACE,
+                     type.value,
+                     hasDisabled ? disabled.value : undefined
                   ]}
                >  
                   { hasIcon && (
