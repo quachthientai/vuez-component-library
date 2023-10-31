@@ -1,9 +1,12 @@
 import {h,DirectiveBinding} from "vue"
 import formValidate from "@/modules/formvalidate"
 import addWarningText from "@/directives/validate/addWarningText"
+import { T } from "vitest/dist/types-94cfe4b4"
 
 
 const visualControl = (condition:boolean, warningText:HTMLParagraphElement) => {
+    
+   
     if(condition){
         warningText.classList.add("hidden")
     }else{
@@ -12,10 +15,23 @@ const visualControl = (condition:boolean, warningText:HTMLParagraphElement) => {
 }
 
 //With Text Input
-const handleTextValueChange = (e:InputEvent,warningText:HTMLParagraphElement)=>{
-    const validateModel = new formValidate({type:(e.target as HTMLInputElement).type,value:(e.target as HTMLInputElement).value})
+const handleTextValueChange = (el:HTMLInputElement,warningP:HTMLParagraphElement,binding:DirectiveBinding)=>{
+    const validateModel = new formValidate({...binding,value:el.value})
+    validateModel.value = el.value
+    let warningText:string
+    
+    if(validateModel.validateMinLength()){
+        warningText = "Must be larger than 3"
+    }
 
-    visualControl(!validateModel.validateMinLength((e.target as HTMLInputElement).value), warningText)
+    warningP.textContent = warningText  
+
+    if(!validateModel.validateMinLength()){
+        warningP.classList.add("hidden")
+    }else{
+        warningP.classList.remove("hidden")
+    }
+    
 }
 
 //With Email Input
@@ -34,17 +50,20 @@ const handleDateValueChange = (e:InputEvent,warningText?:HTMLParagraphElement)=>
 export const InputValidate = {
     mounted(el:HTMLInputElement,binding:DirectiveBinding){
 
+        //10-30-2023
+        //With text value, the onlything that we will take is max/minLength, format, max/minStatement
+        //With email the onlything that we will take is format
+        //With date the onlyvalue that we will take is max/minDate 
         //Conisder if we should pass binding into event listener
         
-        const warningText = addWarningText(el,binding)
-        console.log(binding)
-        el.after(warningText)
-        warningText.classList.add("hidden")
+        const validateModel = new formValidate({...binding.value,value:el.value})
+        const warningP = addWarningText(el,validateModel)
+        el.after(warningP)
         
         switch (el.type) {
             case "text":
                 // el.after(warningP)
-                el.addEventListener('input', (event)=>handleTextValueChange(event as InputEvent,warningText))
+                el.addEventListener('input', (event)=>handleTextValueChange(el,warningP,binding))
                 break
             case "email":
                 el.addEventListener('input',(event)=>handleEmailValueChange(event as InputEvent,warningText)) 

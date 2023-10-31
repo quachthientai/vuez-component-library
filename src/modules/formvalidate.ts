@@ -16,7 +16,7 @@ class formValidate{
         maxLength?:number,
         format?:RegExp,
         type?:string,
-        statements?:string,
+        statement?:string,
         value?: string | number| RegExp
         minDate?: string,
         maxDate?:string
@@ -25,7 +25,7 @@ class formValidate{
         this.maxLength = requirements.maxLength
         this.format = requirements.format
         this.type = requirements.type
-        this.statement = requirements.statements
+        this.statement = requirements.statement
         this.value = requirements.value
         this.minDate = requirements.minDate
         this.maxDate = requirements.maxDate
@@ -33,6 +33,7 @@ class formValidate{
 
     private emailFormat:RegExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
     private zipCodeFormat:RegExp = new RegExp('^\d{5}(?:[-\s]\d{4})?$')
+    
     
     
     private creditCardsCollection:{
@@ -65,8 +66,8 @@ class formValidate{
     
     
     //Check for min length of input !!10-18-23 Besure to combine 2 of them
-    public validateMinLength = (value:string):boolean=>{
-        if(value.length < 3){
+    public validateMinLength = ():boolean=>{
+        if(this.value.length < 3){
             return true
         }else{
             return false
