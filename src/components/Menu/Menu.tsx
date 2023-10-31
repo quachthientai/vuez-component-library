@@ -32,8 +32,11 @@ const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
    setup(props, {slots, attrs}) {
+      function onItemAction(e) {
+         console.log(e)
+      }
       const hasModel = (props.model as MenuItemModel[])?.length > 0;
-
+      console.log((props.model as MenuItemModel[]))
       return () => {
          return (
             <div class="vz-menu">
@@ -52,6 +55,7 @@ const Menu = defineComponent({
                            disabled={item.disabled}
                            divider={item.divider}
                            icon={item.icon}
+                           onItemAction={item.action}
                         >
                            {{ badge: () => {
                                  return (

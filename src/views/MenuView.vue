@@ -16,37 +16,40 @@ export default {
   data() {
 
     const items: MenuItemModel[] = [
-      { label: 'Options', 
-        type: 'header', 
-        icon: {icon:'mdi:account-outline'}, 
-        divider: true 
-      },
-      { label: 'test',
-        disabled: true,
-        divider: true,
-        badge: () => {
-          return h(Badge, {
-            inline: true,
-            rounded: true,
-            color: 'danger',
-            content: '1'
-          })
-        },
-      },
-      { label: 'Profile',
-        divider: true,
-        badge: {
-          content: '1',
-          color: 'primary',
-          inline: true,
-          rounded: true
-        },
-      },
+      // { label: 'Options', 
+      //   type: 'header', 
+      //   icon: {icon:'mdi:account-outline'}, 
+      //   divider: true
+      // },
+      // { label: 'test',
+      //   disabled: true,
+      //   divider: true,
+      //   badge: () => {
+      //     return h(Badge, {
+      //       inline: true,
+      //       rounded: true,
+      //       color: 'danger',
+      //       content: '1'
+      //     })
+      //   },
+      // },
+      // { label: 'Profile',
+      //   divider: true,
+      //   badge: {
+      //     content: '1',
+      //     color: 'primary',
+      //     inline: true,
+      //     rounded: true
+      //   },
+      // },
       { label: 'Profile',
         divider: true,
         badge: (() => {
           return this.test();
         }),
+        action: ((e) => {
+          console.log(e)
+        })  
       }
       
     ]
@@ -62,16 +65,19 @@ export default {
         color: 'primary',
         content: '1'
       })
+    },
+    testEvent(e) {
+      console.log(e)
     }
   }
 }
 </script>
 <template>
-  <MenuItem type="item" 
+  <!-- <MenuItem type="item" 
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"
     label="Navigation"
-    
+    @item-action="this.testEvent"
   />
 
   <MenuItem type="item">
@@ -82,8 +88,8 @@ export default {
     <template v-slot:badge>
       <Badge inline rounded content="1" color="danger" />
     </template>
-  </MenuItem>
-  <!-- <Menu :model="items" /> -->
+  </MenuItem> -->
+  <Menu :model="items" />
   
   <!-- <Menu>
     <MenuItem v-for="item in items" 

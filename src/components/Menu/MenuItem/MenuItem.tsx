@@ -5,7 +5,8 @@ import {
    PropType,
    RendererElement,
    RendererNode,
-   VNode
+   VNode,
+   getCurrentInstance
 } from "vue";
 import { isIncluded } from "@/utils/helpers";
 import { Ripple } from "@/directives/ripple";
@@ -94,8 +95,21 @@ const MenuItem = defineComponent({
    directives: {
       'ripple': Ripple
    },
-   setup(props, {slots, emit}) {
-      console.log(props)
+   methods: {
+      onItemClick(e: any) {
+         this.$emit("item-action", {
+            originalEvent: e
+         })
+      }
+   },
+   setup(this, props, {slots, emit}) {
+      console.log(getCurrentInstance())
+      // function onItemClick(e: any) {
+      //    emit("item-action", {
+      //       originalEvent: e,
+
+      //    });
+      // }
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
 
@@ -114,13 +128,14 @@ const MenuItem = defineComponent({
       const hasBadge = !!(slots.badge || props.badge);
       const hasDivider = !!props.divider;
       const hasDisabled = !!props.disabled;
-      
+
       return () => {
          return (
             <>
                <DynamicTag
                   v-ripple={props.type === 'item'}
                   type={tag}
+                  // onClick={}
                   class={[ NAMESPACE,
                      type.value,
                      hasDisabled ? disabled.value : undefined

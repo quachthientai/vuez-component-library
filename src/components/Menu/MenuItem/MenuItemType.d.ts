@@ -17,6 +17,7 @@ type MenuItemModel = {
    tag?: string;
    badge?: BadgePropType | (() => VNode<RendererNode, RendererElement>);
    icon?: MenuItemModelIcon;
+   action?: ((e: Event) => void)
 }
 
 export {
