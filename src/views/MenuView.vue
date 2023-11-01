@@ -16,37 +16,40 @@ export default {
   data() {
 
     const items: MenuItemModel[] = [
-      { label: 'Options', 
-        type: 'header',
-        icon: {icon:'mdi:account-outline'}, 
-        divider: true 
-      },
-      { label: 'Profile',
-        divider: true,
-        badge: () => {
-          return h(Badge, {
-            inline: true,
-            rounded: true,
-            color: 'danger',
-            content: '1'
-          })
-        },
-      },
-      { label: 'test',
-        divider: true,
-        disabled: true,
-        badge: {
-          content: '1',
-          color: 'primary',
-          inline: true,
-          rounded: true
-        },
-      },
+      // { label: 'Options', 
+      //   type: 'header', 
+      //   icon: {icon:'mdi:account-outline'}, 
+      //   divider: true
+      // },
+      // { label: 'test',
+      //   disabled: true,
+      //   divider: true,
+      //   badge: () => {
+      //     return h(Badge, {
+      //       inline: true,
+      //       rounded: true,
+      //       color: 'danger',
+      //       content: '1'
+      //     })
+      //   },
+      // },
+      // { label: 'Profile',
+      //   divider: true,
+      //   badge: {
+      //     content: '1',
+      //     color: 'primary',
+      //     inline: true,
+      //     rounded: true
+      //   },
+      // },
       { label: 'Profile',
         divider: true,
         badge: (() => {
-          return this.test()
+          return this.test();
         }),
+        action: (() => {
+          console.log('asdasd');
+        })  
       }
       
     ]
@@ -62,6 +65,9 @@ export default {
         color: 'primary',
         content: '1'
       })
+    },
+    testEvent(e) {
+      console.log('sssss')
     }
   }
 }
@@ -71,7 +77,6 @@ export default {
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"
     label="Navigation"
-    :disabled="true"
     divider 
   />
 
@@ -81,10 +86,10 @@ export default {
     </template>
     asd
     <template v-slot:badge>
-      <Badge inline rounded label="1" color="danger" />
+      <Badge inline rounded content="1" color="danger" />
     </template>
   </MenuItem> -->
-  <Menu :model="items" class="ml-[500px]" />
+  <!-- <Menu :model="items" class="ml-[500px]" />
   
   <!-- <Menu>
     <MenuItem v-for="item in items" 
@@ -92,14 +97,13 @@ export default {
       :icon="item.icon"
       :badge="item.badge"
       :divider="item.divider"
-      :label="item.label"
-      :disabled="true"
+      :label="item.label"  
     />
-  </Menu> -->
+  </Menu>
 
   <!-- <Menu>
     <MenuItem type="header" label="Options" />
-    <MenuItem type="item" label="Profile">
+    <MenuItem type="item" disabled label="Profile">
       <template v-slot:icon>
         <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem" />
       </template>

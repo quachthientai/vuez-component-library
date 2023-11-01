@@ -5,7 +5,9 @@ import {
    PropType,
    RendererElement,
    RendererNode,
-   VNode
+   VNode,
+   getCurrentInstance,
+   ComponentInternalInstance
 } from "vue";
 import { isIncluded } from "@/utils/helpers";
 import { Ripple } from "@/directives/ripple";
@@ -19,6 +21,7 @@ import { BadgePropType, Badge } from "@/components/Badge/Badge";
  */
 const NAMESPACE = 'vz-menu-item';
 
+const NAMESPACE = 'vz-menu-item';
 const vMenuItemProps = makePropsFactory({
    /**
     * The label for the menu item.
@@ -76,6 +79,9 @@ const vMenuItemProps = makePropsFactory({
          return isIncluded(['item', 'header'], value);
       }
    },
+   action: {
+      type: Function as PropType<(event: Event) => void>,
+   },
    /**
     * Specify the tag for root element.
     * @type {string}
@@ -91,25 +97,40 @@ const vMenuItemProps = makePropsFactory({
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
+   emits: {
+      itemAction(payload: {
+         originalEvent: Event, 
+         currentInstance: ComponentInternalInstance
+      }) {
+         return payload.originalEvent && payload.currentInstance
+      }
+   },
    directives: {
       'ripple': Ripple
    },
-   setup(props, {slots}) {
-      console.log(props.disabled)
+   // methods: {
+   //    onItemClick(e: any) {
+   //       this.$emit("itemAction", e)
+   //    }
+   // },
+   setup(props, {slots, emit}) { 
+      const instance = getCurrentInstance();
+
+      const onItemClick = (e: Event) => {
+         emit("itemAction", {
+            originalEvent: e,
+            currentInstance: instance
+         });
+         
+      }
+
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
-
-      const disabled = computed(() => {
-         if(props.type === 'header') {
-            return undefined
-         }
-         return NAMESPACE + '--disabled';
-      })
       const type = computed(() => {
          if(props.type === 'item') {
             return undefined
          }
-         return NAMESPACE + `-${props.type as string}`; 
+         return `vz-menu-item--${props.type as string}`;
       })
 
       const hasLabel = !!(slots.default || props.label);
@@ -125,8 +146,7 @@ const MenuItem = defineComponent({
                   v-ripple={props.type === 'item'}
                   type={tag}
                   class={["vz-menu-item",
-                     type.value,
-                     hasDisabled && disabled.value
+                     type.value
                   ]}
                >  
                   { hasIcon && (

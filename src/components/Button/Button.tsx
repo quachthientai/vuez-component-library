@@ -57,7 +57,7 @@ const Button = defineComponent({
          const hasAppend = !!(slots.append || props.appendIcon);
          const hasPrepend = !!(slots.prepend || props.prependIcon);
 
-         return (
+         return (  
             <DynamicTag 
                type={ hasLinkProp ? 'a' : 'button' }
                style={ !hasIcon ? dimension : undefined }
