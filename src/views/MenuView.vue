@@ -47,8 +47,8 @@ export default {
         badge: (() => {
           return this.test();
         }),
-        action: ((e) => {
-          console.log(e)
+        action: (() => {
+          console.log('asdasd');
         })  
       }
       
@@ -67,7 +67,7 @@ export default {
       })
     },
     testEvent(e) {
-      console.log(e)
+      console.log('sssss')
     }
   }
 }
@@ -89,9 +89,9 @@ export default {
       <Badge inline rounded content="1" color="danger" />
     </template>
   </MenuItem> -->
-  <Menu :model="items" />
+  <!-- <Menu :model="items" /> -->
   
-  <!-- <Menu>
+  <Menu>
     <MenuItem v-for="item in items" 
       :type="item.type"
       :icon="item.icon"
@@ -99,8 +99,9 @@ export default {
       :divider="item.divider"
       :label="item.label"
       :disabled="item.disabled"
+      :onItemAction="() => this.testEvent()"
     />
-  </Menu> -->
+  </Menu>
 
   <!-- <Menu>
     <MenuItem type="header" label="Options" />

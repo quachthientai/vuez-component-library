@@ -6,7 +6,8 @@ import {
    RendererElement,
    RendererNode,
    VNode,
-   getCurrentInstance
+   getCurrentInstance,
+   ComponentInternalInstance
 } from "vue";
 import { isIncluded } from "@/utils/helpers";
 import { Ripple } from "@/directives/ripple";
@@ -91,25 +92,33 @@ const vMenuItemProps = makePropsFactory({
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
-   emits: ['item-action'],
+   emits: {
+      itemAction(payload: {
+         originalEvent: Event, 
+         currentInstance: ComponentInternalInstance
+      }) {
+         return payload.originalEvent && payload.currentInstance
+      }
+   },
    directives: {
       'ripple': Ripple
    },
-   methods: {
-      onItemClick(e: any) {
-         this.$emit("item-action", {
-            originalEvent: e
-         })
-      }
-   },
-   setup(this, props, {slots, emit}) {
-      console.log(getCurrentInstance())
-      // function onItemClick(e: any) {
-      //    emit("item-action", {
-      //       originalEvent: e,
+   // methods: {
+   //    onItemClick(e: any) {
+   //       this.$emit("itemAction", e)
+   //    }
+   // },
+   setup(props, {slots, emit}) { 
+      const instance = getCurrentInstance();
 
-      //    });
-      // }
+      const onItemClick = (e: Event) => {
+         emit("itemAction", {
+            originalEvent: e,
+            currentInstance: instance
+         });
+         
+      }
+
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
 
@@ -135,7 +144,7 @@ const MenuItem = defineComponent({
                <DynamicTag
                   v-ripple={props.type === 'item'}
                   type={tag}
-                  // onClick={}
+                  onClick={onItemClick}
                   class={[ NAMESPACE,
                      type.value,
                      hasDisabled ? disabled.value : undefined

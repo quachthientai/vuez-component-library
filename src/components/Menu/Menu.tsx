@@ -47,15 +47,18 @@ const Menu = defineComponent({
                   {hasModel && (props.model as MenuItemModel[])?.map((item, index) => {
                      return (
                         <MenuItem
-                           key={index}
-                           label={item.label}
-                           type={item.type}
-                           tag={item.tag}
-                           href={item.href}
-                           disabled={item.disabled}
-                           divider={item.divider}
-                           icon={item.icon}
+                           {...item}
+                           
+                           // key={index}
+                           // label={item.label}
+                           // type={item.type}
+                           // tag={item.tag}
+                           // href={item.href}
+                           // disabled={item.disabled}
+                           // divider={item.divider}
+                           // icon={item.icon}
                            onItemAction={item.action}
+                           // action={item.action}
                         >
                            {{ badge: () => {
                                  return (
