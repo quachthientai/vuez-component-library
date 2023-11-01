@@ -33,7 +33,7 @@ const Menu = defineComponent({
    props: vMenuProps,
    setup(props, {slots, attrs}) {
       const hasModel = (props.model as MenuItemModel[])?.length > 0;
-
+      // console.log(props.model)
       return () => {
          return (
             <div class="vz-menu">

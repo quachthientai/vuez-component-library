@@ -17,7 +17,7 @@ export default {
 
     const items: MenuItemModel[] = [
       { label: 'Options', 
-        type: 'header', 
+        type: 'header',
         icon: {icon:'mdi:account-outline'}, 
         divider: true 
       },
@@ -28,14 +28,15 @@ export default {
             inline: true,
             rounded: true,
             color: 'danger',
-            label: '1'
+            content: '1'
           })
         },
       },
-      { label: 'Profile',
+      { label: 'test',
         divider: true,
+        disabled: true,
         badge: {
-          label: '1',
+          content: '1',
           color: 'primary',
           inline: true,
           rounded: true
@@ -59,21 +60,22 @@ export default {
         inline: true,
         rounded: true,
         color: 'primary',
-        label: '1'
+        content: '1'
       })
     }
   }
 }
 </script>
 <template>
-  <!-- <MenuItem type="item" 
+  <MenuItem type="item" 
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"
     label="Navigation"
+    :disabled="true"
     divider 
   />
 
-  <MenuItem type="item">
+  <!-- <MenuItem type="item">
     <template v-slot:icon>
       <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem"></Icon>
     </template>
@@ -82,19 +84,20 @@ export default {
       <Badge inline rounded label="1" color="danger" />
     </template>
   </MenuItem> -->
-  <!-- <Menu :model="items" class="ml-[500px]" />
+  <Menu :model="items" class="ml-[500px]" />
   
-  <Menu>
+  <!-- <Menu>
     <MenuItem v-for="item in items" 
       :type="item.type"
       :icon="item.icon"
       :badge="item.badge"
       :divider="item.divider"
-      :label="item.label"  
+      :label="item.label"
+      :disabled="true"
     />
   </Menu> -->
 
-  <Menu>
+  <!-- <Menu>
     <MenuItem type="header" label="Options" />
     <MenuItem type="item" label="Profile">
       <template v-slot:icon>
@@ -127,7 +130,7 @@ export default {
       </template>
     </MenuItem>
 
-  </Menu>
+  </Menu> -->
 
 
   

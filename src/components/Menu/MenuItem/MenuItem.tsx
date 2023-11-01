@@ -14,6 +14,11 @@ import { MenuItemModelIcon } from "./MenuItemType";
 import { Icon } from "@iconify/vue";
 import { BadgePropType, Badge } from "@/components/Badge/Badge";
 
+/**
+ * The namespace of the menu item.
+ */
+const NAMESPACE = 'vz-menu-item';
+
 const vMenuItemProps = makePropsFactory({
    /**
     * The label for the menu item.
@@ -31,7 +36,7 @@ const vMenuItemProps = makePropsFactory({
    /**
     * The href for the menu item.
     * @type {string}
-    * @default undefined
+    * @default false
     * @name href
     */
    href: String,
@@ -90,19 +95,28 @@ const MenuItem = defineComponent({
       'ripple': Ripple
    },
    setup(props, {slots}) {
+      console.log(props.disabled)
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
+
+      const disabled = computed(() => {
+         if(props.type === 'header') {
+            return undefined
+         }
+         return NAMESPACE + '--disabled';
+      })
       const type = computed(() => {
          if(props.type === 'item') {
             return undefined
          }
-         return `vz-menu-item--${props.type as string}`;
+         return NAMESPACE + `-${props.type as string}`; 
       })
 
       const hasLabel = !!(slots.default || props.label);
       const hasIcon = !!(slots.icon || props.icon);
       const hasBadge = !!(slots.badge || props.badge);
       const hasDivider = !!props.divider;
+      const hasDisabled = !!props.disabled;
 
       return () => {
          return (
@@ -111,7 +125,8 @@ const MenuItem = defineComponent({
                   v-ripple={props.type === 'item'}
                   type={tag}
                   class={["vz-menu-item",
-                     type.value
+                     type.value,
+                     hasDisabled && disabled.value
                   ]}
                >  
                   { hasIcon && (

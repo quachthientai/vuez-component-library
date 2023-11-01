@@ -19,6 +19,10 @@
          @include utils-mixin.get-hover-color('text', 'plain');
       }
 
+      &--disabled {
+         @apply opacity-50 text-red-500 cursor-not-allowed;
+      }
+
       &__icon {
          @include utils-mixin.get-grid-template('prepend');
       }
@@ -33,7 +37,7 @@
       }
    }
 
-   .vz-menu-item.vz-menu-item--header {
+   .vz-menu-item.vz-menu-item-header {
       @apply min-h-[43px];
       .vz-menu-item__label {
          @apply font-bold;        
