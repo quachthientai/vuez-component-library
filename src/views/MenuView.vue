@@ -91,17 +91,9 @@ export default {
   </MenuItem> -->
   <!-- <Menu :model="items" class="ml-[500px]" />
   
-  <!-- <Menu>
-    <MenuItem v-for="item in items" 
-      :type="item.type"
-      :icon="item.icon"
-      :badge="item.badge"
-      :divider="item.divider"
-      :label="item.label"  
-    />
-  </Menu>
+  
 
-  <!-- <Menu>
+  <Menu>
     <MenuItem type="header" label="Options" />
     <MenuItem type="item" disabled label="Profile">
       <template v-slot:icon>
