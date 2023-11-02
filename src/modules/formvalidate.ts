@@ -21,8 +21,9 @@ class formValidate{
         minDate?: string,
         maxDate?:string
     }){
-        this.minLength = requirements.minLength
-        this.maxLength = requirements.maxLength
+
+        this.minLength = requirements.minLength ? requirements.minLength : 3
+        this.maxLength = requirements.maxLength ? requirements.maxLength : 100
         this.format = requirements.format
         this.type = requirements.type
         this.statement = requirements.statement
@@ -30,7 +31,7 @@ class formValidate{
         this.minDate = requirements.minDate
         this.maxDate = requirements.maxDate
     }
-
+    
     private emailFormat:RegExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
     private zipCodeFormat:RegExp = new RegExp('^\d{5}(?:[-\s]\d{4})?$')
     
@@ -67,19 +68,19 @@ class formValidate{
     
     //Check for min length of input !!10-18-23 Besure to combine 2 of them
     public validateMinLength = ():boolean=>{
-        if(this.value.length < 3){
-            return true
-        }else{
+        if(this.value.length < this.minLength){
             return false
+        }else{
+            return true
         }
     }
 
     //Check for max length of input
-    public validateMaxLength = (value:string):boolean=>{
-        if(value.length > 100){
-            return true
-        }else{
+    public validateMaxLength = ():boolean=>{
+        if(this.value.length > this.maxLength){
             return false
+        }else{
+            return true
         }
     }
 

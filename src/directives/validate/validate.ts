@@ -19,19 +19,28 @@ const handleTextValueChange = (el:HTMLInputElement,warningP:HTMLParagraphElement
     const validateModel = new formValidate({...binding,value:el.value})
     validateModel.value = el.value
     let warningText:string
-    
-    if(validateModel.validateMinLength()){
+
+
+    if(!validateModel.validateMinLength()){
         warningText = "Must be larger than 3"
     }
 
+    if(!validateModel.validateMaxLength()){
+        warningText = "Must be smaller than 10"
+    }
+
+
+
+    
     warningP.textContent = warningText  
 
-    if(!validateModel.validateMinLength()){
-        warningP.classList.add("hidden")
-    }else{
+    if(!validateModel.validateMinLength() || !validateModel.validateMaxLength()){
         warningP.classList.remove("hidden")
+    }else{
+        warningP.classList.add("hidden")
     }
     
+
 }
 
 //With Email Input
