@@ -13,8 +13,6 @@ const addWarningText = (el:HTMLInputElement,validateModel:formValidate)=>{
 
     // switch (el.type){
 
-
-
     //     case "text":
     //         //Add the text into warning <p> tag
     //         warningPText = document.createTextNode("Must be larger than 3")
