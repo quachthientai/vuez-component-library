@@ -1,0 +1,44 @@
+$button-variants: 'solid', 'outlined', 'text';
+
+$button-sizes: (
+   sm: (
+      "height": "h-[28px]",
+      "min-width": "min-w-[50px]",
+      "padding": "py-0 px-[10px]",
+      "font-size": "text-[.75rem]",
+   ),
+   md: (
+      "height": "h-[36px]",
+      "min-width": "min-w-[64px]",
+      "padding": "py-0 px-[14px]",
+      "font-size": "text-[.875rem]",
+   ),
+   lg: (
+      "height": "h-[44px]",
+      "min-width": "min-w-[78px]",
+      "padding": "py-0 px-[18px]",
+      "font-size": "text-[1rem]",
+   ),
+);
+
+$button-icon-sizes: (
+   sm: (
+      "height": "h-[30px]",
+      "width": "w-[30px]",
+      "padding": "py-0 px-0",
+      "font-size": "text-[1.1rem]",
+   ),
+   md: (
+      "height": "h-[38px]",
+      "width": "w-[38px]",
+      "padding": "py-0 px-0",
+      "font-size": "text-[1.3rem]",
+   ),
+   lg: (
+      "height": "h-[46px]",
+      "width": "w-[46px]",
+      "padding": "py-0 px-0",
+      "font-size": "text-[1.5rem]"
+   )
+)
+

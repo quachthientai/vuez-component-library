@@ -1,0 +1,11 @@
+@use './variables';
+@use '../../utilities/utils-functions';
+@use 'sass:map';
+
+@mixin get-overlay-position($map, $keys...) {
+   $position: utils-functions.map-deep-get($map, $keys...);
+   @apply #{$position};
+};
+
+
+

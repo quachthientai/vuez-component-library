@@ -1,4 +1,5 @@
-@use '../../utilities/variables';
+
+@use '../../utilities/utils-variables';
 @use '../Toast/transition';
 @use 'sass:map';
 @tailwind base;
@@ -11,22 +12,30 @@
 
 .toast-top-container {
   @include toast-container;
-  @apply top-0;
+  @apply top-0 px-2;
 }
 
 .toast-bottom-container {
   @include toast-container;
-  @apply bottom-0;
+  @apply bottom-0 px-2;
 }
 
 @layer base {
-  .toast {
-    @apply pointer-events-auto m-[10px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
+  .toast-wrapper {
+    @apply flex items-center justify-around h-[95px] pointer-events-auto p-0;
+  }
+
+  .toast{
+    @apply pointer-events-auto  h-[76px] drop-shadow-md grid grid-cols-[1.4fr_6fr_0.5fr] w-[350px] rounded-md p-[15px] overflow-hidden;
 
     &__icon {
       @apply text-[30px] self-center;
     }
 
+    &__dismiss {
+      @apply flex items-center;
+    }
+    
     &__body {
       @apply self-center flex flex-col;
     }
@@ -35,6 +44,7 @@
       @apply absolute h-[4px] right-0 left-0 bottom-0;
     }
   }
+
 }
 
 @layer utilities {
@@ -50,10 +60,10 @@
     }
   }
 
-  @each $variant in variables.$variants {
+  @each $variant in utils-variables.$colors {
     .toast-#{$variant} {
       @apply bg-#{$variant}-200;
-
+      
       > div {
         @apply text-#{$variant}-600;
       }

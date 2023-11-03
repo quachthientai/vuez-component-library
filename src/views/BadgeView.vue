@@ -15,7 +15,7 @@ export default {
   <div class="flex justify-start ml-2 mt-2">
     <Badge
       text="Primary"
-      icon="material-symbols:star-outline-rounded"
+      
       class="mr-2"
       badgeClass="badge badge-primary "
     ></Badge>
@@ -212,18 +212,18 @@ export default {
 
   <div class="flex justify-start ml-2 mt-2">
     <Button text="test badge" btnClass="btn btn-sm btn-primary relative mr-3 mt-3">
-      <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" text="99+"></Badge>
+      <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" text="9"></Badge>
     </Button>
 
     <Button text="test badge" btnClass="btn btn-primary relative mr-3 mt-3">
-      <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" text="99+"></Badge>
+      <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2" text="99"></Badge>
     </Button>
 
     <Button text="test badge" btnClass="btn btn-lg btn-primary relative mr-3 mt-3">
       <Badge
         badgeClass="badge badge-pill-danger absolute -right-2 -top-2"
         text="99+"
-        icon="material-symbols:star-outline-rounded"
+
       ></Badge>
     </Button>
   </div>
@@ -254,18 +254,18 @@ export default {
   <div class="flex justify-start ml-2 mt-2">
     <Button text="test badge" btnClass="btn btn-sm btn-primary  mr-3 mt-3">
       <Badge
-        badgeClass="badge badge-danger inline-flexs"
+        badgeClass="badge badge-danger inline-flex ml-1"
         icon="material-symbols:star-outline-rounded"
       ></Badge>
     </Button>
 
     <Button text="test badge" btnClass="btn btn-primary flex mr-3 mt-3">
-      <Badge badgeClass="badge badge-pill-danger " text="99+"></Badge>
+      <Badge badgeClass="badge badge-pill-danger ml-1" text="9"></Badge>
     </Button>
 
     <Button text="test badge" btnClass="btn btn-lg btn-primary  mr-3 mt-3">
       <Badge
-        badgeClass="badge badge-pill-danger "
+        badgeClass="badge badge-pill-danger ml-1"
         icon="material-symbols:star-outline-rounded"
       ></Badge>
     </Button>
@@ -273,7 +273,7 @@ export default {
 
   <div class="flex justify-start ml-2 mt-2">
     <Button text="test badge" btnClass="btn btn-sm btn-primary relative mr-3 mt-3">
-      <Badge badgeClass="badge badge-pill-danger inline-flexs absolute -right-2 -top-2"></Badge>
+      <Badge badgeClass="badge badge-pill-danger inline-flex absolute -right-2 -top-2"></Badge>
     </Button>
 
     <Button text="test badge" btnClass="btn btn-primary flex mr-3 mt-3 relative">
@@ -282,10 +282,10 @@ export default {
 
     <Button text="test badge" btnClass="btn btn-primary relative mr-3 mt-3">
 
-      <span class="absolute -right-1.5 -top-1.5 flex">
+      <!-- <span class="absolute -right-1.5 -top-1.5 flex">
         <Badge badgeClass="badge absolute badge-pill-danger animate-ping"/>
         <Badge badgeClass="badge badge-pill-danger"/>
-      </span>
+      </span> -->
 
       <!-- <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2"></Badge> -->
     </Button>

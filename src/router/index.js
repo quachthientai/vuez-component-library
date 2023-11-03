@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
@@ -11,11 +11,11 @@ const routes = [
     name: 'badge',
     component: () => import('@/views/BadgeView.vue')
   },
-  {
-    path: '/button',
-    name: 'button',
-    component: () => import('@/views/ButtonView.vue')
-  },
+  // {
+  //   path: '/button',
+  //   name: 'button',
+  //   component: () => import('@/views/ButtonView.vue')
+  // },
   {
     path: '/dropdown',
     name: 'dropdown',
@@ -59,12 +59,26 @@ const routes = [
   {
     path: '/upload',
     name:'upload',
-    
   },
   {
     path:'/input',
     name:'input',
     component: () => import('@/views/InputView.vue')
+  },
+  {
+    path: '/buttontest',
+    name: 'buttontest',
+    component: () => import('@/views/ButtonTestView.vue')
+  },
+  {
+    path: '/badgetest',
+    name: 'badgetest',
+    component: () => import('@/views/BadgeTestView.vue')
+  },
+  {
+    path: '/menu',
+    name: 'menu',
+    component: () => import('@/views/MenuView.vue')
   }
 ]
 

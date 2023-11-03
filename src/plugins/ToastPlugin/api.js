@@ -14,13 +14,22 @@ const defaultOption = {
 }
 
 export const useToast = {
+  
+  /**
+   * Shows a toast message with the given message and options.
+   * @param {string} message - The message to display in the toast.
+   * @param {Object} [option] - The options to configure the toast.
+   * @param {string} [option.type] - The type of the toast (e.g. 'success', 'error', 'warning', 'info').
+   * @param {number} [option.duration] - The duration of the toast in milliseconds.
+   * @returns {HTMLElement} The shadow component of the toast.
+   */
   show(message, option) {
     try {
       if (!message) throw new Error('Invalid arguments!')
     } catch (e) {
       console.error(e)
     }
-Object.assign()
+    
     let vOption = option
       ? Object.assign({}, defaultOption, { text: message }, option)
       : Object.assign({}, defaultOption, { text: message })
@@ -28,6 +37,10 @@ Object.assign()
     eventBus.emit('show-toast', vOption)
     return createShadowComponent(Toast, vOption, document.body, 'shadow-container')
   },
+
+  /**
+   * Clears the toast message by emitting a 'dismiss' event.
+   */
   clear() {
     eventBus.emit('dismiss')
   },

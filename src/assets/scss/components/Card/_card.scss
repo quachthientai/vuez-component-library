@@ -3,36 +3,82 @@
 @tailwind utilities;
 
 @for $i from 1 through 5 {
-  .elevation-#{$i} {
-    @apply shadow-elevation-#{$i};
+  .card.elevation-#{$i} {
+    @apply border-none shadow-elevation-#{$i};
   };
 };
 
 .card {
-  @apply p-3 flex flex-col gap-4 dark:bg-slate-700 bg-light rounded-md overflow-hidden text-ellipsis;
-
+  @apply dark:bg-slate-700 bg-light rounded-md  min-h-[1rem] border border-slate-400/40 dark:border-slate-300/40;
   &__header {
-    @apply flex flex-col;
+    @apply p-[1.2rem];
+    display: grid;
+    flex: none;
+    grid-template-areas: "prepend content append";
+    grid-template-columns: max-content auto max-content;
 
-    &-title {
-      @apply text-h5 font-bold mb-0;
+    &-prepend {
+      @apply self-center;
+      grid-area: prepend;
+      margin-right: 1.4rem;
+      > * {
+        @apply inline-block align-middle;
+      }
     }
 
-    &-subtitle {
-      @apply  dark:text-slate-400 text-slate-500 text-content-5 p-0;
+    &-append {
+      @apply self-center;
+      grid-area: append;
+      margin-left: 1.4rem;
+      > * {
+        @apply inline-block align-middle;
+      }
+    }
+
+    &-content {
+      @apply truncate;
+      grid-area: content;
+      
+      .card__title {
+        @apply text-h6 font-semibold mb-0 truncate;
+      }
+  
+      .card__subtitle {
+        @apply  dark:text-slate-400 text-slate-500 text-content-6 truncate p-0;
+      }
     }
   }
 
-  &__content {
-    @apply  text-content-5 mb-0;
+  &__text {
+    @apply p-[1.2rem] text-content-5 mb-0;
   }
 
-  &__action {
-    @apply grid grid-cols-4 gap-2;
+  &__header + &__text,
+  &__header + &__action,
+  &__text + &__action {
+    @apply pt-0;
   }
   
+  
+  &__action {
+    @apply flex items-center p-[1.2rem];
+    > * {
+      @apply mr-2;
+    }
+  }
+
+  &__action:has( > .btn-icon) {
+    @apply px-2;
+  }
+
+  &__action:has( > .btn-plain) {
+    @apply px-2;
+  }
+
+  &__img {
+    z-index: -1;
+  }
+  // &.outlined {
+  //   @apply border dark:border-slate-300/30 border-slate-400/30;
+  // }
 }
-
-// @layer utilities {
-
-// };

@@ -1,3 +1,31 @@
 {
+   "plugins": [
+      "stylelint-scss"
+   ],
+   "fix": true,
+   "rules": {
+      "at-rule-no-unknown": null,
+      "selector-class-pattern": null,
+      "selector-pseudo-element-colon-notation": "single",
+      "no-descending-specificity": null,
+      "at-rule-empty-line-before": null,
+      "import-notation": "string",
+      "alpha-value-notation": "number",
+      "color-function-notation": "modern",
+      "scss/at-rule-no-unknown": [
+         true,
+         {
+            "ignoreAtRules": [
+               "tailwind",
+               "apply",
+               "variants",
+               "responsive",
+               "screen"
+            ]
+         }
+      ],
+      "scss/dollar-variable-pattern": "[a-z][a-zA-Z]+",
+      "scss/selector-no-redundant-nesting-selector": true
+   },
    "extends": "stylelint-config-standard-scss"
 }

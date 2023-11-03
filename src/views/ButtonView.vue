@@ -15,6 +15,7 @@ export default {
       btnClass="btn btn-primary"
       class="mr-2"
       text="Primary"
+      @click="(e) => console.log(e)"
       appendIcon="ph:envelope-bold"
     ></Button>
     <Button
@@ -570,6 +571,14 @@ export default {
     <Button
       btnClass="btn btn-icon-circle btn-lg btn-info"
       class="mr-2"
+      appendIcon="ph:envelope-bold"
+    ></Button>
+
+    <Button
+      btnClass="btn btn-plain"
+      class="mr-2"
+      text="asdasd"
+      :isLoading="false"
       appendIcon="ph:envelope-bold"
     ></Button>
   </div>

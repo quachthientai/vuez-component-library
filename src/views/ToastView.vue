@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
 // import Toast from '@/components/Toast/Toast.vue';
-import Button from '@/components/Button/Button.vue'
-import { times } from 'lodash'
+
+
 
 export default {
   name: 'ToastView',
   components: {
-    Button
+
   },
   data() {
     return {
@@ -15,24 +15,25 @@ export default {
   },
   methods: {
     showToast() {
-      this.$toast.show('default', {timeOut: 5000});
-      this.$toast.success('Success!', {timeOut: 4000})
-      this.$toast.info('Info!', {timeOut: 3000})
-      this.$toast.warning('Warning!', {timeOut: 2000})
-      this.$toast.error('Error!', {timeOut: 1000})
+      this.$toast.success('Success!', {timeOut: 5000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 4000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 3000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 2000, position: 'bottom-center', onClickDismiss: true})
+      // this.$toast.success('Success!', {timeOut: 1000, position: 'bottom-center', onClickDismiss: true})
     },
     clearToast() {
       this.$toast.clear()
+      // this.$toast.success('Success!', {timeOut: 5000, position: 'bottom-center', onClickDismiss: true})
     }
-  },
-  created() {}
+  }
 }
 </script>
 
 <template>
   <div>This is toast view</div>
-
-  <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast" />
-
-  <Button class="mt-3 ms-3" btnClass="btn btn-danger" @click="clearToast" text="clear toast" />
+  <div class="flex flex-row-reverse me-3">
+    <Button class="ms-3" btnClass="btn btn-warning" @click="showToast" text="show toast" />
+    <Button class="ms-3" btnClass="btn btn-danger" @click="clearToast" text="clear toast" />
+  </div>
+  
 </template>

@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Button from './components/Button/Button.vue'
+
 import Radio from './components/Forms/Radio.vue'
 
 export default {
@@ -10,7 +10,7 @@ export default {
     }
   },
   components: {
-    Button,
+
     Radio
   },
   methods: {
@@ -26,7 +26,8 @@ export default {
   <Button btnClass="btn btn-primary" text="toggle" @click="handleClick" />
 
   <div class="mt-3 ms-3">
-    <router-link to="/">Home</router-link> | <router-link to="/button">Button</router-link> |
+    <router-link to="/">Home</router-link> | 
+
     <router-link to="/badge">Badge</router-link> |
     <router-link to="/dropdown">Dropdown</router-link> |
     <router-link to="/switch">Switch Button</router-link> |
@@ -36,6 +37,9 @@ export default {
     <router-link to="/card">Card</router-link> |
     <router-link to="/drag-and-drop">Drag and Drop</router-link> |
     <router-link to="/input">Input</router-link>
+    <router-link to="/buttontest">ButtonTest</router-link> |
+    <router-link to="/badgetest">BadgeTest</router-link> |
+    <router-link to="/menu">Menu</router-link> |
   </div>
 
   <router-view />

@@ -1,0 +1,143 @@
+@use '../../utilities/utils-variables';
+@use '../../utilities/utils-mixin';
+@use '../Button/mixin' as btn-mixins;
+@use '../../utilities/utils-functions';
+@use './variables' as btn-variables;
+@use 'sass:map';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .btn {
+    @apply relative 
+      rounded-[5px] 
+      font-semibold 
+      tracking-wide
+      transition duration-100 ease-out hover:ease-in;
+
+    @include utils-mixin.get-grid-append-prepend-setup;
+
+    &:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    &__loader {
+      @include utils-mixin.get-loader;
+    }
+
+    &__prepend {
+      @include utils-mixin.get-grid-template('prepend');
+      @apply flex mr-[.2em] transition-all duration-150 ease-out;
+    }
+
+    &__content {
+      @include utils-mixin.get-grid-template('content');
+      @apply flex items-center gap-1 justify-center transition-all duration-150 ease-out;
+    }
+
+    &__append {
+      @include utils-mixin.get-grid-template('append');
+      @apply flex ml-[.2em] transition-all duration-150 ease-out;
+    }
+
+    &.btn-sm {
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'sm');
+    }
+
+    &.btn-md {
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'md');
+    }
+
+    &.btn-lg {
+      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'lg');
+    }
+
+    &.btn-block {
+      @apply block w-full;
+    }
+
+    &.btn-loading {
+      @apply cursor-not-allowed;
+    
+      .btn__content,
+      .btn__prepend,
+      .btn__append {
+        @apply opacity-0;
+      }
+    }
+  }
+
+  .btn-icon {
+    @apply relative flex justify-center rounded-full;
+
+    > .ripple {
+      @apply rounded-full;
+    }
+
+    &:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    .btn__content {
+      @apply flex justify-center transition-all duration-150 ease-out;
+    }
+
+    &.btn-sm {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'sm');
+    }
+
+    &.btn-md {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'md');
+    }
+
+    &.btn-lg {
+      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'lg');
+    }
+
+    &.btn-loading {
+      @apply cursor-not-allowed;
+    
+      .btn__content,
+      .btn__prepend,
+      .btn__append {
+        @apply opacity-0;
+      }
+    }
+  }
+}
+
+@for $i from 1 through 5 {
+  .btn-solid.elevation-#{$i} {
+    @apply shadow-elevation-#{$i};
+  };
+};
+
+.btn__prepend-icon,
+.btn__append-icon,
+.btn__loader {
+  font-size: (utils-variables.$icon-multiplier * 1.5em);
+}
+
+@layer components {
+  @each $color in utils-variables.$colors {
+    .btn-#{$color} {
+      @include utils-mixin.get-color($color);
+      
+      > .ripple .ripple__effect {
+        @include utils-mixin.get-rgb-ripple-color($color);
+      }
+    }
+    
+    @each $variant in btn-variables.$button-variants {
+      .btn-#{$color}.btn-#{$variant} {
+        @include utils-mixin.get-variant($variant, $color);
+
+        &:not([disabled]):hover {
+          @include utils-mixin.get-hover-color($variant, $color);
+        };
+      
+      }
+    }
+  }
+}
