@@ -16,7 +16,11 @@ import { MenuItemModelIcon } from "./MenuItemType";
 import { Icon } from "@iconify/vue";
 import { BadgePropType, Badge } from "@/components/Badge/Badge";
 
+/**
+ * The namespace of the menu item.
+ */
 const NAMESPACE = 'vz-menu-item';
+
 const vMenuItemProps = makePropsFactory({
    /**
     * The label for the menu item.
@@ -34,7 +38,7 @@ const vMenuItemProps = makePropsFactory({
    /**
     * The href for the menu item.
     * @type {string}
-    * @default undefined
+    * @default false
     * @name href
     */
    href: String,
@@ -74,9 +78,6 @@ const vMenuItemProps = makePropsFactory({
          return isIncluded(['item', 'header'], value);
       }
    },
-   action: {
-      type: Function as PropType<(event: Event) => void>,
-   },
    /**
     * Specify the tag for root element.
     * @type {string}
@@ -103,33 +104,24 @@ const MenuItem = defineComponent({
    directives: {
       'ripple': Ripple
    },
-   // methods: {
-   //    onItemClick(e: any) {
-   //       this.$emit("itemAction", e)
-   //    }
-   // },
    setup(props, {slots, emit}) { 
       const instance = getCurrentInstance();
-
-      const onItemClick = (e: Event) => {
-         emit("itemAction", {
-            originalEvent: e,
-            currentInstance: instance
-         });
-         
-      }
 
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
 
       const disabled = computed(() => {
-         if(props.type === 'header'){
-            return undefined;
+         if(props.type === 'header') {
+            return undefined
          }
-         return NAMESPACE + '--disabled'
+         return NAMESPACE + '--disabled';
       })
+
       const type = computed(() => {
-         return NAMESPACE + `--${props.type as string}`;
+         if(props.type === 'item') {
+            return undefined
+         }
+         return NAMESPACE + `-${props.type as string}`;
       })
 
       const hasLabel = !!(slots.default || props.label);
@@ -138,6 +130,17 @@ const MenuItem = defineComponent({
       const hasDivider = !!props.divider;
       const hasDisabled = !!props.disabled;
 
+      /**
+       * Handles the click event of the menu item and emits an "itemAction" event with the original event and the current instance.
+       * @param e - The click event.
+       */
+      const onItemClick = (e: Event) => {
+         emit("itemAction", {
+            originalEvent: e,
+            currentInstance: instance
+         });
+      }
+
       return () => {
          return (
             <>
@@ -145,9 +148,9 @@ const MenuItem = defineComponent({
                   v-ripple={props.type === 'item'}
                   type={tag}
                   onClick={onItemClick}
-                  class={[ NAMESPACE,
+                  class={[NAMESPACE,
                      type.value,
-                     hasDisabled ? disabled.value : undefined
+                     hasDisabled && disabled.value
                   ]}
                >  
                   { hasIcon && (

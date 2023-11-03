@@ -11,11 +11,11 @@ const routes = [
     name: 'badge',
     component: () => import('@/views/BadgeView.vue')
   },
-  {
-    path: '/button',
-    name: 'button',
-    component: () => import('@/views/ButtonView.vue')
-  },
+  // {
+  //   path: '/button',
+  //   name: 'button',
+  //   component: () => import('@/views/ButtonView.vue')
+  // },
   {
     path: '/dropdown',
     name: 'dropdown',

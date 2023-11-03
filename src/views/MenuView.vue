@@ -73,14 +73,15 @@ export default {
 }
 </script>
 <template>
-  <!-- <MenuItem type="item" 
+  <MenuItem type="item" 
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"
     label="Navigation"
-    @item-action="this.testEvent"
+    divider 
   />
 
-  <MenuItem type="item">
+  <Menu :model="items"></Menu>
+  <!-- <MenuItem type="item">
     <template v-slot:icon>
       <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem"></Icon>
     </template>
@@ -89,21 +90,11 @@ export default {
       <Badge inline rounded content="1" color="danger" />
     </template>
   </MenuItem> -->
-  <!-- <Menu :model="items" /> -->
+  <!-- <Menu :model="items" class="ml-[500px]" />
   
-  <Menu>
-    <MenuItem v-for="item in items" 
-      :type="item.type"
-      :icon="item.icon"
-      :badge="item.badge"
-      :divider="item.divider"
-      :label="item.label"
-      :disabled="item.disabled"
-      :onItemAction="() => this.testEvent()"
-    />
-  </Menu>
+  
 
-  <!-- <Menu>
+  <Menu>
     <MenuItem type="header" label="Options" />
     <MenuItem type="item" disabled label="Profile">
       <template v-slot:icon>
