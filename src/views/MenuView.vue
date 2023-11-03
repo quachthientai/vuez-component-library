@@ -80,6 +80,7 @@ export default {
     divider 
   />
 
+  <Menu :model="items"></Menu>
   <!-- <MenuItem type="item">
     <template v-slot:icon>
       <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem"></Icon>

@@ -41,10 +41,11 @@ const Menu = defineComponent({
 
                   {slots.default?.()}
                   
-                  {hasModel && (props.model as MenuItemModel[])?.map((item, index) => {
+                  {hasModel && (props.model as MenuItemModel[])?.map((item, index) => { 
+                     const { action, ...mutateItem } = item;   
                      return (
                         <MenuItem
-                           {...item}
+                           {...mutateItem}
                            onItemAction={item.action}
                         >
                            {{ badge: () => {
