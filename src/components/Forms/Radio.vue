@@ -1,4 +1,4 @@
-<script>
+ <script>
 export default {
   name: 'Radio',
   props: {
@@ -41,3 +41,16 @@ export default {
 </template>
 
 <style lang="scss"></style>
+
+// import { PropType, defineComponent, ref} from "vue"
+
+// interface RadioProps{
+//   radioClass:string,
+//   radioValue:string,
+//   radioType:string,
+//   radioID:string
+// }
+
+// const Radio = defineComponent({
+  
+// })

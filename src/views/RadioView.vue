@@ -1,5 +1,5 @@
-<script lang="ts">
-import Radio from '@/components/Forms/Radio.vue';
+<script>
+import Radio from '@/components/Forms/Radio'
 import { VIcon } from '@/components/Icon/Icon';
 export default {
   name: 'RadioView',

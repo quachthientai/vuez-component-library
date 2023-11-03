@@ -15,7 +15,8 @@
   "dependencies": {
     "@iconify/types": "^2.0.0",
     "autoprefixer": "^10.4.14",
-    "mitt": "^3.0.0",
+    "init": "^0.1.2",
+    "mitt": "^3.0.1",
     "pinia": "^2.0.32",
     "postcss": "^8.4.23",
     "sortablejs": "^1.15.0",
@@ -30,6 +31,7 @@
     "@rushstack/eslint-patch": "^1.2.0",
     "@tailwindcss/forms": "^0.5.6",
     "@types/lodash": "^4.14.195",
+    "@types/vue": "^2.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "@vue/babel-plugin-jsx": "^1.1.5",

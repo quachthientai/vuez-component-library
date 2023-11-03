@@ -57,6 +57,15 @@ const routes = [
     component: () => import('@/views/DragDropView.vue')
   },
   {
+    path: '/upload',
+    name:'upload',
+  },
+  {
+    path:'/input',
+    name:'input',
+    component: () => import('@/views/InputView.vue')
+  },
+  {
     path: '/buttontest',
     name: 'buttontest',
     component: () => import('@/views/ButtonTestView.vue')

@@ -36,6 +36,7 @@ export default {
     <router-link to="/radio">Radio</router-link> | <router-link to="/toast">Toast</router-link> |
     <router-link to="/card">Card</router-link> |
     <router-link to="/drag-and-drop">Drag and Drop</router-link> |
+    <router-link to="/input">Input</router-link>
     <router-link to="/buttontest">ButtonTest</router-link> |
     <router-link to="/badgetest">BadgeTest</router-link> |
     <router-link to="/menu">Menu</router-link> |
