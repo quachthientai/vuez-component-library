@@ -1,5 +1,5 @@
-<script>
-import Button from '@/components/Button/Button.vue'
+<script lang="ts">
+
 
 export default {
   name: 'HomeView'

@@ -6,6 +6,11 @@ import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
 
+/**
+ * Namespace for the Menu component.
+ */
+const NAMESPACE = 'vz-menu';
+
 const vMenuProps = makePropsFactory({
    /**
     * The toggler for the menu.
@@ -36,8 +41,8 @@ const Menu = defineComponent({
 
       return () => {
          return (
-            <div class="vz-menu">
-               <ul class="vz-menu-list">
+            <div class={NAMESPACE}>
+               <ul class={`${NAMESPACE}-list`}>
 
                   {slots.default?.()}
                   
@@ -48,7 +53,7 @@ const Menu = defineComponent({
                            {...mutateItem}
                            onItemAction={item.action}
                         >
-                           {{ badge: () => {
+                           {item.badge && { badge: () => {
                                  return (
                                     typeof item.badge === 'function' 
                                     ? item.badge() 

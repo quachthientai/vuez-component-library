@@ -5,6 +5,7 @@ import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
 import { Badge } from '@/components/Badge/Badge';
 import { h } from 'vue';
 import { MenuItemModel } from '@/components/Menu/MenuItem/MenuItemType';
+import { type } from 'os';
 
 export default {
   name: 'MenuView',
@@ -16,23 +17,15 @@ export default {
   data() {
 
     const items: MenuItemModel[] = [
-      // { label: 'Options', 
-      //   type: 'header', 
-      //   icon: {icon:'mdi:account-outline'}, 
-      //   divider: true
-      // },
-      // { label: 'test',
-      //   disabled: true,
-      //   divider: true,
-      //   badge: () => {
-      //     return h(Badge, {
-      //       inline: true,
-      //       rounded: true,
-      //       color: 'danger',
-      //       content: '1'
-      //     })
-      //   },
-      // },
+      { label: 'Options', 
+        type: 'header', 
+        divider: true
+      },
+      { label: 'test',
+        disabled: true,
+        divider: true,
+        
+      },
       // { label: 'Profile',
       //   divider: true,
       //   badge: {
@@ -81,6 +74,19 @@ export default {
   />
 
   <Menu :model="items"></Menu>
+    
+  <!-- <Menu>
+    <MenuItem v-for="item in items"
+      :icon=item.icon
+      :badge=item.badge
+      :type=item.type
+      :label=item.label
+      :divider=item.divider
+      :disabled=item.disabled
+      @itemAction="item.action"
+    ></MenuItem>
+  </Menu> -->
+  <!-- <Menu :model="items"></Menu> -->
   <!-- <MenuItem type="item">
     <template v-slot:icon>
       <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem"></Icon>
@@ -90,11 +96,10 @@ export default {
       <Badge inline rounded content="1" color="danger" />
     </template>
   </MenuItem> -->
-  <!-- <Menu :model="items" class="ml-[500px]" />
   
   
 
-  <Menu>
+  <!-- <Menu>
     <MenuItem type="header" label="Options" />
     <MenuItem type="item" disabled label="Profile">
       <template v-slot:icon>

@@ -17,7 +17,7 @@ import { Icon } from "@iconify/vue";
 import { BadgePropType, Badge } from "@/components/Badge/Badge";
 
 /**
- * The namespace of the menu item.
+ * Namespace of the MenuItem component.
  */
 const NAMESPACE = 'vz-menu-item';
 
@@ -106,7 +106,7 @@ const MenuItem = defineComponent({
    },
    setup(props, {slots, emit}) { 
       const instance = getCurrentInstance();
-
+      console.log(instance.type.name)
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
 
@@ -154,7 +154,7 @@ const MenuItem = defineComponent({
                   ]}
                >  
                   { hasIcon && (
-                     <div class="vz-menu-item__icon">
+                     <div class={`${NAMESPACE}__icon`}>
                         { props.icon 
                            ? <Icon 
                                  icon={icon.icon} 
@@ -167,13 +167,13 @@ const MenuItem = defineComponent({
                   )}
                   
                   { hasLabel && (
-                     <div class="vz-menu-item__label">
+                     <div class={`${NAMESPACE}__label `}>
                         { props.label ? props.label : slots.default?.() }
                      </div>
                   )}
                
                   { (hasBadge && props.type === 'item') && (
-                     <div class="vz-menu-item__badge">
+                     <div class={`${NAMESPACE}__badge`}>
                         <div class="w-9"></div>
                         { props.badge 
                            ? typeof props.badge === 'function'
