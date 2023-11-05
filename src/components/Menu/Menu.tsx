@@ -61,6 +61,7 @@ const Menu = defineComponent({
                <ul class={`${NAMESPACE}-list`}
                   role="menu"
                   tabindex={0}
+                  aria-activedescendant="true"
                   id={id + '-list'}
                   onFocus={ onFocused }
                >

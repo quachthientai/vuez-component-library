@@ -1,4 +1,5 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
+import { RouteLocationRaw } from 'vue-router';
 import { 
    computed,
    defineComponent,
@@ -28,6 +29,12 @@ const vMenuItemProps = makePropsFactory({
     * @name label
     */
    label: String,
+   /**
+    * The route for the menu item.
+    * @type {string | RouteLocationRaw}
+    * @name to
+    */
+   to: [String, Object] as PropType<RouteLocationRaw>,
    /**
     * The content for the menu item.
     * @type {string}

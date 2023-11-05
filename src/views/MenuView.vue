@@ -36,6 +36,7 @@ export default {
       //   },
       // },
       { content: 'Profile',
+        to: '/buttontest',
         divider: true,
         badge: (() => {
           return this.test();

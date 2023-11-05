@@ -1,5 +1,6 @@
-import { defineComponent, h } from "vue";
+import { defineComponent, h, PropType } from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
+import { RouteLocationRaw } from "vue-router";
 
 const vDynamicTagProps = makePropsFactory({
    type: String,
@@ -12,7 +13,9 @@ const DynamicTag = defineComponent({
       return () => {
          return (
             h( props.type, 
-               { type: props.type ==='button' ? 'button' : undefined }, 
+               
+               { type: props.type ==='button' ? 'button' : undefined},
+
                slots.default && slots.default()
             )
          )
