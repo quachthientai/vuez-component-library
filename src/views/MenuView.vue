@@ -17,11 +17,11 @@ export default {
   data() {
 
     const items: MenuItemModel[] = [
-      { label: 'Options', 
+      { content: 'Options',
         type: 'header', 
         divider: true
       },
-      { label: 'test',
+      { content: 'test',
         disabled: true,
         divider: true,
         
@@ -35,7 +35,7 @@ export default {
       //     rounded: true
       //   },
       // },
-      { label: 'Profile',
+      { content: 'Profile',
         divider: true,
         badge: (() => {
           return this.test();
@@ -66,12 +66,12 @@ export default {
 }
 </script>
 <template>
-  <MenuItem type="item" 
+  <!-- <MenuItem type="item" 
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"
-    label="Navigation"
+    content="Navigation"
     divider 
-  />
+  /> -->
 
   <Menu :model="items"></Menu>
     

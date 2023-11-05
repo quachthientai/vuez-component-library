@@ -9,7 +9,8 @@ import { BadgePropType } from "@/components/Badge/Badge";
 type MenuItemModelIcon = Pick<IconType, 'icon'>;
 
 type MenuItemModel = {
-   label: string;
+   content?: string;
+   label?: string;
    disabled?: boolean;
    href?: string; 
    divider?: boolean;

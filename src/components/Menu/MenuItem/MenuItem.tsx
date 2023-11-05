@@ -23,11 +23,18 @@ const NAMESPACE = 'vz-menu-item';
 
 const vMenuItemProps = makePropsFactory({
    /**
-    * The label for the menu item.
+    * The aria-label for the menu item.
     * @type {string}
     * @name label
     */
    label: String,
+   /**
+    * The content for the menu item.
+    * @type {string}
+    * @default undefined
+    * @name content
+    */
+   content: String,
    /**
     * Whether the menu item is disabled or not.
     * @type {boolean}
@@ -35,6 +42,13 @@ const vMenuItemProps = makePropsFactory({
     * @name disabled
     */
    disabled: Boolean,
+   /**
+    * The id for the menu item.
+    * @type {string}
+    * @default undefined
+    * @name id
+    */
+   id: String,
    /**
     * The href for the menu item.
     * @type {string}
@@ -87,12 +101,13 @@ const vMenuItemProps = makePropsFactory({
    tag: {
       type: String,
       default: 'li',
-   },
+   }
 })
 
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
+   inheritAttrs: true,
    emits: {
       itemAction(payload: {
          originalEvent: Event, 
@@ -104,11 +119,12 @@ const MenuItem = defineComponent({
    directives: {
       'ripple': Ripple
    },
-   setup(props, {slots, emit}) { 
+   setup(props, {slots, emit, attrs}) { 
       const instance = getCurrentInstance();
-      console.log(instance.type.name)
+      
       const icon = props.icon as MenuItemModelIcon;
       const tag = props.tag as string;
+      const id = props.id;
 
       const disabled = computed(() => {
          if(props.type === 'header') {
@@ -124,7 +140,8 @@ const MenuItem = defineComponent({
          return NAMESPACE + `-${props.type as string}`;
       })
 
-      const hasLabel = !!(slots.default || props.label);
+      const hasLabel = !!props.label;
+      const hasContent = !!(slots.default || props.content);
       const hasIcon = !!(slots.icon || props.icon);
       const hasBadge = !!(slots.badge || props.badge);
       const hasDivider = !!props.divider;
@@ -134,7 +151,7 @@ const MenuItem = defineComponent({
        * Handles the click event of the menu item and emits an "itemAction" event with the original event and the current instance.
        * @param e - The click event.
        */
-      const onItemClick = (e: Event) => {
+      function onItemClick(e: Event) {
          emit("itemAction", {
             originalEvent: e,
             currentInstance: instance
@@ -146,8 +163,12 @@ const MenuItem = defineComponent({
             <>
                <DynamicTag
                   v-ripple={props.type === 'item'}
+                  role="menuitem"
+                  aria-label={hasLabel ? props.label : props.content}
+                  tabindex={hasDisabled ? -1 : 0}
                   type={tag}
                   onClick={onItemClick}
+                  id={id}
                   class={[NAMESPACE,
                      type.value,
                      hasDisabled && disabled.value
@@ -166,9 +187,9 @@ const MenuItem = defineComponent({
                      </div>
                   )}
                   
-                  { hasLabel && (
-                     <div class={`${NAMESPACE}__label `}>
-                        { props.label ? props.label : slots.default?.() }
+                  { hasContent && (
+                     <div class={`${NAMESPACE}__content`}>
+                        { props.content ? props.content : slots.default?.() }
                      </div>
                   )}
                

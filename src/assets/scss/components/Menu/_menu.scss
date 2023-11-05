@@ -12,7 +12,9 @@
       &-list {
          width: 100%;
       }
-
+      :focus-visible{
+         background-color: darkblue;
+      }
       // &-item {
          
       // }
