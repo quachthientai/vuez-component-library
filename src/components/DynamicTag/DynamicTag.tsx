@@ -11,14 +11,15 @@ const DynamicTag = defineComponent({
    props: vDynamicTagProps,
    setup(props, {attrs, slots}) {
       
-      const type = props.type as string
-      const isRouterLink = type === 'router-link'
-      
+      const isRouterLink = props.type === 'router-link'
+      const isAnchor = props.type === 'a'
+
       return () => {
          return (
-            h( isRouterLink ? <router-link /> : type, 
+            h( isRouterLink ? <router-link /> : props.type, 
                { type: props.type ==='button' ? 'button' : undefined,
-                 to: isRouterLink && attrs.to ? attrs.to : undefined 
+                 to: isRouterLink && attrs.to ? attrs.to : undefined,
+                 href: isAnchor && attrs.href ? attrs.href : undefined,
                },
                { default: () => slots.default && slots.default() }
             )

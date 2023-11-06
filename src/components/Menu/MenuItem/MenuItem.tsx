@@ -149,6 +149,7 @@ const MenuItem = defineComponent({
 
       const hasLabel = !!props.label;
       const hasRoute = !!props.to;
+      const hasHref = !!props.href;
       const hasContent = !!(slots.default || props.content);
       const hasIcon = !!(slots.icon || props.icon);
       const hasBadge = !!(slots.badge || props.badge);
@@ -171,11 +172,14 @@ const MenuItem = defineComponent({
             <>
                <DynamicTag
                   v-ripple={props.type === 'item'}
+                  href={hasHref ? props.href : undefined}
                   role="menuitem"
                   to={hasRoute && !isDisabled ? props.to : undefined}
                   aria-label={hasLabel ? props.label : props.content}
                   tabindex={isDisabled ? -1 : 0}
-                  type={hasRoute ? 'router-link' : tag}
+                  type={ hasRoute && !isDisabled ? 'router-link' 
+                     : hasHref ? 'a' 
+                     : tag}
                   onClick={onItemClick}
                   id={id}
                   class={[NAMESPACE,

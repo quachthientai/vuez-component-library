@@ -5,7 +5,7 @@ import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
 import { Badge } from '@/components/Badge/Badge';
 import { h } from 'vue';
 import { MenuItemModel } from '@/components/Menu/MenuItem/MenuItemType';
-import { type } from 'os';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'MenuView',
@@ -15,7 +15,8 @@ export default {
     Badge
   },
   data() {
-
+    const router = useRouter();
+    console.log(router)
     const items: MenuItemModel[] = [
       { content: 'Options',
         type: 'header', 
@@ -24,7 +25,6 @@ export default {
       { content: 'test',
         disabled: true,
         divider: true,
-        
       },
       // { label: 'Profile',
       //   divider: true,
@@ -36,14 +36,14 @@ export default {
       //   },
       // },
       { content: 'Profile',
+        href: 'https://vuejs.org/',
         
-        to: '/buttontest',
         divider: true,
         badge: (() => {
           return this.test();
         }),
         action: (() => {
-          console.log('asdasd');
+          console.log('asdasd')
         })  
       }
       
