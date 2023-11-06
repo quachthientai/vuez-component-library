@@ -148,11 +148,12 @@ const MenuItem = defineComponent({
       })
 
       const hasLabel = !!props.label;
+      const hasRoute = !!props.to;
       const hasContent = !!(slots.default || props.content);
       const hasIcon = !!(slots.icon || props.icon);
       const hasBadge = !!(slots.badge || props.badge);
       const hasDivider = !!props.divider;
-      const hasDisabled = !!props.disabled;
+      const isDisabled = !!props.disabled;
 
       /**
        * Handles the click event of the menu item and emits an "itemAction" event with the original event and the current instance.
@@ -171,14 +172,15 @@ const MenuItem = defineComponent({
                <DynamicTag
                   v-ripple={props.type === 'item'}
                   role="menuitem"
+                  to={hasRoute && !isDisabled ? props.to : undefined}
                   aria-label={hasLabel ? props.label : props.content}
-                  tabindex={hasDisabled ? -1 : 0}
-                  type={tag}
+                  tabindex={isDisabled ? -1 : 0}
+                  type={hasRoute ? 'router-link' : tag}
                   onClick={onItemClick}
                   id={id}
                   class={[NAMESPACE,
                      type.value,
-                     hasDisabled && disabled.value
+                     isDisabled && disabled.value
                   ]}
                >  
                   { hasIcon && (
