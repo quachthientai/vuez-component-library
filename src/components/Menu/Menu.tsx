@@ -1,10 +1,16 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, getCurrentInstance, MaybeRef, onBeforeMount, onMounted, PropType, Ref, ref, watch } from "vue";
 import { makeDimensionProp } from "@/composable/dimension";
 import { makeColorProp } from "@/composable/color";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
+import { generateComponentId } from "@/utils/ComponentIDGenerator";
+
+/**
+ * Namespace for the Menu component.
+ */
+const NAMESPACE = 'vz-menu';
 
 const vMenuProps = makePropsFactory({
    /**
@@ -31,24 +37,44 @@ const vMenuProps = makePropsFactory({
 const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
-   setup(props, {slots, attrs}) {
+   emits: ['onMenuFocus'],
+   setup(props, {slots, attrs, emit}) {
       const hasModel = (props.model as MenuItemModel[])?.length > 0;
+      const isFocused = ref(false);
+      const id = attrs.id as string || generateComponentId();
 
+      /**
+       * Handles the focus event for the menu.
+       * @param e - The focus event.
+       */
+      function onFocused(e: FocusEvent) {
+         isFocused.value = true;
+         emit('onMenuFocus', e)
+      }
+      
       return () => {
          return (
-            <div class="vz-menu">
-               <ul class="vz-menu-list">
-
-                  {slots.default?.()}
-                  
+            <div 
+               class={NAMESPACE}
+               id={id} 
+            >
+               <ul class={`${NAMESPACE}-list`}
+                  role="menu"
+                  tabindex={0}
+                  aria-activedescendant="true"
+                  id={id + '-list'}
+                  onFocus={ onFocused }
+               >
+                  {slots.default?.()}  
                   {hasModel && (props.model as MenuItemModel[])?.map((item, index) => { 
                      const { action, ...mutateItem } = item;   
                      return (
-                        <MenuItem
+                        <MenuItem 
                            {...mutateItem}
                            onItemAction={item.action}
+                           id={id + '-' + index}
                         >
-                           {{ badge: () => {
+                           {item.badge && { badge: () => {
                                  return (
                                     typeof item.badge === 'function' 
                                     ? item.badge() 

@@ -25,23 +25,22 @@
          @apply opacity-50 cursor-not-allowed;
       }
 
-      &__icon {
+      & &__icon {
          @include utils-mixin.get-grid-template('prepend');
       }
 
-      &__label {
+      & &__content {
          @include utils-mixin.get-grid-template('content');
       }
 
-      &__badge {
-         @apply flex;
+      & &__badge {
          @include utils-mixin.get-grid-template('append');
       }
    }
 
    .vz-menu-item.vz-menu-item-header {
       @apply min-h-[43px];
-      .vz-menu-item__label {
+      .vz-menu-item__content {
          @apply font-bold;        
       }
       &:hover {
