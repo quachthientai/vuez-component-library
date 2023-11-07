@@ -108,7 +108,14 @@ const vMenuItemProps = makePropsFactory({
    tag: {
       type: String,
       default: 'li',
-   }
+   },
+   /**
+    * The key for the menu item.
+    * @type {string}
+    * @default undefined
+    * @name key
+    */
+   key: String,
 })
 
 const MenuItem = defineComponent({

@@ -1,4 +1,8 @@
-import { PropType, defineComponent } from "vue";
+import { PropType, 
+   defineComponent, 
+   getCurrentInstance,
+   ComponentInternalInstance 
+} from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { DynamicTag } from "@/components/DynamicTag/DynamicTag";
 import { Ripple } from "@/directives/ripple";
@@ -31,10 +35,27 @@ const vButtonProps = makePropsFactory({
 const Button = defineComponent({
    name: 'Button',
    props: vButtonProps,
+   emits: {
+      click(payload: {
+         originalEvent: Event, 
+         currentInstance: ComponentInternalInstance
+      }) {
+         return payload.originalEvent && payload.currentInstance
+      }
+   },
    directives: {
       'ripple': Ripple
    },
-   setup(props, {attrs, slots}) {
+   setup(props, {attrs, slots, emit}) {
+      const instance = getCurrentInstance();
+
+      function onButtonClick(e: Event) {
+         emit("click", {
+            originalEvent: e,
+            currentInstance: instance
+         });
+      }
+      
       return () => {
          const loader = useLoader('btn', props.loading as boolean);
          const variant = useVariants('btn', props.variant as string);
@@ -57,6 +78,8 @@ const Button = defineComponent({
          const hasAppend = !!(slots.append || props.appendIcon);
          const hasPrepend = !!(slots.prepend || props.prependIcon);
 
+         
+
          return (  
             <DynamicTag 
                type={ hasLinkProp ? 'a' : 'button' }
@@ -71,7 +94,8 @@ const Button = defineComponent({
                   elevation,
                   hasBlockProp && 'btn-block']}
                disabled={ isDisabled ? 'disabled' : undefined }
-               tabindex="0" 
+               tabindex="0"
+               onClick={ onButtonClick }
                role="button"> 
                   { (hasPrepend && !hasIcon) && (
                      <div class="btn__prepend">

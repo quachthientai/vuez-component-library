@@ -1,11 +1,11 @@
-import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent, getCurrentInstance, MaybeRef, onBeforeMount, onMounted, PropType, Ref, ref, watch } from "vue";
-import { makeDimensionProp } from "@/composable/dimension";
 import { makeColorProp } from "@/composable/color";
+import { makeDimensionProp, useDimension } from "@/composable/dimension";
+import { generateComponentId } from "@/utils/ComponentIDGenerator";
+import { makePropsFactory } from "@/utils/makePropFactory";
+import { defineComponent, onMounted, PropType, ref, Teleport } from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
-import { generateComponentId } from "@/utils/ComponentIDGenerator";
 
 /**
  * Namespace for the Menu component.
@@ -13,6 +13,10 @@ import { generateComponentId } from "@/utils/ComponentIDGenerator";
 const NAMESPACE = 'vz-menu';
 
 const vMenuProps = makePropsFactory({
+   popup: {
+      type: Boolean,
+      default: false,
+   },
    /**
     * The toggler for the menu.
     * @type {string}
@@ -41,8 +45,10 @@ const Menu = defineComponent({
    setup(props, {slots, attrs, emit}) {
       const hasModel = (props.model as MenuItemModel[])?.length > 0;
       const isFocused = ref(false);
+      
+      const dimension = useDimension(props)
       const id = attrs.id as string || generateComponentId();
-
+      const menu = ref();
       /**
        * Handles the focus event for the menu.
        * @param e - The focus event.
@@ -52,41 +58,51 @@ const Menu = defineComponent({
          emit('onMenuFocus', e)
       }
       
+      // onMounted(() => { 
+      //    console.log(menu);
+      // });
+      
       return () => {
          return (
-            <div 
-               class={NAMESPACE}
-               id={id} 
-            >
-               <ul class={`${NAMESPACE}-list`}
-                  role="menu"
-                  tabindex={0}
-                  aria-activedescendant="true"
-                  id={id + '-list'}
-                  onFocus={ onFocused }
+            <Teleport disabled={!props.popup} to="body">
+               <div 
+                  class={NAMESPACE}
+                  id={id}
+                  style={dimension}
+                  ref="menu"
                >
-                  {slots.default?.()}  
-                  {hasModel && (props.model as MenuItemModel[])?.map((item, index) => { 
-                     const { action, ...mutateItem } = item;   
-                     return (
-                        <MenuItem 
-                           {...mutateItem}
-                           onItemAction={item.action}
-                           id={id + '-' + index}
-                        >
-                           {item.badge && { badge: () => {
-                                 return (
-                                    typeof item.badge === 'function' 
-                                    ? item.badge() 
-                                    : <Badge {...item.badge} />
-                                 )
-                              }
-                           }}
-                        </MenuItem>
-                     )
-                  })}
-               </ul>
-            </div>
+                  <ul class={`${NAMESPACE}-list`}
+                     role="menu"
+                     tabindex={0}
+                     aria-activedescendant="true"
+                     id={id + '-list'}
+                     onFocus={ onFocused }
+                  >
+                     {slots.default?.()}  
+                     {hasModel && (props.model as MenuItemModel[])?.map((item, index) => { 
+                        const { action, ...mutateItem } = item;
+                        return (
+                           <MenuItem 
+                              {...mutateItem}
+                              onItemAction={item.action}
+                              id={id + '-' + index}
+                              key={item.key || item.label + index.toString()}
+                           >
+                              {item.badge && { badge: () => {
+                                    return (
+                                       typeof item.badge === 'function' 
+                                       ? item.badge() 
+                                       : <Badge {...item.badge} />
+                                    )
+                                 }
+                              }}
+                           </MenuItem>
+                        )
+                     })}
+                  </ul>
+               </div>
+            </Teleport>
+
          )
       }
    }
@@ -97,7 +113,7 @@ type MenuType = InstanceType<typeof Menu>;
 export {
    Menu,
    MenuType
-}
+};
 
 
 

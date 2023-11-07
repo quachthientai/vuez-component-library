@@ -1,6 +1,5 @@
-import { defineComponent, h, PropType } from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { RouterLink } from "vue-router";
+import { defineComponent, h } from "vue";
 
 const vDynamicTagProps = makePropsFactory({
    type: String,
@@ -31,4 +30,4 @@ const DynamicTag = defineComponent({
 
 export {
    DynamicTag
-}
+};

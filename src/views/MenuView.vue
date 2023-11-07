@@ -3,9 +3,11 @@
 import { Menu } from '@/components/Menu/Menu'
 import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
 import { Badge } from '@/components/Badge/Badge';
-import { h } from 'vue';
+import { h, ref } from 'vue';
 import { MenuItemModel } from '@/components/Menu/MenuItem/MenuItemType';
 import { useRouter } from 'vue-router';
+
+
 
 export default {
   name: 'MenuView',
@@ -14,9 +16,13 @@ export default {
     MenuItem,
     Badge
   },
+  mounted() {
+    // console.log(this.$refs.menu.value)
+  },
   data() {
     const router = useRouter();
-    console.log(router)
+    // const menu = ref<InstanceType<typeof Menu> | null>(null);
+
     const items: MenuItemModel[] = [
       { content: 'Options',
         type: 'header', 
@@ -36,14 +42,13 @@ export default {
       //   },
       // },
       { content: 'Profile',
-        href: 'https://vuejs.org/',
         
         divider: true,
         badge: (() => {
           return this.test();
         }),
         action: (() => {
-          console.log('asdasd')
+          
         })  
       }
       
@@ -62,8 +67,9 @@ export default {
       })
     },
     testEvent(e) {
-      console.log('sssss')
-    }
+      console.log(e)
+    },
+
   }
 }
 </script>
@@ -75,7 +81,8 @@ export default {
     divider 
   /> -->
 
-  <Menu :model="items"></Menu>
+  <Button id="menu-active" @click="(e) => this.testEvent(e)" class="mr-2"  variant="outlined" color="secondary" >BUTTON</Button>
+  <!-- <Menu ref="menu" :model="items"></Menu> -->
     
   <!-- <Menu>
     <MenuItem v-for="item in items"
