@@ -67,7 +67,8 @@ export default {
       })
     },
     testEvent(e) {
-      console.log(e)
+      // console.log(this.$refs.menu)
+      this.$refs.menu.toggle(e)
     },
 
   }
@@ -80,9 +81,9 @@ export default {
     content="Navigation"
     divider 
   /> -->
-
+  <div id="test" class="border h-5 border-red-500"></div>
   <Button id="menu-active" @click="(e) => this.testEvent(e)" class="mr-2"  variant="outlined" color="secondary" >BUTTON</Button>
-  <!-- <Menu ref="menu" :model="items"></Menu> -->
+  <Menu ref="menu" :model="items"></Menu>
     
   <!-- <Menu>
     <MenuItem v-for="item in items"

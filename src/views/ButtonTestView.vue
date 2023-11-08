@@ -28,7 +28,6 @@ export default {
    <div class="flex justify-start mt-2">
       <Button
          :loading="loading"
-         
          class="mr-2" 
          variant="outlined" 
          color="primary"
