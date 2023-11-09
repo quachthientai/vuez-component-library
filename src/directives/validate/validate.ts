@@ -1,7 +1,7 @@
 import {h,DirectiveBinding} from "vue"
 import formValidate from "@/modules/formvalidate"
 import addWarningText from "@/directives/validate/addWarningText"
-import { T } from "vitest/dist/types-94cfe4b4"
+
 
 
 const visualControl = (condition:boolean, warningText:HTMLParagraphElement) => {
@@ -16,7 +16,7 @@ const visualControl = (condition:boolean, warningText:HTMLParagraphElement) => {
 
 //With Text Input
 const handleTextValueChange = (el:HTMLInputElement,warningP:HTMLParagraphElement,binding:DirectiveBinding)=>{
-    const validateModel = new formValidate({...binding,value:el.value})
+    const validateModel = new formValidate({...binding.value,value:el.value})
     validateModel.value = el.value
     let warningText:string
 
@@ -26,12 +26,11 @@ const handleTextValueChange = (el:HTMLInputElement,warningP:HTMLParagraphElement
     }
 
     if(!validateModel.validateMaxLength()){
-        warningText = "Must be smaller than 10"
+        warningText = "Must be smaller than 100"
     }
 
+    console.log(validateModel.value.length)
 
-
-    
     warningP.textContent = warningText  
 
     if(!validateModel.validateMinLength() || !validateModel.validateMaxLength()){
@@ -44,14 +43,44 @@ const handleTextValueChange = (el:HTMLInputElement,warningP:HTMLParagraphElement
 }
 
 //With Email Input
-const handleEmailValueChange = (e:InputEvent,warningText:HTMLParagraphElement)=>{
-    const validateModel = new formValidate({type:(e.target as HTMLInputElement).type,value:(e.target as HTMLInputElement).value})
+const handleEmailValueChange = (el:HTMLInputElement,warningP:HTMLParagraphElement,binding:DirectiveBinding)=>{
+    const validateModel = new formValidate({...binding.value,value:el.value})
+    let warningText:string
+    if(!validateModel.validateEmail()){
+        warningText = "Email is not valid"
+    }
 
-    visualControl(validateModel.validateEmail((e.target as HTMLInputElement).value), warningText)
+    warningP.textContent = warningText
+    if(!validateModel.validateEmail()){
+        warningP.classList.remove("hidden")
+    }else{
+        warningP.classList.add("hidden")
+    
+    }
 }
 
-const handleDateValueChange = (e:InputEvent,warningText?:HTMLParagraphElement)=>{
-    const validateModel = new formValidate({type:(e.target as HTMLInputElement).type,value:(e.target as HTMLInputElement).value})
+const handleDateValueChange = (el:HTMLInputElement,warningP:HTMLParagraphElement,binding:DirectiveBinding)=>{
+    const validateModel = new formValidate({...binding.value,value:el.value})
+    let warningText:string
+    if(!validateModel.validateMinDate()){
+        warningText = "Date must be larger"
+    }
+
+    if(!validateModel.validateMaxDate()){
+        warningText = "Date must be smaller"
+    }
+
+    console.log(validateModel.validateMaxDate())
+
+
+    warningP.textContent = warningText
+    if(!validateModel.validateMinDate() || !validateModel.validateMaxDate()){
+        warningP.classList.remove("hidden")
+    }else{
+        warningP.classList.add("hidden")
+    
+    }
+
     
 }
 
@@ -75,10 +104,10 @@ export const InputValidate = {
                 el.addEventListener('input', (event)=>handleTextValueChange(el,warningP,binding))
                 break
             case "email":
-                el.addEventListener('input',(event)=>handleEmailValueChange(event as InputEvent,warningText)) 
+                el.addEventListener('input',(event)=>handleEmailValueChange(el,warningP,binding)) 
                 break;
             case "date":
-                el.addEventListener('input',(event)=>handleDateValueChange(event as InputEvent,warningText))                
+                el.addEventListener('input',(event)=>handleDateValueChange(el,warningP,binding))                
                 break;
             case "datetime":
                 break;

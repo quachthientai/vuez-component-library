@@ -24,7 +24,7 @@ class formValidate{
 
         this.minLength = requirements.minLength ? requirements.minLength : 3
         this.maxLength = requirements.maxLength ? requirements.maxLength : 100
-        this.format = requirements.format
+        this.format = requirements.format 
         this.type = requirements.type
         this.statement = requirements.statement
         this.value = requirements.value
@@ -86,23 +86,32 @@ class formValidate{
 
 
     //Check for the format of email
-    public validateEmail = (value:string):boolean=>{
-        if(this.emailFormat.test(value)){
+    public validateEmail = ():boolean=>{
+        if(this.emailFormat.test(this.value)){
             return true
         }else{
             return false
         }
     }
     
-    //Set the maximum Date
-    public validateDateValue = (value:string):boolean=>{
-        if(Date.parse(value) >= Date.parse(this.minDate) || Date.parse(value) <= Date.parse(value) ){
+    //Check if value is larger than minDate
+    public validateMinDate = ():boolean=>{
+        if(Date.parse(this.value) > Date.parse(this.minDate)){
             return true
         }else{
             return false
         }
     }
-    
+
+    //Check if value is smaller than maxDate
+    public validateMaxDate = ():boolean=>{
+        if(Date.parse(this.value) < Date.parse(this.maxDate)){
+            return true
+        }else{
+            return false
+        }
+    }
+
     //Check for the format of credit/debit card:
     public validateCard = (value:string, type:string):boolean=>{
         switch(type.toLowerCase()){
