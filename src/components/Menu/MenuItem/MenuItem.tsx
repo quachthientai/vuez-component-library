@@ -118,10 +118,15 @@ const vMenuItemProps = makePropsFactory({
    key: String,
 })
 
+// const vMenuItemProps = makePropsFactory({
+//    test: String
+// })
+
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
    inheritAttrs: true,
+   inject: ['$MenuKey'],
    emits: {
       itemAction(payload: {
          originalEvent: Event, 
@@ -130,106 +135,140 @@ const MenuItem = defineComponent({
          return payload.originalEvent && payload.currentInstance
       }
    },
+   data() {
+      return {         
+         hasLabel: !!this.label,
+         hasRoute: !!this.to,
+         hasHref: !!this.href,
+         hasContent: !!(this.$slots.default || this.content),
+         hasIcon: !!(this.$slots.icon || this.icon),
+         hasBadge: !!(this.$slots.badge || this.badge),
+         hasDivider: !!this.divider,
+         isDisabled: !!this.disabled,
+      }
+   },
    directives: {
       'ripple': Ripple
    },
-   setup(props, {slots, emit, attrs}) { 
-      const instance = getCurrentInstance();
-      
-      const icon = props.icon as MenuItemModelIcon;
-      const tag = props.tag as string;
-      const id = props.id;
-
-      const disabled = computed(() => {
-         if(props.type === 'header') {
+   computed: { 
+      context() {
+         return this.$MenuKey()
+      },
+      disabled() {
+         if(this.type === 'header') {
             return undefined
          }
          return NAMESPACE + '--disabled';
-      })
-
-      const type = computed(() => {
-         if(props.type === 'item') {
+      },
+      type() {
+         if(this.type === 'item') {
             return undefined
          }
-         return NAMESPACE + `-${props.type as string}`;
-      })
-
-      const hasLabel = !!props.label;
-      const hasRoute = !!props.to;
-      const hasHref = !!props.href;
-      const hasContent = !!(slots.default || props.content);
-      const hasIcon = !!(slots.icon || props.icon);
-      const hasBadge = !!(slots.badge || props.badge);
-      const hasDivider = !!props.divider;
-      const isDisabled = !!props.disabled;
-
-      /**
-       * Handles the click event of the menu item and emits an "itemAction" event with the original event and the current instance.
-       * @param e - The click event.
-       */
-      function onItemClick(e: Event) {
-         emit("itemAction", {
-            originalEvent: e,
-            currentInstance: instance
-         });
+         return NAMESPACE + `-${this.type as string}`;
       }
-
-      return () => {
-         return (
-            <>
-               <DynamicTag
-                  v-ripple={props.type === 'item'}
-                  href={hasHref ? props.href : undefined}
-                  role="menuitem"
-                  to={hasRoute && !isDisabled ? props.to : undefined}
-                  aria-label={hasLabel ? props.label : props.content}
-                  tabindex={isDisabled ? -1 : 0}
-                  type={ hasRoute && !isDisabled ? 'router-link' 
-                     : hasHref ? 'a' 
-                     : tag}
-                  onClick={onItemClick}
-                  id={id}
-                  class={[NAMESPACE,
-                     type.value,
-                     isDisabled && disabled.value
-                  ]}
-               >  
-                  { hasIcon && (
-                     <div class={`${NAMESPACE}__icon`}>
-                        { props.icon 
-                           ? <Icon 
-                                 icon={icon.icon} 
-                                 width="1.3rem" 
-                                 height="1.3rem" 
-                              />
-                           : slots.icon?.() 
-                        }
-                     </div>
-                  )}
-                  
-                  { hasContent && (
-                     <div class={`${NAMESPACE}__content`}>
-                        { props.content ? props.content : slots.default?.() }
-                     </div>
-                  )}
+   },
+   render() {
+      const { openMenu } = this.context;
+      console.log(openMenu)
+      return (
+         <>
+            <DynamicTag
+               v-ripple={this.type === 'item'}
+               href={this.hasHref ? this.href : undefined}
+               role="menuitem"
+               to={this.hasRoute && !this.isDisabled ? this.to : undefined}
+               aria-label={this.hasLabel ? this.label : this.content}
+               tabindex={this.isDisabled ? -1 : 0}
+               type={ this.hasRoute && !this.isDisabled ? 'router-link' 
+                  : this.hasHref ? 'a' 
+                  : this.tag}
+               // onClick={onItemClick}
+               id={this.id}
+               class={[NAMESPACE,
+                  this.type.value,
+                  this.isDisabled && this.disabled.value
+               ]}
+            >  
+               { this.hasIcon && (
+                  <div class={`${NAMESPACE}__icon`}>
+                     { this.icon 
+                        ? <Icon 
+                              icon={this.icon.icon} 
+                              width="1.3rem" 
+                              height="1.3rem" 
+                           />
+                        : this.$slots.icon?.() 
+                     }
+                  </div>
+               )}
                
-                  { (hasBadge && props.type === 'item') && (
-                     <div class={`${NAMESPACE}__badge`}>
-                        <div class="w-9"></div>
-                        { props.badge 
-                           ? typeof props.badge === 'function'
-                              ? props.badge()
-                              : <Badge {...props.badge as PropType<BadgePropType>} />
-                           : slots.badge?.()
-                        }
-                     </div>
-                  )}
-               </DynamicTag>
-               { hasDivider && (<hr/>)}
-            </>
-         )
-      }
+               { this.hasContent && (
+                  <div class={`${NAMESPACE}__content`}>
+                     { this.content ? this.content : this.$slots.default?.() }
+                  </div>
+               )}
+            
+               { (this.hasBadge && this.type === 'item') && (
+                  <div class={`${NAMESPACE}__badge`}>
+                     <div class="w-9"></div>
+                     { this.badge 
+                        ? typeof this.badge === 'function'
+                           ? this.badge()
+                           : <Badge {...this.badge as PropType<BadgePropType>} />
+                        : this.$slots.badge?.()
+                     }
+                  </div>
+               )}
+            </DynamicTag>
+            { this.hasDivider && (<hr/>)}
+         </>
+      )
    }
+   // setup(props, {slots, emit, attrs}) { 
+   //    const instance = getCurrentInstance();
+      
+   //    const icon = props.icon as MenuItemModelIcon;
+   //    const tag = props.tag as string;
+   //    const id = props.id;
+
+   //    const disabled = computed(() => {
+   //       if(props.type === 'header') {
+   //          return undefined
+   //       }
+   //       return NAMESPACE + '--disabled';
+   //    })
+
+   //    const type = computed(() => {
+   //       if(props.type === 'item') {
+   //          return undefined
+   //       }
+   //       return NAMESPACE + `-${props.type as string}`;
+   //    })
+
+   //    const hasLabel = !!props.label;
+   //    const hasRoute = !!props.to;
+   //    const hasHref = !!props.href;
+   //    const hasContent = !!(slots.default || props.content);
+   //    const hasIcon = !!(slots.icon || props.icon);
+   //    const hasBadge = !!(slots.badge || props.badge);
+   //    const hasDivider = !!props.divider;
+   //    const isDisabled = !!props.disabled;
+
+   //    /**
+   //     * Handles the click event of the menu item and emits an "itemAction" event with the original event and the current instance.
+   //     * @param e - The click event.
+   //     */
+   //    function onItemClick(e: Event) {
+   //       emit("itemAction", {
+   //          originalEvent: e,
+   //          currentInstance: instance
+   //       });
+   //    }
+
+   //    return () => {
+         
+   //    }
+   // }
 })
 
 type MenuItemType = InstanceType<typeof MenuItem>;

@@ -6,6 +6,7 @@ import { defineComponent, onMounted, PropType, ref, Teleport, toRefs } from "vue
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
+import { Button } from "../Button/Button";
 
 /**
  * Namespace for the Menu component.
@@ -42,17 +43,33 @@ const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
    emits: ['onMenuFocus'],
+   provide(){
+      return {
+         $MenuKey: () => this.MenuKey
+      }
+   },
+   computed: {
+      MenuKey() {
+         return {
+            openMenu: this.openMenu,
+         }
+      }
+   },
    data() {
       return {
          hasModel: this.model?.length > 0,
          dimension: useDimension(this.$props),
          id: this.$attrs.id as string || generateComponentId(),
+         openMenu: ref(false)
       }
    },
    methods: {
       onFocused(e: FocusEvent) {
          this.isFocused = true;
          this.$emit('onMenuFocus', e)
+      },
+      open(e: Event) {
+         this.openMenu.value = true;
       }
    },
    render() { 
