@@ -8,6 +8,8 @@ import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
 import { Button } from "../Button/Button";
 
+import { DOM } from "@/utils/dom";
+
 /**
  * Namespace for the Menu component.
  */
@@ -51,25 +53,74 @@ const Menu = defineComponent({
    computed: {
       MenuKey() {
          return {
-            openMenu: this.openMenu,
+            test: this.test
          }
       }
    },
    data() {
       return {
          hasModel: this.model?.length > 0,
+         focusItemIndex: -1,
          dimension: useDimension(this.$props),
          id: this.$attrs.id as string || generateComponentId(),
-         openMenu: ref(false)
+         openMenu: ref(false),
+         list: ref(null),
       }
    },
+
    methods: {
       onFocused(e: FocusEvent) {
          this.isFocused = true;
+         this.setFocusItemIndex(0);
          this.$emit('onMenuFocus', e)
       },
       open(e: Event) {
          this.openMenu.value = true;
+      },
+      test() {
+         console.log('asd');
+      },
+      listRef(el: HTMLElement) {
+         this.list = el;
+      },
+      setFocusItemIndex(index: number) { 
+         // this.focusItemIndex = index;
+         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
+
+         this.focusItemIndex = index < 0 ? 0 : index >= listItems.length ? listItems.length - 1 : index;
+
+         if([...listItems].indexOf(listItems.item(index)) > -1)  {
+            listItems[index].focus();
+         }
+      },
+      focusNextItem() {
+         const nextItemIndex = this.focusItemIndex + 1;
+         this.setFocusItemIndex(nextItemIndex);
+      },
+      focusPrevItem() {
+         const prevItemIndex = this.focusItemIndex - 1;
+         this.setFocusItemIndex(prevItemIndex);
+      },
+      handleKeyDown(e: KeyboardEvent) { 
+         const { key } = e;
+         switch (key) {
+            case 'ArrowDown':
+               e.preventDefault();
+               this.focusNextItem();
+               break;
+            case 'ArrowUp':
+               e.preventDefault();
+               this.focusPrevItem();
+               break;
+            case 'Enter':
+               e.preventDefault();
+               break;
+            case 'Escape':
+               e.preventDefault();
+               break;
+            default:
+               break;
+         }
       }
    },
    render() { 
@@ -78,10 +129,11 @@ const Menu = defineComponent({
                class={NAMESPACE}
                id={this.id}
                style={this.dimension}
-               ref="menu"
+               onKeydown={this.handleKeyDown}
             >
                <ul class={`${NAMESPACE}-list`}
                   role="menu"
+                  ref={ this.listRef }
                   tabindex={0}
                   aria-activedescendant="true"
                   id={this.id + '-list'}

@@ -18,6 +18,8 @@
 
     @include utils-mixin.get-grid-append-prepend-setup;
 
+    
+
     &:disabled {
       @apply opacity-50 cursor-not-allowed;
     }
@@ -110,6 +112,9 @@
 @for $i from 1 through 5 {
   .btn-solid.elevation-#{$i} {
     @apply shadow-elevation-#{$i};
+    // &:focus {
+    //   @apply bg-slate-600;
+    // }
   };
 };
 

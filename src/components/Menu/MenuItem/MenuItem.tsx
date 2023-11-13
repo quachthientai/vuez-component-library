@@ -168,21 +168,22 @@ const MenuItem = defineComponent({
       }
    },
    render() {
-      const { openMenu } = this.context;
-      console.log(openMenu)
+      const { test } = this.context;
+      console.log(test)
       return (
          <>
             <DynamicTag
                v-ripple={this.type === 'item'}
                href={this.hasHref ? this.href : undefined}
                role="menuitem"
+               data-disabled={this.isDisabled}
                to={this.hasRoute && !this.isDisabled ? this.to : undefined}
                aria-label={this.hasLabel ? this.label : this.content}
                tabindex={this.isDisabled ? -1 : 0}
                type={ this.hasRoute && !this.isDisabled ? 'router-link' 
                   : this.hasHref ? 'a' 
                   : this.tag}
-               // onClick={onItemClick}
+               
                id={this.id}
                class={[NAMESPACE,
                   this.type.value,

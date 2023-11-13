@@ -29,7 +29,7 @@ export default {
         divider: true
       },
       { content: 'test',
-        disabled: true,
+
         divider: true,
       },
       // { label: 'Profile',
@@ -81,8 +81,7 @@ export default {
     content="Navigation"
     divider 
   /> -->
-  <div id="test" class="border h-5 border-red-500"></div>
-  <Button id="menu-active" @click="(e) => this.testEvent(e)" class="mr-2"  variant="outlined" color="secondary" >BUTTON</Button>
+
   <Menu ref="menu" :model="items"></Menu>
     
   <!-- <Menu>
