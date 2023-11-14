@@ -5,7 +5,7 @@ const handleRipple : HandleRippleFunc = (event, element) => {
    const container = element.getElementsByClassName("ripple")[0]
    const diameter = Math.max(element.clientWidth, element.clientHeight);
    const radius = diameter / 2;
-   
+
    const effect = createVNode(
       'span',
       container, { 
@@ -23,6 +23,7 @@ const handleRipple : HandleRippleFunc = (event, element) => {
    }
    
    container.appendChild(effect.el as HTMLElement);
+   event.stopImmediatePropagation()
 }
 
 export const Ripple = {

@@ -19,7 +19,6 @@
     @include utils-mixin.get-grid-append-prepend-setup;
 
     
-
     &:disabled {
       @apply opacity-50 cursor-not-allowed;
     }

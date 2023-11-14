@@ -8,7 +8,7 @@ import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
 import { Button } from "../Button/Button";
 
-import { DOM } from "@/utils/dom";
+import { DOM } from "@/utils/DOM";
 
 /**
  * Namespace for the Menu component.
@@ -67,7 +67,6 @@ const Menu = defineComponent({
          list: ref(null),
       }
    },
-
    methods: {
       onFocused(e: FocusEvent) {
          this.isFocused = true;
@@ -84,36 +83,57 @@ const Menu = defineComponent({
          this.list = el;
       },
       setFocusItemIndex(index: number) { 
-         // this.focusItemIndex = index;
          const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
 
          this.focusItemIndex = index < 0 ? 0 : index >= listItems.length ? listItems.length - 1 : index;
 
-         if([...listItems].indexOf(listItems.item(index)) > -1)  {
-            listItems[index].focus();
+         if(Array.from(listItems).indexOf(listItems.item(index)) > -1)  {
+            (listItems[index] as HTMLElement).focus();
          }
       },
-      focusNextItem() {
+      onArrowDownKey(e: KeyboardEvent) {
          const nextItemIndex = this.focusItemIndex + 1;
          this.setFocusItemIndex(nextItemIndex);
+         e.preventDefault();
       },
-      focusPrevItem() {
+      onArrowUpKey(e: KeyboardEvent) {
          const prevItemIndex = this.focusItemIndex - 1;
          this.setFocusItemIndex(prevItemIndex);
+         e.preventDefault();  
+      },
+      onHomeKey(e: KeyboardEvent) {
+         this.setFocusItemIndex(0);
+         e.preventDefault();
+      },
+      onEndKey(e: KeyboardEvent) {
+         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
+         this.setFocusItemIndex(listItems.length - 1);
+         e.preventDefault();
+      },
+      onEnterKey(e: KeyboardEvent) {
+         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
+         const item = listItems[this.focusItemIndex] as HTMLElement;
+         item.click();
+         e.preventDefault();
       },
       handleKeyDown(e: KeyboardEvent) { 
          const { key } = e;
+
          switch (key) {
             case 'ArrowDown':
-               e.preventDefault();
-               this.focusNextItem();
+               this.onArrowDownKey(e);
                break;
             case 'ArrowUp':
-               e.preventDefault();
-               this.focusPrevItem();
+               this.onArrowUpKey(e);
+               break;
+            case 'Home': 
+               this.onHomeKey(e);
+               break;
+            case 'End':
+               this.onEndKey(e);
                break;
             case 'Enter':
-               e.preventDefault();
+               this.onEnterKey(e);
                break;
             case 'Escape':
                e.preventDefault();

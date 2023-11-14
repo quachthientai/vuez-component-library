@@ -125,7 +125,7 @@ const vMenuItemProps = makePropsFactory({
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
-   inheritAttrs: true,
+   inheritAttrs: false,
    inject: ['$MenuKey'],
    emits: {
       itemAction(payload: {
@@ -167,6 +167,11 @@ const MenuItem = defineComponent({
          return NAMESPACE + `-${this.type as string}`;
       }
    },
+   methods: {
+      onItemClick(e: Event) { 
+         console.log(e);
+      }
+   },
    render() {
       const { test } = this.context;
       console.log(test)
@@ -183,7 +188,7 @@ const MenuItem = defineComponent({
                type={ this.hasRoute && !this.isDisabled ? 'router-link' 
                   : this.hasHref ? 'a' 
                   : this.tag}
-               
+               onClick={this.isDisabled ? undefined : this.onItemClick}
                id={this.id}
                class={[NAMESPACE,
                   this.type.value,
