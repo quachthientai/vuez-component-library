@@ -5,11 +5,14 @@ interface elevationProps {
    elevation?: PropOptions<number>
 }
 
-const elevationProps : elevationProps = makePropsFactory({
-   elevation: {
-      type: Number, 
-   }
-});
+function makeElevationProp(defaultVal? : number) : elevationProps {
+   return makePropsFactory({
+      elevation: {
+         type: Number,
+         default: !defaultVal ? 0 : defaultVal
+      }
+   })
+}
 
 function useElevation(elevation: number) : string {
    const eleVal = computed(() => {
@@ -25,5 +28,5 @@ function useElevation(elevation: number) : string {
 
 export {
    useElevation,
-   elevationProps
+   makeElevationProp
 }

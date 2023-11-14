@@ -2,13 +2,15 @@
 @use 'base/reset';
 @use 'themes/theme';
 @use 'components/Button/button';
-// @use 'components/badge';
+@use 'components/Badge/badge';
+@use 'components/Menu/menu';
+@use 'components/Menu/menu-item';
 // @use 'components/button-group';
 // @use 'components/Forms/switch';
 // @use 'components/Forms/checkbox';
 // @use 'components/Forms/radio';
 // @use 'components/dropdown';
-// @use 'components/Toast/toast';
+@use 'components/Toast/toast';
 @use 'components/Card/card';
 @use '/src/directives/ripple/ripple';
 @use '/src/directives/drag-drop/drag/drag';

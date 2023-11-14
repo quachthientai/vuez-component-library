@@ -1,7 +1,7 @@
 import { defineComponent, computed, defineProps } from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { CardHeader, CardText, CardAction  } from '@/components/Card/index';
-import { useDimension, dimensionProps } from "@/composable/dimenstion";
+import { useDimension, makeDimensionProp } from "@/composable/dimension";
 
 const vCardProps = makePropsFactory({
    title: String,
@@ -12,7 +12,7 @@ const vCardProps = makePropsFactory({
       type: Number,
       default: 0
    },
-   ...dimensionProps
+   ...makeDimensionProp()
 })
 
 const Card = defineComponent({
@@ -33,7 +33,7 @@ const Card = defineComponent({
       
       return() => {
          return (
-            <div style={dimension.value} class={['card', elevation.value]}>
+            <div style={dimension} class={['card', elevation.value]}>
                {  (hasTitle || hasSubtitle || hasPrepend || hasAppend) && (
                      <CardHeader 
                         title={props.title ?? props.title }

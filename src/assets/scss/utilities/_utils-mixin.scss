@@ -15,9 +15,12 @@
    width: 100%;
 }
 
-@mixin get-elevation($elevation) {
-   @apply shadow-#{$elevation};
-}
+@mixin get-overlay-position($top, $right, $bottom, $left){
+   top: $top;
+   bottom: $bottom;
+   right: $right;
+   left: $left;
+};
 
 
 /// A mixin that returns a ripple color based on the given color..
@@ -58,6 +61,7 @@
    grid-template-areas: "prepend content append";
    grid-template-columns: max-content auto max-content;
 }
+
 
 
 /// A mixin that generate grid template styles based on the provided template parameter
@@ -101,7 +105,6 @@
       } @else {
          @apply bg-#{$color}-600;
       }
-      
    } @else {
       @if $color == 'secondary' {
          @apply hover:bg-#{$color}-200
@@ -112,6 +115,27 @@
       } @else {
          @apply hover:bg-#{$color}-100 
             dark:hover:bg-#{$color}-500/10;
+      }
+   }
+}
+
+@mixin get-focus-color($variant,$color) {
+   @if($variant == 'solid') {
+      @if($color == 'plain') {
+         @apply focus:bg-gray-400/70 dark:focus:bg-gray-600;
+      } @else {
+         @apply bg-#{$color}-600;
+      }
+   } @else {
+      @if $color == 'secondary' {
+         @apply focus:bg-#{$color}-200
+            dark:focus:bg-#{$color}-700/50;
+      } @else if ($color == 'plain') {
+         @apply focus:bg-#{$color}-200 
+            dark:focus:bg-#{$color}-200/10;
+      } @else {
+         @apply focus:bg-#{$color}-100 
+            dark:focus:bg-#{$color}-500/10;
       }
    }
 }

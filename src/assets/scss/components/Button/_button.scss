@@ -19,6 +19,7 @@
 
     @include utils-mixin.get-grid-append-prepend-setup;
 
+    
     &:disabled {
       @apply opacity-50 cursor-not-allowed;
     }
@@ -39,7 +40,7 @@
 
     &__content {
       @include utils-mixin.get-grid-template('content');
-      @apply transition-all duration-150 ease-out;
+      @apply flex items-center gap-1 justify-center transition-all duration-150 ease-out;
     }
 
     &__append {
@@ -113,8 +114,11 @@
 }
 
 @for $i from 1 through 5 {
-  .elevation-#{$i} {
-    @apply border-none shadow-elevation-#{$i};
+  .btn-solid.elevation-#{$i} {
+    @apply shadow-elevation-#{$i};
+    // &:focus {
+    //   @apply bg-slate-600;
+    // }
   };
 };
 
@@ -134,7 +138,7 @@
       }
     }
     
-    @each $variant in utils-variables.$variants {
+    @each $variant in btn-variables.$button-variants {
       .btn-#{$color}.btn-#{$variant} {
         @include utils-mixin.get-variant($variant, $color);
 

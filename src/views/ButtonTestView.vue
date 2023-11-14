@@ -1,12 +1,11 @@
 <script >
-import { Button } from '@/components/Button/Button';
+// import { Button } from '@/components/Button/Button';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 
 export default {
   name: 'ButtonView',
   components: {
-    Button,
     Icon
   },
   data() {
@@ -27,66 +26,121 @@ export default {
 
 <template>
    <div class="flex justify-start mt-2">
-      <Button size="sm" 
+      <Button
          :loading="loading"
-         @click="load"
-         :prependIcon="{icon: 'mdi-check-circle'}" 
-         :appendIcon="{icon: 'mdi-check-circle'}"  
          class="mr-2" 
          variant="outlined" 
          color="primary"
-      > 
+         @click="(e) => console.log(e)"
+      >
          BUTTON
       </Button>
-      
-      <Button size="md" :disabled="true"  :prependIcon="{icon: 'mdi-check-circle'}"  class="mr-2" variant="outlined" color="secondary" ></Button>
+      <Button class="mr-2" variant="outlined" color="secondary" >BUTTON</Button>
+      <Button class="mr-2" variant="outlined" color="success">BUTTON</Button>
+      <Button class="mr-2" variant="outlined" color="danger">BUTTON</Button>
+      <Button class="mr-2" variant="outlined" color="warning">BUTTON</Button>
+      <Button class="mr-2" variant="outlined" color="info">BUTTON</Button>
+      <Button class="mr-2" variant="outlined">BUTTON</Button>
 
-      <Button size="md"  :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" variant="outlined" color="secondary" >BUTTON</Button>
-      
-      <Button size="lg" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" variant="outlined" color="success">LARGE BUTTON</Button>
-
-      <Button size="md" class="mr-2" variant="outlined" color="danger">BUTTON</Button>
-      <Button size="md" class="mr-2" variant="outlined" color="warning">BUTTON</Button>
-      <Button size="md" class="mr-2" variant="outlined" color="info">BUTTON</Button>
-      <Button size="md" :elevation="3" variant="outlined" class="mr-2" color="plain">BUTTON</Button>
-   </div>
-
-   <div class="flex justify-start mt-2">
-      <Button size="sm" :elevation="3" class="mr-2 shadow-elevation-3" color="primary">SMALL BUTTON</Button>
-      <Button size="md" :elevation="3" class="mr-2" color="secondary">REGULAR BUTTON</Button>
-      <Button size="lg" :disabled="true"  href="" :elevation="3" class="mr-2" color="success">LARGE BUTTON</Button>
-      <Button size="md" :elevation="3" class="mr-2" color="danger">BUTTON</Button>
-      <Button size="md" :elevation="3" class="mr-2" color="warning">BUTTON</Button>
-      <Button size="md" :elevation="3" class="mr-2" color="info">BUTTON</Button>
-      <Button :elevation="1" class="mr-2" >BUTTON</Button>
-   </div>
-
-   <div class="flex justify-start mt-2">
-      <Button size="sm" class="mr-2" variant="text" color="primary">SMALL BUTTON</Button>
-      <Button size="md" class="mr-2" variant="text" color="secondary">REGULAR BUTTON</Button>
-      <Button size="lg" class="mr-2" variant="text" color="success">LARGE BUTTON</Button>
-      <Button size="md" class="mr-2" variant="text" color="danger">BUTTON</Button>
-      <Button size="md" class="mr-2" variant="text" color="warning">BUTTON</Button>
-      <Button size="md" class="mr-2" variant="text" color="info">BUTTON</Button>
-      <Button size="md"  class="mr-2" variant="text" color="plain">BUTTON</Button>
-
+      <Button :loading="loading"
+         @click="load" 
+         class="mr-2" 
+         variant="outlined" 
+         :icon="{icon: 'mdi-account'}" 
+      />
+      <Button class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" color="info" />
+      <Button class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" color="warning" />
+      <Button class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" color="danger" />
+      <Button class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" color="success" />
+      <Button class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" color="secondary" />
+      <Button class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" color="primary" />
       
    </div>
 
    <div class="flex justify-start mt-2">
-      <Button size="md" text="REGULAR BUTTON" :elevation="3" class="mr-2" color="warning"></Button>
+      <Button :loading="loading"
+         @click="load" 
+         :elevation="3" 
+         class="mr-2" 
+         color="primary">BUTTON
+      </Button>
+      <Button :elevation="3" class="mr-2" color="secondary">BUTTON</Button>
+      <Button :elevation="3" class="mr-2" color="success">BUTTON</Button>
+      <Button :elevation="3" class="mr-2" color="danger">BUTTON</Button>
+      <Button :elevation="3" class="mr-2" color="warning">BUTTON</Button>
+      <Button :elevation="3" class="mr-2" color="info">BUTTON</Button>
+      <Button :elevation="3" class="mr-2">BUTTON</Button>
 
-      <Button size="sm" class="mr-2" :elevation="5" :icon="{icon: 'mdi-account'}" color="plain">a</Button>
+      <Button :loading="loading"
+         @click="load"
+         :elevation="3" 
+         class="mr-2" 
+         :icon="{icon: 'mdi-account'}" 
+      />
+      <Button :elevation="3" class="mr-2" :icon="{icon: 'mdi-account'}" color="info" />
+      <Button :elevation="3" class="mr-2" :icon="{icon: 'mdi-account'}" color="warning" />
+      <Button :elevation="3" class="mr-2" :icon="{icon: 'mdi-account'}" color="danger" />
+      <Button :elevation="3" class="mr-2" :icon="{icon: 'mdi-account'}" color="success" />
+      <Button :elevation="3" class="mr-2" :icon="{icon: 'mdi-account'}" color="secondary" />
+      <Button :elevation="3" class="mr-2" :icon="{icon: 'mdi-account'}" color="primary" />
+   </div>
 
-      <Button class="mr-2" :loading="loading" @click="load" :elevation="5" :icon="{icon: 'mdi-account'}" color="secondary">a</Button>
+   <div class="flex justify-start mt-3">
+      <Button :loading="loading"
+         @click="load" 
+         class="mr-2" 
+         variant="text" 
+         color="primary">BUTTON
+      </Button>
+      <Button class="mr-2" variant="text" color="secondary">BUTTON</Button>
+      <Button class="mr-2" variant="text" color="success">BUTTON</Button>
+      <Button class="mr-2" variant="text" color="danger">BUTTON</Button>
+      <Button class="mr-2" variant="text" color="warning">BUTTON</Button>
+      <Button class="mr-2" variant="text" color="info">BUTTON</Button>
+      <Button class="mr-2" variant="text">BUTTON</Button>
 
-      <Button size="lg" href="/button" :elevation="5" class="mr-2" :icon="{icon: 'mdi-account'}" color="success">a</Button>
-      
+      <Button :loading="loading"
+         @click="load"
+         class="mr-2" 
+         variant="text" 
+         :icon="{icon: 'mdi-account'}" 
+      />
+      <Button class="mr-2" variant="text" :icon="{icon: 'mdi-account'}" color="info" />
+      <Button class="mr-2" variant="text" :icon="{icon: 'mdi-account'}" color="warning" />
+      <Button class="mr-2" variant="text" :icon="{icon: 'mdi-account'}" color="danger" />
+      <Button class="mr-2" variant="text" :icon="{icon: 'mdi-account'}" color="success" />
+      <Button class="mr-2" variant="text" :icon="{icon: 'mdi-account'}" color="secondary" />
+      <Button class="mr-2" variant="text" :icon="{icon: 'mdi-account'}" color="primary" />
+   </div>
 
-      <Button size="lg" :elevation="5" variant="text" class="mr-2" :icon="{icon: 'mdi-account'}" color="plain">a</Button>
+   <div class="flex justify-start mt-3">
+      <Button size="sm" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" >SMALL BUTTON</Button>
+      <Button size="md" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" >REGULAR BUTTON</Button>
+      <Button size="lg" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" >LARGE BUTTON</Button>
 
-      <Button size="lg" :elevation="4" class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" :block="true" color="plain">asdasdasd</Button>
-      <Button size="lg" :elevation="5" class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" :block="true" color="plain">asdasdasd</Button>
+      <Button size="lg" class="mr-2" :elevation="3" :icon="{icon: 'mdi-account'}" color="primary" >SMALL BUTTON</Button>
+      <Button size="md" class="mr-2" :elevation="3" :icon="{icon: 'mdi-account'}" color="primary" >REGULAR BUTTON</Button>
+      <Button size="sm" class="mr-2" :elevation="3" :icon="{icon: 'mdi-account'}" color="primary" >LARGE BUTTON</Button>
+   </div>
+
+   <div class="flex justify-start mt-3">
+      <Button size="sm" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="outlined" >SMALL BUTTON</Button>
+      <Button size="md" :prependIcon="{icon: 'mdi-check-circle' }" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="outlined" >REGULAR BUTTON</Button>
+      <Button size="lg" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="outlined" >LARGE BUTTON</Button>
+
+      <Button size="lg" class="mr-2" :elevation="3" variant="outlined" :icon="{icon: 'mdi-account'}" color="primary" >SMALL BUTTON</Button>
+      <Button size="md" class="mr-2" :elevation="3" variant="outlined" :icon="{icon: 'mdi-account'}" color="primary" >REGULAR BUTTON</Button>
+      <Button size="sm" class="mr-2" :elevation="3" variant="outlined" :icon="{icon: 'mdi-account'}" color="primary" >LARGE BUTTON</Button>
+   </div>
+
+   <div class="flex justify-start mt-3">
+      <Button size="sm" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="text" >SMALL BUTTON</Button>
+      <Button size="md" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="text" >REGULAR BUTTON</Button>
+      <Button size="lg" :prependIcon="{icon: 'mdi-check-circle'}" :appendIcon="{icon: 'mdi-check-circle'}" class="mr-2" :elevation="3" color="primary" variant="text" >LARGE BUTTON</Button>
+
+      <Button size="lg" class="mr-2" :elevation="3" variant="text" :icon="{icon: 'mdi-account'}" color="primary" >SMALL BUTTON</Button>
+      <Button size="md" class="mr-2" :elevation="3" variant="text" :icon="{icon: 'mdi-account'}" color="primary" >REGULAR BUTTON</Button>
+      <Button size="sm" class="mr-2" :elevation="3" variant="text" :icon="{icon: 'mdi-account'}" color="primary" >LARGE BUTTON</Button>
    </div>
 </template>
 
