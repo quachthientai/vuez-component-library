@@ -52,7 +52,7 @@ export default {
    </div>
 
    <div class="flex justify-start mt-2">
-      <Button size="sm" :elevation="3" class="mr-2" color="primary">SMALL BUTTON</Button>
+      <Button size="sm" :elevation="3" class="mr-2 shadow-elevation-3" color="primary">SMALL BUTTON</Button>
       <Button size="md" :elevation="3" class="mr-2" color="secondary">REGULAR BUTTON</Button>
       <Button size="lg" :disabled="true"  href="" :elevation="3" class="mr-2" color="success">LARGE BUTTON</Button>
       <Button size="md" :elevation="3" class="mr-2" color="danger">BUTTON</Button>
@@ -85,8 +85,8 @@ export default {
 
       <Button size="lg" :elevation="5" variant="text" class="mr-2" :icon="{icon: 'mdi-account'}" color="plain">a</Button>
 
-      <Button size="lg" :elevation="5" class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" color="plain">asdasdasd</Button>
-      
+      <Button size="lg" :elevation="4" class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" :block="true" color="plain">asdasdasd</Button>
+      <Button size="lg" :elevation="5" class="mr-2" variant="outlined" :icon="{icon: 'mdi-account'}" :block="true" color="plain">asdasdasd</Button>
    </div>
 </template>
 

@@ -9,6 +9,7 @@
 @tailwind utilities;
 
 @layer base {
+  /// Regular button styling 
   .btn {
     @apply relative 
       rounded-[5px] 
@@ -24,11 +25,16 @@
 
     &__loader {
       @include utils-mixin.get-loader;
+      font-size: (utils-variables.$icon-multiplier * 1.5em);
     }
 
     &__prepend {
       @include utils-mixin.get-grid-template('prepend');
       @apply flex mr-[.2em] transition-all duration-150 ease-out;
+
+      &-icon {
+        font-size: (utils-variables.$icon-multiplier * 1.5em);
+      }
     }
 
     &__content {
@@ -39,6 +45,7 @@
     &__append {
       @include utils-mixin.get-grid-template('append');
       @apply flex ml-[.2em] transition-all duration-150 ease-out;
+      font-size: (utils-variables.$icon-multiplier * 1.5em);
     }
 
     &.btn-sm {
@@ -68,6 +75,7 @@
     }
   }
 
+  /// Icon button styling
   .btn-icon {
     @apply relative flex justify-center rounded-full;
 
@@ -97,10 +105,7 @@
 
     &.btn-loading {
       @apply cursor-not-allowed;
-    
-      .btn__content,
-      .btn__prepend,
-      .btn__append {
+      .btn__content{
         @apply opacity-0;
       }
     }
@@ -108,16 +113,16 @@
 }
 
 @for $i from 1 through 5 {
-  .btn-solid.elevation-#{$i} {
-    @apply shadow-elevation-#{$i};
+  .elevation-#{$i} {
+    @apply border-none shadow-elevation-#{$i};
   };
 };
 
-.btn__prepend-icon,
-.btn__append-icon,
-.btn__loader {
-  font-size: (utils-variables.$icon-multiplier * 1.5em);
-}
+@each $elevation in utils-variables.$elevation-levels {
+  .elevation-#{$elevation} {
+    @apply border-none shadow-elevation-#{$elevation};
+  };
+};
 
 @layer components {
   @each $color in utils-variables.$colors {

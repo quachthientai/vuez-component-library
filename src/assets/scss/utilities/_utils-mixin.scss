@@ -15,6 +15,10 @@
    width: 100%;
 }
 
+@mixin get-elevation($elevation) {
+   @apply shadow-#{$elevation};
+}
+
 
 /// A mixin that returns a ripple color based on the given color..
 /// @param {string} $color - The color to apply styles for
