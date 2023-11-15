@@ -59,15 +59,29 @@ const Menu = defineComponent({
    },
    data() {
       return {
-         hasModel: this.model?.length > 0,
-         focusItemIndex: -1,
          dimension: useDimension(this.$props),
+         focusItemIndex: -1,
+         hasModel: this.model?.length > 0,
          id: this.$attrs.id as string || generateComponentId(),
+         list: null,
+         focusableItems: null,
          openMenu: ref(false),
-         list: ref(null),
+      }
+   },
+   mounted() {
+      this.focusableItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
+   },
+   watch: {
+      focusItemIndex(newIndex: number, oldIndex: number) {
+         this.updateTabIndex(newIndex);
       }
    },
    methods: {
+      updateTabIndex(index: number) {
+         this.focusableItems.forEach((item: HTMLElement, i: number) => {
+            item.setAttribute('tabindex', index === i ? '0' : '-1');
+         })
+      },
       onFocused(e: FocusEvent) {
          this.isFocused = true;
          this.setFocusItemIndex(0);
@@ -83,12 +97,12 @@ const Menu = defineComponent({
          this.list = el;
       },
       setFocusItemIndex(index: number) { 
-         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
+         this.focusItemIndex = index < 0 ? 0 
+            : index >= this.focusableItems.length ? this.focusableItems.length - 1 
+            : index;
 
-         this.focusItemIndex = index < 0 ? 0 : index >= listItems.length ? listItems.length - 1 : index;
-
-         if(Array.from(listItems).indexOf(listItems.item(index)) > -1)  {
-            (listItems[index] as HTMLElement).focus();
+         if(Array.from(this.focusableItems).indexOf(this.focusableItems.item(index)) > -1)  {
+            (this.focusableItems[index] as HTMLElement).focus();
          }
       },
       onArrowDownKey(e: KeyboardEvent) {
@@ -106,13 +120,11 @@ const Menu = defineComponent({
          e.preventDefault();
       },
       onEndKey(e: KeyboardEvent) {
-         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
-         this.setFocusItemIndex(listItems.length - 1);
+         this.setFocusItemIndex(this.focusableItems.length - 1);
          e.preventDefault();
       },
       onEnterKey(e: KeyboardEvent) {
-         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
-         const item = listItems[this.focusItemIndex] as HTMLElement;
+         const item = this.focusableItems[this.focusItemIndex] as HTMLElement;
          item.click();
          e.preventDefault();
       },

@@ -6,17 +6,22 @@
 
 @layer base {
    .vz-menu {
-      margin: 1rem;
-      @apply absolute bg-light text-dark dark:bg-slate-700 dark:text-light rounded-[5px] overflow-auto dark:shadow-elevation-4 shadow-elevation-2 py-1;
-
-      &-list {
-         width: 100%;
-      }
+      @apply 
+         bg-light text-dark dark:bg-slate-700 dark:text-light 
+         rounded-[5px] overflow-auto dark:shadow-elevation-4 
+         shadow-elevation-2 py-1;
+      width: 150px;
+      
       // :focus-visible{
       //    background-color: darkblue;
       // }
       // &-item {
          
       // }
+   }
+
+   .vz-menu-list {
+      width: 100%;
+      // position: relative;
    }
 }

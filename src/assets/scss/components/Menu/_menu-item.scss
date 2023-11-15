@@ -6,27 +6,22 @@
 
 @layer base {
    .vz-menu-item {
-      @apply py-1 text-sm relative px-4 text-gray-600 dark:text-gray-200;
-      align-items: center;
-      min-height: 40px;
-      width: 100%;
-      cursor: pointer;
+      @apply py-1 
+         text-sm relative px-4 
+         text-gray-600 dark:text-gray-200 
+         align-middle min-h-[40px] w-full 
+         cursor-pointer gap-2;
       @include utils-mixin.get-grid-append-prepend-setup;
-      
-      
-      
-      @apply gap-2;
-      display: grid;
-      
+
       > .ripple .ripple__effect {
-         @include utils-mixin.get-rgb-ripple-color('primary');
-       }
+         @include utils-mixin.get-rgb-ripple-color('plain');
+      }
 
       &:hover{
          @include utils-mixin.get-hover-color('text', 'plain');
       }
 
-      &:focus-visible {
+      &:focus-visible, &:focus {
          @apply outline-none;
          @include utils-mixin.get-focus-color('text', 'plain');
       }

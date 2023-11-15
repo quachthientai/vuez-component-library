@@ -2,6 +2,7 @@ import { makePropsFactory } from "@/utils/makePropFactory";
 import { RouteLocationRaw } from 'vue-router';
 import { 
    computed,
+   ref,
    defineComponent,
    PropType,
    RendererElement,
@@ -118,10 +119,6 @@ const vMenuItemProps = makePropsFactory({
    key: String,
 })
 
-// const vMenuItemProps = makePropsFactory({
-//    test: String
-// })
-
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
@@ -145,6 +142,7 @@ const MenuItem = defineComponent({
          hasBadge: !!(this.$slots.badge || this.badge),
          hasDivider: !!this.divider,
          isDisabled: !!this.disabled,
+         tabIndex: ref(null)
       }
    },
    directives: {
@@ -167,9 +165,20 @@ const MenuItem = defineComponent({
          return NAMESPACE + `-${this.type as string}`;
       }
    },
+   watch: {
+      tabIndex(oldValue: number, newValue: number) {
+         console.log(oldValue, newValue)
+      }
+   },
    methods: {
-      onItemClick(e: Event) { 
-         console.log(e);
+      onFocused(e: Event) { 
+         console.log(e.target);
+      },
+      onBlured(e: Event) {
+         console.log('blured')
+      },
+      onItemClick(e: Event) {
+         console.log(e)
       }
    },
    render() {
@@ -178,6 +187,8 @@ const MenuItem = defineComponent({
       return (
          <>
             <DynamicTag
+               onFocus={this.onFocused}
+               onBlur={this.onBlured}
                v-ripple={this.type === 'item'}
                href={this.hasHref ? this.href : undefined}
                role="menuitem"
