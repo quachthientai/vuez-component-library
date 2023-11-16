@@ -4,6 +4,6 @@
 
 @layer base{
     .vz-input{
-        @apply w-[31.4rem] h-[4.8rem] rounded-[5px] border border-solid border-[#E5E5E5] bg-[#FFFFFF] text-[#000000] text-[1.4rem] px-[1.6rem] py-[1.2rem] ;
+        @apply relative w-[15rem] h-[3rem] border border-solid border-secondary-300 rounded-md focus:border-primary-500 transition;
     }
 }
