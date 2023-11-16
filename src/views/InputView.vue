@@ -17,6 +17,7 @@ export default defineComponent({
     <p>Date Input</p>
     <input v-validate="{statement:'Validation Format of Date', minDate:'10-20-2023', maxDate:'11-25-2023'}" class="input_test border border-slate-800" type="date">
     <br>
+    <InputVue></InputVue>
     
 </template>
 
