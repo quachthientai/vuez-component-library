@@ -32,6 +32,10 @@ export default {
 
         divider: true,
       },
+      { content: 'test2',
+
+        divider: true,
+      },
       // { label: 'Profile',
       //   divider: true,
       //   badge: {
@@ -67,8 +71,9 @@ export default {
       })
     },
     testEvent(e) {
-      // console.log(this.$refs.menu)
-      this.$refs.menu.toggle(e)
+      console.log(e)
+      // // console.log(this.$refs.menu)
+      // this.$refs.menu.toggle(e)
     },
 
   }
@@ -82,7 +87,7 @@ export default {
     divider 
   /> -->
 
-  <Menu ref="menu" :model="items"></Menu>
+  <Menu ref="menu" @on-menu-focus="testEvent" :model="items"></Menu>
     
   <!-- <Menu>
     <MenuItem v-for="item in items"

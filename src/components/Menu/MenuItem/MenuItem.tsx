@@ -149,9 +149,9 @@ const MenuItem = defineComponent({
       'ripple': Ripple
    },
    computed: { 
-      context() {
-         return this.$MenuKey()
-      },
+      // context() {
+      //    return this.$MenuKey()
+      // },
       disabled() {
          if(this.type === 'header') {
             return undefined
@@ -182,8 +182,7 @@ const MenuItem = defineComponent({
       }
    },
    render() {
-      const { test } = this.context;
-      console.log(test)
+
       return (
          <>
             <DynamicTag

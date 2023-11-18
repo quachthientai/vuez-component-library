@@ -2,11 +2,10 @@ import { makeColorProp } from "@/composable/color";
 import { makeDimensionProp, useDimension } from "@/composable/dimension";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent, onMounted, PropType, ref, Teleport, toRefs } from "vue";
+import { ComponentInternalInstance, defineComponent, getCurrentInstance, onMounted, PropType, ref, Teleport, toRefs } from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
-import { Button } from "../Button/Button";
 
 import { DOM } from "@/utils/DOM";
 
@@ -44,32 +43,34 @@ const vMenuProps = makePropsFactory({
 const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
-   emits: ['onMenuFocus'],
-   provide(){
-      return {
-         $MenuKey: () => this.MenuKey
-      }
-   },
-   computed: {
-      MenuKey() {
-         return {
-            test: this.test
-         }
+   emits: {
+      'onMenuFocus': (payload: {
+         originalEvent: FocusEvent,
+         currentInstance: ComponentInternalInstance,
+      }) => {
+         return payload.originalEvent && payload.currentInstance;
       }
    },
    data() {
       return {
+         instance: null,
          dimension: useDimension(this.$props),
          focusItemIndex: -1,
          hasModel: this.model?.length > 0,
          id: this.$attrs.id as string || generateComponentId(),
          list: null,
          focusableItems: null,
-         openMenu: ref(false),
+         firstChars: null,
       }
    },
    mounted() {
+      this.instance = getCurrentInstance();
+
       this.focusableItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
+
+      this.firstChars = Array.from(this.focusableItems).map((item: HTMLElement) => {
+         return item.textContent?.charAt(0).toLowerCase();
+      });
    },
    watch: {
       focusItemIndex(newIndex: number, oldIndex: number) {
@@ -85,13 +86,10 @@ const Menu = defineComponent({
       onFocused(e: FocusEvent) {
          this.isFocused = true;
          this.setFocusItemIndex(0);
-         this.$emit('onMenuFocus', e)
-      },
-      open(e: Event) {
-         this.openMenu.value = true;
-      },
-      test() {
-         console.log('asd');
+         this.$emit('onMenuFocus', {
+            originalEvent: e,
+            currentInstance: this.instance,
+         })
       },
       listRef(el: HTMLElement) {
          this.list = el;
@@ -124,8 +122,29 @@ const Menu = defineComponent({
          e.preventDefault();
       },
       onEnterKey(e: KeyboardEvent) {
-         const item = this.focusableItems[this.focusItemIndex] as HTMLElement;
-         item.click();
+         this.focusableItems[this.focusItemIndex].click();
+         e.preventDefault();
+      },
+      onSpaceKey(e: KeyboardEvent) {
+         this.focusableItems[this.focusItemIndex].click();
+         e.preventDefault();
+      },
+      onFirstCharKey(e: KeyboardEvent) {
+         const char = e.key.toLowerCase();
+
+         // Find the first item that starts with the char and set focus
+         let foundIndex = this.firstChars.indexOf(char, this.focusItemIndex + 1);
+
+         // If not found in search after focus item, start from the beginning
+         if(foundIndex === -1) {
+            foundIndex = this.firstChars.indexOf(char,0);
+         }
+
+         // If match was found, set focus
+         if(foundIndex > -1) {
+            this.setFocusItemIndex(foundIndex);
+         }
+
          e.preventDefault();
       },
       handleKeyDown(e: KeyboardEvent) { 
@@ -144,6 +163,9 @@ const Menu = defineComponent({
             case 'End':
                this.onEndKey(e);
                break;
+            case 'Space':
+               this.onSpaceKey(e);
+               break;
             case 'Enter':
                this.onEnterKey(e);
                break;
@@ -151,75 +173,54 @@ const Menu = defineComponent({
                e.preventDefault();
                break;
             default:
+               if(/\S/.test(key) && key.length === 1) {
+                  this.onFirstCharKey(e);
+               }
                break;
          }
       }
    },
    render() { 
       return (
-            <div 
-               class={NAMESPACE}
-               id={this.id}
-               style={this.dimension}
-               onKeydown={this.handleKeyDown}
+         <div 
+            class={NAMESPACE}
+            id={this.id}
+            style={this.dimension}
+            ref="menu"
+            onKeydown={this.handleKeyDown}
+         >
+            <ul class={`${NAMESPACE}-list`}
+               role="menu"
+               ref={ this.listRef }
+               tabindex={0}
+               id={this.id + '-list'}
+               onFocus={ this.onFocused }
             >
-               <ul class={`${NAMESPACE}-list`}
-                  role="menu"
-                  ref={ this.listRef }
-                  tabindex={0}
-                  aria-activedescendant="true"
-                  id={this.id + '-list'}
-                  onFocus={ this.onFocused }
-               >
-                  {this.$slots.default?.()}  
-                  {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
-                     const { action, ...mutateItem } = item;
-                     return (
-                        <MenuItem 
-                           {...mutateItem}
-                           onItemAction={item.action}
-                           id={this.id + '-' + index}
-                           key={item.key || item.label + index.toString()}
-                        >
-                           {item.badge && { badge: () => {
-                                 return (
-                                    typeof item.badge === 'function' 
-                                    ? item.badge() 
-                                    : <Badge {...item.badge} />
-                                 )
-                              }
-                           }}
-                        </MenuItem>
-                     )
-                  })}
-               </ul>
-            </div>
-         
-
+               {this.$slots.default?.()}  
+               {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
+                  const { action, ...mutateItem } = item;
+                  return (
+                     <MenuItem 
+                        {...mutateItem}
+                        onItemAction={item.action}
+                        id={this.id + '-' + index}
+                        key={item.key || item.label + index.toString()}
+                     >
+                        {item.badge && { badge: () => {
+                              return (
+                                 typeof item.badge === 'function' 
+                                 ? item.badge() 
+                                 : <Badge {...item.badge} />
+                              )
+                           }
+                        }}
+                     </MenuItem>
+                  )
+               })}
+            </ul>
+         </div>
       )
    },
-   // setup(props, {slots, attrs, emit}) {
-      
-   //    const hasModel = (props.model as MenuItemModel[])?.length > 0;
-   //    const isFocused = ref(false);
-      
-   //    const dimension = useDimension(props)
-   //    const id = attrs.id as string || generateComponentId();
-      
-   //    /**
-   //     * Handles the focus event for the menu.
-   //     * @param e - The focus event.
-   //     */
-   //    function onFocused(e: FocusEvent) {
-   //       isFocused.value = true;
-   //       emit('onMenuFocus', e)
-   //    }
-      
-   //    return () => {
-         
-         
-   //    }
-   // }
 })
 
 type MenuType = InstanceType<typeof Menu>;
