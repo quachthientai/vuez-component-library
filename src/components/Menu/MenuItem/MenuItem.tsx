@@ -123,7 +123,6 @@ const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
    inheritAttrs: false,
-   inject: ['$MenuKey'],
    emits: {
       itemAction(payload: {
          originalEvent: Event, 
@@ -142,28 +141,27 @@ const MenuItem = defineComponent({
          hasBadge: !!(this.$slots.badge || this.badge),
          hasDivider: !!this.divider,
          isDisabled: !!this.disabled,
-         tabIndex: ref(null)
       }
    },
    directives: {
       'ripple': Ripple
    },
    computed: { 
-      // context() {
-      //    return this.$MenuKey()
-      // },
-      disabled() {
-         if(this.type === 'header') {
-            return undefined
+      itemClasses() {
+         return {
+            disabled: this.isDisabled 
+               ? this.type === 'item' 
+                  ? NAMESPACE + '--disabled'
+                  : undefined
+               : undefined,
+            type: this.type === 'item' 
+               ? undefined 
+               : NAMESPACE + `-${this.type}`,
+            content: this.hasContent && NAMESPACE + '__content',
+            icon: this.hasIcon && NAMESPACE + '__icon',
+            badge: this.hasBadge && NAMESPACE + '__badge',
          }
-         return NAMESPACE + '--disabled';
       },
-      type() {
-         if(this.type === 'item') {
-            return undefined
-         }
-         return NAMESPACE + `-${this.type as string}`;
-      }
    },
    watch: {
       tabIndex(oldValue: number, newValue: number) {
@@ -172,41 +170,51 @@ const MenuItem = defineComponent({
    },
    methods: {
       onFocused(e: Event) { 
-         console.log(e.target);
+         // console.log(e.target);
       },
       onBlured(e: Event) {
-         console.log('blured')
+         // console.log('blured')
       },
       onItemClick(e: Event) {
          console.log(e)
       }
    },
    render() {
-
       return (
          <>
             <DynamicTag
-               onFocus={this.onFocused}
-               onBlur={this.onBlured}
-               v-ripple={this.type === 'item'}
-               href={this.hasHref ? this.href : undefined}
-               role="menuitem"
-               data-disabled={this.isDisabled}
-               to={this.hasRoute && !this.isDisabled ? this.to : undefined}
-               aria-label={this.hasLabel ? this.label : this.content}
-               tabindex={this.isDisabled ? -1 : 0}
-               type={ this.hasRoute && !this.isDisabled ? 'router-link' 
-                  : this.hasHref ? 'a' 
-                  : this.tag}
-               onClick={this.isDisabled ? undefined : this.onItemClick}
-               id={this.id}
                class={[NAMESPACE,
-                  this.type.value,
-                  this.isDisabled && this.disabled.value
+                  this.itemClasses.type,
+                  this.itemClasses.disabled
                ]}
+               href={this.hasHref ? this.href : undefined}
+
+               onFocus={ this.onFocused }
+               onBlur={ this.onBlured }
+               onClick={ 
+                  !this.isDisabled && this.type === 'item' 
+                     ? this.onItemClick
+                     : undefined 
+               }
+
+               role="menuitem"
+               aria-label={ this.hasLabel ? this.label : this.content }
+               tabindex={ this.isDisabled ? -1 : 0 }
+
+               to={ this.hasRoute && !this.isDisabled ? this.to : undefined }
+               type={ 
+                  this.hasRoute && !this.isDisabled ? 'router-link' 
+                     : this.hasHref ? 'a' 
+                     : this.tag
+               }
+               v-ripple={ this.type === 'item' && !this.isDisabled }
+               
+               data-disabled={this.isDisabled}
+               data-element-type={this.type}
+               data-vz-component="VZMenuItem"
             >  
                { this.hasIcon && (
-                  <div class={`${NAMESPACE}__icon`}>
+                  <div class={this.itemClasses.icon}>
                      { this.icon 
                         ? <Icon 
                               icon={this.icon.icon} 
@@ -219,13 +227,13 @@ const MenuItem = defineComponent({
                )}
                
                { this.hasContent && (
-                  <div class={`${NAMESPACE}__content`}>
+                  <div class={this.itemClasses.content}>
                      { this.content ? this.content : this.$slots.default?.() }
                   </div>
                )}
             
                { (this.hasBadge && this.type === 'item') && (
-                  <div class={`${NAMESPACE}__badge`}>
+                  <div class={this.itemClasses.badge}>
                      <div class="w-9"></div>
                      { this.badge 
                         ? typeof this.badge === 'function'

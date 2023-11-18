@@ -24,36 +24,39 @@ export default {
     // const menu = ref<InstanceType<typeof Menu> | null>(null);
 
     const items: MenuItemModel[] = [
-      { content: 'Options',
+      { content: 'Documents',
         type: 'header', 
-        divider: true
       },
-      { content: 'test',
-
+      { content: 'New',
+        icon: {
+          icon: 'mdi:plus',
+        }
+      },
+      { content: 'Search',
+        icon: {
+          icon: 'mdi:magnify',
+        },
         divider: true,
       },
-      { content: 'test2',
-
-        divider: true,
+      { content: 'Settings',
+        type: 'header', 
       },
-      // { label: 'Profile',
-      //   divider: true,
-      //   badge: {
-      //     content: '1',
-      //     color: 'primary',
-      //     inline: true,
-      //     rounded: true
-      //   },
-      // },
       { content: 'Profile',
-        
-        divider: true,
+        icon: {
+          icon: 'mdi:account-outline',
+        },
+
         badge: (() => {
           return this.test();
         }),
         action: (() => {
           
         })  
+      },
+      { content: 'Logout',
+        icon: {
+          icon: 'mdi:logout',
+        },
       }
       
     ]

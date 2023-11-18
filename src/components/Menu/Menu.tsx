@@ -53,20 +53,19 @@ const Menu = defineComponent({
    },
    data() {
       return {
-         instance: null,
          dimension: useDimension(this.$props),
+         firstChars: null,
+         focusableItems: null,
          focusItemIndex: -1,
          hasModel: this.model?.length > 0,
-         id: this.$attrs.id as string || generateComponentId(),
+         instance: null,
          list: null,
-         focusableItems: null,
-         firstChars: null,
       }
    },
    mounted() {
       this.instance = getCurrentInstance();
 
-      this.focusableItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
+      this.focusableItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"][data-element-type="item"]');
 
       this.firstChars = Array.from(this.focusableItems).map((item: HTMLElement) => {
          return item.textContent?.charAt(0).toLowerCase();
@@ -95,6 +94,7 @@ const Menu = defineComponent({
          this.list = el;
       },
       setFocusItemIndex(index: number) { 
+         debugger;
          this.focusItemIndex = index < 0 ? 0 
             : index >= this.focusableItems.length ? this.focusableItems.length - 1 
             : index;
@@ -104,6 +104,7 @@ const Menu = defineComponent({
          }
       },
       onArrowDownKey(e: KeyboardEvent) {
+debugger;
          const nextItemIndex = this.focusItemIndex + 1;
          this.setFocusItemIndex(nextItemIndex);
          e.preventDefault();
@@ -184,33 +185,37 @@ const Menu = defineComponent({
       return (
          <div 
             class={NAMESPACE}
-            id={this.id}
+            // id={this.id}
             style={this.dimension}
             ref="menu"
+            data-vz-component="VZMenu"
             onKeydown={this.handleKeyDown}
          >
             <ul class={`${NAMESPACE}-list`}
                role="menu"
                ref={ this.listRef }
                tabindex={0}
-               id={this.id + '-list'}
                onFocus={ this.onFocused }
             >
                {this.$slots.default?.()}  
+
                {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
-                  const { action, ...mutateItem } = item;
+                  const { action, ...mutateProps } = item;
                   return (
                      <MenuItem 
-                        {...mutateItem}
+                        {...mutateProps}
                         onItemAction={item.action}
-                        id={this.id + '-' + index}
-                        key={item.key || item.label + index.toString()}
+                        key={
+                           item.label ? item.label + index.toString() 
+                              : item.content ? item.content + index.toString() 
+                              : item.key + index.toString()
+                        }
                      >
                         {item.badge && { badge: () => {
                               return (
                                  typeof item.badge === 'function' 
-                                 ? item.badge() 
-                                 : <Badge {...item.badge} />
+                                    ? item.badge() 
+                                    : <Badge {...item.badge} />
                               )
                            }
                         }}

@@ -1,6 +1,8 @@
 import { HandleRippleFunc } from "../type";
 import { createVNode } from "@/plugins/render";
 
+import {DirectiveBinding} from 'vue'
+
 const handleRipple : HandleRippleFunc = (event, element) => {
    const container = element.getElementsByClassName("ripple")[0]
    const diameter = Math.max(element.clientWidth, element.clientHeight);
@@ -27,13 +29,20 @@ const handleRipple : HandleRippleFunc = (event, element) => {
 }
 
 export const Ripple = {
-   created(el: HTMLElement | null) {
+   created(el: HTMLElement | null, binding: DirectiveBinding) {
+      if(binding.value === false) {
+         return;
+      }
       createVNode('div', el, null, null, 'ripple');
    },
-   mounted(el: HTMLElement | null) {
+   mounted(el: HTMLElement | null, binding: DirectiveBinding) {
+      if(binding.value === false) {
+         return;
+      }
       el.addEventListener('click', (event) => handleRipple(event, el));
    },
    unmounted(el: HTMLElement | null){
       el.removeEventListener('click', (event) => handleRipple(event, el));
    }
 }
+
