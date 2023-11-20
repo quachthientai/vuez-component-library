@@ -6,11 +6,12 @@
 
 @layer base {
    .vz-menu {
-      @apply 
+      @apply
+         max-w-[200px]
          bg-light text-dark dark:bg-slate-700 dark:text-light 
-         rounded-[5px] overflow-auto dark:shadow-elevation-4 
+         rounded-[5px] dark:shadow-elevation-4 
          shadow-elevation-2 py-1;
-      width: 170px;
+
       
       // :focus-visible{
       //    background-color: darkblue;

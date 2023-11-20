@@ -199,7 +199,7 @@ const MenuItem = defineComponent({
 
                role="menuitem"
                aria-label={ this.hasLabel ? this.label : this.content }
-               tabindex={ this.isDisabled ? -1 : 0 }
+               // tabindex={ this.isDisabled ? -1 : 0 }
 
                to={ this.hasRoute && !this.isDisabled ? this.to : undefined }
                type={ 

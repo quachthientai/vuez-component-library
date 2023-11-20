@@ -24,8 +24,12 @@ export default {
     // const menu = ref<InstanceType<typeof Menu> | null>(null);
 
     const items: MenuItemModel[] = [
+      {content: 'VUEZUI',
+    type: 'header',
+  divider:true},
       { content: 'Documents',
         type: 'header', 
+        
       },
       { content: 'New',
         icon: {
@@ -83,14 +87,17 @@ export default {
 }
 </script>
 <template>
+  <div class="m-3">
+    <Button :elevation="3" id="testToggler" color="secondary">BUTTON</Button>
+    <Menu ref="menu" class="mt-1" toggler="#testToggler" :model="items"></Menu>
+  </div>
   <!-- <MenuItem type="item" 
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"
     content="Navigation"
     divider 
   /> -->
-
-  <Menu ref="menu" @on-menu-focus="testEvent" :model="items"></Menu>
+  
     
   <!-- <Menu>
     <MenuItem v-for="item in items"

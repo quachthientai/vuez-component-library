@@ -63,6 +63,7 @@ const Menu = defineComponent({
       }
    },
    mounted() {
+
       this.instance = getCurrentInstance();
 
       this.focusableItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"][data-element-type="item"]');
@@ -70,6 +71,8 @@ const Menu = defineComponent({
       this.firstChars = Array.from(this.focusableItems).map((item: HTMLElement) => {
          return item.textContent?.charAt(0).toLowerCase();
       });
+      
+      this.updateTabIndex()
    },
    watch: {
       focusItemIndex(newIndex: number, oldIndex: number) {
@@ -77,7 +80,10 @@ const Menu = defineComponent({
       }
    },
    methods: {
-      updateTabIndex(index: number) {
+      // resetTabIndex() {
+      //    this.updateTabIndex(-1);
+      // },
+      updateTabIndex(index?: number) {
          this.focusableItems.forEach((item: HTMLElement, i: number) => {
             item.setAttribute('tabindex', index === i ? '0' : '-1');
          })
@@ -94,7 +100,6 @@ const Menu = defineComponent({
          this.list = el;
       },
       setFocusItemIndex(index: number) { 
-         debugger;
          this.focusItemIndex = index < 0 ? 0 
             : index >= this.focusableItems.length ? this.focusableItems.length - 1 
             : index;
@@ -104,7 +109,6 @@ const Menu = defineComponent({
          }
       },
       onArrowDownKey(e: KeyboardEvent) {
-debugger;
          const nextItemIndex = this.focusItemIndex + 1;
          this.setFocusItemIndex(nextItemIndex);
          e.preventDefault();
@@ -183,7 +187,8 @@ debugger;
    },
    render() { 
       return (
-         <div 
+         <Teleport to="#overlay">
+            <div 
             class={NAMESPACE}
             // id={this.id}
             style={this.dimension}
@@ -196,6 +201,7 @@ debugger;
                ref={ this.listRef }
                tabindex={0}
                onFocus={ this.onFocused }
+               // onBlur={ this.resetTabIndex }
             >
                {this.$slots.default?.()}  
 
@@ -224,6 +230,8 @@ debugger;
                })}
             </ul>
          </div>
+         </Teleport>
+         
       )
    },
 })
