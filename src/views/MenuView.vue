@@ -106,7 +106,7 @@ export default {
 
   <Menu :openOnClick="false" class="m-3">
     <MenuList ref="menu" class="mt-1" toggler="#test" :model="items" />
-    <MenuButton :elevation="4" color="secondary">BUTTON</MenuButton>
+    <MenuButton :elevation="4" data-show="asdasd" color="secondary">BUTTON</MenuButton>
     <!-- <MenuList ref="menu" class="mt-1"  :model="items" /> -->
   </Menu>
 
