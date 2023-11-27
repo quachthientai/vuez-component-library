@@ -1,7 +1,11 @@
-let lastId : number = 0;
+import ShortUniqueId from 'short-unique-id';
 
+
+function generateComponentId(prefix?: string) : string
 function generateComponentId(prefix : string = 'vz-component-id-') : string {
-   return `${prefix}${lastId++}`;
+   const uid = new ShortUniqueId();
+
+   return `${prefix}-${uid.rnd()}`;
 }
 
 export {

@@ -6,11 +6,7 @@
 
 @layer base {
    .vz-menu {
-      @apply
-         max-w-[200px]
-         bg-light text-dark dark:bg-slate-700 dark:text-light 
-         rounded-[5px] dark:shadow-elevation-4 
-         shadow-elevation-2 py-1;
+     
 
       
       // :focus-visible{
@@ -22,7 +18,55 @@
    }
 
    .vz-menu-list {
+      animation: grow-down 0.4s ease-in-out;
+      transform-origin: top center;
+      display: none;
       width: 100%;
-      // position: relative;
+      opacity: 0;
+      @apply
+         max-w-[200px]
+         
+         
+         overflow-hidden
+         bg-light text-dark dark:bg-slate-700 dark:text-light 
+         rounded-[5px] dark:shadow-elevation-4 
+         shadow-elevation-2 py-1;
+       // max-h-0 transition-all duration-500 ease-in-out;
    }
+
+   .vz-menu-list[data-show="true"] {
+      // animation: grow-up 0.3s ease-in-out;
+      // transform-origin: top center;
+      transition: opacity 0.7s ease-in-out;
+      @apply block;
+      opacity: 1;
+      // @apply max-h-96 py-1;
+   }
+
+   @keyframes grow-up {
+      0% {
+          transform: scaleY(1)
+      }
+      80% {
+          transform: scaleY(1.1)
+      }
+      100% {
+          transform: scaleY(0)
+      }
+  }
+
+   @keyframes grow-down {
+      0% {
+          transform: scaleY(0)
+      }
+      80% {
+          transform: scaleY(1.1)
+      }
+      100% {
+          transform: scaleY(1)
+      }
+  }
+  
+
+
 }

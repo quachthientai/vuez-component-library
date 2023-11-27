@@ -37,6 +37,7 @@ module.exports =  {
       },
       transitionProperty: {
         'max-height': 'max-height',
+        'height': 'height',
         'border-width': 'border-width'
       },
       keyframes: {

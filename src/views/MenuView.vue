@@ -1,7 +1,9 @@
 <script lang="ts">
 
+import { MenuList } from '@/components/Menu/MenuList'
 import { Menu } from '@/components/Menu/Menu'
 import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
+import { MenuButton } from '@/components/Menu/MenuButton'
 import { Badge } from '@/components/Badge/Badge';
 import { h, ref } from 'vue';
 import { MenuItemModel } from '@/components/Menu/MenuItem/MenuItemType';
@@ -13,6 +15,8 @@ export default {
   name: 'MenuView',
   components: {
     Menu,
+    MenuList,
+    MenuButton,
     MenuItem,
     Badge
   },
@@ -35,6 +39,12 @@ export default {
         icon: {
           icon: 'mdi:plus',
         }
+      },
+      { content: 'Search',
+        icon: {
+          icon: 'mdi:magnify',
+        },
+        divider: true,
       },
       { content: 'Search',
         icon: {
@@ -87,10 +97,23 @@ export default {
 }
 </script>
 <template>
-  <div class="m-3">
+  <!-- <div class="m-3">
     <Button :elevation="3" id="testToggler" color="secondary">BUTTON</Button>
-    <Menu ref="menu" class="mt-1" toggler="#testToggler" :model="items"></Menu>
-  </div>
+    
+  </div> -->
+  
+  
+
+  <Menu :openOnClick="false" class="m-3">
+    <MenuList ref="menu" class="mt-1" toggler="#test" :model="items" />
+    <MenuButton :elevation="4" color="secondary">BUTTON</MenuButton>
+    <!-- <MenuList ref="menu" class="mt-1"  :model="items" /> -->
+  </Menu>
+
+  
+  
+    <!-- <template #toggler><Button :elevation="3" id="testToggler" color="secondary">BUTTON</Button></template> -->
+  
   <!-- <MenuItem type="item" 
     :icon="{icon: 'mdi:account-outline' }" 
     :badge="this.test"

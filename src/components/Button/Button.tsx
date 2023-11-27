@@ -159,5 +159,6 @@ type ButtonType = InstanceType<typeof Button>;
 
 export {
    Button,
-   ButtonType
+   ButtonType,
+   vButtonProps
 }
