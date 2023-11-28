@@ -1,6 +1,6 @@
 import { MenuKey } from "@/constants/injectionKey"
 import { Button, vButtonProps } from "../Button/Button"
-import { defineComponent, inject, nextTick, onMounted, ref, watch, toRef } from "vue"
+import { defineComponent, inject, nextTick, onMounted, ref, watch, toRef, computed } from "vue"
 
 const NAMESPACE = 'vz-menu-button'
 
@@ -10,20 +10,15 @@ const MenuButton = defineComponent({
    inheritAttrs: false,
    setup(props, { slots, attrs }) {
       const MenuContext = inject(MenuKey);
-      const { isOpen, menuListID, menuTriggerID, toggleMenu, openOnClick } = MenuContext;
+      const { isOpen, menuListID, menuTriggerID } = MenuContext;
 
-
-      const componentAttrs = {
-         ...attrs,
-         'aria-haspopup': 'true',
-         'aria-expanded': isOpen.value,
-         'aria-controls': menuListID.value,
-         id: menuTriggerID.value,
-      }
-
-      watch(toRef(isOpen.value), (newVal, oldVal) => {
-         if(newVal) {
-            console.log('asdasd')
+      const componentAttrs = computed(() => {
+         return {
+            ...attrs,
+            'aria-haspopup': true,
+            'aria-expanded': isOpen.value,
+            'aria-controls': menuListID.value,
+            id: menuTriggerID.value,
          }
       })
 
@@ -43,7 +38,6 @@ const MenuButton = defineComponent({
             <Button {...this.$props} 
                {...this.componentAttrs}
                onClick={ openOnClick ? toggleMenu : undefined }
-               
             >
                {this.$slots.default?.()}   
             </Button>

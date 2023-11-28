@@ -1,4 +1,4 @@
-import { Event, Binding, HandleClickOutFunc } from "../type";
+import { Event, HandleClickOutFunc } from "../type";
 
 const handleClickOut : HandleClickOutFunc = (event, element, binding) => {
   if(!(element === event.target || element.contains(event.target as HTMLElement))) {
@@ -8,10 +8,10 @@ const handleClickOut : HandleClickOutFunc = (event, element, binding) => {
 
 
 export const ClickOut = {
-  mounted(el: HTMLElement, binding?: Binding) {
+  mounted(el: HTMLElement, binding) {
     document.body.addEventListener('click', (ev) => handleClickOut(ev, el, binding))
   },
-  unmounted(el: HTMLElement, binding?: Binding) {
+  unmounted(el: HTMLElement, binding) {
     document.body.removeEventListener('click', (ev) => handleClickOut(ev, el, binding))
   }
 }

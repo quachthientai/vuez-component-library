@@ -22,10 +22,10 @@ const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
    setup(props, { slots, attrs }) {
-      const isOpen = ref(false)
+      const isOpen = ref<boolean>(false)
       const root = ref<HTMLElement>(null)
 
-      let menuTrigger = ref<HTMLElement>(null)
+      const menuTrigger = ref<HTMLElement>(null)
       const menuTriggerID = computed(() => {
          return generateComponentId('vz-menu-trigger')
       })

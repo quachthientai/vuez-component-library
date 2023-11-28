@@ -9,6 +9,7 @@ import { MenuItemModel } from "./MenuItem/MenuItemType";
 
 import { DOM } from "@/utils/DOM";
 import { MenuKey } from "@/constants/injectionKey";
+import { ClickOut } from "@/directives/click-outside";
 
 
 /*
@@ -54,9 +55,12 @@ const MenuList = defineComponent({
          return payload.originalEvent && payload.currentInstance;
       }
    },
+   directives: {
+      'click-outside': ClickOut,
+   },
    setup(props, { slots,attrs,emit }) { 
       const MenuContext = inject(MenuKey);
-      const { menuTriggerRef } = MenuContext; 
+      const { menuTriggerRef, isOpen, menuListID } = MenuContext; 
       
       const instance = getCurrentInstance();
 
@@ -67,27 +71,44 @@ const MenuList = defineComponent({
       const firstChars = ref<string[] | null>(null);
       const focusableItems = ref<NodeListOf<HTMLElement>>(null);
       const focusItemIndex = ref<number>(-1); 
+
+      const componentAttrs = computed(() => {
+         return {
+            ...attrs,
+            'role': 'menu',
+            'tabindex': 0,
+            'data-show': isOpen.value,
+            'data-vz-component': 'VZMenuList',
+            id: menuListID.value,
+         }
+      })
       
 
       onMounted(() => {
-         focusableItems.value = DOM.find(root.value, 'li[role="menuitem"][data-disabled="false"][data-element-type="item"]');
+         nextTick(() => {
+            focusableItems.value = DOM.find(root.value, 'li[role="menuitem"][data-disabled="false"][data-element-type="item"]');
 
-         firstChars.value = Array.from(focusableItems.value).map((item: HTMLElement) => {
-            return item.textContent?.charAt(0).toLowerCase();
+            firstChars.value = Array.from(focusableItems.value).map((item: HTMLElement) => {
+               return item.textContent?.charAt(0).toLowerCase();
+            })
+
+            updateTabIndex();
+            setupWatchers();
          })
-         updateTabIndex();
          
       })
 
-      watch(menuTriggerRef, (newTrigger: HTMLElement, oldTrigger: HTMLElement) => {
-         if(newTrigger) {
-            alignMenu();
-         }
-      })
-
-      watch(focusItemIndex, (newIndex: number, oldIndex: number) => {
-         updateTabIndex(newIndex);
-      });
+      function setupWatchers() {
+         watch([menuTriggerRef, isOpen], ([newTrigger], [newOpenVal]) => {
+            if(newTrigger || newOpenVal) {
+               alignMenu();
+            }
+         })
+   
+         watch(focusItemIndex, (newIndex: number, oldIndex: number) => {
+            updateTabIndex(newIndex);
+         });
+      }
 
       function alignMenu() {
          const rect = menuTriggerRef.value?.getBoundingClientRect();
@@ -221,26 +242,19 @@ const MenuList = defineComponent({
          onFocused,
          root,
          rootRef,
+         componentAttrs,
       }
    },
    render() {
-      const { isOpen, menuListID } = this.MenuContext;
-
       return (
          <Teleport to="#overlay">
          <ul class={`${NAMESPACE}`}
-            role="menu"
-            data-show={ isOpen.value }
+            v-click-outside
+            {...this.componentAttrs}
             ref={ this.rootRef }
-            tabindex={0}
-            onFocus={ this.onFocused }
-            // class={NAMESPACE}
-            id={ menuListID.value }
             style={ this.dimension }
-            // ref="menu"
-            data-vz-component="VZMenuList"
+            onFocus={ this.onFocused }
             onKeydown={ this.handleKeyDown }
-            // onBlur={ this.resetTabIndex }
          >
             {this.$slots.default?.()}  
 
