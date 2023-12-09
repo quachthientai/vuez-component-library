@@ -1,6 +1,8 @@
 import { MenuKey } from "@/constants/injectionKey"
 import { Button, vButtonProps } from "../Button/Button"
-import { defineComponent, inject, nextTick, onMounted, ref, watch, toRef, computed } from "vue"
+import { DOM } from "@/utils/DOM"
+import { extractRefHTMLElement } from "@/utils/extractRefHTMLElement"
+import { defineComponent, inject, nextTick, onMounted, ref, watch, toRef, computed, onBeforeMount, onUnmounted } from "vue"
 
 const NAMESPACE = 'vz-menu-button'
 
@@ -10,7 +12,9 @@ const MenuButton = defineComponent({
    inheritAttrs: false,
    setup(props, { slots, attrs }) {
       const MenuContext = inject(MenuKey);
-      const { isOpen, menuListID, menuTriggerID } = MenuContext;
+      const { isOpen, menuListID, menuTriggerID, show, hide } = MenuContext;
+
+      const root = ref<HTMLElement>(null)
 
       const componentAttrs = computed(() => {
          return {
@@ -21,27 +25,36 @@ const MenuButton = defineComponent({
             id: menuTriggerID.value,
          }
       })
-
-      onMounted(() => {
       
-      })
+      function rootRef(el: HTMLElement) {
+         root.value = el;
+      }
+      
+      function handleClick(e) {
+         if(isOpen.value) {
+            hide()
+         } else {
+            show()
+         }
+      }
 
       return {
          MenuContext,
          componentAttrs,
+         handleClick,
+         root,
+         rootRef,
       }
    },
    render() {
-      const { openOnClick, toggleMenu } = this.MenuContext;
       return (
-         <>
-            <Button {...this.$props} 
-               {...this.componentAttrs}
-               onClick={ openOnClick ? toggleMenu : undefined }
-            >
-               {this.$slots.default?.()}   
-            </Button>
-         </>
+         <Button ref={this.rootRef}
+            {...this.$props} 
+            {...this.componentAttrs}
+            onClick={ this.handleClick }
+         >
+            { this.$slots.default?.() }   
+         </Button>
       )
    },
 })

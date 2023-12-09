@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.0.2",
     "@iconify/types": "^2.0.0",
     "autoprefixer": "^10.4.14",
     "init": "^0.1.2",

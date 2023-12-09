@@ -29,8 +29,8 @@ export default {
 
     const items: MenuItemModel[] = [
       {content: 'VUEZUI',
-    type: 'header',
-  divider:true},
+        type: 'header',
+        divider:true},
       { content: 'Documents',
         type: 'header', 
         
@@ -104,9 +104,13 @@ export default {
   
   
 
-  <Menu :openOnClick="false" class="m-3">
-    <MenuList ref="menu" class="mt-1" toggler="#test" :model="items" />
-    <MenuButton :elevation="4" data-show="asdasd" color="secondary">BUTTON</MenuButton>
+  <Menu>
+    <MenuList class="mt-1" placement="bottom" :model="items" />
+
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
+      SMALL BUTTON
+    </MenuButton>
+    <!-- <MenuButton :elevation="4" color="secondary">BUTTON</MenuButton> -->
     <!-- <MenuList ref="menu" class="mt-1"  :model="items" /> -->
   </Menu>
 

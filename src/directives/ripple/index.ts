@@ -23,9 +23,10 @@ const handleRipple : HandleRippleFunc = (event, element) => {
    if (effect.el) {
       (effect.el).remove();
    }
-   
+   event.stopPropagation()
+      
    container.appendChild(effect.el as HTMLElement);
-   event.stopImmediatePropagation()
+   
 }
 
 export const Ripple = {

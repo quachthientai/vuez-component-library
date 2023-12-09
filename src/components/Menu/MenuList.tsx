@@ -3,41 +3,41 @@ import { makeDimensionProp, useDimension } from "@/composable/dimension";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { ComponentInternalInstance, computed, defineComponent, getCurrentInstance, inject, onMounted, PropType, ref, Teleport, toRefs, watch, Transition, nextTick, onUnmounted } from "vue";
+import { usePopup } from "@/composable/usePopup";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
-import { MenuItemModel } from "./MenuItem/MenuItemType";
 
+import { MenuItemModel } from "./MenuItem/MenuItemType";
 import { DOM } from "@/utils/DOM";
 import { MenuKey } from "@/constants/injectionKey";
 import { ClickOut } from "@/directives/click-outside";
+import { computePosition, autoUpdate, Placement, offset, shift, flip, arrow, useFloating } from '@floating-ui/vue';
+import { extractRefHTMLElement } from "@/utils/extractRefHTMLElement";
 
 
 /*
  * Namespace for the Menu List component.
 */
 const NAMESPACE = 'vz-menu-list';
+const TRANSITION_PLACEMENT = {
+   TOP: 'popup-top',
+   BOTTOM: 'popup-bottom',
+   LEFT: 'popup-side',
+   RIGHT: 'popup-side',
+}
 
 const vMenuListProps = makePropsFactory({
-   popup: {
-      type: Boolean,
-      default: false,
-   },
-   /*
-    * The toggler for the menu.
-    * @type {string}
-    * @default undefined
-    * @name toggler
-    */
-   toggler: String,
-   /*
-    * The model item for the menu.
-    * @type {MenuItemModel[]}
-    * @default []
-    * @name model
-    */
    model: {
       type: Array as PropType<MenuItemModel[]>,
       default: () => [],
+   },
+   placement: {
+      type: String,
+      default: 'bottom',
+   },
+   offset: {
+      type: Number,
+      default: 0,
    },
    ...makeDimensionProp(),
    ...makeColorProp(),
@@ -59,9 +59,10 @@ const MenuList = defineComponent({
       'click-outside': ClickOut,
    },
    setup(props, { slots,attrs,emit }) { 
+      //* Inject the MenuContext key */
       const MenuContext = inject(MenuKey);
-      const { menuTriggerRef, isOpen, menuListID } = MenuContext; 
-      
+      const { menuTriggerRef, isOpen, menuListID, autoSelect } = MenuContext; 
+
       const instance = getCurrentInstance();
 
       const dimension = useDimension(props);
@@ -77,47 +78,54 @@ const MenuList = defineComponent({
             ...attrs,
             'role': 'menu',
             'tabindex': 0,
-            'data-show': isOpen.value,
             'data-vz-component': 'VZMenuList',
+            'data-popup-placement': props.placement,
             id: menuListID.value,
          }
       })
       
-
-      onMounted(() => {
-         nextTick(() => {
-            focusableItems.value = DOM.find(root.value, 'li[role="menuitem"][data-disabled="false"][data-element-type="item"]');
-
-            firstChars.value = Array.from(focusableItems.value).map((item: HTMLElement) => {
-               return item.textContent?.charAt(0).toLowerCase();
-            })
-
-            updateTabIndex();
-            setupWatchers();
-         })
-         
+      const transition = computed(() => {
+         switch(props.placement){
+            case 'top':
+               return TRANSITION_PLACEMENT.TOP;
+            case 'bottom':
+               return TRANSITION_PLACEMENT.BOTTOM;
+            case 'left':
+               return TRANSITION_PLACEMENT.LEFT;
+            case 'right': 
+               return TRANSITION_PLACEMENT.RIGHT;
+            default:
+               return TRANSITION_PLACEMENT.BOTTOM;
+         }
       })
 
-      function setupWatchers() {
-         watch([menuTriggerRef, isOpen], ([newTrigger], [newOpenVal]) => {
-            if(newTrigger || newOpenVal) {
-               alignMenu();
-            }
-         })
-   
-         watch(focusItemIndex, (newIndex: number, oldIndex: number) => {
-            updateTabIndex(newIndex);
-         });
-      }
+      watch(focusItemIndex, (newIndex: number, oldIndex: number) => {
+         updateTabIndex(newIndex);
+      });
 
       function alignMenu() {
-         const rect = menuTriggerRef.value?.getBoundingClientRect();
+         const trigger = extractRefHTMLElement(menuTriggerRef);
+         const list = extractRefHTMLElement(root);
          
-         if(rect) {
-            root.value.style.top = rect.bottom + 'px';
-            root.value.style.left = rect.left + 'px';
-            root.value.style.position = 'absolute'
-         }
+         autoUpdate(trigger, list, () => {
+            computePosition(trigger, list, {
+               placement: props.placement as Placement,
+               middleware: [shift({ padding: 10 }), 
+                  offset(({placement}) => {
+                     return (
+                        placement !== 'bottom' ? 10 : 0
+                      );
+                  }), 
+                  flip()]
+            }).then(({x, y}) => {
+               Object.assign(list.style, {
+                  top: y + 'px',
+                  left: x + 'px',
+                  position: 'absolute',
+               })
+            });
+         });
+         
       }
 
       function rootRef(el: HTMLElement) {
@@ -231,6 +239,25 @@ const MenuList = defineComponent({
          e.preventDefault();
       }
 
+      function onEnterTransition() {
+         focusableItems.value = DOM.find(root.value, 'li[role="menuitem"][data-disabled="false"][data-element-type="item"]');
+
+         firstChars.value = Array.from(focusableItems.value).map((item: HTMLElement) => {
+            return item.textContent?.charAt(0).toLowerCase();
+         })
+
+         updateTabIndex();
+         alignMenu();
+
+         if(autoSelect.value){
+            setFocusItemIndex(0);
+         }
+      }
+      
+      function onLeaveTransition() {
+         setFocusItemIndex(-1);
+      }
+
       return {
          dimension,
          firstChars,
@@ -238,50 +265,62 @@ const MenuList = defineComponent({
          focusItemIndex,
          handleKeyDown,
          hasModel,
-         MenuContext,
+         isOpen,
          onFocused,
+         onEnterTransition,
+         onLeaveTransition,
          root,
          rootRef,
          componentAttrs,
+         transition,
+         MenuContext
       }
    },
    render() {
+      const { hide } = this.MenuContext;
       return (
          <Teleport to="#overlay">
-         <ul class={`${NAMESPACE}`}
-            v-click-outside
-            {...this.componentAttrs}
-            ref={ this.rootRef }
-            style={ this.dimension }
-            onFocus={ this.onFocused }
-            onKeydown={ this.handleKeyDown }
-         >
-            {this.$slots.default?.()}  
-
-            {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
-               const { action, ...mutateProps } = item;
-               return (
-                  <MenuItem 
-                     {...mutateProps}
-                     onItemAction={item.action}
-                     key={
-                        item.label ? item.label + index.toString() 
-                           : item.content ? item.content + index.toString() 
-                           : item.key + index.toString()
-                     }
+            <Transition name={this.transition} 
+               onEnter={this.onEnterTransition}
+               onLeave={this.onLeaveTransition} 
+            >
+               {this.isOpen && (
+                  <ul class={`${NAMESPACE}`}
+                     {...this.componentAttrs}
+                     ref={ this.rootRef }
+                     style={ this.dimension }
+                     onFocus={ this.onFocused }
+                     onKeydown={ this.handleKeyDown }
+                     v-click-outside={ hide }
                   >
-                     {item.badge && { badge: () => {
-                           return (
-                              typeof item.badge === 'function' 
-                                 ? item.badge() 
-                                 : <Badge {...item.badge} />
-                           )
-                        }
-                     }}
-                  </MenuItem>
-               )
-            })}
-         </ul>
+                     {this.$slots.default?.()}  
+
+                     {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
+                        const { action, ...mutateProps } = item;
+                        return (
+                           <MenuItem 
+                              {...mutateProps}
+                              onItemAction={item.action}
+                              key={
+                                 item.label ? item.label + index.toString() 
+                                    : item.content ? item.content + index.toString() 
+                                    : item.key + index.toString()
+                              }
+                           >
+                              {item.badge && { badge: () => {
+                                    return (
+                                       typeof item.badge === 'function' 
+                                          ? item.badge() 
+                                          : <Badge {...item.badge} />
+                                    )
+                                 }
+                              }}
+                           </MenuItem>
+                        )
+                     })}
+                  </ul>
+               )}
+            </Transition>
          </Teleport>
       )
    },

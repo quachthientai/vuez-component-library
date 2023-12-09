@@ -1,20 +1,42 @@
-import { makePropsFactory } from "@/utils/makePropFactory";
-import { Ref, RendererElement, RendererNode, computed, defineComponent, getCurrentInstance, nextTick, onBeforeMount, onMounted, provide, ref, toRef, useSlots, watch } from "vue";
 import { MenuKey } from "@/constants/injectionKey";
-import { DOM } from "@/utils/DOM";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
+import { DOM } from "@/utils/DOM";
+import { makePropsFactory } from "@/utils/makePropFactory";
+import { usePopup } from "@/composable/usePopup";
+import { Ref, 
+   computed, 
+   defineComponent, 
+   nextTick, 
+   onMounted, 
+   provide, 
+   ref, 
+   toRef,
+   watch, 
+} from "vue";
 
 const NAMESPACE = 'vz-menu';
 
 const vMenuProps = makePropsFactory({
-   openOnClick: {
+   autoSelect: {
       type: Boolean,
       default: true,
    },
-   openOnHover: {
+   closeOnSelect: {
       type: Boolean,
-      default: false,
+      default: true,
    },
+   closeOnBlur: {
+      type: Boolean,
+      default: true,
+   },
+   // openOnClick: {
+   //    type: Boolean,
+   //    default: true,
+   // },
+   // openOnHover: {
+   //    type: Boolean,
+   //    default: false,
+   // },
    
 })
 
@@ -23,6 +45,7 @@ const Menu = defineComponent({
    props: vMenuProps,
    setup(props, { slots, attrs }) {
       const isOpen = ref<boolean>(false)
+      const triggerStack = ref(0);
       const root = ref<HTMLElement>(null)
 
       const menuTrigger = ref<HTMLElement>(null)
@@ -35,40 +58,58 @@ const Menu = defineComponent({
          return generateComponentId('vz-menu-list')
       })
 
-      // const slot = useSlots();
-      
       function rootRef(el: HTMLElement) {
          return root.value = el;
       }
       
-      function toggleMenu() {
-         isOpen.value = !isOpen.value  
-         console.log(isOpen.value);
+      function show() {
+         if(isOpen.value) return;
+
+         triggerStack.value += 1;
+         isOpen.value = true;
       }
 
-      
+      function hide() {
+         if(!isOpen.value) return;
+
+         triggerStack.value -= 1;
+         
+         if(triggerStack.value <= 0) {
+            triggerStack.value = 0;
+            isOpen.value = false;
+         }
+      }
 
       provide(MenuKey, {
-         openOnClick: toRef(props, 'openOnClick') as Ref<boolean>,
-         openOnHover: toRef(props, 'openOnHover') as Ref<boolean>,
+         autoSelect: toRef(props, 'autoSelect') as Ref<boolean>,
+         closeOnSelect: toRef(props, 'closeOnSelect') as Ref<boolean>,
+         closeOnBlur: toRef(props, 'closeOnBlur') as Ref<boolean>,
          menuTriggerRef: menuTrigger,
          menuTriggerID: menuTriggerID,
          menuListRef: menuList,
          menuListID: menuListID,
          isOpen: isOpen,
-         toggleMenu: toggleMenu
+         show: show,
+         hide: hide,
       })
+      
 
-      onMounted(async () => {
+      onMounted(() => {
          nextTick(() => {
             menuTrigger.value = DOM.findSingle(document, `#${menuTriggerID.value}`);
             menuList.value = DOM.findSingle(document, `#${menuListID.value}`);
          })
       })
 
+      
+
+      // function handleClick() {
+      //    console.log('click from menu')
+      // }
+
       return {
          rootRef,
-         root
+         root,
       }
       
    },
@@ -76,7 +117,9 @@ const Menu = defineComponent({
       // debugger;
       return (
          <div class={NAMESPACE}
-            ref={this.rootRef}>
+            ref={this.rootRef}
+            // onClick={this.handleClick}
+         >
             {/* <div id="menu-button">
                {Array.from(this.$slots.default()).find((node) => node.type.name === 'MenuButton')}
             </div>
@@ -96,4 +139,4 @@ type MenuType = InstanceType<typeof Menu>
 export {
    Menu,
    MenuType
-}
+};
