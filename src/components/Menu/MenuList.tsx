@@ -1,18 +1,33 @@
-import { makeColorProp } from "@/composable/color";
-import { makeDimensionProp, useDimension } from "@/composable/dimension";
-import { generateComponentId } from "@/utils/ComponentIDGenerator";
+import { makeDimensionProp, 
+   useDimension,
+   makeColorProp,
+   useClickOutside
+} from "@/composable/index";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { ComponentInternalInstance, computed, defineComponent, getCurrentInstance, inject, onMounted, PropType, ref, Teleport, toRefs, watch, Transition, nextTick, onUnmounted, onBeforeUnmount } from "vue";
-import { usePopup } from "@/composable/usePopup";
+import { ComponentInternalInstance, 
+   computed, 
+   defineComponent, 
+   getCurrentInstance, 
+   inject, 
+   PropType, 
+   ref, 
+   Teleport, 
+   watch, 
+   Transition 
+} from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
-
 import { MenuItemModel } from "./MenuItem/MenuItemType";
 import { DOM } from "@/utils/DOM";
 import { MenuKey } from "@/constants/injectionKey";
-import { computePosition, autoUpdate, Placement, offset, shift, flip, arrow, useFloating } from '@floating-ui/vue';
+import { computePosition, 
+   autoUpdate, 
+   Placement, 
+   offset, 
+   shift, 
+   flip 
+} from '@floating-ui/vue';
 import { extractRefHTMLElement } from "@/utils/extractRefHTMLElement";
-import { useClickOutside } from "@/composable/useClickOutside"; 
 
 /*
  * Namespace for the Menu List component.
