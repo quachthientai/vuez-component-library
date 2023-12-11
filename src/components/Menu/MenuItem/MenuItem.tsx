@@ -176,7 +176,9 @@ const MenuItem = defineComponent({
          // console.log('blured')
       },
       onItemClick(e: Event) {
-         console.log(e)
+         
+         console.log('item clicked')
+         e.stopPropagation();
       }
    },
    render() {
@@ -196,7 +198,6 @@ const MenuItem = defineComponent({
                      ? this.onItemClick
                      : undefined 
                }
-
                role="menuitem"
                aria-label={ this.hasLabel ? this.label : this.content }
                // tabindex={ this.isDisabled ? -1 : 0 }

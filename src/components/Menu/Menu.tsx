@@ -45,7 +45,6 @@ const Menu = defineComponent({
    props: vMenuProps,
    setup(props, { slots, attrs }) {
       const isOpen = ref<boolean>(false)
-      const triggerStack = ref(0);
       const root = ref<HTMLElement>(null)
 
       const menuTrigger = ref<HTMLElement>(null)
@@ -64,20 +63,12 @@ const Menu = defineComponent({
       
       function show() {
          if(isOpen.value) return;
-
-         triggerStack.value += 1;
          isOpen.value = true;
       }
 
       function hide() {
          if(!isOpen.value) return;
-
-         triggerStack.value -= 1;
-         
-         if(triggerStack.value <= 0) {
-            triggerStack.value = 0;
-            isOpen.value = false;
-         }
+         isOpen.value = false;
       }
 
       provide(MenuKey, {
@@ -100,12 +91,6 @@ const Menu = defineComponent({
             menuList.value = DOM.findSingle(document, `#${menuListID.value}`);
          })
       })
-
-      
-
-      // function handleClick() {
-      //    console.log('click from menu')
-      // }
 
       return {
          rootRef,

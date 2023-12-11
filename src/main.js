@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from '../src/App.vue'
-import { ClickOut } from './directives/click-outside'
 import { Icon } from '@iconify/vue'
 import {Button} from './components/Button/Button.tsx'
 
@@ -20,7 +19,6 @@ app.use(createPinia())
   .use(router)
   .component('Button', Button)
   .component('Icon', Icon)
-  .directive('click-outside', ClickOut)
   .directive('drag', Drag)
   .directive('drop', Drop)
   .directive('validate',InputValidate)
