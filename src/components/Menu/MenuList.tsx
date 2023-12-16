@@ -13,7 +13,9 @@ import { ComponentInternalInstance,
    ref, 
    Teleport, 
    watch, 
-   Transition 
+   Transition, 
+   onMounted,
+   nextTick
 } from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
@@ -72,7 +74,14 @@ const MenuList = defineComponent({
    setup(props, { slots,attrs,emit }) { 
       //* Inject the MenuContext key */
       const MenuContext = inject(MenuKey);
-      const { menuTriggerRef, isOpen, menuListID, autoSelect, hide } = MenuContext; 
+      const { 
+         menuTriggerRef, 
+         isOpen, 
+         menuListID, 
+         autoSelect,
+         closeOnSelect, 
+         hide 
+      } = MenuContext; 
       
       // * Get the current instance */
       const instance = getCurrentInstance();
@@ -99,7 +108,7 @@ const MenuList = defineComponent({
             ...attrs,
             'role': 'menu',
             'tabindex': 0,
-            'data-vz-component': 'VZMenuList',
+            'data-vz-component': NAMESPACE,
             'data-popup-placement': props.placement,
             id: menuListID.value,
          }
@@ -124,7 +133,6 @@ const MenuList = defineComponent({
          updateTabIndex(newIndex);
       });
 
-      
       /**
        * Aligns the menu based on the trigger element and the menu list.
        */
@@ -173,6 +181,8 @@ const MenuList = defineComponent({
          if(Array.from(focusableItems.value).indexOf(focusableItems.value.item(index)) > -1) {
             (focusableItems.value[index] as HTMLElement).focus();
          }
+
+         updateTabIndex(index);
       }
 
       /**
@@ -226,7 +236,10 @@ const MenuList = defineComponent({
        * @param e The focus event.
        */
       function onFocused(e: FocusEvent) {
-         setFocusItemIndex(0);
+         if(autoSelect.value){
+            setFocusItemIndex(0);
+         }
+
          emit('onMenuListFocus', {
             originalEvent: e,
             currentInstance: instance,
@@ -238,6 +251,7 @@ const MenuList = defineComponent({
        * @param e The Keyboard event
        */
       function onArrowDownKey(e: KeyboardEvent) {
+         
          const nextItemIndex = focusItemIndex.value + 1;
          setFocusItemIndex(nextItemIndex);
          e.preventDefault();
@@ -329,16 +343,24 @@ const MenuList = defineComponent({
          updateTabIndex();
          alignMenu();
 
-         if(autoSelect.value){
-            setFocusItemIndex(0);
-         }
+         root.value.focus();
       }
       
       /**
        * Handles the leave transition.
        */
       function onLeaveTransition() {
-         setFocusItemIndex(-1);
+         focusItemIndex.value = -1;
+      }
+      
+      function onItemAction(e: Event, callback?: Function) {
+         if(closeOnSelect.value) {
+            hide();
+         }
+
+         if(callback) {
+            callback(e);
+         }
       }
 
       return {
@@ -349,6 +371,7 @@ const MenuList = defineComponent({
          onFocused,
          onEnterTransition,
          onLeaveTransition,
+         onItemAction,
          rootRef,
          componentAttrs,
          transition,
@@ -372,11 +395,16 @@ const MenuList = defineComponent({
                      {this.$slots.default?.()}  
 
                      {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
-                        const { action, ...mutateProps } = item;
+                        const { action, ...rest} = item;
                         return (
                            <MenuItem 
-                              {...mutateProps}
-                              onItemAction={item.action}
+                              {...rest}
+                              onItemAction={
+                                 (e: Event) => {
+                                    item.action !== undefined ? this.onItemAction(e, item.action) 
+                                       : this.onItemAction(e);
+                                 }
+                              }
                               key={
                                  item.label ? item.label + index.toString() 
                                     : item.content ? item.content + index.toString() 

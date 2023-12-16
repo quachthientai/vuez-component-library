@@ -62,6 +62,7 @@ const Menu = defineComponent({
       }
       
       function show() {
+         console.log(menuList);
          if(isOpen.value) return;
          isOpen.value = true;
       }

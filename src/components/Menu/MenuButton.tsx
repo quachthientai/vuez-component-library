@@ -12,7 +12,7 @@ const MenuButton = defineComponent({
    inheritAttrs: false,
    setup(props, { slots, attrs }) {
       const MenuContext = inject(MenuKey);
-      const { isOpen, menuListID, menuTriggerID, show, hide } = MenuContext;
+      const { isOpen, menuListRef, menuListID, menuTriggerID, show, hide } = MenuContext;
 
       const root = ref<HTMLElement>(null)
 

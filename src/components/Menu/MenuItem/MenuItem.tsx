@@ -126,96 +126,147 @@ const MenuItem = defineComponent({
    emits: {
       itemAction(payload: {
          originalEvent: Event, 
-         currentInstance: ComponentInternalInstance
+         // currentInstance: ComponentInternalInstance
       }) {
-         return payload.originalEvent && payload.currentInstance
+         return payload.originalEvent
+         // return payload.originalEvent && payload.currentInstance
       }
    },
-   data() {
-      return {         
-         hasLabel: !!this.label,
-         hasRoute: !!this.to,
-         hasHref: !!this.href,
-         hasContent: !!(this.$slots.default || this.content),
-         hasIcon: !!(this.$slots.icon || this.icon),
-         hasBadge: !!(this.$slots.badge || this.badge),
-         hasDivider: !!this.divider,
-         isDisabled: !!this.disabled,
-      }
-   },
+   // data() {
+   //    return {         
+   //       hasLabel: !!this.label,
+   //       hasRoute: !!this.to,
+   //       hasHref: !!this.href,
+   //       hasContent: !!(this.$slots.default || this.content),
+   //       hasIcon: !!(this.$slots.icon || this.icon),
+   //       hasBadge: !!(this.$slots.badge || this.badge),
+   //       hasDivider: !!this.divider,
+   //       isDisabled: !!this.disabled,
+   //    }
+   // },
    directives: {
       'ripple': Ripple
    },
-   computed: { 
-      itemClasses() {
+   // computed: { 
+   //    itemClasses() {
+   //       return {
+   //          disabled: this.isDisabled 
+   //             ? this.type === 'item' 
+   //                ? NAMESPACE + '--disabled'
+   //                : undefined
+   //             : undefined,
+   //          type: this.type === 'item' 
+   //             ? undefined 
+   //             : NAMESPACE + `-${this.type}`,
+   //          content: this.hasContent && NAMESPACE + '__content',
+   //          icon: this.hasIcon && NAMESPACE + '__icon',
+   //          badge: this.hasBadge && NAMESPACE + '__badge',
+   //       }
+   //    },
+   // },
+   // watch: {
+   //    tabIndex(oldValue: number, newValue: number) {
+   //       console.log(oldValue, newValue)
+   //    }
+   // },
+   setup(props, {slots, emit, attrs}) {
+      const instance = getCurrentInstance();
+      
+      
+      // * Computed properties
+      const booleanContext = computed(() => {
          return {
-            disabled: this.isDisabled 
-               ? this.type === 'item' 
+            hasLabel: !!props.label,
+            hasRoute: !!props.to,
+            hasHref: !!props.href,
+            hasContent: !!(slots.default || props.content),
+            hasIcon: !!(slots.icon || props.icon),
+            hasBadge: !!(slots.badge || props.badge),
+            hasDivider: !!props.divider,
+            isDisabled: !!props.disabled,
+         }
+      })
+
+      const componentClasses = computed(() => {
+         const { hasContent, hasIcon, hasBadge, isDisabled } = booleanContext.value;
+         return {
+            disabled: isDisabled
+               ? props.type === 'item'
                   ? NAMESPACE + '--disabled'
                   : undefined
                : undefined,
-            type: this.type === 'item' 
-               ? undefined 
-               : NAMESPACE + `-${this.type}`,
-            content: this.hasContent && NAMESPACE + '__content',
-            icon: this.hasIcon && NAMESPACE + '__icon',
-            badge: this.hasBadge && NAMESPACE + '__badge',
+            type: props.type === 'item'
+               ? undefined
+               : NAMESPACE + `-${props.type}`,
+            content: hasContent && NAMESPACE + '__content',
+            icon: hasIcon && NAMESPACE + '__icon',
+            badge: hasBadge && NAMESPACE + '__badge',
          }
-      },
-   },
-   watch: {
-      tabIndex(oldValue: number, newValue: number) {
-         console.log(oldValue, newValue)
-      }
-   },
-   methods: {
-      onFocused(e: Event) { 
-         // console.log(e.target);
-      },
-      onBlured(e: Event) {
-         // console.log('blured')
-      },
-      onItemClick(e: Event) {
-         
-         console.log('item clicked')
-         e.stopPropagation();
+      })
+
+      const componentAttrs = computed(() => {
+         return {
+            ...attrs,
+            'data-vz-component': NAMESPACE,
+            'data-disabled': props.disabled,
+            'data-element-type': props.type,
+            'role': 'menuitem',
+            'aria-label': props.label || props.content,
+            'to': props.to && !props.disabled ? props.to : undefined,
+         }
+      })
+
+      return {
+         componentAttrs,
+         componentClasses,
+         booleanContext,
       }
    },
    render() {
+      const { hasHref,
+         hasRoute,
+         hasIcon,
+         hasContent,
+         hasBadge,
+         hasDivider,
+         isDisabled
+      } = this.booleanContext;
+      
       return (
          <>
             <DynamicTag
-               class={[NAMESPACE,
-                  this.itemClasses.type,
-                  this.itemClasses.disabled
+               class={[NAMESPACE, 
+                  this.componentClasses['type'],
+                  this.componentClasses['disabled']
                ]}
-               href={this.hasHref ? this.href : undefined}
+               {...this.componentAttrs}
+               href={hasHref ? this.href : undefined}
 
-               onFocus={ this.onFocused }
-               onBlur={ this.onBlured }
-               onClick={ 
-                  !this.isDisabled && this.type === 'item' 
-                     ? this.onItemClick
-                     : undefined 
-               }
-               role="menuitem"
-               aria-label={ this.hasLabel ? this.label : this.content }
+               // onFocus={ this.onFocused }
+               // onBlur={ this.onBlured }
+               // onClick={ 
+               //    !this.isDisabled && this.type === 'item' 
+               //       ? this.onItemClick
+               //       : undefined 
+               // }
+               //role="menuitem"
+               //aria-label={ this.hasLabel ? this.label : this.content }
                // tabindex={ this.isDisabled ? -1 : 0 }
 
-               to={ this.hasRoute && !this.isDisabled ? this.to : undefined }
+               //to={ this.hasRoute && !this.isDisabled ? this.to : undefined }
                type={ 
-                  this.hasRoute && !this.isDisabled ? 'router-link' 
-                     : this.hasHref ? 'a' 
+                  hasRoute && !isDisabled ? 'router-link' 
+                     : this.to ? 'a' 
                      : this.tag
                }
-               v-ripple={ this.type === 'item' && !this.isDisabled }
+               v-ripple={ this.type === 'item' && !isDisabled }
                
-               data-disabled={this.isDisabled}
-               data-element-type={this.type}
-               data-vz-component="VZMenuItem"
+               //data-disabled={this.isDisabled}
+               //data-element-type={this.type}
+               //data-vz-component="VZMenuItem"
             >  
-               { this.hasIcon && (
-                  <div class={this.itemClasses.icon}>
+               { hasIcon && (
+                  <div class={this.componentClasses['icon']}>
                      { this.icon 
                         ? <Icon 
                               icon={this.icon.icon} 
@@ -227,14 +278,14 @@ const MenuItem = defineComponent({
                   </div>
                )}
                
-               { this.hasContent && (
-                  <div class={this.itemClasses.content}>
+               { hasContent && (
+                  <div class={this.componentClasses['content']}>
                      { this.content ? this.content : this.$slots.default?.() }
                   </div>
                )}
-            
-               { (this.hasBadge && this.type === 'item') && (
-                  <div class={this.itemClasses.badge}>
+               
+               { (hasBadge && this.type === 'item') && (
+                  <div class={this.componentClasses['badge']}>
                      <div class="w-9"></div>
                      { this.badge 
                         ? typeof this.badge === 'function'
@@ -245,7 +296,7 @@ const MenuItem = defineComponent({
                   </div>
                )}
             </DynamicTag>
-            { this.hasDivider && (<hr/>)}
+            { hasDivider && (<hr/>)}
          </>
       )
    }

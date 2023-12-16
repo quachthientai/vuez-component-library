@@ -63,8 +63,8 @@ export default {
         badge: (() => {
           return this.test();
         }),
-        action: (() => {
-          
+        action: ((e) => {
+          console.log(e)
         })  
       },
       { content: 'Logout',
@@ -104,7 +104,7 @@ export default {
   
   
 
-  <Menu>
+  <Menu :autoSelect="false">
     <MenuList class="mt-1" placement="bottom" :model="items" />
 
     <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
