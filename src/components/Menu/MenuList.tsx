@@ -99,10 +99,12 @@ const MenuList = defineComponent({
          callback: hide,
       })
 
-      // * Computed */
+      
+      // #region ComputedRegion
       const hasModel = computed(() => {
          return (props.model as MenuItemModel[]).length > 0
       });
+
       const componentAttrs = computed(() => {
          return {
             ...attrs,
@@ -113,6 +115,7 @@ const MenuList = defineComponent({
             id: menuListID.value,
          }
       })
+
       const transition = computed(() => {
          switch(props.placement){
             case 'top':
@@ -127,6 +130,7 @@ const MenuList = defineComponent({
                return TRANSITION_PLACEMENT.BOTTOM;
          }
       })
+      // #endregion
 
       // * Watchers */
       watch(focusItemIndex, (newIndex: number, oldIndex: number) => {
@@ -221,7 +225,7 @@ const MenuList = defineComponent({
                onEnterKey(e);
                break;
             case 'Escape':
-               e.preventDefault();
+               onEscapeKey(e);
                break;
             default:
                if(/\S/.test(key) && key.length === 1) {
@@ -251,7 +255,6 @@ const MenuList = defineComponent({
        * @param e The Keyboard event
        */
       function onArrowDownKey(e: KeyboardEvent) {
-         
          const nextItemIndex = focusItemIndex.value + 1;
          setFocusItemIndex(nextItemIndex);
          e.preventDefault();
@@ -302,7 +305,15 @@ const MenuList = defineComponent({
          focusableItems.value[focusItemIndex.value].click();
          e.preventDefault();
       }
-      
+
+      /**
+       * Handles the escape key.
+       * @param e The Keyboard event
+       */
+      function onEscapeKey(e: KeyboardEvent) {
+         hide();
+         e.preventDefault();
+      }
       /**
        * Handles the first char key.
        * @param e The Keyboard event
@@ -353,6 +364,11 @@ const MenuList = defineComponent({
          focusItemIndex.value = -1;
       }
       
+      /**
+       * Handles the item action.
+       * @param e The event.
+       * @param callback The callback function.
+       */
       function onItemAction(e: Event, callback?: Function) {
          if(closeOnSelect.value) {
             hide();
