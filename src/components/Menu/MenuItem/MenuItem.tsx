@@ -144,7 +144,7 @@ const MenuItem = defineComponent({
             hasLabel: !!props.label,
             hasRoute: !!props.to,
             hasHref: !!props.href,
-            hasContent: !!(slots.default || props.content),
+            hasContent: !!(slots.default || props.content || slots.content),
             hasIcon: !!(slots.icon || props.icon),
             hasBadge: !!(slots.badge || props.badge),
             hasDivider: !!props.divider,
@@ -198,9 +198,7 @@ const MenuItem = defineComponent({
          })
       }
 
-      function onBlured(e) {
-         // console.log('asd');
-      }
+      console.log(slots.default?.());
 
       return {
          componentAttrs,
@@ -214,10 +212,10 @@ const MenuItem = defineComponent({
          hasRoute,
          isDisabled,
          onItemClick,
-         onBlured,
       }
    },
    render() {
+      console.log(this.hasBadge)
       return (
          <>
             <DynamicTag
@@ -235,7 +233,6 @@ const MenuItem = defineComponent({
 
                v-ripple={ this.type === 'item' && !this.isDisabled }
                // onFocus={ this.onFocused }
-               onBlur={ this.onBlured }
                onClick={
                   !this.isDisabled && this.type === 'item'
                      ? this.onItemClick

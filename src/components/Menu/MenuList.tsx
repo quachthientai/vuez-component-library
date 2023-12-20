@@ -93,10 +93,6 @@ const MenuList = defineComponent({
 
       // * Composables */
       const dimension = useDimension(props);
-      useClickOutside({
-         refElement: root,
-         callback: hide,
-      })
       
       // #region ComputedRegion
       const hasModel = computed(() => {
@@ -151,7 +147,7 @@ const MenuList = defineComponent({
                         !props.offset 
                            ? 5 
                            : props.offset
-                      );
+                     );
                   }), 
                   flip()]
             }).then(({x, y}) => {
@@ -182,7 +178,10 @@ const MenuList = defineComponent({
             : index >= focusableItems.value.length ? focusableItems.value.length - 1 
             : index;
 
-         if(Array.from(focusableItems.value).indexOf(focusableItems.value.item(index)) > -1) {
+         if(Array
+               .from(focusableItems.value)
+               .indexOf(focusableItems.value.item(index)) > -1
+            ) {
             (focusableItems.value[index] as HTMLElement).focus();
          }
 
@@ -379,13 +378,6 @@ const MenuList = defineComponent({
          }
       }
 
-      function onBlurred(e: FocusEvent) {
-         console.log('MenuList: onBlurred')
-         // if(MenuContext.closeOnBlur.value) {
-         //    hide();
-         // }
-      }
-
       return {
          dimension,
          handleKeyDown,
@@ -398,7 +390,6 @@ const MenuList = defineComponent({
          rootRef,
          componentAttrs,
          transition,
-         onBlurred,
       }
    },
    render() {
@@ -415,7 +406,6 @@ const MenuList = defineComponent({
                      style={ this.dimension }
                      onFocus={ this.onFocused }
                      onKeydown={ this.handleKeyDown }
-                     onBlur={ this.onBlurred }
                   >
                      {this.$slots.default?.()}  
 

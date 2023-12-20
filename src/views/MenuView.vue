@@ -98,15 +98,29 @@ export default {
 </script>
 <template>
 
-  <Menu >
+  <Menu>
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
+    <MenuList>
+      <MenuItem>
+        asdasd
+        <!-- <Badge inline rounded color="primary" content="1" /> -->
+        <template #badge>
+          <Badge inline rounded color="primary" content="1" />
+        </template>
+      </MenuItem>
+      
+      
+    </MenuList> 
+  </Menu>
+
+  <!-- <Menu>
     <MenuList class="mt-1" placement="bottom" :model="items" />
     <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
       SMALL BUTTON
     </MenuButton>
   </Menu>
 
-  <Menu >
-
+  <Menu>
     <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
       SMALL BUTTON
     </MenuButton>
@@ -117,8 +131,7 @@ export default {
       <MenuItem>Menu item 3</MenuItem>
     </MenuList>
 
-    
-  </Menu>
+  </Menu> -->
 
 </template>
 

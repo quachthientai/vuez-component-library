@@ -4,6 +4,7 @@ import { DOM } from "@/utils/DOM";
 import { Helpers } from "@/utils/helpers";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { DynamicTag } from "../DynamicTag/DynamicTag";
+import { useClickOutside } from "@/composable";
 
 import { Ref, 
    computed, 
@@ -46,6 +47,12 @@ const Menu = defineComponent({
       const root = ref<HTMLElement>(null)
       const menuTrigger = ref<HTMLElement>(null)
       const menuList = ref<HTMLElement>(null)
+      
+      // * Composable */
+      useClickOutside({
+         refElement: root,
+         callback: hide,
+      })
 
       //* Computed properties */
       const menuTriggerID = computed(() => {
