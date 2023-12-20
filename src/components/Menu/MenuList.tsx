@@ -14,13 +14,12 @@ import { ComponentInternalInstance,
    Teleport, 
    watch, 
    Transition, 
-   onMounted,
-   nextTick
 } from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
 import { MenuItemModel } from "./MenuItem/MenuItemType";
 import { DOM } from "@/utils/DOM";
+import { Helpers } from "@/utils/helpers";
 import { MenuKey } from "@/constants/injectionKey";
 import { computePosition, 
    autoUpdate, 
@@ -71,7 +70,7 @@ const MenuList = defineComponent({
          return payload.originalEvent && payload.currentInstance;
       }
    },
-   setup(props, { slots,attrs,emit }) { 
+   setup(props, { slots, attrs, emit }) { 
       //* Inject the MenuContext key */
       const MenuContext = inject(MenuKey);
       const { 
@@ -98,7 +97,6 @@ const MenuList = defineComponent({
          refElement: root,
          callback: hide,
       })
-
       
       // #region ComputedRegion
       const hasModel = computed(() => {
@@ -110,7 +108,7 @@ const MenuList = defineComponent({
             ...attrs,
             'role': 'menu',
             'tabindex': 0,
-            'data-vz-component': NAMESPACE,
+            'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
             'data-popup-placement': props.placement,
             id: menuListID.value,
          }
@@ -148,9 +146,11 @@ const MenuList = defineComponent({
             computePosition(trigger, list, {
                placement: props.placement as Placement,
                middleware: [shift({ padding: 10 }), 
-                  offset(({placement}) => {
+                  offset(() => {
                      return (
-                        placement !== 'bottom' ? 10 : 0
+                        !props.offset 
+                           ? 5 
+                           : props.offset
                       );
                   }), 
                   flip()]
@@ -343,7 +343,7 @@ const MenuList = defineComponent({
       function onEnterTransition() {
          focusableItems.value = DOM.find(
             root.value, 
-            'li[role="menuitem"][data-disabled="false"][data-element-type="item"]'
+            `[role="menuitem"][data-disabled="false"][data-element-type="item"]`
          );
 
          firstChars.value = Array.from(focusableItems.value)
@@ -379,6 +379,13 @@ const MenuList = defineComponent({
          }
       }
 
+      function onBlurred(e: FocusEvent) {
+         console.log('MenuList: onBlurred')
+         // if(MenuContext.closeOnBlur.value) {
+         //    hide();
+         // }
+      }
+
       return {
          dimension,
          handleKeyDown,
@@ -391,6 +398,7 @@ const MenuList = defineComponent({
          rootRef,
          componentAttrs,
          transition,
+         onBlurred,
       }
    },
    render() {
@@ -401,12 +409,13 @@ const MenuList = defineComponent({
                onLeave={this.onLeaveTransition} 
             >
                {this.isOpen && (
-                  <ul class={`${NAMESPACE}`}
+                  <ul class={NAMESPACE}
                      {...this.componentAttrs}
                      ref={ this.rootRef }
                      style={ this.dimension }
                      onFocus={ this.onFocused }
                      onKeydown={ this.handleKeyDown }
+                     onBlur={ this.onBlurred }
                   >
                      {this.$slots.default?.()}  
 

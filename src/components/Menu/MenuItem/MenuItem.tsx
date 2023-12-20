@@ -11,7 +11,7 @@ import {
    getCurrentInstance,
    ComponentInternalInstance
 } from "vue";
-import { isIncluded } from "@/utils/helpers";
+import { Helpers, isIncluded } from "@/utils/helpers";
 import { Ripple } from "@/directives/ripple";
 import { DynamicTag } from "../../DynamicTag/DynamicTag";
 import { MenuItemModelIcon } from "./MenuItemType";
@@ -184,7 +184,7 @@ const MenuItem = defineComponent({
             'aria-label': hasLabel ? props.label : props.content,
             'data-disabled': isDisabled,
             'data-element-type': props.type,
-            'data-vz-component': NAMESPACE,
+            'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
             'href': hasHref ? props.href : undefined,
             'role': 'menuitem',
             'to': hasRoute && !isDisabled ? props.to : undefined,
@@ -196,6 +196,10 @@ const MenuItem = defineComponent({
             originalEvent: e,
             currentInstance: instance
          })
+      }
+
+      function onBlured(e) {
+         // console.log('asd');
       }
 
       return {
@@ -210,6 +214,7 @@ const MenuItem = defineComponent({
          hasRoute,
          isDisabled,
          onItemClick,
+         onBlured,
       }
    },
    render() {
@@ -230,7 +235,7 @@ const MenuItem = defineComponent({
 
                v-ripple={ this.type === 'item' && !this.isDisabled }
                // onFocus={ this.onFocused }
-               // onBlur={ this.onBlured }
+               onBlur={ this.onBlured }
                onClick={
                   !this.isDisabled && this.type === 'item'
                      ? this.onItemClick

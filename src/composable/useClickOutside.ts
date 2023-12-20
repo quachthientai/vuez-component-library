@@ -1,7 +1,6 @@
 import { extractRefHTMLElement } from '@/utils/extractRefHTMLElement';
 import { Ref, nextTick, onMounted, onUnmounted } from 'vue';
 
-
 const useClickOutside = (props: {
    refElement: Ref<HTMLElement | null>,
    callback: () => void 
@@ -25,13 +24,11 @@ const useClickOutside = (props: {
    }
 
    onMounted(() => {
-      nextTick(() => {
-         document.addEventListener('click', handleClickOutside)
-      })
+      document.addEventListener('mousedown', handleClickOutside)
    })
 
    onUnmounted(() => {
-      document.removeEventListener('click', handleClickOutside)
+      document.removeEventListener('mousedown', handleClickOutside)
    })
 }
 

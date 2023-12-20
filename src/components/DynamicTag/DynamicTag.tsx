@@ -1,5 +1,5 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent, h } from "vue";
+import { defineComponent, h, resolveComponent } from "vue";
 
 const vDynamicTagProps = makePropsFactory({
    type: String,
@@ -12,6 +12,7 @@ const DynamicTag = defineComponent({
       
       const isRouterLink = props.type === 'router-link'
       const isAnchor = props.type === 'a'
+
 
       return () => {
          return (
@@ -27,6 +28,8 @@ const DynamicTag = defineComponent({
       }
    }
 });
+
+// const GlobalDynamicTag = resolveComponent('DynamicTag');
 
 export {
    DynamicTag

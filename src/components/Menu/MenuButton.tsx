@@ -1,8 +1,7 @@
 import { MenuKey } from "@/constants/injectionKey"
 import { Button, vButtonProps } from "../Button/Button"
-import { DOM } from "@/utils/DOM"
-import { extractRefHTMLElement } from "@/utils/extractRefHTMLElement"
-import { defineComponent, inject, nextTick, onMounted, ref, watch, toRef, computed, onBeforeMount, onUnmounted } from "vue"
+import { Helpers } from "@/utils/helpers"
+import { defineComponent, inject, ref, computed } from "vue"
 
 const NAMESPACE = 'vz-menu-button'
 
@@ -11,25 +10,38 @@ const MenuButton = defineComponent({
    props: vButtonProps,
    inheritAttrs: false,
    setup(props, { slots, attrs }) {
+      //* Inject the MenuContext key */
       const MenuContext = inject(MenuKey);
-      const { isOpen, menuListRef, menuListID, menuTriggerID, show, hide } = MenuContext;
+      const { isOpen, menuListID, menuTriggerID, show, hide } = MenuContext;
 
+      //* Refs */
       const root = ref<HTMLElement>(null)
 
+      //* Computed properties */
       const componentAttrs = computed(() => {
          return {
             ...attrs,
             'aria-haspopup': true,
             'aria-expanded': isOpen.value,
             'aria-controls': menuListID.value,
+            'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
             id: menuTriggerID.value,
          }
       })
       
+      /**
+       * Sets the root element (obtain by using template refs) to the root ref.
+       * https://vuejs.org/guide/essentials/template-refs.html#template-refs
+       * @param el The root element.
+       */
       function rootRef(el: HTMLElement) {
          root.value = el;
       }
       
+      /**
+       * Handles the click event on the root element.
+       * @param e The click event.
+       */
       function handleClick(e) {
          if(isOpen.value) {
             hide()
@@ -48,7 +60,9 @@ const MenuButton = defineComponent({
    },
    render() {
       return (
-         <Button ref={this.rootRef}
+         <Button 
+            class={ NAMESPACE }
+            ref={this.rootRef}
             {...this.$props} 
             {...this.componentAttrs}
             onClick={ this.handleClick }

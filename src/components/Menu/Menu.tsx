@@ -1,8 +1,10 @@
 import { MenuKey } from "@/constants/injectionKey";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { DOM } from "@/utils/DOM";
+import { Helpers } from "@/utils/helpers";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { usePopup } from "@/composable/usePopup";
+import { DynamicTag } from "../DynamicTag/DynamicTag";
+
 import { Ref, 
    computed, 
    defineComponent, 
@@ -11,8 +13,8 @@ import { Ref,
    provide, 
    ref, 
    toRef,
-   watch, 
 } from "vue";
+import { MenuButton } from "./MenuButton";
 
 const NAMESPACE = 'vz-menu';
 
@@ -29,40 +31,44 @@ const vMenuProps = makePropsFactory({
       type: Boolean,
       default: true,
    },
-   // openOnClick: {
-   //    type: Boolean,
-   //    default: true,
-   // },
-   // openOnHover: {
-   //    type: Boolean,
-   //    default: false,
-   // },
-   
+   tag: {
+      type: String,
+      default: 'div',
+   },
 })
 
 const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
    setup(props, { slots, attrs }) {
+      //* Refs */
       const isOpen = ref<boolean>(false)
       const root = ref<HTMLElement>(null)
-
       const menuTrigger = ref<HTMLElement>(null)
+      const menuList = ref<HTMLElement>(null)
+
+      //* Computed properties */
       const menuTriggerID = computed(() => {
          return generateComponentId('vz-menu-trigger')
       })
 
-      const menuList = ref<HTMLElement>(null)
       const menuListID = computed(() => {
          return generateComponentId('vz-menu-list')
       })
 
+      const componentAttrs = computed(() => {
+         return {
+            ...attrs,
+            'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
+         }
+      })
+
+      // * Methods */
       function rootRef(el: HTMLElement) {
          return root.value = el;
       }
       
       function show() {
-         console.log(menuList);
          if(isOpen.value) return;
          isOpen.value = true;
       }
@@ -72,6 +78,15 @@ const Menu = defineComponent({
          isOpen.value = false;
       }
 
+      // * Lifecycle */
+      onMounted(() => {
+         nextTick(() => {
+            menuTrigger.value = DOM.findSingle(document, `#${menuTriggerID.value}`);
+            menuList.value = DOM.findSingle(document, `#${menuListID.value}`);
+         })
+      })
+
+      // * Provide MenuContext Key */
       provide(MenuKey, {
          autoSelect: toRef(props, 'autoSelect') as Ref<boolean>,
          closeOnSelect: toRef(props, 'closeOnSelect') as Ref<boolean>,
@@ -85,37 +100,29 @@ const Menu = defineComponent({
          hide: hide,
       })
       
-
-      onMounted(() => {
-         nextTick(() => {
-            menuTrigger.value = DOM.findSingle(document, `#${menuTriggerID.value}`);
-            menuList.value = DOM.findSingle(document, `#${menuListID.value}`);
-         })
-      })
+      function onBlured() {
+         console.log('onblured')
+      }
 
       return {
          rootRef,
          root,
+         componentAttrs,
+         onBlured,
       }
       
    },
    render() {
-      // debugger;
+      // console.log(this.$slots.trigger?.());
       return (
-         <div class={NAMESPACE}
+         <DynamicTag class={NAMESPACE}
+            type={this.tag}
             ref={this.rootRef}
-            // onClick={this.handleClick}
+            {...this.componentAttrs}
+            onBlured={this.onBlured}
          >
-            {/* <div id="menu-button">
-               {Array.from(this.$slots.default()).find((node) => node.type.name === 'MenuButton')}
-            </div>
-            <div id="menu-list">
-               {Array.from(this.$slots.default()).find((node) => node.type.name === 'MenuList')}
-            </div> */}
-            
-            
             {this.$slots.default?.()}
-         </div>
+         </DynamicTag>
       )
    },
 })

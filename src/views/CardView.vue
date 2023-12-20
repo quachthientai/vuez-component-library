@@ -61,10 +61,6 @@ export default {
         icon: {
           icon: 'mdi:account-outline',
         },
-
-        badge: (() => {
-          // return this.test();
-        }),
         action: ((e) => {
           console.log(e)
         })  
@@ -100,8 +96,7 @@ export default {
             <MenuList class="mt-1" placement="bottom" :model="items" />
 
             <MenuButton size="lg" :icon="{icon: 'mdi-dots-vertical',color:'grey', width:'1.7rem', height: '1.7rem'}" variant="text"></MenuButton>
-            <!-- <MenuButton :elevation="4" color="secondary">BUTTON</MenuButton> -->
-            <!-- <MenuList ref="menu" class="mt-1"  :model="items" /> -->
+            
           </Menu>
             <!-- <Button size="lg" :icon="{icon: 'mdi-dots-vertical',color:'grey', width:'1.7rem', height: '1.7rem'}" variant="text"></Button> -->
         </template>
