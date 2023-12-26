@@ -28,14 +28,17 @@ export default {
     // const menu = ref<InstanceType<typeof Menu> | null>(null);
 
     const items: MenuItemModel[] = [
-      {content: 'VUEZUI',
+      {
+        content: 'VUEZUI',
         type: 'header',
-        divider:true},
-      { content: 'Documents',
-        type: 'header', 
-        
+        divider:true
       },
-      { content: 'New',
+      { 
+        content: 'Documents',
+        type: 'header', 
+      },
+      { 
+        content: 'New',
         icon: {
           icon: 'mdi:plus',
         }
@@ -59,7 +62,7 @@ export default {
         icon: {
           icon: 'mdi:account-outline',
         },
-
+        // disabled: true,
         badge: (() => {
           return this.test();
         }),
@@ -98,19 +101,31 @@ export default {
 </script>
 <template>
 
+  <Menu :closeOnSelect="false">
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
+    <MenuList :model="items"/>
+  </Menu>
+
+
   <Menu>
     <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
     <MenuList>
-      <MenuItem>
-        asdasd
-        <!-- <Badge inline rounded color="primary" content="1" /> -->
-        <template #badge>
-          <Badge inline rounded color="primary" content="1" />
-        </template>
-      </MenuItem>
-      
-      
-    </MenuList> 
+      <MenuItem v-for="item in items"
+        :content="item.content"
+        :icon="item.icon"
+        :badge="item.badge"
+        :divider="item.divider"
+        :type="item.type"
+        :href="item.href"
+        @onItemAction="item.action"
+      /> 
+    </MenuList>
+  </Menu>
+
+  <Menu  class="ml-[500px]">
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
+    <MenuList :model="items"/>
+
   </Menu>
 
   <!-- <Menu>

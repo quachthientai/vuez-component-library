@@ -1,11 +1,10 @@
-<script>
-import Radio from '@/components/Forms/Radio'
-import { VIcon } from '@/components/Icon/Icon';
+<script lang="ts">
+
+
 export default {
   name: 'RadioView',
   components: {
-    Radio,
-    VIcon
+
   }
 }
 </script>
@@ -19,7 +18,7 @@ export default {
   <Radio radioClass="radio radio-warning" radioValue="warning"></Radio>
   <Radio radioClass="radio radio-danger" radioValue="danger"></Radio>
   <Radio radioClass="radio radio-success" radioValue="success"></Radio> -->
-  <v-icon icon="mdi-checkbox-marked-circle"></v-icon>
+  
   
 
 </template>

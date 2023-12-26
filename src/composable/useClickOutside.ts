@@ -10,7 +10,7 @@ const useClickOutside = (props: {
    const handleClickOutside = (ev : Event) => {
       const target = ev.target as HTMLElement;
       const element = extractRefHTMLElement(refElement);
-      
+
       if(!target || !element) {
          return;
       }
@@ -20,7 +20,6 @@ const useClickOutside = (props: {
       }
       
       callback();
-
    }
 
    onMounted(() => {

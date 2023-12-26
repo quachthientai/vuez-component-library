@@ -13,7 +13,9 @@ import { ComponentInternalInstance,
    ref, 
    Teleport, 
    watch, 
-   Transition, 
+   Transition,
+   onMounted,
+   nextTick, 
 } from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
@@ -94,7 +96,7 @@ const MenuList = defineComponent({
       // * Composables */
       const dimension = useDimension(props);
       
-      // #region ComputedRegion
+      // * Computed
       const hasModel = computed(() => {
          return (props.model as MenuItemModel[]).length > 0
       });
@@ -162,7 +164,7 @@ const MenuList = defineComponent({
 
       /**
        * Sets the root element (obtain by using template refs) to the root ref.
-       * https://vuejs.org/guide/essentials/template-refs.html#template-refs
+       * @see https://vuejs.org/guide/essentials/template-refs.html#template-refs
        * @param el The root element.
        */
       function rootRef(el: HTMLElement) {
@@ -362,21 +364,6 @@ const MenuList = defineComponent({
       function onLeaveTransition() {
          focusItemIndex.value = -1;
       }
-      
-      /**
-       * Handles the item action.
-       * @param e The event.
-       * @param callback The callback function.
-       */
-      function onItemAction(e: Event, callback?: Function) {
-         if(closeOnSelect.value) {
-            hide();
-         }
-
-         if(callback) {
-            callback(e);
-         }
-      }
 
       return {
          dimension,
@@ -386,7 +373,6 @@ const MenuList = defineComponent({
          onFocused,
          onEnterTransition,
          onLeaveTransition,
-         onItemAction,
          rootRef,
          componentAttrs,
          transition,
@@ -394,53 +380,43 @@ const MenuList = defineComponent({
    },
    render() {
       return (
-         <Teleport to="#overlay">
-            <Transition name={this.transition} 
-               onEnter={this.onEnterTransition}
-               onLeave={this.onLeaveTransition} 
-            >
-               {this.isOpen && (
-                  <ul class={NAMESPACE}
-                     {...this.componentAttrs}
-                     ref={ this.rootRef }
-                     style={ this.dimension }
-                     onFocus={ this.onFocused }
-                     onKeydown={ this.handleKeyDown }
-                  >
-                     {this.$slots.default?.()}  
-
-                     {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
-                        const { action, ...rest} = item;
-                        return (
-                           <MenuItem 
-                              {...rest}
-                              onItemAction={
-                                 (e: Event) => {
-                                    item.action !== undefined ? this.onItemAction(e, item.action) 
-                                       : this.onItemAction(e);
-                                 }
+         <Transition name={this.transition} 
+            onEnter={this.onEnterTransition}
+            onLeave={this.onLeaveTransition} 
+         >
+            {this.isOpen && (
+               <ul class={NAMESPACE}
+                  {...this.componentAttrs}
+                  ref={ this.rootRef }
+                  style={ this.dimension }
+                  onFocus={ this.onFocused }
+                  onKeydown={ this.handleKeyDown }
+               >
+                  {this.$slots.default?.()}  
+                  {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
+                     return (
+                        <MenuItem
+                           {...item}
+                           key={
+                              item.label ? item.label + index.toString() 
+                                 : item.content ? item.content + index.toString() 
+                                 : item.key + index.toString()
+                           }
+                        >
+                           {item.badge && { badge: () => {
+                                 return (
+                                    typeof item.badge === 'function' 
+                                       ? item.badge() 
+                                       : <Badge {...item.badge} />
+                                 )
                               }
-                              key={
-                                 item.label ? item.label + index.toString() 
-                                    : item.content ? item.content + index.toString() 
-                                    : item.key + index.toString()
-                              }
-                           >
-                              {item.badge && { badge: () => {
-                                    return (
-                                       typeof item.badge === 'function' 
-                                          ? item.badge() 
-                                          : <Badge {...item.badge} />
-                                    )
-                                 }
-                              }}
-                           </MenuItem>
-                        )
-                     })}
-                  </ul>
-               )}
-            </Transition>
-         </Teleport>
+                           }}
+                        </MenuItem>
+                     )
+                  })}
+               </ul>
+            )}
+         </Transition>
       )
    },
 })
@@ -451,6 +427,3 @@ export {
    MenuList,
    MenuListType
 };
-
-
-

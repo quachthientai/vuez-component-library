@@ -5,7 +5,6 @@ import { Helpers } from "@/utils/helpers";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { DynamicTag } from "../DynamicTag/DynamicTag";
 import { useClickOutside } from "@/composable";
-
 import { Ref, 
    computed, 
    defineComponent, 
@@ -15,7 +14,6 @@ import { Ref,
    ref, 
    toRef,
 } from "vue";
-import { MenuButton } from "./MenuButton";
 
 const NAMESPACE = 'vz-menu';
 
@@ -47,7 +45,7 @@ const Menu = defineComponent({
       const root = ref<HTMLElement>(null)
       const menuTrigger = ref<HTMLElement>(null)
       const menuList = ref<HTMLElement>(null)
-      
+
       // * Composable */
       useClickOutside({
          refElement: root,
@@ -120,7 +118,6 @@ const Menu = defineComponent({
       
    },
    render() {
-      // console.log(this.$slots.trigger?.());
       return (
          <DynamicTag class={NAMESPACE}
             type={this.tag}

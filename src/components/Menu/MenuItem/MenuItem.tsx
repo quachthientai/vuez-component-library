@@ -3,13 +3,15 @@ import { RouteLocationRaw } from 'vue-router';
 import { 
    computed,
    ref,
+   inject,
    defineComponent,
    PropType,
    RendererElement,
    RendererNode,
    VNode,
    getCurrentInstance,
-   ComponentInternalInstance
+   ComponentInternalInstance,
+   onMounted
 } from "vue";
 import { Helpers, isIncluded } from "@/utils/helpers";
 import { Ripple } from "@/directives/ripple";
@@ -17,6 +19,7 @@ import { DynamicTag } from "../../DynamicTag/DynamicTag";
 import { MenuItemModelIcon } from "./MenuItemType";
 import { Icon } from "@iconify/vue";
 import { BadgePropType, Badge } from "@/components/Badge/Badge";
+import { MenuKey } from "@/constants/injectionKey";
 
 /**
  * Namespace of the MenuItem component.
@@ -27,12 +30,14 @@ const vMenuItemProps = makePropsFactory({
    /**
     * The aria-label for the menu item.
     * @type {string}
+    * @default undefined
     * @name label
     */
    label: String,
    /**
     * The route for the menu item.
     * @type {string | RouteLocationRaw}
+    * @default undefined
     * @name to
     */
    to: [String, Object] as PropType<RouteLocationRaw>,
@@ -111,6 +116,16 @@ const vMenuItemProps = makePropsFactory({
       default: 'li',
    },
    /**
+    * The action for the menu item.
+    * @type {Function}
+    * @default () => {}
+    * @name action
+    */
+   action: {
+      type: Function as PropType<(e: Event) => void>,
+      default: () => {},
+   },
+   /**
     * The key for the menu item.
     * @type {string}
     * @default undefined
@@ -138,6 +153,13 @@ const MenuItem = defineComponent({
       // * Get the current instance
       const instance = getCurrentInstance();
       
+      // * Inject the MenuContext key 
+      const MenuContext = inject(MenuKey);
+      const {
+         closeOnSelect,
+         hide
+      } = MenuContext;
+
       // * Computed properties
       const booleanContext = computed(() => {
          return {
@@ -188,17 +210,24 @@ const MenuItem = defineComponent({
             'href': hasHref ? props.href : undefined,
             'role': 'menuitem',
             'to': hasRoute && !isDisabled ? props.to : undefined,
+            'target': hasHref ? '_blank' : undefined,
          }
       })
       
-      function onItemClick(e: Event) {
+      function onItemClick(e: Event, callback?: Function) {
+         if(callback) {
+            callback(e);
+         }
+
+         if(closeOnSelect.value) {
+            hide();
+         }
+
          emit('onItemAction', {
             originalEvent: e,
             currentInstance: instance
          })
       }
-
-      console.log(slots.default?.());
 
       return {
          componentAttrs,
@@ -215,7 +244,6 @@ const MenuItem = defineComponent({
       }
    },
    render() {
-      console.log(this.hasBadge)
       return (
          <>
             <DynamicTag
@@ -227,15 +255,17 @@ const MenuItem = defineComponent({
 
                type={ 
                   this.hasRoute && !this.isDisabled ? 'router-link' 
-                     : this.to ? 'a' 
+                     : this.hasHref ? 'a' 
                      : this.tag
                }
-
                v-ripple={ this.type === 'item' && !this.isDisabled }
-               // onFocus={ this.onFocused }
                onClick={
                   !this.isDisabled && this.type === 'item'
-                     ? this.onItemClick
+                     ? (e: Event) => {
+                        this.action 
+                           ? this.onItemClick(e, this.action)
+                           : this.onItemClick(e);
+                     }
                      : undefined 
                }
             >  
