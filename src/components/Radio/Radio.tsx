@@ -27,7 +27,18 @@ const vRadioProps = makePropsFactory({
       type: Boolean,
       default: false,
    },
-   ...makeColorProp(),
+   checked: {
+      type: Boolean,
+      default: false,
+   },
+   ...makeColorProp([
+      'primary',
+      'secondary',
+      'success',
+      'info',
+      'warning',
+      'danger',
+   ], 'primary'),
 });
 
 const Radio = defineComponent({
@@ -44,13 +55,14 @@ const Radio = defineComponent({
    },
    setup(props, { slots, emit, attrs }) {
       const color = useColor('radio', props.color as string);
-      
+
       const componentID = generateComponentId(NAMESPACE.RADIO);
 
       const componentAttrs = computed(() => {
          return {
             ...attrs,
             'data-vz-component': Helpers.toPascalCase(NAMESPACE.RADIO, '-'),
+            'data-disabled': props.disabled,
          }
       })
 
@@ -61,14 +73,14 @@ const Radio = defineComponent({
       }
    },
    render() {
-
       return (
          <div class={NAMESPACE.RADIO}
             {...this.componentAttrs}
          >
-            <input checked class={[
+            <input
+            checked={this.checked} class={[
                NAMESPACE.RADIO_INPUT,
-               this.color
+               this.color,
             ]} 
                id={this.componentID}
                type="radio" 

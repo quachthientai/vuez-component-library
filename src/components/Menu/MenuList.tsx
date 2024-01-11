@@ -96,7 +96,7 @@ const MenuList = defineComponent({
       // * Composables */
       const dimension = useDimension(props);
       
-      // * Computed
+      // * Computed properties */
       const hasModel = computed(() => {
          return (props.model as MenuItemModel[]).length > 0
       });
@@ -376,7 +376,7 @@ const MenuList = defineComponent({
          rootRef,
          componentAttrs,
          transition,
-      }
+      };
    },
    render() {
       return (

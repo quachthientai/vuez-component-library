@@ -16,11 +16,19 @@ const predefinedColors = [
    'plain'
 ]
 
-function makeColorProp(colors: Array<String> = predefinedColors, defaultVal? : string) : colorProps {
+function makeColorProp(colors? : Array<string>, defaultVal? : string) : colorProps {
+   if(colors === undefined || null) {
+      colors = predefinedColors;
+   };
+
+   if(defaultVal === undefined || null) {
+      defaultVal = 'plain'
+   }
+
    return makePropsFactory({
       color: {
          type: String,
-         default: !defaultVal ? 'plain' : defaultVal,
+         default: defaultVal,
          validator: (colorVal: string) => {
             return isIncluded(colors, colorVal)
          }

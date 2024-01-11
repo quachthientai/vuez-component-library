@@ -11,3 +11,4 @@ function generateComponentId(prefix : string = 'vz-component-id-') : string {
 export {
    generateComponentId
 }
+

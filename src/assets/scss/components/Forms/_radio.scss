@@ -8,9 +8,33 @@ $disabled: #d9d9d9;
 
 @layer base {
   .vz-radio {
-    @apply inline-flex items-center opacity-60 justify-center transition-all duration-300;
+    @apply flex items-center transition-all duration-300 p-1;
+    &.vz-radio--disabled {
+      @apply opacity-60 cursor-not-allowed;
+    }
+  }
+  
+  .vz-radio-group {
+    @apply flex flex-col;
+    > label {
+      @apply p-1;
+      align-items: start;
+      color: inherit;
+      display: inline-flex;
+      font-size: 1rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      
+    }
+
+    
   }
 
+}
+.testControl {
+  display: flex;
+  flex-direction: column;
 }
 
 @layer utilities {
@@ -25,7 +49,7 @@ $disabled: #d9d9d9;
   }
 
   .vz-radio-label {
-    @apply ms-2 text-sm font-medium text-gray-900 dark:text-gray-300;
+    @apply mx-1 text-sm font-medium text-gray-800 dark:text-gray-300;
   }
   // @each $variant in utils-variables.$colors {
   //   .radio-#{$variant} {
