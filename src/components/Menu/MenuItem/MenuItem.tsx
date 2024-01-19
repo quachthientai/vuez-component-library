@@ -214,6 +214,7 @@ const MenuItem = defineComponent({
          }
       })
       
+      // * Methods *
       function onItemClick(e: Event, callback?: Function) {
          if(callback) {
             callback(e);

@@ -9,7 +9,7 @@
 @tailwind utilities;
 
 @layer base {
-  .btn {
+  .vz-btn {
     @apply relative 
       rounded-[5px] 
       font-semibold 
@@ -58,18 +58,18 @@
       @apply block w-full;
     }
 
-    &.btn-loading {
+    &.vz-btn-loading {
       @apply cursor-not-allowed;
     
-      .btn__content,
-      .btn__prepend,
-      .btn__append {
+      .vz-btn__content,
+      .vz-btn__prepend,
+      .vz-btn__append {
         @apply opacity-0;
       }
     }
   }
 
-  .btn-icon {
+  .vz-btn--icon {
     @apply relative flex justify-center rounded-full;
 
     > .ripple {
@@ -80,7 +80,7 @@
       @apply opacity-50 cursor-not-allowed;
     }
 
-    .btn__content {
+    .vz-btn__content {
       @apply flex justify-center transition-all duration-150 ease-out;
     }
 
@@ -96,12 +96,12 @@
       @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'lg');
     }
 
-    &.btn-loading {
+    &.vz-btn-loading {
       @apply cursor-not-allowed;
     
-      .btn__content,
-      .btn__prepend,
-      .btn__append {
+      .vz-btn__content,
+      .vz-btn__prepend,
+      .vz-btn__append {
         @apply opacity-0;
       }
     }

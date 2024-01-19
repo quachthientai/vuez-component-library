@@ -1,14 +1,21 @@
 {
-   "compilerOptions": {
-      "jsx": "preserve",
-      "baseUrl": "./",
-      "paths": {
-         "@/*": [
-           "src/*"
-         ]
-       },
-   },
-   "include": [
+  "compilerOptions": {
+    "target": "ES6",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+    },
+    "module": "esnext",
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client", "vue"],
+    "esModuleInterop": true
+  },
+  "include": [
       "src/**/*",
       "tests/**/*",
       "typings/**/*.d.ts",

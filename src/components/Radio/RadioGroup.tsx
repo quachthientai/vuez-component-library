@@ -30,6 +30,22 @@ const vRadioGroupProps = makePropsFactory({
    }
 });
 
+// const RadioGroup = defineComponent({
+//    name: 'RadioGroup',
+//    props: vRadioGroupProps,
+//    inheritAttrs: false,
+//    setup(props, { slots, emit, attrs }) {
+
+//    },
+//    render() {
+//       return (
+//          <div class={NAMESPACE}>
+//             {this.$slots.default?.()}
+//          </div>
+//       )
+//    }
+
+// })
 const RadioGroup = defineComponent({
    name: 'RadioGroup',
    props: vRadioGroupProps,

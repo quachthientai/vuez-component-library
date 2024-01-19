@@ -30,7 +30,7 @@ export default {
          :loading="loading"
          class="mr-2" 
          variant="outlined" 
-         color="primary"
+         color="Primary"
          @click="(e) => console.log(e)"
       >
          BUTTON
