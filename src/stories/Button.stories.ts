@@ -1,11 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { vueRouter } from 'storybook-vue3-router'
 import { Button } from '../components/Button/Button'
-import { colorArgType, contentArgType, disabledArgType, hrefArgType, elevationArgType, sizeArgType, variantArgType, dimensionArgType, iconArgType } from '../../.storybook/argsTypes'
+import Home from './Home.vue'
+import About from './About.vue'
+import { colorArgType, contentArgType, disabledArgType, hrefArgType, elevationArgType, sizeArgType, variantArgType, dimensionArgType, iconArgType, routeArgType } from '../../.storybook/argsTypes'
+import routerViewWrapper from './routerViewWrapper.vue';
 
-/**
- * TODO: fix button bug at href prop, when href is defined, button is showed as block
- * TODO: refactor composable (Dimension) to make it more reusable
- */
+const customRoutes = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home 
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About
+  }
+]
+
 const meta = {
   title: 'Components/Button',
   component: Button,
@@ -17,8 +30,15 @@ const meta = {
     color: colorArgType(),
     size: sizeArgType(),
     variant: variantArgType(),
+    to: routeArgType(),
     ...dimensionArgType(),
     ...iconArgType(),
+    onClick: {
+      action: 'onClick',
+      table: {
+        category: 'Events',
+      },
+    },
     icon: {
       control: {
         type: 'object',
@@ -55,7 +75,8 @@ const meta = {
         category: 'Slots',
       },
     }
-  }
+  },
+  decorators: [ vueRouter(customRoutes) ]
 } satisfies Meta<typeof Button>
 
 export default meta;
@@ -68,7 +89,7 @@ export const Basic: Story = {
     setup() {
       return { args };
     },
-    template: '<Button v-bind="args" />',
+    template: `<Button v-bind="args" />`,
   }),
   args: {
     content: 'Button',
@@ -142,7 +163,28 @@ export const TextButton: Story = {
       <Button v-bind="args" variant="text" color="plain">Plain</Button>
     </div>`,
   })
-}
+};
+
+export const RoutingButton: Story = {
+  render: (args) => ({
+    components: { 'Button': Button, 'RouterViewWrapper': routerViewWrapper },
+    setup() {
+      return { args };
+    },
+    template: `
+    <RouterViewWrapper title="Vue 3 Router custom on props 'to'">
+      <div>
+        <div style="display: flex; gap: 1em;" class="my-3">
+          <Button v-bind="args" to="/"> Home </Button> 
+          <Button v-bind="args" to="/about"> About </Button>
+          <Button v-bind="args" href="https://www.google.com/"> External Link </Button>
+        </div>
+        <router-view />
+      </div>
+    </RouterViewWrapper>
+    `,
+  }),
+};
 
 export const OutlinedButton: Story = {
   render: (args) => ({
@@ -219,19 +261,19 @@ export const Elevation: Story = {
       return { args };
     },
     template: `<div class="flex gap-2">
-      <Button v-bind="args" elevation="1">Elevation 1</Button>
-      <Button v-bind="args" elevation="2">Elevation 2</Button>
-      <Button v-bind="args" elevation="3">Elevation 3</Button>
-      <Button v-bind="args" elevation="4">Elevation 4</Button>
-      <Button v-bind="args" elevation="5">Elevation 5</Button>
+      <Button v-bind="args" :elevation="1">Elevation 1</Button>
+      <Button v-bind="args" :elevation="2">Elevation 2</Button>
+      <Button v-bind="args" :elevation="3">Elevation 3</Button>
+      <Button v-bind="args" :elevation="4">Elevation 4</Button>
+      <Button v-bind="args" :elevation="5">Elevation 5</Button>
     </div>
     
     <div class="flex mt-3 gap-2">
-      <Button v-bind="args" :icon="{icon: 'mdi-account'}" elevation="1" />
-      <Button v-bind="args" :icon="{icon: 'mdi-account'}" elevation="2" />
-      <Button v-bind="args" :icon="{icon: 'mdi-account'}" elevation="3" />
-      <Button v-bind="args" :icon="{icon: 'mdi-account'}" elevation="4" />
-      <Button v-bind="args" :icon="{icon: 'mdi-account'}" elevation="5" />
+      <Button v-bind="args" :icon="{icon: 'mdi-account'}" :elevation="1" />
+      <Button v-bind="args" :icon="{icon: 'mdi-account'}" :elevation="2" />
+      <Button v-bind="args" :icon="{icon: 'mdi-account'}" :elevation="3" />
+      <Button v-bind="args" :icon="{icon: 'mdi-account'}" :elevation="4" />
+      <Button v-bind="args" :icon="{icon: 'mdi-account'}" :elevation="5" />
     </div>`
   }),
   args: {
@@ -303,6 +345,9 @@ export const LoadingState: Story = {
     loading: true
   }
 }
+
+
+
 
 
 

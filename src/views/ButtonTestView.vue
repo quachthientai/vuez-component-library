@@ -32,6 +32,7 @@ export default {
          variant="outlined" 
          color="Primary"
          @click="(e) => console.log(e)"
+         to="/menu"
       >
          BUTTON
       </Button>

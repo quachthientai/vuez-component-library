@@ -42,7 +42,7 @@ const useColor = (prefix: string, color: string) => {
 
       // refactor condition to check if user using their own color scheme
       if(color && isIncluded(predefinedColors, color.toLowerCase())) {
-         return `${prefix}-${color.toLowerCase()}`
+         return `${prefix}--${color.toLowerCase()}`
       }
    })
    return colorStyle.value

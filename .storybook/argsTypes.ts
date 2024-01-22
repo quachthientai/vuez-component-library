@@ -148,3 +148,12 @@ export const iconArgType = () => ({
       table: {...propsTable}
    }
 });
+
+export const routeArgType = () => ({
+   control: {
+      type: 'text',
+      description: 'Define component route',
+   },
+   table: {...propsTable}
+});
+

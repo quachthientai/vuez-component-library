@@ -4,13 +4,12 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-a11y'
+    '@storybook/addon-a11y',
+    '@storybook/addon-mdx-gfm'
   ],
-  core: {
-    builder: '@storybook/builder-vite'
-  },
+  core: {},
   framework: {
-    name: '@storybook/vue3-vite',
+    name: "@storybook/vue3-vite",
     options: {}
   },
   docs: {

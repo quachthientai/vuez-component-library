@@ -37,7 +37,7 @@ function useSize(prefix: string, size: string) : string {
       if(prefix === undefined || null) return
 
       if(size && isIncluded(predefinedSizes, size)) {
-         return `${prefix}-${size}`
+         return `${prefix}--${size}`
       }
    })
    return sizeStyle.value

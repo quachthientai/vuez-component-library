@@ -21,46 +21,132 @@ import { RouteLocationRaw } from "vue-router";
 const NAMESPACE = 'vz-btn';
 
 /**
- * TODO add prop "to" to storybook
- * TODO inspect the dimension prop
- * TODO predefined the classes for sub-component
- * TODO create NAMESPACE enum type for component and sub-component classes
- * TODO implement the accessibility
- * TODO comment the code
+ * Namespaces of the Button component.
+ */
+enum NAMESPACES {
+   Button = 'vz-btn',
+   ButtonContent = 'vz-btn__content',
+   ButtonPrepend = 'vz-btn__prepend',
+      ButtonPrependIcon = 'vz-btn__prepend-icon',
+   ButtonAppend = 'vz-btn__append',
+      ButtonAppendIcon = 'vz-btn__append-icon',
+   ButtonLoader = 'vz-btn__loader',
+}
+
+/**
+ * TODO inspect the dimension prop 
+ * TODO predefined the classes for sub-component ✔
+ * TODO create NAMESPACE enum type for component and sub-component classes ✔
+ * TODO implement the accessibility ✔
+ * TODO comment the code ✔
+ * TODO: refactor composable (Dimension) to make it more reusable
+ * TODO: button router-link can't use Enter and Space click
  * * See notepad++ for previous version
  */
 
 const vButtonProps = makePropsFactory({
+   /**
+    * Whether the button is block or not.
+    * @type {boolean}
+    * @default false
+    * @name block
+    */
    block: {
       type: Boolean,
       default: false,
    },
+   /**
+    * The content for the button.
+    * @type {string}
+    * @default undefined
+    * @name content
+    */
    content: { 
       type: String,
       default: undefined,
    },
+   /**
+    * Whether the button is disabled or not.
+    * @type {boolean}
+    * @default false
+    * @name disabled
+    */
    disabled: {
       type: Boolean,
       default: false,
    },
+   /**
+    * Define the external link for the button.
+    * @type {string}
+    * @default undefined
+    * @name href
+    */
    href: {
       type: String,
       default: undefined,
    },
+   /**
+    * Define the icon for the button. Button will be icon only
+    * @type {IconType}
+    * @default undefined
+    * @name icon
+    */
    icon: {
       type: Object as PropType<IconType>,
       default: undefined,
    },
+   /**
+    * The route for the button.
+    * @type {string | RouteLocationRaw}
+    * @default undefined
+    * @name to
+    */
    to: {
       type: [String, Object] as PropType<string | RouteLocationRaw>,
       default: undefined,
    },
    ...makeDimensionProp(),
+   /**
+    * Define the type variant for the button.
+    * @type {'outlined' | 'text' | 'solid'}
+    * @default 'solid'
+    * @name variant
+    */
    ...makeVariantProp(),
+   /**
+    * Defined the append or prepend icon for the button.
+    * @type {IconType}
+    * @default undefined
+    * @name appendIcon | prependIcon
+    */
    ...makeIconProps(),
+   /**
+    * Defined the size for the button.
+    * @type {'sm' | 'md' | 'lg'}
+    * @default 'md'
+    * @name size
+    */
    ...makeSizeProp(),
+   /**
+    * Defined the color for the button.
+    * @type {'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'plain'}
+    * @default 'plain'
+    * @name color
+    */
    ...makeColorProp(),
+   /**
+    * Whether the button is loading or not.
+    * @type {boolean}
+    * @default false
+    * @name loading
+    */
    ...makeLoaderProp(),
+   /**
+    * Defined the elevation for the button.
+    * @type {number}
+    * @default 0
+    * @name elevation
+    */
    ...makeElevationProp(),
 });
 
@@ -114,7 +200,7 @@ const Button = defineComponent({
          return {
             ...attrs,
             'role': 'button',
-            'tabindex': 0,
+            // 'tabindex': 0,
             'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
             'data-disabled': isDisabled,
             'to': hasRoute && !isDisabled ? props.to : undefined,
@@ -126,9 +212,9 @@ const Button = defineComponent({
       const componentClasses = computed(() => {
          return {
             loader: useLoader('vz-btn', props.loading as boolean),
-            variant: useVariants('btn', props.variant as string),
-            size: useSize('btn', props.size as string),
-            color: useColor('btn', props.color as string),
+            variant: useVariants('vz-btn', props.variant as string),
+            size: useSize('vz-btn', props.size as string),
+            color: useColor('vz-btn', props.color as string),
             elevation: useElevation(props.elevation as number),
             dimension: useDimension(props),
 
@@ -183,10 +269,10 @@ const Button = defineComponent({
                onClick={ this.onButtonClick }
             >
                { (this.hasPrependIcon && !this.isIcon) && (
-                  <div class="btn__prepend">
+                  <div class="vz-btn__prepend">
                      { this.prependIcon
                         ? <Icon 
-                              class={["btn__prepend-icon", this.prependIcon.color]} 
+                              class={["vz-btn__prepend-icon", this.prependIcon.color]} 
                               width={ this.prependIcon.width } 
                               height={ this.prependIcon.height } 
                               icon={ this.prependIcon.icon }
@@ -218,7 +304,7 @@ const Button = defineComponent({
                   <div class="vz-btn__append">
                      { this.appendIcon
                         ? <Icon 
-                              class={["btn__append-icon", this.appendIcon.color]} 
+                              class={["vz-btn__append-icon", this.appendIcon.color]} 
                               width={ this.appendIcon.width } 
                               height={ this.appendIcon.height } 
                               icon={ this.appendIcon.icon }
