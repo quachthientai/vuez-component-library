@@ -16,11 +16,19 @@ const predefinedColors = [
    'plain'
 ]
 
-function makeColorProp(colors: Array<String> = predefinedColors, defaultVal? : string) : colorProps {
+function makeColorProp(colors? : Array<string>, defaultVal? : string) : colorProps {
+   if(colors === undefined || null) {
+      colors = predefinedColors;
+   };
+
+   if(defaultVal === undefined || null) {
+      defaultVal = 'plain'
+   }
+
    return makePropsFactory({
       color: {
          type: String,
-         default: !defaultVal ? 'plain' : defaultVal,
+         default: defaultVal,
          validator: (colorVal: string) => {
             return isIncluded(colors, colorVal)
          }
@@ -33,8 +41,8 @@ const useColor = (prefix: string, color: string) => {
       if(prefix === undefined || null) return []
 
       // refactor condition to check if user using their own color scheme
-      if(color && isIncluded(predefinedColors, color)) {
-         return `${prefix}-${color}`
+      if(color && isIncluded(predefinedColors, color.toLowerCase())) {
+         return `${prefix}--${color.toLowerCase()}`
       }
    })
    return colorStyle.value

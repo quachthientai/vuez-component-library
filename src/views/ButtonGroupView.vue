@@ -33,7 +33,6 @@ function hello() {
     :item-list="[{ text: 'text1' }, { text: 'text2' }, { text: 'text3' }]"
   ></ButtonGroup>
   <br />
-
   <ButtonGroup
     option="default"
     class="btnGroup-pill btnGroup-primary"
@@ -50,7 +49,6 @@ function hello() {
     :item-list="[{ text: 'text1' }, { text: 'text2' }, { text: 'text3' }]"
   ></ButtonGroup>
   <br />
-
   <ButtonGroup class="ms-3 mt-3" option="custom">
     <Button
       btnClass="btn btn-primary"

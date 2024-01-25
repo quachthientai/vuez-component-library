@@ -5,6 +5,7 @@ import Badge from '@/components/Badge/Badge.vue'
 export default {
   name: 'ButtonView',
   components: {
+    // Button,
     Badge
   }
 }

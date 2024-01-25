@@ -6,30 +6,33 @@
 
 @layer base {
    .vz-menu-item {
-      @apply py-1 text-sm relative px-4 text-gray-600 dark:text-gray-200;
-      align-items: center;
-      min-height: 40px;
-      width: 100%;
-      cursor: pointer;
       @include utils-mixin.get-grid-append-prepend-setup;
-      
-      
-      
-      @apply gap-2;
-      display: grid;
-      
-      > .ripple .ripple__effect {
-         @include utils-mixin.get-rgb-ripple-color('primary');
-       }
+      grid-template-columns: max-content 1fr auto;
+      align-items: center;
+      @apply 
+         text-sm relative px-4 
+         outline-none
+         overflow-hidden
+         
+         ease-linear duration-150
+         text-gray-600 dark:text-gray-200 
+         align-middle min-h-[40px] w-full 
+         cursor-pointer grid gap-2;
 
-      &:hover{
+
+      > .ripple .ripple__effect {
+         @include utils-mixin.get-rgb-ripple-color('plain');
+      }
+
+      &:not([data-disabled="true"], [data-element-type="header"]):hover,{
          @include utils-mixin.get-hover-color('text', 'plain');
       }
 
-      &:focus-visible {
-         @apply outline-none;
+      &:not([data-disabled="true"], [data-element-type="header"]):focus-visible, 
+      &:not([data-disabled="true"], [data-element-type="header"]):focus, {
          @include utils-mixin.get-focus-color('text', 'plain');
       }
+
 
       & ~ &--disabled {
          @apply opacity-50 cursor-not-allowed;
@@ -41,20 +44,22 @@
 
       & &__content {
          @include utils-mixin.get-grid-template('content');
+         @apply overflow-hidden truncate;
       }
 
       & &__badge {
          @include utils-mixin.get-grid-template('append');
+         @apply overflow-hidden;
       }
    }
 
    .vz-menu-item.vz-menu-item-header {
-      @apply min-h-[43px];
+      @apply min-h-[40px];
       .vz-menu-item__content {
          @apply font-bold;        
       }
       &:hover {
-         @apply bg-light cursor-default;
+         @apply cursor-default;
       }
    }
 

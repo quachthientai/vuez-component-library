@@ -1,25 +1,36 @@
-<script>
-import Radio from '@/components/Forms/Radio'
-import { VIcon } from '@/components/Icon/Icon';
+<script lang="ts">
+import { Radio } from '@/components/Radio/Radio';
+import { RadioGroup } from '@/components/Radio/RadioGroup';
+import { RadioModel } from '@/components/Radio/RadioType';
+
 export default {
   name: 'RadioView',
   components: {
     Radio,
-    VIcon
+    RadioGroup,
+  },
+  data() {
+    const radios : RadioModel[] = [
+      { label: 'Banana', value: '1' },
+      { label: 'Strawberry', value: '2' },
+      { label: 'Rasberry', value: '3', color: 'danger', checked: true }
+    ]
+    return {
+      radios,
+    }
   }
 }
 </script>
 
 <template>
-  <div>This is home view</div>
-
-  <!-- <Radio radioClass="radio radio-primary" radioValue="success"></Radio>
-  <Radio radioClass="radio radio-secondary" radioValue="secondary"></Radio>
-  <Radio radioClass="radio radio-info" radioValue="info"></Radio>
-  <Radio radioClass="radio radio-warning" radioValue="warning"></Radio>
-  <Radio radioClass="radio radio-danger" radioValue="danger"></Radio>
-  <Radio radioClass="radio radio-success" radioValue="success"></Radio> -->
-  <v-icon icon="mdi-checkbox-marked-circle"></v-icon>
+  <div class="m-[150px]">
+    <!-- <Radio value="2" label="Option 2"></Radio> -->
+    <RadioGroup label="Fruits" :model="radios"></RadioGroup>
+  </div>
+  
+  
+  
+  
   
 
 </template>

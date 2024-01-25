@@ -1,221 +1,139 @@
-import { makeColorProp } from "@/composable/color";
-import { makeDimensionProp, useDimension } from "@/composable/dimension";
+import { MenuKey } from "@/constants/injectionKey";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
-import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent, onMounted, PropType, ref, Teleport, toRefs } from "vue";
-import { Badge } from "../Badge/Badge";
-import { MenuItem } from "./MenuItem/MenuItem";
-import { MenuItemModel } from "./MenuItem/MenuItemType";
-import { Button } from "../Button/Button";
-
 import { DOM } from "@/utils/DOM";
+import { Helpers } from "@/utils/helpers";
+import { makePropsFactory } from "@/utils/makePropFactory";
+import { DynamicTag } from "../DynamicTag/DynamicTag";
+import { useClickOutside } from "@/composable";
+import { Ref, 
+   computed, 
+   defineComponent, 
+   nextTick, 
+   onMounted, 
+   provide, 
+   ref, 
+   toRef,
+} from "vue";
 
-/**
- * Namespace for the Menu component.
- */
 const NAMESPACE = 'vz-menu';
 
 const vMenuProps = makePropsFactory({
-   popup: {
+   autoSelect: {
       type: Boolean,
-      default: false,
+      default: true,
    },
-   /**
-    * The toggler for the menu.
-    * @type {string}
-    * @default undefined
-    * @name toggler
-    */
-   toggler: String,
-   /**
-    * The model item for the menu.
-    * @type {MenuItemModel[]}
-    * @default []
-    * @name model
-    */
-   model: {
-      type: Array as PropType<MenuItemModel[]>,
-      default: () => [],
+   closeOnSelect: {
+      type: Boolean,
+      default: true,
    },
-   ...makeDimensionProp(),
-   ...makeColorProp(),
-});
+   closeOnBlur: {
+      type: Boolean,
+      default: true,
+   },
+   tag: {
+      type: String,
+      default: 'div',
+   },
+})
 
 const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
-   emits: ['onMenuFocus'],
-   provide(){
-      return {
-         $MenuKey: () => this.MenuKey
-      }
-   },
-   computed: {
-      MenuKey() {
+   setup(props, { slots, attrs }) {
+      //* Refs */
+      const isOpen = ref<boolean>(false)
+      const root = ref<HTMLElement>(null)
+      const menuTrigger = ref<HTMLElement>(null)
+      const menuList = ref<HTMLElement>(null)
+
+      // * Composable */
+      useClickOutside({
+         refElement: root,
+         callback: hide,
+      })
+
+      //* Computed properties */
+      const menuTriggerID = computed(() => {
+         return generateComponentId('vz-menu-trigger')
+      })
+
+      const menuListID = computed(() => {
+         return generateComponentId('vz-menu-list')
+      })
+
+      const componentAttrs = computed(() => {
          return {
-            test: this.test
+            ...attrs,
+            'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
          }
+      })
+
+      // * Methods */
+      function rootRef(el: HTMLElement) {
+         return root.value = el;
       }
-   },
-   data() {
+      
+      function show() {
+         if(isOpen.value) return;
+         isOpen.value = true;
+      }
+
+      function hide() {
+         if(!isOpen.value) return;
+         isOpen.value = false;
+      }
+
+      // * Lifecycle */
+      onMounted(() => {
+         nextTick(() => {
+            menuTrigger.value = DOM.findSingle(document, `#${menuTriggerID.value}`);
+            menuList.value = DOM.findSingle(document, `#${menuListID.value}`);
+         })
+      })
+
+      // * Provide MenuContext Key */
+      provide(MenuKey, {
+         autoSelect: toRef(props, 'autoSelect') as Ref<boolean>,
+         closeOnSelect: toRef(props, 'closeOnSelect') as Ref<boolean>,
+         closeOnBlur: toRef(props, 'closeOnBlur') as Ref<boolean>,
+         menuTriggerRef: menuTrigger,
+         menuTriggerID: menuTriggerID,
+         menuListRef: menuList,
+         menuListID: menuListID,
+         isOpen: isOpen,
+         show: show,
+         hide: hide,
+      })
+      
+      function onBlured() {
+         console.log('onblured')
+      }
+
       return {
-         hasModel: this.model?.length > 0,
-         focusItemIndex: -1,
-         dimension: useDimension(this.$props),
-         id: this.$attrs.id as string || generateComponentId(),
-         openMenu: ref(false),
-         list: ref(null),
+         rootRef,
+         root,
+         componentAttrs,
+         onBlured,
       }
+      
    },
-   methods: {
-      onFocused(e: FocusEvent) {
-         this.isFocused = true;
-         this.setFocusItemIndex(0);
-         this.$emit('onMenuFocus', e)
-      },
-      open(e: Event) {
-         this.openMenu.value = true;
-      },
-      test() {
-         console.log('asd');
-      },
-      listRef(el: HTMLElement) {
-         this.list = el;
-      },
-      setFocusItemIndex(index: number) { 
-         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
-
-         this.focusItemIndex = index < 0 ? 0 : index >= listItems.length ? listItems.length - 1 : index;
-
-         if(Array.from(listItems).indexOf(listItems.item(index)) > -1)  {
-            (listItems[index] as HTMLElement).focus();
-         }
-      },
-      onArrowDownKey(e: KeyboardEvent) {
-         const nextItemIndex = this.focusItemIndex + 1;
-         this.setFocusItemIndex(nextItemIndex);
-         e.preventDefault();
-      },
-      onArrowUpKey(e: KeyboardEvent) {
-         const prevItemIndex = this.focusItemIndex - 1;
-         this.setFocusItemIndex(prevItemIndex);
-         e.preventDefault();  
-      },
-      onHomeKey(e: KeyboardEvent) {
-         this.setFocusItemIndex(0);
-         e.preventDefault();
-      },
-      onEndKey(e: KeyboardEvent) {
-         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
-         this.setFocusItemIndex(listItems.length - 1);
-         e.preventDefault();
-      },
-      onEnterKey(e: KeyboardEvent) {
-         const listItems = DOM.find(this.list, 'li[role="menuitem"][data-disabled="false"]');
-         const item = listItems[this.focusItemIndex] as HTMLElement;
-         item.click();
-         e.preventDefault();
-      },
-      handleKeyDown(e: KeyboardEvent) { 
-         const { key } = e;
-
-         switch (key) {
-            case 'ArrowDown':
-               this.onArrowDownKey(e);
-               break;
-            case 'ArrowUp':
-               this.onArrowUpKey(e);
-               break;
-            case 'Home': 
-               this.onHomeKey(e);
-               break;
-            case 'End':
-               this.onEndKey(e);
-               break;
-            case 'Enter':
-               this.onEnterKey(e);
-               break;
-            case 'Escape':
-               e.preventDefault();
-               break;
-            default:
-               break;
-         }
-      }
-   },
-   render() { 
+   render() {
       return (
-            <div 
-               class={NAMESPACE}
-               id={this.id}
-               style={this.dimension}
-               onKeydown={this.handleKeyDown}
-            >
-               <ul class={`${NAMESPACE}-list`}
-                  role="menu"
-                  ref={ this.listRef }
-                  tabindex={0}
-                  aria-activedescendant="true"
-                  id={this.id + '-list'}
-                  onFocus={ this.onFocused }
-               >
-                  {this.$slots.default?.()}  
-                  {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
-                     const { action, ...mutateItem } = item;
-                     return (
-                        <MenuItem 
-                           {...mutateItem}
-                           onItemAction={item.action}
-                           id={this.id + '-' + index}
-                           key={item.key || item.label + index.toString()}
-                        >
-                           {item.badge && { badge: () => {
-                                 return (
-                                    typeof item.badge === 'function' 
-                                    ? item.badge() 
-                                    : <Badge {...item.badge} />
-                                 )
-                              }
-                           }}
-                        </MenuItem>
-                     )
-                  })}
-               </ul>
-            </div>
-         
-
+         <DynamicTag class={NAMESPACE}
+            type={this.tag}
+            ref={this.rootRef}
+            {...this.componentAttrs}
+            onBlured={this.onBlured}
+         >
+            {this.$slots.default?.()}
+         </DynamicTag>
       )
    },
-   // setup(props, {slots, attrs, emit}) {
-      
-   //    const hasModel = (props.model as MenuItemModel[])?.length > 0;
-   //    const isFocused = ref(false);
-      
-   //    const dimension = useDimension(props)
-   //    const id = attrs.id as string || generateComponentId();
-      
-   //    /**
-   //     * Handles the focus event for the menu.
-   //     * @param e - The focus event.
-   //     */
-   //    function onFocused(e: FocusEvent) {
-   //       isFocused.value = true;
-   //       emit('onMenuFocus', e)
-   //    }
-      
-   //    return () => {
-         
-         
-   //    }
-   // }
 })
 
-type MenuType = InstanceType<typeof Menu>;
+type MenuType = InstanceType<typeof Menu>
 
 export {
    Menu,
    MenuType
 };
-
-
-

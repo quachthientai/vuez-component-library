@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "preserve",
     "target": "ES6",
     "module": "esnext",
     "baseUrl": "./",
