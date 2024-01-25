@@ -1,18 +1,17 @@
 <script>
-import Button from '@/components/Button/Button.vue'
+// import Button from '@/components/Button/Button.vue'
 import Badge from '@/components/Badge/Badge.vue'
 
 export default {
   name: 'ButtonView',
   components: {
-    Button,
     Badge
   }
 }
 </script>
 
 <template>
-  <div class="flex justify-start ml-2 mt-2">
+  <!-- <div class="flex justify-start ml-2 mt-2">
     <Badge
       text="Primary"
       
@@ -282,14 +281,9 @@ export default {
 
     <Button text="test badge" btnClass="btn btn-primary relative mr-3 mt-3">
 
-      <!-- <span class="absolute -right-1.5 -top-1.5 flex">
-        <Badge badgeClass="badge absolute badge-pill-danger animate-ping"/>
-        <Badge badgeClass="badge badge-pill-danger"/>
-      </span> -->
 
-      <!-- <Badge badgeClass="badge badge-pill-danger absolute -right-2 -top-2"></Badge> -->
     </Button>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss"></style>
