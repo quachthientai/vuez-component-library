@@ -5,11 +5,12 @@ const config = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     '@storybook/addon-a11y',
-    '@storybook/addon-mdx-gfm'
+    '@storybook/addon-mdx-gfm',
+    'storybook-addon-vue-slots'
   ],
   core: {},
   framework: {
-    name: "@storybook/vue3-vite",
+    name: '@storybook/vue3-vite',
     options: {}
   },
   docs: {

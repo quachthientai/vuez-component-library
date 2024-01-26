@@ -180,7 +180,7 @@ const Button = defineComponent({
             hasDefaultSlots: !!slots.default,
             isDisabled: !!(props.disabled || props.loading),
             isBlock: !!props.block, 
-            isIcon: !!(slots.icon || props.icon),
+            isIcon: !!(slots.icon || props.icon as IconType),
          }
       });
 
@@ -200,7 +200,7 @@ const Button = defineComponent({
          return {
             ...attrs,
             'role': 'button',
-            // 'tabindex': 0,
+            'tabindex': 0,
             'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
             'data-disabled': isDisabled,
             'to': hasRoute && !isDisabled ? props.to : undefined,
@@ -223,6 +223,8 @@ const Button = defineComponent({
             icon: isIcon ? NAMESPACE + '--icon' : undefined,
          }
       });
+
+      const iconProps = props.icon as IconType;
       
       function onButtonClick(e: Event) {
          emit("click", {
@@ -231,19 +233,21 @@ const Button = defineComponent({
          });
       }
 
+      
       return {
-            isIcon,
-            isDisabled,
-            hasHref,
-            hasRoute,
-            hasContent,
-            hasAppendIcon,
-            hasPrependIcon,
-            hasDefaultSlots,
-            onButtonClick,
-            componentAttrs,
-            componentClasses,
-         }
+         isIcon,
+         isDisabled,
+         hasHref,
+         hasRoute,
+         hasContent,
+         hasAppendIcon,
+         hasPrependIcon,
+         hasDefaultSlots,
+         onButtonClick,
+         componentAttrs,
+         componentClasses,
+         iconProps
+      }
    },
    render() {
       const { color, variant, size, loader, elevation, block, icon } = this.componentClasses;
@@ -285,14 +289,14 @@ const Button = defineComponent({
                   <span class="vz-btn__content">
                      { (this.isIcon) && (
                         <div class="flex align-middle">
-                           { this.isIcon
+                           { this.icon
                               ? <Icon 
-                                    class={ this.icon.color } 
-                                    width={ this.icon.width } 
-                                    height={ this.icon.height } 
-                                    icon={ this.icon.icon }
+                                    class={ this.iconProps.color } 
+                                    width={ this.iconProps.width } 
+                                    height={ this.iconProps.height } 
+                                    icon={ this.iconProps.icon }
                                  />
-                              : this.$slots.prepend?.() }
+                              : this.$slots.icon?.() }
                         </div>
                      )}
                      { (this.hasContent && !this.isIcon) && this.content }

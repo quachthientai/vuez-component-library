@@ -1,0 +1,59 @@
+import { Meta, Title, Primary, Controls, Stories, ArgTypes } from '@storybook/blocks';
+import * as ButtonStories from './Button.stories';
+
+<Meta 
+   of={ButtonStories}
+   name="Docs"
+/>
+
+<Title />
+
+The `Button` is a component that allows users to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
+
+### Import
+```ts
+   import { Button } from '@storybook/blocks';
+```
+
+### Usage
+<Primary />
+<Controls exclude={['onClick','Icon Slot','Append Icon', 'Prepend Icon', 'Default']}/>
+
+<Stories />
+
+### Events
+<ArgTypes include={['onClick']}/>
+
+### Slots
+<ArgTypes include={['Icon Slot','Append Icon', 'Prepend Icon', 'Default']}/>
+
+### Accessibility
+#### **Screen Reader**
+
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Enter | Activates the button |
+| Space | Activates the button |
+
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `button` |
+| tab-index  | `0` |
+
+### Type
+#### **Icon Type**
+`IconType` interface is used to define the type of `icon | appendIcon | prependIcon` props to be used in the button.
+```ts
+   interface IconType {
+      icon: string,
+      color?: string,
+      height?: string | number,
+      width?: string | number
+   }
+```
+
+
+
+

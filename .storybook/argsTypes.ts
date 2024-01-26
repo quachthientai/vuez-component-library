@@ -1,5 +1,5 @@
 const propsTable = {
-   category: 'Props'
+   category: 'Props',
 };
 
 export const colorArgType = (
@@ -8,8 +8,6 @@ export const colorArgType = (
    options,
    control: {
       type: 'select',
-      description: 'Define component colors',
-      defaultValue: 'plain',
       labels: {
          primary: 'Primary',
          secondary: 'Secondary',
@@ -20,31 +18,48 @@ export const colorArgType = (
          plain: 'Plain'
       }
    },
-   table: {...propsTable} 
+   description: 'Define component colors',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'plain' },
+      type: { summary: "'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'plain'" }
+   } 
 });
 
 export const contentArgType = () => ({
    control: {
       type: 'text',
-      description: 'Define component content',
    },
-   table: {...propsTable} 
+   description: 'Define component content',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'undefined' },
+      type: { summary: 'string' }
+   } 
 });
 
 export const disabledArgType = () => ({
    control: {
       type: 'boolean',
-      description: 'Whether component is disabled or not',
    },
-   table: {...propsTable} 
+   description: 'Whether component is disabled or not',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'false' },
+      type: { summary: 'boolean' }
+   } 
 });
 
 export const hrefArgType = () => ({
    control: {
       type: 'text',
-      description: 'Define component href',
    },
-   table: {...propsTable} 
+    description: 'Define external link for button',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'undefined' },
+      type: { summary: 'string' }
+   } 
 });
 
 export const elevationArgType = () => ({
@@ -54,81 +69,116 @@ export const elevationArgType = () => ({
       max: 5,
       step: 1
    },
-   table: {...propsTable}
+   description: 'Define component elevation value',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: '0' },
+      type: { summary: 'number' }
+   }
 });
 
 export const sizeArgType = () => ({
    options: ['sm', 'md', 'lg'],
    control: {
       type: 'select',
-      description: 'Define component size',
-      defaultValue: 'md',
       labels: {
          sm: 'sm',
          md: 'md',
          lg: 'lg',
       }
    },
-   table: {...propsTable} 
+   description: 'Define component size',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'md' },
+      type: { summary: "'sm' | 'md' | 'lg'" }
+   } 
 });
 
 export const variantArgType = () => ({
    options: ['solid', 'outlined', 'text'],
    control: {
       type: 'select',
-      description: 'Define component variant',
-      defaultValue: 'solid',
       labels: {
          solid: 'solid',
          outlined: 'outlined',
          text: 'text',
       }
    },
-   table: {...propsTable} 
+   description: 'Define component variant',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'solid' },
+      type: { summary: "'solid' | 'outlined' | 'text'" }
+   } 
 });
 
 export const dimensionArgType = () => ({
    width: {
       control: {
          type: 'number',
-         description: 'Define component width',
       },
-      table: {...propsTable}
+      description: 'Define component width',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'number' }
+      }
    },
    minWidth: {
       control: {
          type: 'number',
-         description: 'Define component min width',
       },
-      table: {...propsTable}
+      description: 'Define component min width',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'number' }
+      }
    },
    maxWidth: {
       control: {
          type: 'number',
-         description: 'Define component max width',
       },
-      table: {...propsTable}
+      description: 'Define component max width',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'number' }
+      }
    },
    height: {
       control: {
          type: 'number',
-         description: 'Define component height',
       },
-      table: {...propsTable}
+      description: 'Define component height',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'number' }
+      }
    },
    minHeight: {
       control: {
          type: 'number',
-         description: 'Define component min height',
       },
-      table: {...propsTable}
+      description: 'Define component min height',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'number' }
+      }
    },
    maxHeight: {
       control: {
          type: 'number',
-         description: 'Define component max height',
       },
-      table: {...propsTable}
+      description: 'Define component max height',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'number' }
+      }
    }
 })
 
@@ -136,24 +186,36 @@ export const iconArgType = () => ({
    appendIcon: {
       control: {
          type: 'object',
-         description: 'Define component append icon',
       },
-      table: {...propsTable}
+      description: 'Define component append icon',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'IconType' }
+      }
    },
    prependIcon: {
       control: {
          type: 'object',
-         description: 'Define component prepend icon',
       },
-      table: {...propsTable}
+      description: 'Define component prepend icon',
+      table: {
+         ...propsTable,
+         defaultValue: { summary: 'undefined' },
+         type: { summary: 'IconType' }
+      }
    }
 });
 
 export const routeArgType = () => ({
    control: {
       type: 'text',
-      description: 'Define component route',
    },
-   table: {...propsTable}
+   description: 'Define component router',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'undefined' },
+      type: { summary: "string | RouteLocationRaw"}
+   }
 });
 

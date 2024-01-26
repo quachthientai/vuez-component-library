@@ -42,41 +42,74 @@ const meta = {
     icon: {
       control: {
         type: 'object',
-        description: 'Define button as icon button'
       },
+      type: 'function',
+      description: 'Define button as icon button',
       table: {
         category: 'Props',
+        defaultValue: { summary: 'undefined' },
+        type: { summary: 'IconType' }
       }
     },
     block: {
       control: {
         type: 'boolean',
-        description: 'Whether component is block or not',
       },
+      description: 'Whether component is block or not',
       table: {
         category: 'Props',
+        defaultValue: { summary: 'false' },
+        type: { summary: 'boolean' }
       },
     },
     loading: {
       control: {
         type: 'boolean',
-        description: 'Whether component has loader or not',
       },
+      description: 'Whether component has loader or not',
       table: {
         category: 'Props',
+        defaultValue: { summary: 'false' },
+        type: { summary: 'boolean' }
       },
     },
-    default: {
-      control: {
-        type: 'text',
-        desciption: 'Define component default slot',
-      },
+    iconSlot: {
+      name: 'Icon Slot',
+      description: 'Slot for icon',
       table: {
         category: 'Slots',
+        type: { summary: 'icon' }
       },
-    }
+    },
+    prependIconSlot: {
+      name: 'Prepend Icon',
+      description: 'Slot for prepend icon',
+      table: {
+        category: 'Slots',
+        type: { summary: 'prepend' }
+      },
+    },
+    appendIconSlot: {
+      name: 'Append Icon',
+      description: 'Slot for append icon',
+      table: {
+        category: 'Slots',
+        type: { summary: 'append' }
+      },
+    },
+    defaultSlot: {
+      name: 'Default',
+      description: 'Slot for default button content',
+      table: {
+        category: 'Slots',
+        type: { summary: 'default' }
+      },
+    },
   },
-  decorators: [ vueRouter(customRoutes) ]
+  args: {
+    content: ''
+  },
+  decorators: [ vueRouter(customRoutes) ],
 } satisfies Meta<typeof Button>
 
 export default meta;
@@ -92,7 +125,7 @@ export const Basic: Story = {
     template: `<Button v-bind="args" />`,
   }),
   args: {
-    content: 'Button',
+    content: 'Button'
   }
 };
 
@@ -111,7 +144,7 @@ export const ColorVariants: Story = {
       <Button v-bind="args" color="info">Info</Button>
       <Button v-bind="args" color="plain">Plain</Button>
     </div>`,
-  })
+  }),
 };
 
 export const SizeVariants: Story = {
@@ -344,7 +377,8 @@ export const LoadingState: Story = {
   args: {
     loading: true
   }
-}
+};
+
 
 
 
