@@ -1,4 +1,4 @@
-import { Meta, Title, Primary, Controls, Stories, ArgTypes } from '@storybook/blocks';
+import { Meta, Title, Primary, Controls, Stories, ArgTypes, Source } from '@storybook/blocks';
 import * as ButtonStories from './Button.stories';
 
 <Meta 
@@ -12,7 +12,7 @@ The `Button` is a component that allows users to trigger an action or event, suc
 
 ### Import
 ```ts
-   import { Button } from '@storybook/blocks';
+   import { Button } from '@/components/Button';
 ```
 
 ### Usage
@@ -25,7 +25,32 @@ The `Button` is a component that allows users to trigger an action or event, suc
 <ArgTypes include={['onClick']}/>
 
 ### Slots
+
 <ArgTypes include={['Icon Slot','Append Icon', 'Prepend Icon', 'Default']}/>
+
+<Source code={`
+// * Icon slot * //
+<Button>
+   <template #icon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Button>
+
+// * Append slot * //
+<Button>
+   <template #appendIcon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Button>
+
+// * Prepend slot * //
+<Button>
+   <template #prependIcon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Button>`} 
+/>
+
 
 ### Accessibility
 #### **Screen Reader**
@@ -45,14 +70,16 @@ Attribute | Value |
 ### Type
 #### **Icon Type**
 `IconType` interface is used to define the type of `icon | appendIcon | prependIcon` props to be used in the button.
-```ts
-   interface IconType {
-      icon: string,
-      color?: string,
-      height?: string | number,
-      width?: string | number
-   }
-```
+
+<Source language="typescript" code={
+`interface IconType {
+   icon: string,
+   color?: string,
+   height?: string | number,
+   width?: string | number
+}`} />
+
+
 
 
 

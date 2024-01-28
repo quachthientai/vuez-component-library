@@ -59,7 +59,7 @@
     @include utils-mixin.get-grid-template('prepend');
     @apply flex mr-[.2em] transition-all duration-150 ease-out;
 
-    .vz-btn__prepend-icon {
+    .vz-btn__prepend-icon, svg {
       font-size: (utils-variables.$icon-multiplier * 1.5em);
     };
   }
@@ -71,7 +71,7 @@
     @include utils-mixin.get-grid-template('append');
     @apply flex ml-[.2em] transition-all duration-150 ease-out;
 
-    .vz-btn__append-icon {
+    .vz-btn__append-icon, svg {
       font-size: (utils-variables.$icon-multiplier * 1.5em);
     };
   }

@@ -1,0 +1,111 @@
+import { Meta, Title, Primary, Controls, Story, Stories, ArgTypes, Source, Canvas } from '@storybook/blocks';
+import * as MenuStories from './Menu.stories';
+
+<Meta 
+   of={MenuStories}
+   name="Docs"
+/>
+
+<Title />
+
+The `Menu` is a accessible component that dropdown a list of choices on a temporary surface. It appears when the user interacts with a `MenuButton`
+
+### Import
+To use Menu component, import these sub-components to rendering menu:
+```ts
+import { Menu } from '@/components/Menu/Menu'
+import { MenuList } from '@/components/Menu/MenuList'
+import { MenuButton } from '@/components/Menu/MenuButton'
+import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
+```
+
+### API
+*Note: **Click onto the component name** to view its props and events document*
+| Component | Description |
+| - | - |
+| [`<Menu>`](#menu) | Primary Component |
+| [`<MenuList>`](#menu-list) | Sub-component used to render the menu dropdown list, and wrap the `<MenuItem>` component. **Must be direct child of** `<Menu>` |
+| [`<MenuItem>`](#menu-item) | Sub-component used to render the menu item from list. **Must be direct child of** `<MenuList>` |
+| [`<MenuButton>`](?path=/docs/components-button--docs) | Sub-component used to trigger the menu list. **Must be direct child of** `<MenuButton>`  |
+
+
+### Usage
+#### **Menu**
+<Controls include={['closeOnBlur','autoSelect','closeOnSelect','tag (MenuTag)']} />
+
+#### **Menu List**
+<Controls include={['model', 'placement', 'offset']}/>
+
+#### **Menu Item**
+<Controls include={['label', 'to', 'content', 'id', 'href', 'divider', 'icon', 'badge', 'type', 'tag (MenuItemTag)', 'action', 'key']}/>
+
+#### **Menu Button**
+*[ Go to MenuButton Docs ](?path=/docs/components-button--docs)*
+
+
+
+
+
+
+### Events
+<ArgTypes include={['onClick']}/>
+
+### Slots
+<ArgTypes include={['Icon Slot','Append Icon', 'Prepend Icon', 'Default']}/>
+
+<Source code={`
+// * Icon slot * //
+<Button>
+   <template #icon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Button>
+
+// * Append slot * //
+<Button>
+   <template #appendIcon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Button>
+
+// * Prepend slot * //
+<Button>
+   <template #prependIcon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Button>`} 
+/>
+
+
+### Accessibility
+#### **Screen Reader**
+
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Enter | Activates the button |
+| Space | Activates the button |
+
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `button` |
+| tab-index  | `0` |
+
+### Type
+#### **Icon Type**
+`IconType` interface is used to define the type of `icon | appendIcon | prependIcon` props to be used in the button.
+
+<Source language="typescript" code={
+`interface IconType {
+   icon: string,
+   color?: string,
+   height?: string | number,
+   width?: string | number
+}`} />
+
+
+
+
+
+

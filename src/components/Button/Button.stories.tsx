@@ -1,10 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { vueRouter } from 'storybook-vue3-router'
-import { Button } from '../components/Button/Button'
-import Home from './Home.vue'
-import About from './About.vue'
-import { colorArgType, contentArgType, disabledArgType, hrefArgType, elevationArgType, sizeArgType, variantArgType, dimensionArgType, iconArgType, routeArgType } from '../../.storybook/argsTypes'
-import routerViewWrapper from './routerViewWrapper.vue';
+import { Button } from './Button'
+import Home from '@/stories/Home.vue'
+import About from '@/stories/About.vue'
+import routerViewWrapper from '@/stories/routerViewWrapper.vue'
+import { Icon } from '@iconify/vue';
+import { 
+  colorArgType, 
+  contentArgType, 
+  disabledArgType, 
+  hrefArgType, 
+  elevationArgType, 
+  sizeArgType, 
+  variantArgType, 
+  dimensionArgType, 
+  iconArgType, 
+  routeArgType 
+} from '../../../.storybook/argsTypes';
+
 
 const customRoutes = [
   {
@@ -43,7 +56,6 @@ const meta = {
       control: {
         type: 'object',
       },
-      type: 'function',
       description: 'Define button as icon button',
       table: {
         category: 'Props',
@@ -75,7 +87,7 @@ const meta = {
     },
     iconSlot: {
       name: 'Icon Slot',
-      description: 'Slot for icon',
+      description: `Slot for icon button, if you want to use icon button, you must use this slot`,
       table: {
         category: 'Slots',
         type: { summary: 'icon' }
@@ -99,7 +111,7 @@ const meta = {
     },
     defaultSlot: {
       name: 'Default',
-      description: 'Slot for default button content',
+      description: 'Slot for default',
       table: {
         category: 'Slots',
         type: { summary: 'default' }
@@ -118,7 +130,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   render: (args) => ({
-    components: { Button },
+    components: { 'Button': Button, 'Icon': Icon },
     setup() {
       return { args };
     },

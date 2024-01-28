@@ -54,7 +54,10 @@ const vMenuItemProps = makePropsFactory({
     * @default false
     * @name disabled
     */
-   disabled: Boolean,
+   disabled: {
+      type: Boolean,
+      default: false,
+   },
    /**
     * The id for the menu item.
     * @type {string}
@@ -65,7 +68,7 @@ const vMenuItemProps = makePropsFactory({
    /**
     * The href for the menu item.
     * @type {string}
-    * @default false
+    * @default undefined
     * @name href
     */
    href: String,
@@ -75,7 +78,10 @@ const vMenuItemProps = makePropsFactory({
     * @default false
     * @name divider
     */
-   divider: Boolean,
+   divider: {
+      type: Boolean,
+      default: false,
+   },
    /**
     * The icon for the menu item.
     * @type {MenuItemModelIcon}

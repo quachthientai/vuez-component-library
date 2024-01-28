@@ -26,6 +26,27 @@ export const colorArgType = (
    } 
 });
 
+export const placementArgType = (
+   options = ['top', 'right', 'bottom', 'left']
+) => ({
+   options,
+   control: {
+      type: 'select',
+      labels: {
+         top: 'Top',
+         right: 'Right',
+         bottom: 'Bottom',
+         left: 'Left',
+      }
+   },
+   description: 'Define component placement',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'bottom' },
+      type: { summary: "'top' | 'right' | 'bottom' | 'left'" }
+   }
+})
+
 export const contentArgType = () => ({
    control: {
       type: 'text',
@@ -218,4 +239,16 @@ export const routeArgType = () => ({
       type: { summary: "string | RouteLocationRaw"}
    }
 });
+
+export const labelArgType = () => ({
+   control: {
+      type: 'text',
+   },
+   description: 'Define aria-label for component',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'undefined' },
+      type: { summary: 'string' }
+   }
+})
 

@@ -1,7 +1,6 @@
 import { makeDimensionProp, 
    useDimension,
    makeColorProp,
-   useClickOutside
 } from "@/composable/index";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { ComponentInternalInstance, 
@@ -11,11 +10,8 @@ import { ComponentInternalInstance,
    inject, 
    PropType, 
    ref, 
-   Teleport, 
    watch, 
    Transition,
-   onMounted,
-   nextTick, 
 } from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
@@ -51,13 +47,16 @@ const vMenuListProps = makePropsFactory({
    placement: {
       type: String,
       default: 'bottom',
+      validator: (value: string) => {
+         return Helpers.isIncluded(Object.keys(TRANSITION_PLACEMENT), value);
+      }
    },
    offset: {
       type: Number,
       default: 0,
    },
    ...makeDimensionProp(),
-   ...makeColorProp(),
+   // ...makeColorProp(),
 });
 
 const MenuList = defineComponent({

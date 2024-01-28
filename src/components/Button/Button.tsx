@@ -232,7 +232,6 @@ const Button = defineComponent({
             currentInstance: instance
          });
       }
-
       
       return {
          isIcon,

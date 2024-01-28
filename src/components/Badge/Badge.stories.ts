@@ -1,8 +1,8 @@
 import type{ Meta, StoryObj } from '@storybook/vue3';
-import { Badge } from '../components/Badge/Badge';
-import { Button } from '../components/Button/Button';
+import { Badge } from './Badge';
+import { Button } from '../Button/Button';
 import { Icon } from '@iconify/vue';
-import { colorArgType, contentArgType } from '../../.storybook/argsTypes';
+import { colorArgType, contentArgType } from '../../../.storybook/argsTypes';
 
 const meta = {
    title: 'Components/Badge',
@@ -14,34 +14,54 @@ const meta = {
          control: {
             type: 'boolean'
          },
+         description: 'Whether badge is dot-style',
          table: {
-            category: 'Props'
+            category: 'Props',
+            type: { summary: 'boolean' },
+            defaultValue: { summary: 'false' }
          }
       },
       rounded: {
          control: {
             type: 'boolean'
          },
+         description: 'Whether badge is rounded-style',
          table: {
-            category: 'Props'
+            category: 'Props',
+            type: { summary: 'boolean' },
+            defaultValue: { summary: 'false' }
          }
       },
       inline: {
          control: {
             type: 'boolean'
          },
+         description: 'Whether badge is inline-style in the other component.',
          table: {
-            category: 'Props'
+            category: 'Props',
+            type: { summary: 'boolean' },
+            defaultValue: { summary: 'false' }
          }
       },
       overlay: {
          control: {
             type: 'boolean'
          },
+         description: 'Whether badge is overlay-style in the other component.',
          table: {
-            category: 'Props'
+            category: 'Props',
+            type: { summary: 'boolean' },
+            defaultValue: { summary: 'false' }
          }
       },
+      defaultSlot: {
+         name: 'Default',
+         description: 'Slot for default',
+         table: {
+            category: 'Slots',
+            type: { summary: 'default' },
+         }
+      }
    }
 } satisfies Meta<typeof Badge>
 
@@ -53,7 +73,7 @@ export const Basic: Story = {
       setup() {
          return { args };
       },
-      template: `<Badge v-bind="args" />`
+      template: `<Badge v-bind="args"/>`
    }),
    args: {
       content: 'Badge'
