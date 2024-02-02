@@ -11,7 +11,8 @@ const Helpers = {
    },
    isIncluded<T>(arr: Array<T>, val: T) : boolean {
       if(typeof val === 'string') {
-         return arr.includes(val.toLowerCase() as any);
+         return arr.map(item => item.toString().toLowerCase())
+            .includes(val.toLowerCase());
       }
       return arr.includes(val);
    }

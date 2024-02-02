@@ -40,7 +40,7 @@ const meta = {
          table: {
             category: 'Props',
             type: { summary: 'boolean' },
-            defaultValue: { summary: 'false' }
+            defaultValue: { summary: 'true' }
          }
       },
       overlay: {

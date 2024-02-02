@@ -30,6 +30,10 @@ import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
 
 
 ### Usage
+<Canvas>
+   <Story of={MenuStories.Basic} height="180px"/>   
+</Canvas>
+
 #### **Menu**
 <Controls include={['closeOnBlur','autoSelect','closeOnSelect','tag (MenuTag)']} />
 
@@ -40,42 +44,92 @@ import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
 <Controls include={['label', 'to', 'content', 'id', 'href', 'divider', 'icon', 'badge', 'type', 'tag (MenuItemTag)', 'action', 'key']}/>
 
 #### **Menu Button**
-*[ Go to MenuButton Docs ](?path=/docs/components-button--docs)*
+*[ Go to Button Docs ](?path=/docs/components-button--docs)*
 
+### Basic
+<Canvas>
+   <Story of={MenuStories.Basic} height="180px"/>   
+</Canvas>
 
+### AutoSelect
+<Canvas>
+   <Story of={MenuStories.AutoSelect} height="180px"/>   
+</Canvas>
 
+### CloseOnSelect
+<Canvas>
+   <Story of={MenuStories.CloseOnSelect} height="180px"/>   
+</Canvas>
 
+### CloseOnBlur
+<Canvas>
+   <Story of={MenuStories.CloseOnBlur} height="180px"/>   
+</Canvas>
 
+### Placement
+<Canvas>
+   <Story of={MenuStories.Placement} height="300px"/>   
+</Canvas>
 
 ### Events
-<ArgTypes include={['onClick']}/>
+#### **Menu**
+#### **Menu List**
+#### **Menu Item**
+#### **Menu Button**
 
 ### Slots
-<ArgTypes include={['Icon Slot','Append Icon', 'Prepend Icon', 'Default']}/>
+#### **Menu**
+<ArgTypes include={['Default (MenuDefaultSlots)']} />
+<Source code={`
+<template>
+   <Menu>
+      <MenuButton>Dropdown</MenuButton>
+      <MenuList :model="items"/>
+   </Menu>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const items = ref([ 
+   {content: 'Home', icon: 'mdi:home'}, 
+   {content: 'Account', icon: 'mdi:account'},
+   {content: 'Setting', icon: 'mdi:cog'}, 
+]);
+</script>`} 
+/>
+
+#### **Menu List**
+<ArgTypes include={['Default (MenuListDefaultSlots)']} />
+<Source code={`
+<Menu>
+   <MenuButton>Dropdown</MenuButton>
+   <MenuList>
+      <MenuItem>Home</MenuItem>
+      <MenuItem>Account</MenuItem>
+      <MenuItem>Setting</MenuItem>
+   </MenuList>
+</Menu>`} 
+/>
+
+#### **Menu Item**
+<ArgTypes include={['Default (MenuItemDefaultSlots)', 'Icon (MenuItemIconSlots)', 'Badge (MenuItemBadgeSlots)']} />
 
 <Source code={`
-// * Icon slot * //
-<Button>
+<MenuItem>
    <template #icon>
       <Icon icon="mdi-gear" />
    </template>
-</Button>
 
-// * Append slot * //
-<Button>
-   <template #appendIcon>
-      <Icon icon="mdi-gear" />
+   <template #badge>
+      <Badge content="2" />
    </template>
-</Button>
-
-// * Prepend slot * //
-<Button>
-   <template #prependIcon>
-      <Icon icon="mdi-gear" />
-   </template>
-</Button>`} 
+</MenuItem>
+`} 
 />
 
+#### **Menu Button**
+*[ Go to Button Slots Section ](?path=/docs/components-button--docs#slots)*
 
 ### Accessibility
 #### **Screen Reader**
@@ -93,16 +147,28 @@ Attribute | Value |
 | tab-index  | `0` |
 
 ### Type
-#### **Icon Type**
-`IconType` interface is used to define the type of `icon | appendIcon | prependIcon` props to be used in the button.
 
+#### **MenuItemModel**
+`MenuItemModel` is a type that used to render the menu item from list. It has the following properties:
 <Source language="typescript" code={
-`interface IconType {
-   icon: string,
-   color?: string,
-   height?: string | number,
-   width?: string | number
+`type MenuItemModel = {
+   id?: string,
+   content?: string,
+   label?: string,
+   disabled?: boolean,
+   to?: string | RouteLocationRaw,
+   href?: string,
+   divider?: boolean,
+   tag?: string,
+   badge?: BadgePropType | (() => VNode<RendererNode, RendererElement>),
+   icon?: string,
+   items: MenuItemModel[],
+   action?: ((e: Event) => void),
+   key?: string
 }`} />
+
+#### **BadgePropType**
+`BadgePropType` is a type that used to render the badge on menu item. Please see the [Badge](?path=/docs/components-badge--docs) component for more information.
 
 
 

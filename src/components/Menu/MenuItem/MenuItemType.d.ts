@@ -46,10 +46,10 @@ type MenuItemModel = {
    disabled?: boolean;
    /**
     * The menu item route name.
-    * @type {RouteLocationRaw}
+    * @type {RouteLocationRaw | string}
     * @memberof MenuItemModel
     */
-   to?: RouteLocationRaw;
+   to?: string | RouteLocationRaw;
    /**
     * The menu item external link.
     * @type {string}
@@ -62,13 +62,6 @@ type MenuItemModel = {
     * @memberof MenuItemModel
     */
    divider?: boolean;
-   /**
-    * The menu item type (item, header, footer).
-    * @type {item | header | footer}
-    * @memberof MenuItemModel
-    * @default item
-    */
-   type?: 'item' | 'header' | 'footer';
    /**
     * The menu item tag.
     * @type {string}
@@ -84,10 +77,16 @@ type MenuItemModel = {
    badge?: BadgePropType | (() => VNode<RendererNode, RendererElement>);
    /**
     * The menu item icon.
-    * @type {MenuItemModelIcon}
+    * @type {string}
     * @memberof MenuItemModel
     */ 
-   icon?: MenuItemModelIcon;
+   icon?: string;
+   /**  
+    * The menu items array for grouping style
+    * @type {MenuItemModel[]}
+    * @memberof MenuItemModel
+    */
+   items?: MenuItemModel[];
    /**
     * The menu item action.
     * @type {function}

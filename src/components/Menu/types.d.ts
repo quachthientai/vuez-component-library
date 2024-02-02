@@ -1,4 +1,9 @@
-import type { ComponentInternalInstance, ComputedRef, Ref, RendererNode } from "vue";
+import type { 
+   ComponentInternalInstance, 
+   ComputedRef, 
+   Ref, 
+   RendererNode 
+} from "vue";
 
 export interface MenuInjectionKey {
    autoSelect: Ref<boolean>;

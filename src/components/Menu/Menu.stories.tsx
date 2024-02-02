@@ -5,14 +5,24 @@ import { Menu } from '@/components/Menu/Menu';
 import { MenuButton } from '@/components/Menu/MenuButton';
 import { MenuList } from '@/components/Menu/MenuList';
 import { MenuItem } from '@/components/Menu/MenuItem/MenuItem';
-
-import { MenuItemModel } from '@/components/Menu/MenuItem/MenuItemType';
+import { Badge } from '../Badge/Badge';
+import { Icon } from '@iconify/vue';
 
 import { placementArgType, dimensionArgType, labelArgType, hrefArgType, routeArgType, contentArgType } from '../../../.storybook/argsTypes';
 
 const meta = {
    title: 'Components/Menu',
    component: Menu,
+   parameters: {
+      controls: { exclude: [
+         'Default (MenuDefaultSlots)',
+         'Default (MenuListDefaultSlots)',
+         'Default (MenuItemDefaultSlots)',
+         'Icon (MenuItemIconSlots)',
+         'Badge (MenuItemBadgeSlots)',
+         'MenuButton'
+      ]}
+   },
    argTypes: {
       // * Menu's Props */
       closeOnBlur: {
@@ -52,6 +62,14 @@ const meta = {
             type: { summary: 'string' }
          }
       },
+      MenuDefaultSlots: {
+         name: 'Default (MenuDefaultSlots)',
+         description: 'Slot for default use to render menu button and menu list',
+         table: {
+            category: 'Menu\'s Slots',
+         type: { summary: 'default' }
+         }
+      },
       // * Menu Button's Props */
       MenuButton: {
          description: 'Menu Button inherited props from Button component, please see Button Docs for more details',
@@ -71,7 +89,7 @@ const meta = {
       },
       placement: {
          ...placementArgType(),
-         description: 'The placement of the menu list',
+         description: 'The placement of the menu list. **Note:** the menu list will be automatically flipped when it reaches the viewport bounds. **See more at https://floating-ui.com/docs/flip**',
          table: {
             category: "Menu List's Props",
             defaultValue: placementArgType().table.defaultValue,
@@ -85,6 +103,14 @@ const meta = {
             category: "Menu List's Props",
             defaultValue: { summary: '0' },
             type: { summary: 'number' }
+         }
+      },
+      MenuListDefaultSlots: {
+         name: 'Default (MenuListDefaultSlots)',
+         description: 'Slot for default use to render menu item',
+         table: {
+            category: "Menu List's Slots",
+            type: { summary: 'default' }
          }
       },
       // * Menu Item's Props */
@@ -144,13 +170,24 @@ const meta = {
       },
       icon: {
          control: {
-            type: 'object',
+            type: 'text',
          },
          description: 'The icon for the menu item (prepend)',
          table: {
             category: "Menu Item's Props",
             defaultValue: { summary: 'undefined' },
-            type: { summary: 'MenuItemModelIcon' }
+            type: { summary: 'string' }
+         }
+      },
+      items: {
+         control: {
+            type: 'object'
+         },
+         description: 'An array for the items if define item as group',
+         table: {
+            category: "Menu Item's Props",
+            defaultValue: { summary: 'undefined' },
+            type: { summary: 'MenuItemModel[]' }
          }
       },
       badge: {
@@ -162,15 +199,6 @@ const meta = {
             category: "Menu Item's Props",
             defaultValue: { summary: 'undefined' },
             type: { summary: 'BadgePropType | () => VNode<RendererNode, RendererElement>' }
-         }
-      },
-      type: {
-         control: { type: 'text' },
-         description: 'The type of the menu item',
-         table: {
-            category: "Menu Item's Props",
-            defaultValue: { summary: 'item' },
-            type: { summary: "'item' | 'header'" }
          }
       },
       MenuItemTag: {
@@ -199,53 +227,47 @@ const meta = {
             defaultValue: { summary: 'undefined' },
             type: { summary: 'string' }
          }
-      }
-   },
+      },
+      MenuItemDefaultSlots: {
+         name: 'Default (MenuItemDefaultSlots)',
+         description: 'Slot for default use to render menu item content',
+         table: {
+            category: 'Menu Item\'s Slots',
+            type: { summary: 'default' }
+         }
+      },
+      MenuItemIconSlots: {
+         name: 'Icon (MenuItemIconSlots)',
+         description: 'Slot for default use to render menu item icon',
+         table: {
+            category: 'Menu Item\'s Slots',
+            type: { summary: 'icon' }
+         }
+      },
+      MenuItemBadgeSlots: {
+         name: 'Badge (MenuItemBadgeSlots)',
+         description: 'Slot for default use to render menu item badge',
+         table: {
+            category: 'Menu Item\'s Slots',
+            type: { summary: 'badge' }
+         }
+      },
+   }
 } satisfies Meta<typeof Menu>
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const Items: MenuItemModel[] = [
-   {
-      content: 'VUEZUI',
-      type: 'header',
-      divider:true
-   },
-   { 
-      content: 'Documents',
-      type: 'header', 
-   },
-   { 
-      content: 'New',
-      icon: {
-         icon: 'mdi:plus',
-      }
-   },
-   { content: 'Search',
-      icon: {
-         icon: 'mdi:magnify',
-      },
-      divider: true,
-   },
-   { content: 'Search',
-      icon: {
-         icon: 'mdi:magnify',
-      },
-      divider: true,
-   },
-   { content: 'Settings',
-      type: 'header', 
-   }
-]
-
 export const Basic: Story = {
    render: (args) => ({
       components: {'Menu': Menu, 
          'MenuButton': MenuButton,
          'MenuList': MenuList,
-         'MenuItem': MenuItem,},
+         'MenuItem': MenuItem,
+         'Icon': Icon,
+         'Badge': Badge
+      },
       setup() {
          return { args };
       },
@@ -253,11 +275,14 @@ export const Basic: Story = {
          <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
             Dropdown
          </MenuButton>
-         <MenuList :model="args.items"/>
+         <MenuList :model="args.model" />
       </Menu>`,
    }),
    args: {
-      items: Items,
+      model: [ {content: 'Home', icon: 'mdi:home'}, 
+         {content: 'Account', icon: 'mdi:account'},
+         {content: 'Setting', icon: 'mdi:cog'}, 
+      ],
       autoSelect: false,
       closeOnSelect: false,
       closeOnBlur: false,
@@ -274,15 +299,103 @@ export const AutoSelect: Story = {
          return { args };
       },
       template: `
-      <Menu v-bind="args">
+      <Menu autoSelect>
          <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
-            Dropdown
+            AutoSelectMenu
          </MenuButton>
-         <MenuList :model="args.items"/>
+         <MenuList :model="args.model"/>
       </Menu>`,
    }),
    args: {
       ...Basic.args,
-      autoSelect: true,
    },
 };
+
+export const CloseOnSelect: Story = {
+   render: (args) => ({
+      components: {'Menu': Menu, 
+         'MenuButton': MenuButton,
+         'MenuList': MenuList,
+         'MenuItem': MenuItem,},
+      setup() {
+         return { args };
+      },
+      template: `
+      <Menu :closeOnSelect="true">
+         <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
+            CloseOnSelectMenu
+         </MenuButton>
+         <MenuList :model="args.model"/>
+      </Menu>`,
+   }),
+   args: {
+      ...Basic.args,
+   },
+};
+
+export const CloseOnBlur: Story = {
+   render: (args) => ({
+      components: {'Menu': Menu, 
+         'MenuButton': MenuButton,
+         'MenuList': MenuList,
+         'MenuItem': MenuItem,},
+      setup() {
+         return { args };
+      },
+      template: `
+      <Menu closeOnBlur>
+         <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
+            CloseOnBlurMenu
+         </MenuButton>
+         <MenuList :model="args.model"/>
+      </Menu>`,
+   }),
+   args: {
+      ...Basic.args,
+   },
+};
+
+export const Placement: Story = {
+   render: (args) => ({
+      components: {'Menu': Menu, 
+         'MenuButton': MenuButton,
+         'MenuList': MenuList,
+         'MenuItem': MenuItem,},
+      setup() {
+         return { args };
+      },
+      template: `<div class="flex gap-2 m-[150px]">
+         <Menu>
+            <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
+               Top
+            </MenuButton>
+            <MenuList placement="top" :model="args.model"/>
+         </Menu>
+         <Menu>
+            <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
+               Bottom
+            </MenuButton>
+            <MenuList :model="args.model"/>
+         </Menu>
+         <Menu>
+            <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
+               Left
+            </MenuButton>
+            <MenuList placement="left" :model="args.model"/>
+         </Menu>
+         <Menu>
+            <MenuButton :appendIcon="{icon: 'mdi:chevron-down'}">
+               Right
+            </MenuButton>
+            <MenuList placement="right" :model="args.model"/>
+         </Menu>
+         
+         
+      </div>
+      `,
+   }),
+   args: {
+      ...Basic.args,
+   },
+};
+

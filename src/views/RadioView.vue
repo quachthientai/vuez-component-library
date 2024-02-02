@@ -10,12 +10,14 @@ export default {
     RadioGroup,
   },
   data() {
+    const picked = 'One';
     const radios : RadioModel[] = [
       { label: 'Banana', value: '1' },
       { label: 'Strawberry', value: '2' },
       { label: 'Rasberry', value: '3', color: 'danger', checked: true }
     ]
     return {
+      picked,
       radios,
     }
   }
@@ -24,8 +26,14 @@ export default {
 
 <template>
   <div class="m-[150px]">
+    <Radio value="One" v-model="picked" >One</Radio>
+    <Radio value="Two" v-model="picked" >Two</Radio>
     <!-- <Radio value="2" label="Option 2"></Radio> -->
-    <RadioGroup label="Fruits" :model="radios"></RadioGroup>
+    <!-- <input type="radio" id="one" value="One" v-model="picked" /> -->
+	<!-- <label for="one">One</label> -->
+
+	
+    <!-- <RadioGroup label="Fruits" :model="radios"></RadioGroup> -->
   </div>
   
   
