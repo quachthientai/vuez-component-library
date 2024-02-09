@@ -7,6 +7,7 @@ import type {
 
 export interface RadioGroupInjectionKey {
    value: Ref,
+   color: Ref<string>,
    disabled: Ref<boolean>,
    onChange: (value: string) => void,
 }

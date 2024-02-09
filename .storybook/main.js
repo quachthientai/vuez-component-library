@@ -7,6 +7,10 @@ const config = {
     '@storybook/addon-a11y',
     '@storybook/addon-mdx-gfm',
     '@storybook/addon-docs',
+    '@storybook/addon-themes',
+    // '@storybook/addon-styling',
+    //'storybook-tailwind-dark-mode',
+
     'storybook-addon-vue-slots'
   ],
   core: {},

@@ -4,11 +4,17 @@ import { isIncluded, Helpers } from "@/utils/helpers";
 import { RadioGroupKey } from "@/constants/injectionKey";
 import { RadioModel } from "@/components/Radio/RadioType";
 import { Radio } from "./Radio";
-import { ComponentInternalInstance, computed, defineComponent, watch, type PropType, provide, Ref, toRef, getCurrentInstance } from "vue";
+import { makeDirectionProp, useDirection } from "@/composable/direction";
+import { makeColorProp, useColor } from "@/composable/color";
+import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance } from "vue";
+
 
 enum NAMESPACES {
    RADIO_GROUP = 'vz-radio-group',
    RADIO_GROUP_LABEL = 'vz-radio-group__label',
+   RADIO_GROUP_HORIZONTAL = 'vz-radio-group--horizontal',
+   RADIO_GROUP_VERTICAL = 'vz-radio-group--vertical',
+   RADIO_GROUP_DISABLED = 'vz-radio-group--disabled',
 }
 
 enum RadioGroupDirection {
@@ -17,19 +23,6 @@ enum RadioGroupDirection {
 }
 
 const vRadioGroupProps = makePropsFactory({
-   /**
-    * Used to define the direction of the radio group.
-    * @default vertical
-    * @type {'horizontal' | 'vertical}
-    * @name direction
-    */
-   direction: {
-      type: String as PropType<RadioGroupDirection>,
-      default: RadioGroupDirection.VERTICAL,
-      validator: (value: string) => {
-         return isIncluded(Object.values(RadioGroupDirection), value);
-      }
-   },
    /**
     * The fallback label of the radio group.
     * @type {string}
@@ -75,6 +68,27 @@ const vRadioGroupProps = makePropsFactory({
       type: Boolean,
       default: false,
    },
+   /**
+    * Used to define the direction of the radio group.
+    * @default vertical
+    * @type {'horizontal' | 'vertical}
+    * @name direction
+    */
+   ...makeDirectionProp(Object.values(RadioGroupDirection), RadioGroupDirection.VERTICAL),
+   /**
+    * Used to define the color of the radio group.
+    * @default primary
+    * @type {'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger'}
+    * @name color
+    */
+   ...makeColorProp([
+      'primary',
+      'secondary',
+      'success',
+      'info',
+      'warning',
+      'danger',
+   ], 'primary')
 });
 
 const RadioGroup = defineComponent({
@@ -82,18 +96,14 @@ const RadioGroup = defineComponent({
    props: vRadioGroupProps,
    inheritAttrs: false,
    emits: {
-      'update:modelValue': (v) => {
-         return v
+      'update:modelValue': (value: any) => {
+         return value;
       },
    },
    setup(props, { slots, emit, attrs }) {
-      // * Get component instance */
-      const instance = getCurrentInstance();
-
       // * Get component ID * 
       const componentID = generateComponentId(NAMESPACES.RADIO_GROUP);
 
-      // * Computed properties *
       const booleanContext = computed(() => {
          return {
             hasOptions: (props.options as RadioModel[]).length > 0,
@@ -110,40 +120,52 @@ const RadioGroup = defineComponent({
          isDisabled,
       } = booleanContext.value;
       
+      const componentClasses = computed(() => {
+         return {
+            direction: useDirection(NAMESPACES.RADIO_GROUP, props.direction as string),
+            disabled: isDisabled ? NAMESPACES.RADIO_GROUP_DISABLED : undefined,
+         }
+      })
+
       const componentAttrs = computed(() => {
          return {
             ...attrs,
             'role': 'radiogroup',
             'name': hasName ? props.name : componentID,
-            'data-disabled': isDisabled,
+            'data-disabled': isDisabled || undefined,
             'aria-labelledby': props.label,
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.RADIO_GROUP, '-'),
          };
       });
 
-      function onChange(v: string) {
-         emit('update:modelValue', v);
+      // * Methods */
+      function onChange(value: any) {
+         emit('update:modelValue', value);
       }
 
       // * Provide RadioGroupContextKey */
       provide(RadioGroupKey, {
          value: toRef(props, 'modelValue') as Ref,
+         color: toRef(props, 'color') as Ref<string>,
          disabled: toRef(props, 'disabled') as Ref<boolean>,
          onChange,
-      })
-
-      
+      });
 
       return {
          hasLabel,
          componentID,
          componentAttrs,
+         componentClasses,
          hasOptions,
       }
    },
    render() {
+      const { direction, disabled } = this.componentClasses;
       return (
-         <div class={NAMESPACES.RADIO_GROUP} 
+         <div class={[NAMESPACES.RADIO_GROUP,
+               disabled,
+               direction,
+            ]} 
             {...this.componentAttrs}
          >  
             {this.hasLabel && (
@@ -157,7 +179,6 @@ const RadioGroup = defineComponent({
             {this.hasOptions && (this.options as RadioModel[])?.map((radio) => {
                return (
                   <Radio 
-                     
                      {...radio}
                   />
                )
@@ -165,7 +186,6 @@ const RadioGroup = defineComponent({
          </div>
       )
    }
-   
 });
 
 type RadioGroupType = InstanceType<typeof RadioGroup>;

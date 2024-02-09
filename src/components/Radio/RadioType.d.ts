@@ -8,7 +8,13 @@ type RadioModel = {
     * @type {string}
     * @memberof RadioModel
     */
-   label?: string;
+   label: string;
+   /**
+    * The radio value.
+    * @type {any}
+    * @memberof RadioModel
+    */
+   value: any;
    /**
     * The radio modelValue.
     * @type {any}

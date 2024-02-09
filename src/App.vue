@@ -15,8 +15,9 @@ export default {
   },
   methods: {
     handleClick() {
-      const body = document.getElementsByTagName('body')[0]
-      body.classList.toggle('dark')
+      document.querySelector('html')?.classList.toggle('dark')
+      // const body = document.getElementsByTagName('body')[0]
+      // body.classList.toggle('dark')
     }
   }
 }

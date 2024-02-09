@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { Radio } from './Radio';
-import { RadioGroup } from './RadioGroup';
 import {
    colorArgType,
    disabledArgType,
@@ -9,96 +8,35 @@ import {
 import { ref } from 'vue';
 
 const meta = {
-   title: 'Forms/RadioGroup',
-   component: RadioGroup,
+   title: 'Forms/Radio',
+   component: Radio,
    argTypes: {
-      // * RadioGroup Props *
-      direction: {
-         options: ['horizontal', 'vertical'],
-         control: {
-            type: 'select',
-         },
-         description: 'The direction of the radio group',
-         table: {
-            category: 'RadioGroup Props',
-            defaultValue: { summary: 'vertical' },
-            type: { summary: "'vertical' | 'horizontal'" },
-         }
-      },
-      RadioGroupLabel: {
-         control: {
-            type: labelArgType().control.type
-         },
-         name: 'label (RadioGroup)',
-         description: 'Define aria-labelledby for the radio group',
-         table: {
-            category: 'RadioGroup Props',
-            defaultValue: labelArgType().table.defaultValue,
-            type: labelArgType().table.type,
-         }
-      },
-      model: {
-         control: {
-            type: 'object'
-         },
-         description: 'The radiogroup model used to render radio in group',
-         table: {
-            category: 'RadioGroup Props',
-            defaultValue: { summary: '[]' },
-            type: { summary: 'RadioModel[]' },
-         }
-      },
-      // * Radio Props *
-      label: {
-         ...labelArgType(),
-         table: {
-            ...labelArgType().table,
-            category: 'Radio Props',
-         }
-      },
-      color: {
-         ...colorArgType(),
-         table: {
-            ...colorArgType().table,
-            category: 'Radio Props',
-         }
-      },
-      disabled: {
-         ...disabledArgType(),
-         table: {
-            ...disabledArgType().table,
-            category: 'Radio Props',
-         }
-      },
-      checked: {
-         control: {
-            type: 'boolean'
-         },
-         description: 'The checked state of the radio',
-         table: {
-            category: 'Radio Props',
-            defaultqValue: { summary: 'false' },
-            type: { summary: 'boolean' },
-         }
-      },
+      label: labelArgType(),
+      color: colorArgType(),
+      disabled: disabledArgType(),
       name: {
          control: {
             type: 'text'
          },
          description: 'The name of the radio',
          table: {
-            category: 'Radio Props',
+            category: 'Props',
             defaultValue: { summary: 'null' },
             type: { summary: 'string' },
          }
       },
+      modelValue: {
+         description: 'The modelValue of the radio',
+         table: {
+            category: 'Props',
+            defaultValue: { summary: 'null' },
+            type: { summary: 'string | number | boolean' },
+         }
+      },
       value: {
-         control: {
-            type: 'text' 
-         },
          description: 'The value of the radio',
          table: {
-            category: 'Radio Props',
+            category: 'Props',
             defaultValue: { summary: 'null' },
             type: { summary: 'string | number | boolean' },
          }
@@ -110,27 +48,64 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const radioOptions = [
-   { label: 'One', value: 'One' },
-   { label: 'Two', value: 'Two' },
-   { label: 'Three', value: 'Three' },
-]
-
 export const Basic: Story = {
    render: (args) => ({
-      components: { 'Radio': Radio, 'RadioGroup': RadioGroup },
+      components: { Radio },
       setup() {
-         const picked = ref("One");
-         console.log(picked);
-         return { picked,args };
+         const picked = ref("");
+         return { picked, args };
       },
       template: `
-         
-         <div>onUpdatedValue: {{ picked }}</div>
-         <RadioGroup label="Radio group" v-model="picked" :options="args.options" />
+         <div class="mb-2">
+            <span>Picked: </span> {{ picked }}
+         </div>
+         <Radio label="Option 1" value="One" v-model="picked" v-bind="args" />
+         <Radio label="Option 2" value="Two" v-model="picked" v-bind="args" />
+      `
+   }),
+};
+
+export const ColorVariants: Story = {
+   render: (args) => ({
+      components: { Radio },
+      setup() {
+         const picked = ref("");
+         return { picked, args };
+      },
+      template: `
+         <div class="mb-2">
+            <span>Picked: </span> {{ picked }}
+         </div>
+
+         <div class="flex flex-col">
+            <Radio label="Primary" value="Primary" color="primary" v-model="picked" v-bind="args" />
+            <Radio label="Secondary" value="Secondary" color="secondary" v-model="picked" v-bind="args" />
+            <Radio label="Success" value="Success" color="success" v-model="picked" v-bind="args" />
+            <Radio label="Warning" value="Warning" color="warning" v-model="picked" v-bind="args" />
+            <Radio label="Danger" value="Danger" color="danger" v-model="picked" v-bind="args" />
+            <Radio label="Info" value="Info" color="info" v-model="picked" v-bind="args" />
+         </div>
+      `
+   }),
+};
+
+export const Disabled: Story = {
+   render: (args) => ({
+      components: { Radio },
+      setup() {
+         const picked = ref("");
+         return { picked, args };
+      },
+      template: `
+         <div class="mb-2">
+            <span>Picked: </span> {{ picked }}
+         </div>
+         <Radio label="Option 1" value="One" v-model="picked" v-bind="args" />
+         <Radio label="Option 2" value="Two" v-model="picked" v-bind="args" />
+         <Radio label="Option 3" value="Three" v-model="picked" v-bind="args" />
       `
    }),
    args: {
-      options: radioOptions
+      disabled: true
    }
 };

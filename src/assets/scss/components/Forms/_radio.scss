@@ -8,16 +8,28 @@ $disabled: #d9d9d9;
 
 @layer base {
   .vz-radio {
-    @apply items-center transition-all duration-300 p-1;
+    @apply inline-block items-center transition-all duration-300 p-1;
     &.vz-radio--disabled {
-      @apply opacity-60 cursor-not-allowed;
+      > * {
+        @apply opacity-60 cursor-not-allowed;
+      }
     }
   }
   
   .vz-radio-group {
-    @apply flex flex-col;
+    @apply flex flex-wrap;
+
+    &.vz-radio-group--horizontal {
+      @apply flex-row;
+    }
+
+    &.vz-radio-group--vertical {
+      @apply flex-col;
+    }
+
     > label {
       @apply p-1;
+      flex-basis: 100%;
       align-items: start;
       color: inherit;
       display: inline-flex;
@@ -26,47 +38,26 @@ $disabled: #d9d9d9;
       text-overflow: ellipsis;
       overflow: hidden;
     }
-
-    
   }
+}
 
-}
-.testControl {
-  display: flex;
-  flex-direction: column;
-}
 
 @layer utilities {
-  .vz-radio-input {
-    @apply inline-block relative transition-all duration-300 focus:ring-4 focus:ring-offset-0;
+  .vz-radio__input {
+    @apply inline-block relative cursor-pointer transition-all duration-300 focus:ring-4 focus:ring-offset-0;
 
     @each $color in utils-variables.$colors {
-      &.radio-#{$color} {
-        @apply text-#{$color}-500 border-#{$color}-500 focus:ring-#{$color}-500/50;
+      &.vz-radio--#{$color} {
+        @apply text-#{$color}-500 border-#{$color}-500 focus:ring-#{$color}-500/40;
+
+        &.vz-radio--#{$color}:not(:checked) {
+          @apply dark:bg-slate-800/10 bg-light;
+        }
       }
     }
   }
 
-  .vz-radio-label {
-    @apply mx-1 text-sm font-medium text-gray-800 dark:text-gray-300;
+  .vz-radio__label {
+    @apply mx-2 cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-300;
   }
-  // @each $variant in utils-variables.$colors {
-  //   .radio-#{$variant} {
-  //     &:after {
-  //       @apply bg-#{$variant}-500;
-  //     }
-
-  //     &:checked {
-  //       + &:before {
-  //         @apply border-#{$variant}-500;
-  //       }
-  //     }
-
-  //     &:focus {
-  //       + &:before {
-  //         @apply ring-#{$variant}-500/50;
-  //       }
-  //     }
-  //   }
-  // }
 }
