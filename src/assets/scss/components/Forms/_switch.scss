@@ -1,90 +1,59 @@
-@use '../../utilities/variables';
+@use '../../utilities/utils-variables';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  .switch {
-    @apply inline-block w-[51px] h-[26px] cursor-pointer relative;
+  .vz-toggle {
+    @apply relative inline-flex items-center cursor-pointer;
 
-    &__input[role='switch'] {
-      @apply opacity-0 w-0 h-0;
+    &__input {
+      @apply sr-only;
     }
 
     &__slider {
-      @apply absolute cursor-pointer inset-0 border-[2px] rounded-full transition-all border-slate-300 duration-100;
+      @apply w-11 h-6 absolute cursor-pointer inset-0 border-2 rounded-full transition-all duration-200 dark:border-slate-300/80 border-slate-300;
 
       &:before {
-        @apply absolute content-[""] h-[18px] w-[18px] left-[2px] right-[1px] bottom-[2px] rounded-full bg-slate-300 transition-all duration-300;
+        @apply absolute content-[''] h-4 w-4 left-[2px] right-[1px] bottom-[2px] rounded-full dark:bg-slate-300/80 bg-slate-300 transition-all duration-200;
+      }
+    }
+
+    &.vz-toggle--disabled {
+      > * {
+        @apply opacity-60 cursor-not-allowed;
       }
     }
   }
+
 }
 
 @layer utilities {
-  @each $variant in variables.$variants {
-    .switch-#{$variant} {
-      input[role='switch'] {
-        &:checked {
-          + .switch__slider {
-            @apply dark:bg-#{$variant}-500/90 border-#{$variant}-500 bg-#{$variant}-500;
-          }
-
-          + .switch__slider:before {
-            @apply translate-x-[26px] bg-light;
-          }
-
-          + &:focus {
-            + .switch__slider {
-              @apply ring-2 ring-offset-1 dark:ring-offset-dark dark:ring-#{$variant}-500/50 ring-#{$variant}-500/30;
+  .vz-toggle {
+    @each $color in utils-variables.$colors {
+      &.vz-toggle--#{$color} {
+        .vz-toggle__input {
+          &:checked {
+            + .vz-toggle__slider {
+              @apply dark:bg-#{$color}-500/90 bg-#{$color}-500 border-#{$color}-500 dark:border-#{$color}-500/90;
+          
+              &:before {
+                @apply translate-x-[20px] bg-light;
+              }
             }
           }
-
-          ~ .switch__labels {
-            &:before,
-            .onIcon {
-              @apply opacity-100;
-            }
-
-            &:after,
-            .offIcon {
-              @apply opacity-0;
-            }
-          }
-        }
-
-        &:disabled {
-          + .switch__slider {
-            @apply opacity-50 cursor-no-drop;
-          }
-        }
-
-        &:focus {
-          + .switch__slider {
+          
+          &:focus:not(:checked) + .vz-toggle__slider {
             @apply ring-2 ring-offset-1 ring-slate-500/20 dark:ring-slate-300/30 dark:ring-offset-dark;
           }
-        }
-      }
 
-      .switch__labels {
-        @apply text-dark font-extrabold text-[9px] dark:text-light;
-
-        .onIcon {
-          @apply absolute top-2 left-2 opacity-0;
-        }
-
-        .offIcon {
-          @apply absolute top-2 right-2 opacity-100;
-        }
-
-        &:before {
-          @apply opacity-0 left-[6px] top-[7px] ml-1 content-[attr(data-on)] absolute  transition-all ease-in-out duration-100;
-        }
-        
-        &:after {
-          @apply opacity-100 top-[7px] right-1 mr-1 content-[attr(data-off)] absolute  transition-all ease-in-out duration-100;
+          &:focus:checked + .vz-toggle__slider {
+            @apply ring-2 ring-offset-1 ring-#{$color}-500/30 dark:ring-offset-dark dark:ring-#{$color}-500/50;
+          }
+          
         }
       }
     }
   }
 }
+

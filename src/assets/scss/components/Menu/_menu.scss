@@ -6,12 +6,11 @@
 
 @layer base {
    .vz-menu {
-      margin: 1rem;
-      @apply absolute bg-light text-dark dark:bg-slate-700 dark:text-light rounded-[5px] overflow-auto dark:shadow-elevation-4 shadow-elevation-2 py-1;
-
-      &-list {
-         width: 100%;
-      }
+     display: inline-block;
+     
+   //   border: red 1px solid;
+      // position: relative;
+      
       // :focus-visible{
       //    background-color: darkblue;
       // }
@@ -19,4 +18,58 @@
          
       // }
    }
-}
+  
+   .vz-menu-list {
+    //   animation: grow-down 0.4s ease-in-out;
+    //   transform-origin: top center;
+    //   display: none;
+      width: 100%;
+    //   opacity: 0;
+      @apply
+         max-w-[200px]
+         overflow-hidden
+         bg-light text-dark dark:bg-slate-700 dark:text-light 
+         rounded-[5px] dark:shadow-elevation-4 
+         shadow-elevation-2 py-1;
+
+      &:focus {
+         outline: none;
+      }
+   }
+
+   .vz-menu-list[data-show="true"] {
+      // animation: grow-up 0.3s ease-in-out;
+      // transform-origin: top center;
+      
+      @apply block;
+      opacity: 1;
+      // @apply max-h-96 py-1;
+   }
+
+   
+
+  //  .slide-enter-active{
+  //   transition: all 0.3s ease-in-out;
+  //  }
+  //   .slide-leave-active{
+  //     transition: all 0.3s ease-in-out;
+  //   }
+
+  //   .slide-enter-from,
+  //   .slide-leave-active{
+  //     opacity: 0;
+
+  //     transform: translateY(-6px);
+  //   }
+
+  
+   
+
+  }
+  
+  
+  
+  
+
+
+

@@ -8,136 +8,157 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  .btn {
-    @apply relative 
-      rounded-[5px] 
-      font-semibold 
-      tracking-wide
-      transition duration-100 ease-out hover:ease-in;
-
+.vz-btn {
+  // * Base class * /
+  @apply relative 
+    rounded-[5px] 
+    font-semibold 
+    tracking-wide
+    transition duration-100 ease-out hover:ease-in;
     @include utils-mixin.get-grid-append-prepend-setup;
 
-    &:disabled {
-      @apply opacity-50 cursor-not-allowed;
-    }
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
 
-    &__loader {
-      @include utils-mixin.get-loader;
-    }
+  &:focus {
+    @apply bg-red-700;
+  }
 
-    &__prepend {
-      @include utils-mixin.get-grid-template('prepend');
-      @apply flex mr-[.2em] transition-all duration-150 ease-out;
-    }
+  // * Size variants * /
+  &.vz-btn--sm {
+    @include btn-mixins.get-button-size(btn-variables.$button-sizes,'sm');
+  };
+  &.vz-btn--md {
+    @include btn-mixins.get-button-size(btn-variables.$button-sizes,'md');
+  };
+  &.vz-btn--lg {
+    @include btn-mixins.get-button-size(btn-variables.$button-sizes,'lg');
+  };
 
-    &__content {
-      @include utils-mixin.get-grid-template('content');
-      @apply flex items-center gap-1 justify-center transition-all duration-150 ease-out;
-    }
-
-    &__append {
-      @include utils-mixin.get-grid-template('append');
-      @apply flex ml-[.2em] transition-all duration-150 ease-out;
-    }
-
-    &.btn-sm {
-      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'sm');
-    }
-
-    &.btn-md {
-      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'md');
-    }
-
-    &.btn-lg {
-      @include btn-mixins.get-button-size(btn-variables.$button-sizes,'lg');
-    }
-
-    &.btn-block {
-      @apply block w-full;
-    }
-
-    &.btn-loading {
-      @apply cursor-not-allowed;
-    
-      .btn__content,
-      .btn__prepend,
-      .btn__append {
-        @apply opacity-0;
-      }
+  &.vz-btn--loading {
+    @apply cursor-not-allowed;
+  
+    .vz-btn__content,
+    .vz-btn__prepend,
+    .vz-btn__append {
+      @apply opacity-0;
     }
   }
 
-  .btn-icon {
-    @apply relative flex justify-center rounded-full;
+  &.vz-btn--block {
+    @apply block w-full;
+  }
 
-    > .ripple {
-      @apply rounded-full;
-    }
+  // * Elements * /
+  &__loader {
+    @include utils-mixin.get-loader;
+    font-size: (utils-variables.$icon-multiplier * 1.5em);
+  }
+  &__prepend {
+    @include utils-mixin.get-grid-template('prepend');
+    @apply flex mr-[.2em] transition-all duration-150 ease-out;
 
-    &:disabled {
-      @apply opacity-50 cursor-not-allowed;
-    }
+    .vz-btn__prepend-icon, svg {
+      font-size: (utils-variables.$icon-multiplier * 1.5em);
+    };
+  }
+  &__content {
+    @include utils-mixin.get-grid-template('content');
+    @apply flex items-center gap-1 justify-center transition-all duration-150 ease-out;
+  }
+  &__append {
+    @include utils-mixin.get-grid-template('append');
+    @apply flex ml-[.2em] transition-all duration-150 ease-out;
 
-    .btn__content {
-      @apply flex justify-center transition-all duration-150 ease-out;
-    }
+    .vz-btn__append-icon, svg {
+      font-size: (utils-variables.$icon-multiplier * 1.5em);
+    };
+  }
 
-    &.btn-sm {
-      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'sm');
-    }
+  /** 
+  * * Color and type variants
+  * * The type variant has unique style respective to the color
+  */
+  @each $color in utils-variables.$colors {
+    // * Color variants * /
+    &.vz-btn--#{$color} {
+      @include utils-mixin.get-color($color);
 
-    &.btn-md {
-      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'md');
-    }
-
-    &.btn-lg {
-      @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes,'lg');
-    }
-
-    &.btn-loading {
-      @apply cursor-not-allowed;
-    
-      .btn__content,
-      .btn__prepend,
-      .btn__append {
-        @apply opacity-0;
+      // &:focus {
+      //   @apply bg-red-700;
+      // }
+      // * Ripple color * /
+      > .ripple .ripple__effect {
+        @include utils-mixin.get-rgb-ripple-color($color);
       }
+    }
+
+    @each $type in btn-variables.$button-type-variants {
+      // * Type variants * /
+      &.vz-btn--#{$color}.vz-btn--#{$type} {
+        @include utils-mixin.get-variant($type, $color);
+        
+        transition: .2s ease-in-out;
+
+        &:not([disabled]):focus-visible {
+          @apply ring-2 ring-offset-1 ring-offset-#{$color}-400/40 ring-#{$color}-400/50;
+        }
+
+        // * Hover state * /
+        &:not([disabled]):hover {
+          @include utils-mixin.get-hover-color($type, $color);
+        };
+      }
+
+    }
+  }
+}
+
+.vz-btn--icon {
+  @apply relative flex justify-center rounded-full;
+
+  >.ripple {
+    @apply rounded-full;
+  }
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .vz-btn__content {
+    @apply flex justify-center transition-all duration-150 ease-out;
+  }
+
+  &.vz-btn--sm {
+    @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes, 'sm');
+  }
+
+  &.vz-btn--md {
+    @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes, 'md');
+  }
+
+  &.vz-btn--lg {
+    @include btn-mixins.get-button-size(btn-variables.$button-icon-sizes, 'lg');
+  }
+
+  &.vz-btn--loading {
+    @apply cursor-not-allowed;
+
+    .vz-btn__content,
+    .vz-btn__prepend,
+    .vz-btn__append {
+      @apply opacity-0;
     }
   }
 }
 
 @for $i from 1 through 5 {
-  .btn-solid.elevation-#{$i} {
+  .vz-btn--solid.elevation-#{$i} {
     @apply shadow-elevation-#{$i};
+    // &:focus {
+    //   @apply bg-slate-600;
+    // }
   };
 };
 
-.btn__prepend-icon,
-.btn__append-icon,
-.btn__loader {
-  font-size: (utils-variables.$icon-multiplier * 1.5em);
-}
-
-@layer components {
-  @each $color in utils-variables.$colors {
-    .btn-#{$color} {
-      @include utils-mixin.get-color($color);
-      
-      > .ripple .ripple__effect {
-        @include utils-mixin.get-rgb-ripple-color($color);
-      }
-    }
-    
-    @each $variant in btn-variables.$button-variants {
-      .btn-#{$color}.btn-#{$variant} {
-        @include utils-mixin.get-variant($variant, $color);
-
-        &:not([disabled]):hover {
-          @include utils-mixin.get-hover-color($variant, $color);
-        };
-      
-      }
-    }
-  }
-}

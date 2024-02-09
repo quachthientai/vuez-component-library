@@ -29,7 +29,7 @@ function useVariants(prefix: string, variant: string) : string {
       if(prefix === undefined || null) return
 
       if (variant && isIncluded(predefinedVariants, variant)) {
-         return `${prefix}-${variant}`
+         return `${prefix}--${variant}`
       }
    })
    return variantStyle.value

@@ -17,7 +17,7 @@ function hello() {
 </script>
 
 <template>
-  <ButtonGroup
+  <!-- <ButtonGroup
     option="default"
     class="btnGroup btnGroup-primary"
     :item-list="[{ text: 'text1', event: hello }, { text: 'text2' }, { text: 'text3' }]"
@@ -33,7 +33,6 @@ function hello() {
     :item-list="[{ text: 'text1' }, { text: 'text2' }, { text: 'text3' }]"
   ></ButtonGroup>
   <br />
-  <!--Pill-->
   <ButtonGroup
     option="default"
     class="btnGroup-pill btnGroup-primary"
@@ -50,10 +49,6 @@ function hello() {
     :item-list="[{ text: 'text1' }, { text: 'text2' }, { text: 'text3' }]"
   ></ButtonGroup>
   <br />
-  <!--Custom-->
-  <!-- <ButtonGroup option='custom' :item-list="[{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
-,{btnClass:'btn btn-primary', class:'mr-2', text:'Primary', iconPosition:'right', icon:'ph:envelope-bold'}
-,{dropDownClass:'dropwdown dropdown-secondary', class:'ml-3', text:'dropdown'}]"  ></ButtonGroup> -->
   <ButtonGroup class="ms-3 mt-3" option="custom">
     <Button
       btnClass="btn btn-primary"
@@ -83,7 +78,7 @@ function hello() {
         </ul>
       </template>
     </Dropdown>
-  </ButtonGroup>
+  </ButtonGroup> -->
 </template>
 
 <style lang="scss"></style>

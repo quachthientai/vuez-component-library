@@ -28,10 +28,11 @@ export default {
    <div class="flex justify-start mt-2">
       <Button
          :loading="loading"
-         @click="load"
          class="mr-2" 
          variant="outlined" 
-         color="primary"
+         color="Primary"
+         @click="(e) => console.log(e)"
+         to="/menu"
       >
          BUTTON
       </Button>

@@ -2,20 +2,24 @@ import { makePropsFactory } from "@/utils/makePropFactory";
 import { RouteLocationRaw } from 'vue-router';
 import { 
    computed,
+   ref,
+   inject,
    defineComponent,
    PropType,
    RendererElement,
    RendererNode,
    VNode,
    getCurrentInstance,
-   ComponentInternalInstance
+   ComponentInternalInstance,
+   onMounted
 } from "vue";
-import { isIncluded } from "@/utils/helpers";
+import { Helpers, isIncluded } from "@/utils/helpers";
 import { Ripple } from "@/directives/ripple";
 import { DynamicTag } from "../../DynamicTag/DynamicTag";
 import { MenuItemModelIcon } from "./MenuItemType";
 import { Icon } from "@iconify/vue";
 import { BadgePropType, Badge } from "@/components/Badge/Badge";
+import { MenuKey } from "@/constants/injectionKey";
 
 /**
  * Namespace of the MenuItem component.
@@ -26,12 +30,14 @@ const vMenuItemProps = makePropsFactory({
    /**
     * The aria-label for the menu item.
     * @type {string}
+    * @default undefined
     * @name label
     */
    label: String,
    /**
     * The route for the menu item.
     * @type {string | RouteLocationRaw}
+    * @default undefined
     * @name to
     */
    to: [String, Object] as PropType<RouteLocationRaw>,
@@ -48,7 +54,10 @@ const vMenuItemProps = makePropsFactory({
     * @default false
     * @name disabled
     */
-   disabled: Boolean,
+   disabled: {
+      type: Boolean,
+      default: false,
+   },
    /**
     * The id for the menu item.
     * @type {string}
@@ -59,7 +68,7 @@ const vMenuItemProps = makePropsFactory({
    /**
     * The href for the menu item.
     * @type {string}
-    * @default false
+    * @default undefined
     * @name href
     */
    href: String,
@@ -69,14 +78,17 @@ const vMenuItemProps = makePropsFactory({
     * @default false
     * @name divider
     */
-   divider: Boolean,
+   divider: {
+      type: Boolean,
+      default: false,
+   },
    /**
     * The icon for the menu item.
-    * @type {MenuItemModelIcon}
+    * @type {string}
     * @default undefined
     * @name icon
     */
-   icon: Object as PropType<MenuItemModelIcon>,
+   icon: String,
    /**
     * The badge for the menu item.
     * @type {BadgePropType | Function(): VNode}
@@ -108,15 +120,32 @@ const vMenuItemProps = makePropsFactory({
    tag: {
       type: String,
       default: 'li',
-   }
+   },
+   /**
+    * The action for the menu item.
+    * @type {Function}
+    * @default () => {}
+    * @name action
+    */
+   action: {
+      type: Function as PropType<(e: Event) => void>,
+      default: () => {},
+   },
+   /**
+    * The key for the menu item.
+    * @type {string}
+    * @default undefined
+    * @name key
+    */
+   key: String,
 })
 
 const MenuItem = defineComponent({
    name: 'MenuItem',
    props: vMenuItemProps,
-   inheritAttrs: true,
+   inheritAttrs: false,
    emits: {
-      itemAction(payload: {
+      onItemAction(payload: {
          originalEvent: Event, 
          currentInstance: ComponentInternalInstance
       }) {
@@ -126,98 +155,159 @@ const MenuItem = defineComponent({
    directives: {
       'ripple': Ripple
    },
-   setup(props, {slots, emit, attrs}) { 
+   setup(props, {slots, emit, attrs}) {
+      // * Get the current instance
       const instance = getCurrentInstance();
       
-      const icon = props.icon as MenuItemModelIcon;
-      const tag = props.tag as string;
-      const id = props.id;
+      // * Inject the MenuContext key 
+      const MenuContext = inject(MenuKey);
+      const {
+         closeOnSelect,
+         hide
+      } = MenuContext;
 
-      const disabled = computed(() => {
-         if(props.type === 'header') {
-            return undefined
+      // * Computed properties
+      const booleanContext = computed(() => {
+         return {
+            hasLabel: !!props.label,
+            hasRoute: !!props.to,
+            hasHref: !!props.href,
+            hasContent: !!(slots.default || props.content),
+            hasIcon: !!(slots.icon || props.icon),
+            hasBadge: !!(slots.badge || props.badge),
+            hasDivider: !!props.divider,
+            isDisabled: !!props.disabled,
          }
-         return NAMESPACE + '--disabled';
       })
 
-      const type = computed(() => {
-         if(props.type === 'item') {
-            return undefined
+      const { hasBadge,
+         hasContent,
+         hasDivider,
+         hasHref,
+         hasIcon,
+         hasLabel,
+         hasRoute,
+         isDisabled,
+      } = booleanContext.value;
+
+      const componentClasses = computed(() => {
+         return {
+            disabled: isDisabled
+               ? props.type === 'item'
+                  ? NAMESPACE + '--disabled'
+                  : undefined
+               : undefined,
+            type: props.type === 'item'
+               ? undefined
+               : NAMESPACE + `-${props.type}`,
+            content: hasContent && NAMESPACE + '__content',
+            icon: hasIcon && NAMESPACE + '__icon',
+            badge: hasBadge && NAMESPACE + '__badge',
          }
-         return NAMESPACE + `-${props.type as string}`;
       })
 
-      const hasLabel = !!props.label;
-      const hasRoute = !!props.to;
-      const hasContent = !!(slots.default || props.content);
-      const hasIcon = !!(slots.icon || props.icon);
-      const hasBadge = !!(slots.badge || props.badge);
-      const hasDivider = !!props.divider;
-      const isDisabled = !!props.disabled;
+      const componentAttrs = computed(() => {
+         return {
+            ...attrs,
+            'aria-label': hasLabel ? props.label : props.content,
+            'data-disabled': isDisabled,
+            'data-element-type': props.type,
+            'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
+            'href': hasHref ? props.href : undefined,
+            'role': 'menuitem',
+            'to': hasRoute && !isDisabled ? props.to : undefined,
+            'target': hasHref ? '_blank' : undefined,
+         }
+      })
+      
+      // * Methods *
+      function onItemClick(e: Event, callback?: Function) {
+         if(callback) {
+            callback(e);
+         }
 
-      /**
-       * Handles the click event of the menu item and emits an "itemAction" event with the original event and the current instance.
-       * @param e - The click event.
-       */
-      function onItemClick(e: Event) {
-         emit("itemAction", {
+         if(closeOnSelect.value) {
+            hide();
+         }
+
+         emit('onItemAction', {
             originalEvent: e,
             currentInstance: instance
-         });
+         })
       }
 
-      return () => {
-         return (
-            <>
-               <DynamicTag
-                  v-ripple={props.type === 'item'}
-                  role="menuitem"
-                  to={hasRoute && !isDisabled ? props.to : undefined}
-                  aria-label={hasLabel ? props.label : props.content}
-                  tabindex={isDisabled ? -1 : 0}
-                  type={hasRoute ? 'router-link' : tag}
-                  onClick={onItemClick}
-                  id={id}
-                  class={[NAMESPACE,
-                     type.value,
-                     isDisabled && disabled.value
-                  ]}
-               >  
-                  { hasIcon && (
-                     <div class={`${NAMESPACE}__icon`}>
-                        { props.icon 
-                           ? <Icon 
-                                 icon={icon.icon} 
-                                 width="1.3rem" 
-                                 height="1.3rem" 
-                              />
-                           : slots.icon?.() 
-                        }
-                     </div>
-                  )}
-                  
-                  { hasContent && (
-                     <div class={`${NAMESPACE}__content`}>
-                        { props.content ? props.content : slots.default?.() }
-                     </div>
-                  )}
-               
-                  { (hasBadge && props.type === 'item') && (
-                     <div class={`${NAMESPACE}__badge`}>
-                        <div class="w-9"></div>
-                        { props.badge 
-                           ? typeof props.badge === 'function'
-                              ? props.badge()
-                              : <Badge {...props.badge as PropType<BadgePropType>} />
-                           : slots.badge?.()
-                        }
-                     </div>
-                  )}
-               </DynamicTag>
-               { hasDivider && (<hr/>)}
-            </>
-         )
+      return {
+         componentAttrs,
+         componentClasses,
+         hasBadge,
+         hasContent,
+         hasDivider,
+         hasHref,
+         hasIcon,
+         hasLabel,
+         hasRoute,
+         isDisabled,
+         onItemClick,
       }
+   },
+   render() {
+      return (
+         <>
+            <DynamicTag
+               class={[NAMESPACE, 
+                  this.componentClasses['type'],
+                  this.componentClasses['disabled']
+               ]}
+               {...this.componentAttrs}
+
+               type={ 
+                  this.hasRoute && !this.isDisabled ? 'router-link' 
+                     : this.hasHref ? 'a' 
+                     : this.tag
+               }
+               v-ripple={ this.type === 'item' && !this.isDisabled }
+               onClick={
+                  !this.isDisabled && this.type === 'item'
+                     ? (e: Event) => {
+                        this.action 
+                           ? this.onItemClick(e, this.action)
+                           : this.onItemClick(e);
+                     }
+                     : undefined 
+               }
+            >  
+               { this.hasIcon && (
+                  <div class={this.componentClasses['icon']}>
+                     { this.icon 
+                        ? <Icon 
+                              icon={this.icon} 
+                           />
+                        : this.$slots.icon?.() 
+                     }
+                  </div>
+               )}
+               
+               { this.hasContent && (
+                  <div class={this.componentClasses['content']}>
+                     { this.content ? this.content : this.$slots.default?.() }
+                  </div>
+               )}
+               
+               { (this.hasBadge && this.type === 'item') && (
+                  <div class={this.componentClasses['badge']}>
+                     <div class="w-9"></div>
+                     { this.badge 
+                        ? typeof this.badge === 'function'
+                           ? this.badge()
+                           : <Badge {...this.badge as PropType<BadgePropType>} />
+                        : this.$slots.badge?.()
+                     }
+                  </div>
+               )}
+            </DynamicTag>
+            { this.hasDivider && (<hr/>)}
+         </>
+      )
    }
 })
 

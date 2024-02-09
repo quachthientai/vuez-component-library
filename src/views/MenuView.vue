@@ -1,50 +1,79 @@
 <script lang="ts">
 
+import { MenuList } from '@/components/Menu/MenuList'
 import { Menu } from '@/components/Menu/Menu'
 import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
+import { MenuButton } from '@/components/Menu/MenuButton'
 import { Badge } from '@/components/Badge/Badge';
-import { h } from 'vue';
+import { h, ref } from 'vue';
 import { MenuItemModel } from '@/components/Menu/MenuItem/MenuItemType';
-import { type } from 'os';
+import { useRouter } from 'vue-router';
+
+
 
 export default {
   name: 'MenuView',
   components: {
     Menu,
+    MenuList,
+    MenuButton,
     MenuItem,
     Badge
   },
+  mounted() {
+    // console.log(this.$refs.menu.value)
+  },
   data() {
+    const router = useRouter();
+    // const menu = ref<InstanceType<typeof Menu> | null>(null);
 
     const items: MenuItemModel[] = [
-      { content: 'Options',
+      {
+        content: 'VUEZUI',
+        type: 'header',
+        divider:true
+      },
+      { 
+        content: 'Documents',
         type: 'header', 
-        divider: true
       },
-      { content: 'test',
-        disabled: true,
+      { 
+        content: 'New',
+        icon: {
+          icon: 'mdi:plus',
+        }
+      },
+      { content: 'Search',
+        icon: {
+          icon: 'mdi:magnify',
+        },
         divider: true,
-        
       },
-      // { label: 'Profile',
-      //   divider: true,
-      //   badge: {
-      //     content: '1',
-      //     color: 'primary',
-      //     inline: true,
-      //     rounded: true
-      //   },
-      // },
+      { content: 'Search',
+        icon: {
+          icon: 'mdi:magnify',
+        },
+        divider: true,
+      },
+      { content: 'Settings',
+        type: 'header', 
+      },
       { content: 'Profile',
-        
-        to: '/buttontest',
-        divider: true,
+        icon: {
+          icon: 'mdi:account-outline',
+        },
+        // disabled: true,
         badge: (() => {
           return this.test();
         }),
-        action: (() => {
-          console.log('asdasd');
+        action: ((e) => {
+          console.log(e)
         })  
+      },
+      { content: 'Logout',
+        icon: {
+          icon: 'mdi:logout',
+        },
       }
       
     ]
@@ -62,82 +91,63 @@ export default {
       })
     },
     testEvent(e) {
-      console.log('sssss')
-    }
+      console.log(e)
+      // // console.log(this.$refs.menu)
+      // this.$refs.menu.toggle(e)
+    },
+
   }
 }
 </script>
 <template>
-  <!-- <MenuItem type="item" 
-    :icon="{icon: 'mdi:account-outline' }" 
-    :badge="this.test"
-    content="Navigation"
-    divider 
-  /> -->
 
-  <Menu :model="items"></Menu>
-    
-  <!-- <Menu>
-    <MenuItem v-for="item in items"
-      :icon=item.icon
-      :badge=item.badge
-      :type=item.type
-      :label=item.label
-      :divider=item.divider
-      :disabled=item.disabled
-      @itemAction="item.action"
-    ></MenuItem>
-  </Menu> -->
-  <!-- <Menu :model="items"></Menu> -->
-  <!-- <MenuItem type="item">
-    <template v-slot:icon>
-      <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem"></Icon>
-    </template>
-    asd
-    <template v-slot:badge>
-      <Badge inline rounded content="1" color="danger" />
-    </template>
-  </MenuItem> -->
-  
-  
+  <Menu :closeOnSelect="false">
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
+    <MenuList :model="items"/>
+  </Menu>
+
+
+  <Menu>
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
+    <MenuList>
+      <MenuItem v-for="item in items"
+        :content="item.content"
+        :icon="item.icon"
+        :badge="item.badge"
+        :divider="item.divider"
+        :type="item.type"
+        :href="item.href"
+        @onItemAction="item.action"
+      /> 
+    </MenuList>
+  </Menu>
+
+  <Menu  class="ml-[500px]">
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
+    <MenuList :model="items"/>
+
+  </Menu>
 
   <!-- <Menu>
-    <MenuItem type="header" label="Options" />
-    <MenuItem type="item" disabled label="Profile">
-      <template v-slot:icon>
-        <Icon icon="mdi:account-outline" width="1.3rem" height="1.3rem" />
-      </template>
-      
-    </MenuItem>
-    <MenuItem type="item" label="Setting" divider>
-      <template v-slot:icon>
-        <Icon icon="mdi:cog-outline" width="1.3rem" height="1.3rem" />
-      </template>
-      <template v-slot:badge>
-        <Badge inline rounded content="1" color="danger" />
-      </template>
-    </MenuItem>
+    <MenuList class="mt-1" placement="bottom" :model="items" />
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
+      SMALL BUTTON
+    </MenuButton>
+  </Menu>
 
-    
+  <Menu>
+    <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
+      SMALL BUTTON
+    </MenuButton>
 
-    <MenuItem type="header" label="Navigation" />
-
-    <MenuItem type="item" label="Website">
-      <template v-slot:icon>
-        <Icon icon="mdi:link-variant" width="1.3rem" height="1.3rem" />
-      </template>
-    </MenuItem>
-
-    <MenuItem type="item" label="Upload">
-      <template v-slot:icon>
-        <Icon icon="mdi:tray-arrow-up" width="1.3rem" height="1.3rem" />
-      </template>
-    </MenuItem>
+    <MenuList placement="left">
+      <MenuItem>Menu item 1</MenuItem>
+      <MenuItem>Menu item 2</MenuItem>
+      <MenuItem>Menu item 3</MenuItem>
+    </MenuList>
 
   </Menu> -->
 
-
-  
 </template>
 
 <style lang="scss"></style>

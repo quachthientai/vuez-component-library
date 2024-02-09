@@ -1,6 +1,5 @@
-import { defineComponent, h, PropType } from "vue";
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { RouterLink } from "vue-router";
+import { defineComponent, h, resolveComponent } from "vue";
 
 const vDynamicTagProps = makePropsFactory({
    type: String,
@@ -10,15 +9,17 @@ const DynamicTag = defineComponent({
    name: 'DynamicTag',
    props: vDynamicTagProps,
    setup(props, {attrs, slots}) {
-      
-      const type = props.type as string
-      const isRouterLink = type === 'router-link'
-      
+
+      const isRouterLink = props.type === 'router-link'
+      const isAnchor = props.type === 'a'
+
       return () => {
          return (
-            h( isRouterLink ? <router-link /> : type, 
+            h( isRouterLink ? <router-link /> : props.type, 
                { type: props.type ==='button' ? 'button' : undefined,
-                 to: isRouterLink && attrs.to ? attrs.to : undefined 
+                 to: isRouterLink && attrs.to ? attrs.to : undefined,
+                 href: isAnchor && attrs.href ? attrs.href : undefined,
+                 tabindex: 0,
                },
                { default: () => slots.default && slots.default() }
             )
@@ -28,6 +29,8 @@ const DynamicTag = defineComponent({
    }
 });
 
+// const GlobalDynamicTag = resolveComponent('DynamicTag');
+
 export {
    DynamicTag
-}
+};

@@ -1,4 +1,5 @@
-@use '../../utilities/variables';
+// @use '../../utilities/variables';
+@use '../../utilities/utils-variables';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,58 +7,57 @@
 $disabled: #d9d9d9;
 
 @layer base {
-  .radio {
-    @apply relative w-[17px] h-[17px] cursor-pointer;
-
-    &:before {
-      content: '';
-
-      @apply w-[17px] h-[17px] absolute rounded-full  border-2 bg-light dark:bg-dark;
-    }
-
-    &:after {
-      content: '';
-      transform: translate(-50%, -50%);
-
-      @apply w-[9px] h-[9px] absolute rounded-full bg-primary-500 top-1/2 left-1/2  opacity-0;
-    }
-
-    &:checked {
-      + &:after {
-        @apply opacity-100 transition-all duration-300;
-      }
-
-      + &:before {
-        @apply border-primary-500  transition-all duration-300;
+  .vz-radio {
+    @apply inline-block items-center transition-all duration-300 p-1;
+    &.vz-radio--disabled {
+      > * {
+        @apply opacity-60 cursor-not-allowed;
       }
     }
+  }
+  
+  .vz-radio-group {
+    @apply flex flex-wrap;
 
-    &:focus {
-      + &:before {
-        @apply ring-2 ring-offset-0 ring-primary-500/50 transition-all duration-100;
-      }
+    &.vz-radio-group--horizontal {
+      @apply flex-row;
+    }
+
+    &.vz-radio-group--vertical {
+      @apply flex-col;
+    }
+
+    > label {
+      @apply p-1;
+      flex-basis: 100%;
+      align-items: start;
+      color: inherit;
+      display: inline-flex;
+      font-size: 1rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 }
 
+
 @layer utilities {
-  @each $variant in variables.$variants {
-    .radio-#{$variant} {
-      &:after {
-        @apply bg-#{$variant}-500;
-      }
+  .vz-radio__input {
+    @apply inline-block relative cursor-pointer transition-all duration-300 focus:ring-4 focus:ring-offset-0;
 
-      &:checked {
-        + &:before {
-          @apply border-#{$variant}-500;
-        }
-      }
+    @each $color in utils-variables.$colors {
+      &.vz-radio--#{$color} {
+        @apply text-#{$color}-500 border-#{$color}-500 focus:ring-#{$color}-500/40;
 
-      &:focus {
-        + &:before {
-          @apply ring-#{$variant}-500/50;
+        &.vz-radio--#{$color}:not(:checked) {
+          @apply dark:bg-slate-800/10 bg-light;
         }
       }
     }
+  }
+
+  .vz-radio__label {
+    @apply mx-2 cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-300;
   }
 }

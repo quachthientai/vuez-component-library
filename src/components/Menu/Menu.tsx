@@ -1,103 +1,140 @@
-import { makePropsFactory } from "@/utils/makePropFactory";
-import { defineComponent, getCurrentInstance, MaybeRef, onBeforeMount, onMounted, PropType, Ref, ref, watch } from "vue";
-import { makeDimensionProp } from "@/composable/dimension";
-import { makeColorProp } from "@/composable/color";
-import { Badge } from "../Badge/Badge";
-import { MenuItem } from "./MenuItem/MenuItem";
-import { MenuItemModel } from "./MenuItem/MenuItemType";
+import { MenuKey } from "@/constants/injectionKey";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
+import { DOM } from "@/utils/DOM";
+import { Helpers } from "@/utils/helpers";
+import { makePropsFactory } from "@/utils/makePropFactory";
+import { DynamicTag } from "../DynamicTag/DynamicTag";
+import { useClickOutside } from "@/composable";
+import { Ref, 
+   computed, 
+   defineComponent, 
+   nextTick, 
+   onMounted, 
+   provide, 
+   ref, 
+   toRef,
+} from "vue";
 
-/**
- * Namespace for the Menu component.
- */
 const NAMESPACE = 'vz-menu';
 
 const vMenuProps = makePropsFactory({
-   /**
-    * The toggler for the menu.
-    * @type {string}
-    * @default undefined
-    * @name toggler
-    */
-   toggler: String,
-   /**
-    * The model item for the menu.
-    * @type {MenuItemModel[]}
-    * @default []
-    * @name model
-    */
-   model: {
-      type: Array as PropType<MenuItemModel[]>,
-      default: () => [],
+   autoSelect: {
+      type: Boolean,
+      default: true,
    },
-   ...makeDimensionProp(),
-   ...makeColorProp(),
-});
+   closeOnSelect: {
+      type: Boolean,
+      default: true,
+   },
+   closeOnBlur: {
+      type: Boolean,
+      default: true,
+   },
+   tag: {
+      type: String,
+      default: 'div',
+   },
+})
 
 const Menu = defineComponent({
    name: 'Menu',
    props: vMenuProps,
-   emits: ['onMenuFocus'],
-   setup(props, {slots, attrs, emit}) {
-      const hasModel = (props.model as MenuItemModel[])?.length > 0;
-      const isFocused = ref(false);
-      const id = attrs.id as string || generateComponentId();
+   setup(props, { slots, attrs }) {
+      //* Refs */
+      const isOpen = ref<boolean>(false)
+      const root = ref<HTMLElement>(null)
+      const menuTrigger = ref<HTMLElement>(null)
+      const menuList = ref<HTMLElement>(null)
 
-      /**
-       * Handles the focus event for the menu.
-       * @param e - The focus event.
-       */
-      function onFocused(e: FocusEvent) {
-         isFocused.value = true;
-         emit('onMenuFocus', e)
+      // * Composable */
+      useClickOutside({
+         refElement: root,
+         callback: hide,
+      })
+
+      //* Computed properties */
+      const menuTriggerID = computed(() => {
+         return generateComponentId('vz-menu-trigger')
+      })
+
+      const menuListID = computed(() => {
+         return generateComponentId('vz-menu-list')
+      })
+
+      const componentAttrs = computed(() => {
+         return {
+            ...attrs,
+            'tabindex': -1,
+            'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
+         }
+      })
+
+      // * Methods */
+      function rootRef(el: HTMLElement) {
+         return root.value = el;
       }
       
-      return () => {
-         return (
-            <div 
-               class={NAMESPACE}
-               id={id} 
-            >
-               <ul class={`${NAMESPACE}-list`}
-                  role="menu"
-                  tabindex={0}
-                  aria-activedescendant="true"
-                  id={id + '-list'}
-                  onFocus={ onFocused }
-               >
-                  {slots.default?.()}  
-                  {hasModel && (props.model as MenuItemModel[])?.map((item, index) => { 
-                     const { action, ...mutateItem } = item;   
-                     return (
-                        <MenuItem 
-                           {...mutateItem}
-                           onItemAction={item.action}
-                           id={id + '-' + index}
-                        >
-                           {item.badge && { badge: () => {
-                                 return (
-                                    typeof item.badge === 'function' 
-                                    ? item.badge() 
-                                    : <Badge {...item.badge} />
-                                 )
-                              }
-                           }}
-                        </MenuItem>
-                     )
-                  })}
-               </ul>
-            </div>
-         )
+      function show() {
+         if(isOpen.value) return;
+         isOpen.value = true;
       }
-   }
+
+      function hide() {
+         if(!isOpen.value) return;
+         isOpen.value = false;
+      }
+
+      // * Lifecycle */
+      onMounted(() => {
+         nextTick(() => {
+            menuTrigger.value = DOM.findSingle(document, `#${menuTriggerID.value}`);
+            menuList.value = DOM.findSingle(document, `#${menuListID.value}`);
+         })
+      })
+
+      // * Provide MenuContext Key */
+      provide(MenuKey, {
+         autoSelect: toRef(props, 'autoSelect') as Ref<boolean>,
+         closeOnSelect: toRef(props, 'closeOnSelect') as Ref<boolean>,
+         closeOnBlur: toRef(props, 'closeOnBlur') as Ref<boolean>,
+         menuTriggerRef: menuTrigger,
+         menuTriggerID: menuTriggerID,
+         menuListRef: menuList,
+         menuListID: menuListID,
+         isOpen: isOpen,
+         show: show,
+         hide: hide,
+      })
+      
+      function onBlured() {
+         console.log('onblured')
+      }
+
+      return {
+         rootRef,
+         root,
+         componentAttrs,
+         onBlured,
+      }
+      
+   },
+   render() {
+      return (
+         <DynamicTag class={NAMESPACE}
+            type={this.tag}
+            ref={this.rootRef}
+            {...this.componentAttrs}
+            onBlured={this.onBlured}
+         >
+            {this.$slots.default?.()}
+         </DynamicTag>
+      )
+   },
 })
 
-type MenuType = InstanceType<typeof Menu>;
+type MenuType = InstanceType<typeof Menu>
 
 export {
    Menu,
    MenuType
-}
-
-
-
+};
