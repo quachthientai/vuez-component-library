@@ -1,70 +1,60 @@
-@use '../../utilities/variables';
+@use '../../utilities/utils-variables';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  .checkbox {
-    @apply inline-block w-[17px] h-[17px] relative;
+  .vz-checkbox {
+    @apply inline-block items-center transition-all duration-300 p-1;
 
-    &__input {
-      @apply w-full h-full absolute opacity-0;
-
-      &:checked {
-        ~ .checkbox__custom:after {
-          @apply w-[5px] h-[9px] opacity-100;
-        }
-      }
-
-      &:disabled {
-        + .checkbox__custom {
-          @apply opacity-50 cursor-no-drop;
-        }
-      }
-      
-      &:focus {
-        + .checkbox__custom {
-          @apply ring-2 ring-slate-300/70 dark:ring-offset-dark ring-offset-1;
-        }
+    &.vz-checkbox--disabled {
+      > * {
+        @apply opacity-60 cursor-not-allowed;
       }
     }
 
-    + &__custom {
-      @apply block w-full h-full absolute rounded-[3px] border-[2px] border-slate-300;
+    &__input {
+      @apply inline-block rounded relative cursor-pointer transition-all duration-300 focus:ring-4 focus:ring-offset-0;
 
-      &:hover {
-        @apply border-slate-400 cursor-pointer transition duration-100 ease-in;
+      &:indeterminate {
+        @apply dark:bg-slate-800/10 bg-light;
       }
 
-      &:after {
-        @apply content-[""] absolute left-[6.3px] right-0 bottom-[4.6px] opacity-0 w-0 h-0 border-solid border-light border-r-[2px] border-b-[2px] rotate-45;
-
-        transition: opacity 0.3s;
+      &:not(:checked) {
+        @apply dark:bg-slate-800/10 bg-light;
       }
+    }
+
+    &__label {
+      @apply mx-2 cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-300;
+    }
+  }
+
+  .vz-checkbox-group {
+    @apply flex flex-wrap;
+
+    &.vz-checkbox-group--horizontal {
+      @apply flex-row;
+    }
+
+    &.vz-checkbox-group--vertical {
+      @apply flex-col;
+    }
+
+    &__label {
+      @apply p-1 basis-full items-start text-inherit inline-flex text-base truncate; 
     }
   }
 }
 
 @layer utilities {
-  @each $variant in variables.$variants {
-    .checkbox-#{$variant} {
-      .checkbox__input {
-        &:checked {
-          + .checkbox__custom {
-            @apply border-none bg-#{$variant}-500;
-          }
+  @each $color in utils-variables.$colors {
+    .vz-checkbox--#{$color} {
+      > .vz-checkbox__input {
+        @apply text-#{$color}-500 border-#{$color}-500 focus:ring-#{$color}-500/40;
 
-          + &:focus {
-            + .checkbox__custom {
-              @apply ring-2 ring-offset-1 ring-#{$variant}-500/70;
-            }
-          }
-
-          + &:hover {
-            + .checkbox__custom {
-              @apply transition duration-100 ease-in bg-#{$variant}-600;
-            }
-          }
+        &:indeterminate {
+          @apply dark:bg-#{$color}-500/90 bg-#{$color}-500;
         }
       }
     }

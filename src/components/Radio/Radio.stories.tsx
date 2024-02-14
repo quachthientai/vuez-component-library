@@ -52,15 +52,15 @@ export const Basic: Story = {
    render: (args) => ({
       components: { Radio },
       setup() {
-         const picked = ref("");
+         const picked = ref("Option 1");
          return { picked, args };
       },
       template: `
          <div class="mb-2">
             <span>Picked: </span> {{ picked }}
          </div>
-         <Radio label="Option 1" value="One" v-model="picked" v-bind="args" />
-         <Radio label="Option 2" value="Two" v-model="picked" v-bind="args" />
+         <Radio label="Option 1" value="Option 1" v-model="picked" v-bind="args" />
+         <Radio label="Option 2" value="Option 2" v-model="picked" v-bind="args" />
       `
    }),
 };
@@ -103,6 +103,8 @@ export const Disabled: Story = {
          <Radio label="Option 1" value="One" v-model="picked" v-bind="args" />
          <Radio label="Option 2" value="Two" v-model="picked" v-bind="args" />
          <Radio label="Option 3" value="Three" v-model="picked" v-bind="args" />
+
+         
       `
    }),
    args: {

@@ -12,11 +12,15 @@
     }
 
     &__slider {
-      @apply w-11 h-6 absolute cursor-pointer inset-0 border-2 rounded-full transition-all duration-200 dark:border-slate-300/80 border-slate-300;
+      @apply w-11 h-6 cursor-pointer inset-0 border-2 rounded-full transition-all duration-300 dark:border-slate-300/80 border-slate-300;
 
       &:before {
-        @apply absolute content-[''] h-4 w-4 left-[2px] right-[1px] bottom-[2px] rounded-full dark:bg-slate-300/80 bg-slate-300 transition-all duration-200;
+        @apply absolute content-[''] h-4 w-4 left-[5px] right-[1px] bottom-[4px] rounded-full dark:bg-slate-300/80 bg-slate-300 transition-all duration-300;
       }
+    }
+
+    &__label {
+      @apply mx-2 cursor-pointer text-[0.95rem] font-medium text-gray-800 dark:text-gray-300;
     }
 
     &.vz-toggle--disabled {
@@ -44,11 +48,11 @@
           }
           
           &:focus:not(:checked) + .vz-toggle__slider {
-            @apply ring-2 ring-offset-1 ring-slate-500/20 dark:ring-slate-300/30 dark:ring-offset-dark;
+            @apply ring-4 ring-offset-0 ring-slate-500/20 dark:ring-slate-300/30 dark:ring-offset-dark;
           }
 
           &:focus:checked + .vz-toggle__slider {
-            @apply ring-2 ring-offset-1 ring-#{$color}-500/30 dark:ring-offset-dark dark:ring-#{$color}-500/50;
+            @apply ring-4 ring-offset-0 ring-#{$color}-500/30 dark:ring-offset-dark dark:ring-#{$color}-500/50;
           }
           
         }

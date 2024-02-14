@@ -25,10 +25,10 @@ export const Basic: Story = {
          <div class="mb-2">
             <span>Checked: </span> {{ isChecked }}
          </div>
-         <Toggle v-bind="args" v-model="isChecked"/>
+         <Toggle v-bind="args"  v-model="isChecked"/>
       `
    }),
    args: {
-      disabled: true,
+      disabled: false,
    }
 }

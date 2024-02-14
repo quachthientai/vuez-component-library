@@ -15,12 +15,12 @@ enum NAMESPACES {
    RADIO_GROUP_HORIZONTAL = 'vz-radio-group--horizontal',
    RADIO_GROUP_VERTICAL = 'vz-radio-group--vertical',
    RADIO_GROUP_DISABLED = 'vz-radio-group--disabled',
-}
+};
 
 enum RadioGroupDirection {
    HORIZONTAL = 'horizontal',
    VERTICAL = 'vertical',
-}
+};
 
 const vRadioGroupProps = makePropsFactory({
    /**
@@ -143,7 +143,7 @@ const RadioGroup = defineComponent({
          emit('update:modelValue', value);
       }
 
-      // * Provide RadioGroupContextKey */
+      // * Provide RadioGroupKey Context*/
       provide(RadioGroupKey, {
          value: toRef(props, 'modelValue') as Ref,
          color: toRef(props, 'color') as Ref<string>,
@@ -153,10 +153,10 @@ const RadioGroup = defineComponent({
 
       return {
          hasLabel,
+         hasOptions,
          componentID,
          componentAttrs,
          componentClasses,
-         hasOptions,
       }
    },
    render() {
@@ -184,7 +184,7 @@ const RadioGroup = defineComponent({
                )
             })}
          </div>
-      )
+      );
    }
 });
 
