@@ -10,11 +10,7 @@ $disabled: #d9d9d9;
     @apply inline-block items-center transition-all duration-300 p-1;
 
     &__input {
-      @apply inline-block relative cursor-pointer transition-all duration-300 focus:ring-4 focus:ring-offset-0;
-      
-        &:not(:checked) {
-          @apply dark:bg-slate-800/10 bg-light;
-        }
+      @apply inline-block outline-none relative cursor-pointer transition-all duration-300  dark:border-slate-300/80 border-slate-400/80 dark:bg-dark;
     }
     
     &__label {
@@ -50,7 +46,17 @@ $disabled: #d9d9d9;
   @each $color in utils-variables.$colors {
     .vz-radio--#{$color} {
       > .vz-radio__input {
-        @apply text-#{$color}-500 border-#{$color}-500 focus:ring-#{$color}-500/40;
+        &:checked {
+          @apply dark:bg-#{$color}-500/90 dark:border-#{$color}-500/90 border-#{$color}-500 text-#{$color}-500;
+        }
+
+        &:focus:not(:checked) {
+          @apply ring-4 ring-offset-0 ring-slate-500/20 dark:ring-slate-300/30 dark:ring-offset-dark;
+        }
+
+        &:focus:checked {
+          @apply ring-4 ring-offset-0 ring-#{$color}-500/30 dark:ring-offset-dark dark:ring-#{$color}-500/50;
+        }
       }
     }
   } 

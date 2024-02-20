@@ -59,6 +59,7 @@ const Toggle = defineComponent({
       } = booleanContext.value;
 
       const checked = computed(() => {
+			if(props.modelValue !== undefined) return false;
          return props.modelValue;
       })
 

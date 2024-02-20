@@ -1,0 +1,98 @@
+@use '../../utilities/utils-variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .vz-input {
+    @apply relative;
+    // > * {
+    //   @apply cursor-pointer;
+    // }
+
+    &__label {
+      @apply absolute bg-light dark:bg-dark text-sm text-slate-400 dark:text-slate-300/70 transition-all duration-300 transform scale-75 -translate-y-4 top-2 z-10 origin-[0] px-2 start-1;
+    }
+
+    &__control {
+      @apply block ps-10 pe-10 w-full h-full px-2.5 py-3 text-sm bg-transparent rounded-lg border-slate-300 dark:border-slate-400/80 text-dark/80 dark:text-light/90 appearance-none outline-none transition-all duration-300;
+
+      &[type="password"]:not(&:placeholder-shown) {
+        
+        letter-spacing: 0.125em;
+      }
+
+      &:placeholder-shown {
+        ~ .vz-input__label {
+          @apply scale-100 -translate-y-1/2 top-1/2;
+        }
+      }
+
+      &:focus {
+        ~ .vz-input__label {
+          @apply px-2 top-2 scale-75 -translate-y-4;
+        }
+      }
+    }
+
+    &__prepend-icon {
+      @apply absolute text-dark/60 dark:text-light/80 inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none;
+      > svg {
+        @apply text-lg;
+      }
+    }
+
+    &__append-icon {
+      @apply absolute z-10 text-dark/60 dark:text-light/80 inset-y-0 end-0 flex items-center pe-3.5;
+      >svg {
+        @apply text-lg;
+      }
+    }
+
+    &--disabled {
+      > .vz-input__control {
+        @apply bg-slate-300 dark:bg-slate-400/80 opacity-60 cursor-not-allowed;
+        &:placeholder-shown {
+          ~ .vz-input__label {
+            @apply bg-transparent dark:text-slate-300/70;
+          }
+        }
+      }
+    }
+  };
+}
+
+@layer utilities {
+  .vz-input {
+    @each $color in utils-variables.$colors {
+      &.vz-input--#{$color} {
+        > .vz-input__control {
+          // &:hover {
+          //   @apply border ring-0 border-#{$color}-500 dark:border-#{$color}-500/90;
+          // }
+          &:focus {
+            @apply border ring-0 border-#{$color}-500 dark:border-#{$color}-500/90;
+            ~.vz-input__label {
+              @apply text-#{$color}-500 dark:text-#{$color}-500/90;
+            }
+          }
+        }
+      }
+    }
+    // Hide placeholder when label is present
+    // Show placeholder when input is focused
+    &:has(&__label) {
+      .vz-input__control {
+        &::placeholder {
+          @apply invisible;
+        }
+
+        &:focus {
+          &::placeholder {
+            @apply visible;
+          }
+        }
+      }
+    }
+  }
+};

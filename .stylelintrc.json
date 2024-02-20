@@ -12,6 +12,9 @@
       "import-notation": "string",
       "alpha-value-notation": "number",
       "color-function-notation": "modern",
+      "selector-pseudo-element-no-unknown": [true, {
+         "ignorePseudoElements": ["input-placeholder"]
+      }],
       "scss/at-rule-no-unknown": [
          true,
          {
