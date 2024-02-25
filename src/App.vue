@@ -1,7 +1,6 @@
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 
-import Radio from './components/Forms/Radio.vue'
 
 export default {
   data() {
@@ -11,7 +10,7 @@ export default {
   },
   components: {
 
-    Radio
+    
   },
   methods: {
     handleClick() {

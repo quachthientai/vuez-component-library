@@ -23,6 +23,7 @@ export const Basic: Story = {
          <div class="mb-2">
             <span>Checked: </span> {{ checked }}
          </div>
+			
          <Checkbox  v-bind="args" label="Checkbox 1" v-model="checked"/>
          <Checkbox  v-bind="args" label="Checkbox 2" v-model="checked" color="secondary"/>
          <Checkbox  v-bind="args" label="Checkbox 3" v-model="checked" color="success"/>

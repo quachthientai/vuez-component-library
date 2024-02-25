@@ -23,12 +23,20 @@ export const Basic: Story = {
 	render: (args) => ({
 		components: { Input },
 		setup() {
-			const msg = ref('Hello World!');
+			const msg = ref('');
+			
 			return { args, msg };
 		},
 		template: `
 			Message: {{ msg }}
-			<Input class="mt-3" v-bind="args" type="password" :prependIcon="{icon: 'mdi:email'}"  placeholder="Please enter your email"/>
+			<Input class="mt-3" v-bind="args" v-model="msg" 
+				
+				label="Password"
+				:prependIcon="{icon: 'mdi:email'}"
+				type="password"
+				helperText="We’ll never share your details. Read our Privacy Policy."
+				placeholder="Please enter password"
+			/>
 		`
 	}),
 };

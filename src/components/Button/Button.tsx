@@ -33,17 +33,6 @@ enum NAMESPACES {
    ButtonLoader = 'vz-btn__loader',
 }
 
-/**
- * TODO inspect the dimension prop 
- * TODO predefined the classes for sub-component ✔
- * TODO create NAMESPACE enum type for component and sub-component classes ✔
- * TODO implement the accessibility ✔
- * TODO comment the code ✔
- * TODO: refactor composable (Dimension) to make it more reusable
- * TODO: button router-link can't use Enter and Space click
- * * See notepad++ for previous version
- */
-
 const vButtonProps = makePropsFactory({
    /**
     * Whether the button is block or not.
