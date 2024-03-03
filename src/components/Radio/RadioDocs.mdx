@@ -1,9 +1,9 @@
-import { Meta, Title, Controls, Story, Primary, Canvas } from '@storybook/blocks';
+import { Meta, Title, Controls, Story, Primary, Canvas, Stories } from '@storybook/blocks';
 import * as RadioStories from './Radio.stories';
 
 <Meta
    of={RadioStories}
-   title="Docs"
+   name="Docs"
 />
 
 <Title />
@@ -19,11 +19,11 @@ import { Radio } from '@component/Radio/Radio';
 *Note: **Click onto the component name** to view its props and events document*
 | Component | Description |
 | - | - |
-| [`<Radio>`](#api) | Sub-component used to render the radio options, wrap by `<RadioGroup>` component. |
-| [`<RadioGroup>`](#api) | Primary component is the component used to render set of user options |
+| [`<Radio>`]() | Component used to render the radio options |
+| [`<RadioGroup>`]() | Component used to render set of `Radio` options |
 
 ### Usage
-<Canvas mdxSoure={'asdasd'}>
-   <Story name="Basic" />
-</Canvas>
-{/* <Primary /> */}
+<Primary />
+<Controls />
+
+<Stories />

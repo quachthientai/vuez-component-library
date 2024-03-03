@@ -1,0 +1,79 @@
+import { Meta, Title, Controls, Story, ArgTypes, Source, Canvas, Primary, Stories } from '@storybook/blocks';
+import * as CheckboxGroup from './CheckboxGroup.stories';
+
+<Meta
+   of={CheckboxGroup}
+   name="Docs"
+/>
+
+<Title />
+
+The `CheckboxGroup` component is used to group multiple checkboxes together.
+
+### Import
+To use CheckboxGroup component, import these sub-components to render
+```ts
+import { Checkbox } from '@components/Checkbox/Checbox';
+import { CheckboxGroup } from '@components/CheckboxGroup/ChecboxGroup';
+```
+
+### API
+*Note: **Click onto the component name** to view its props and events document*
+| Component | Description |
+| - | - |
+| [`<Checkbox>`](?path=/docs/forms-checkbox--docs) | Sub-component used to render checkbox options **Must be direct child of** `<CheckboxGroup>` |
+| [`<CheckboxGroup>`](#api) | Primary component used to wrap the list of checkboxes options |
+
+### Usage
+<Primary />
+<Controls exclude={['default', 'update:modelValue']}/>
+<Stories />
+
+### Events
+<ArgTypes include={'update:modelValue'} />
+
+### Slots
+<ArgTypes include={'default'} />
+<Source code={`
+<template>
+   <CheckboxGroup v-model="checked">
+      <Checkbox v-for="option in checkboxOptions" :label="option.label" :value="option.value" />
+   </CheckboxGroup>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const checked = ref(['Apple', 'Banana', 'Cherry']);
+const checkboxOptions : CheckboxModel[] = [
+   { label: 'Apple', value: "Apple" },
+   { label: 'Banana', value: "Banana" },
+   { label: 'Cherry', value: "Cherry" },
+]
+</script>
+`} />
+
+### Accessibility
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Tab | Moves keyboard focus to the checkbox |
+| Space | Toggle checkbox between checked and unchecked states |
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `group` |
+| aria-labelledby | `id of label tag` |
+
+### Type
+`CheckboxModel` is a type that used to render the checkbox options. It has the following properties:
+<Source language="typescript" code= {
+`type CheckboxModel = {
+   modelValue?: any;
+   value: string;
+   name?: string;
+   disabled?: boolean;
+   label: string;
+   color?: string;
+}`
+} />

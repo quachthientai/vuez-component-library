@@ -101,39 +101,28 @@ const Radio = defineComponent({
         
          return props.value === props.modelValue;
       });
-      
-      const booleanContext = computed(() => {
-         return {
-            isDisabled: RadioGroupContext?.disabled.value || props.disabled,
-         }
-      });
 
-      const {
-         isDisabled,
-      } = booleanContext.value;
-      
+		const isDisabled = computed(() => {
+			if(RadioGroupContext?.disabled.value) {
+				return RadioGroupContext?.disabled.value;
+			}
+			return props.disabled;
+		});
+
+		const color = useColor(NAMESPACES.RADIO, RadioGroupContext?.color.value as string || props.color as string);
+
       const componentAttrs = computed(() => {
          return {
             ...attrs,
             'role': 'radio',
             'aria-checked': checked.value,
             'name': props.name,
-            'aria-disabled': isDisabled || undefined,
-            'data-disabled': isDisabled || undefined,
+            'aria-disabled': isDisabled.value,
+            'data-disabled': isDisabled.value,
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.RADIO, '-'),
          }
       });
       
-      const componentClasses = computed(() => {
-         return {
-            color: useColor(NAMESPACES.RADIO, 
-               RadioGroupContext?.color.value as string ||props.color as string
-            ),
-            disabled: isDisabled && NAMESPACES.RADIO_DISABLED,
-         }
-      })
-
-
       // * Methods * /
       function onChange(e: Event) {
          const target = e.target as HTMLInputElement;
@@ -147,9 +136,9 @@ const Radio = defineComponent({
       }
 
       return {
+			color,
          instance,
          checked,
-         componentClasses,
          componentAttrs,
          componentID,
          isDisabled,
@@ -157,11 +146,10 @@ const Radio = defineComponent({
       }
    },
    render() {
-      const { color, disabled } = this.componentClasses;
       return (
          <div class={[NAMESPACES.RADIO,
-               color,
-               disabled
+               this.color,
+               this.isDisabled && NAMESPACES.RADIO_DISABLED,
             ]}
             data-vz-component={this.componentAttrs['data-vz-component']}
          >

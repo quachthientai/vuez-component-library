@@ -31,6 +31,10 @@ const vCheckboxProps = makePropsFactory({
       default: undefined,
       required: true
    },
+	indeterminate: {
+		type: Boolean,
+		default: false,
+	},
    ...makeColorProp([
       'primary',
       'secondary',
@@ -65,36 +69,31 @@ const Checkbox = defineComponent({
          return props.modelValue;
       });
 
-      const booleanContext = computed(() => {
-         return {
-            isDisabled: props.disabled,
-         };
-      });
+		const isDisabled = computed(() => {
+			if(CheckboxGroupContext?.value) {
+				return CheckboxGroupContext.disabled.value;
+			}
+			return props.disabled;
+		})
 
-      const {
-         isDisabled,
-      } = booleanContext.value;
-      
       const componentAttrs = computed(() => {
          return {
             ...attrs,
             'role': 'checkbox',
             'aria-checked': checked.value,
             'name': props.name || componentID,
-            'aria-disabled': isDisabled || undefined,
-            'data-disabled': isDisabled || undefined,
+            'aria-disabled': isDisabled.value,
+            'data-disabled': isDisabled.value,
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.CHECKBOX, '-'),
          }
       })
 
-      const componentClasses = computed(() => {
-         return {
-            color: useColor(NAMESPACES.CHECKBOX, 
-               CheckboxGroupContext?.color.value as string || props.color as string
-            ),
-            disabled: isDisabled && NAMESPACES.CHECKBOX_DISABLED,
-         }
-      });
+		const componentClasses = computed(() => {
+			return {
+				color: useColor(NAMESPACES.CHECKBOX, CheckboxGroupContext?.color.value as string || props.color as string),
+				disabled: isDisabled.value && NAMESPACES.CHECKBOX_DISABLED
+			}
+		})
 
       function onChange(e: Event) {
          const target = e.target as HTMLInputElement;
@@ -111,19 +110,20 @@ const Checkbox = defineComponent({
          checked,
          onChange,
          instance,
-         isDisabled,
+			isDisabled,
          componentID,
          componentAttrs,
-         componentClasses,
+			componentClasses
       }
    },
    render() {
-      const { color, disabled } = this.componentClasses;
+		const { color, disabled } = this.componentClasses;
+		
       return (
          <div class={[
+					color,
+					disabled,
                NAMESPACES.CHECKBOX,
-               color,
-               disabled,
             ]}
             data-vz-component={this.componentAttrs['data-vz-component']}
          >
@@ -132,6 +132,7 @@ const Checkbox = defineComponent({
                checked={this.checked}
                onChange={this.onChange}
                disabled={this.isDisabled}
+					indeterminate={this.indeterminate}
                name={this.componentAttrs['name']}
                role={this.componentAttrs['role']}
                id={this.instance.attrs.id || this.componentID} 

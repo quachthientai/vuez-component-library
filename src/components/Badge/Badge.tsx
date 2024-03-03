@@ -82,9 +82,10 @@ const Badge = defineComponent({
          }
       });
 
-      const { isDot, 
-         isRounded, 
-         isInline, 
+      const { 
+			isDot, 
+         isInline,
+			isRounded, 
          isOverlay, 
          hasDefaultSlots 
       } = booleanContext.value;

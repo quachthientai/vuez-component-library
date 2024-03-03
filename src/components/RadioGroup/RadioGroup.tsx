@@ -2,8 +2,8 @@ import { makePropsFactory } from "@/utils/makePropFactory";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { isIncluded, Helpers } from "@/utils/helpers";
 import { RadioGroupKey } from "@/constants/injectionKey";
-import { RadioModel } from "@/components/Radio/RadioType";
-import { Radio } from "./Radio";
+import { RadioModel } from "@/components/Radio/type";
+import { Radio } from "../Radio/Radio";
 import { makeDirectionProp, useDirection } from "@/composable/direction";
 import { makeColorProp, useColor } from "@/composable/color";
 import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance } from "vue";
@@ -109,7 +109,6 @@ const RadioGroup = defineComponent({
             hasOptions: (props.options as RadioModel[]).length > 0,
             hasLabel: props.label !== undefined,
             hasName: props.name !== undefined,
-            isDisabled: props.disabled,
          }
       });
       
@@ -117,13 +116,11 @@ const RadioGroup = defineComponent({
          hasName,
          hasLabel,
          hasOptions,
-         isDisabled,
       } = booleanContext.value;
       
       const componentClasses = computed(() => {
          return {
             direction: useDirection(NAMESPACES.RADIO_GROUP, props.direction as string),
-            disabled: isDisabled ? NAMESPACES.RADIO_GROUP_DISABLED : undefined,
          }
       })
 
@@ -132,7 +129,7 @@ const RadioGroup = defineComponent({
             ...attrs,
             'role': 'radiogroup',
             'name': hasName ? props.name : componentID,
-            'data-disabled': isDisabled || undefined,
+            'data-disabled': props.disabled,
             'aria-labelledby': props.label,
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.RADIO_GROUP, '-'),
          };
@@ -160,10 +157,10 @@ const RadioGroup = defineComponent({
       }
    },
    render() {
-      const { direction, disabled } = this.componentClasses;
+      const { direction } = this.componentClasses;
       return (
          <div class={[NAMESPACES.RADIO_GROUP,
-               disabled,
+               this.disabled && NAMESPACES.RADIO_GROUP_DISABLED,
                direction,
             ]} 
             {...this.componentAttrs}

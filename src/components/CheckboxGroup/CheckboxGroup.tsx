@@ -2,7 +2,7 @@ import { makePropsFactory } from "@/utils/makePropFactory";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { isIncluded, Helpers } from "@/utils/helpers";
 import { CheckboxGroupKey } from "@/constants/injectionKey";
-import { CheckboxModel } from "../Checkbox/CheckboxType";
+import { CheckboxModel } from "../Checkbox/type";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { makeDirectionProp, useDirection } from "@/composable/direction";
 import { makeColorProp, useColor } from "@/composable/color";
@@ -91,7 +91,7 @@ const CheckboxGroup = defineComponent({
       const componentAttrs = computed(() => {
          return {
             ...attrs,
-            'role': 'checkboxgroup',
+            'role': 'group',
             'name': hasName ? props.name : componentID,
             'data-disabled': isDisabled || undefined,
             'aria-labelledby': props.label,
@@ -140,12 +140,13 @@ const CheckboxGroup = defineComponent({
             {...this.componentAttrs}
          >
             {this.hasLabel && (
-               <label class={NAMESPACES.CHECKBOX_GROUP_LABEL}>
+               <label id={this.label} class={NAMESPACES.CHECKBOX_GROUP_LABEL}>
                   {this.label}
                </label>
             )}
 
             {this.$slots.default?.()}
+				{/* {this.$slots.option?.()} */}
             
             {this.hasOptions && (this.options as CheckboxModel[])?.map((checkbox) => {
                return (

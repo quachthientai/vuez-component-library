@@ -11,21 +11,23 @@ enum NAMESPACES {
 	INPUT_ICON = 'vz-input__icon',
 	INPUT_LABEL = 'vz-input__label',
 	INPUT_FIELD = 'vz-input__field',
+	INPUT_CONTROL = 'vz-input__control',
 	INPUT_DISABLED = 'vz-input--disabled',
 	INPUT_CLEARABLE = 'vz-input__clearable',
 	INPUT_HELPER_TEXT = 'vz-input__helper-text',
 	INPUT_APPEND_ICON = 'vz-input__append-icon',
 	INPUT_PREPEND_ICON = 'vz-input__prepend-icon',
-	INPUT_PASSWORD_TOGGLE = 'vz-input__show-password-toggle',
 	INPUT_FIELD_WRAPPER = 'vz-input__field-wrapper',
+	INPUT_PASSWORD_TOGGLE = 'vz-input__show-password-toggle',
 };
 
 /**
- * TODO dynamically prepend icon based on type
- * TODO implement slots logic for (prepend, append, helperText) 
+ * TODO dynamically prepend icon based on type ✅
+ * TODO helper text rendering ✅
+ * TODO implement slots logic for (prepend, append, helperText) ✅
  * TODO implement clearable logic ✅
- * TODO implement password toggle logic 
- * TODO styling the dot (make it more larger without resize the input) for the password toggle
+ * TODO implement password toggle logic ✅
+ * TODO styling the dot (make it more larger without resize the input) for the password toggle ✅
  * TODO define emit events for the component (update:modelValue, togglePassword, clear) ✅
  * TODO document the component
  * TODO comment the component
@@ -56,6 +58,10 @@ const vInputProps = makePropsFactory({
 	disabled: {
 		type: Boolean,
 		default: false,
+	},
+	hasTypeIcon: {
+		type: Boolean,
+		default: true,
 	},
 	type: {
 		type: String,
@@ -102,20 +108,38 @@ const Input = defineComponent({
 		// * Computed properties
 		const booleanContext = computed(() => {
 			return {
-				isDisabled: props.disabled || undefined,
 				hasLabel: props.label || undefined,
+				isDisabled: props.disabled || undefined,
 				hasHelperText: props.helperText || undefined,
 				hasAppendIcon: !!(slots.append || props.appendIcon),
 				hasPrependIcon: !!(slots.prepend || props.prependIcon),
 			}
 		});
 
+		const inputTypeIcon = computed(() => {
+			switch(props.type) { 
+				case 'email':
+					return 'mdi:email';
+				case 'password':
+					return 'mdi:lock';
+				case 'number':
+					return 'mdi:numeric';
+				case 'tel':
+					return 'mdi:phone';
+				case 'url':
+					return 'mdi:link';
+				default:
+					return 'mdi:abc';
+			}
+		})
+
 		const isPasswordToggle = computed(() => {
 			return props.type === 'password';
 		})
 
-		// const isPassword = computed(() => {
-		// })
+		const type = computed(() => {
+			return props.type === 'password' && showPassword.value ? 'text' : props.type;
+		})
 
 		const isClearable = computed(() => {
 			return props.clearable && !props.disabled && props.modelValue !== '';
@@ -168,17 +192,19 @@ const Input = defineComponent({
 		}
 
 		return {
-			inputRef,
+			type,
 			onInput,
+			onClear,
+			inputRef,
 			instance,
 			hasLabel,
 			isDisabled,
-			onClear,
 			isClearable,
-			showPassword,
 			componentID,
+			showPassword,
 			hasHelperText,
 			hasAppendIcon,
+			inputTypeIcon,
 			hasPrependIcon,
 			componentAttrs,
 			isPasswordToggle,
@@ -188,7 +214,6 @@ const Input = defineComponent({
 	},
 	render() {
 		const { color, disabled } = this.componentClasses;
-		console.log(this.isClearable);
 		return (
 			<div class={[
 					NAMESPACES.INPUT,
@@ -197,61 +222,77 @@ const Input = defineComponent({
 				]}
 				data-vz-component={this.componentAttrs['data-vz-component']}
 			>	
-				{/* render if has prepend icon  */}
-				{ this.hasPrependIcon && (
-					<div class={[NAMESPACES.INPUT_PREPEND_ICON, NAMESPACES.INPUT_ICON]}>
-						<i><Icon icon={this.prependIcon.icon}/></i>
-					</div>
-				)}
+				<div class={NAMESPACES.INPUT_CONTROL}>
+					{/* render if has prepend icon  */}
+					{ (this.hasPrependIcon || this.hasTypeIcon) && (
+						<div class={[NAMESPACES.INPUT_PREPEND_ICON, NAMESPACES.INPUT_ICON]}>
+							<i>
+								{ this.prependIcon
+									? <Icon icon={this.prependIcon.icon}/>
+									: this.$slots.prepend?.()
+								}
+								{ this.hasTypeIcon && (
+									<Icon icon={this.inputTypeIcon}/>
+								)}
+							</i>
+						</div>
+					)}
 
-				<div class={NAMESPACES.INPUT_FIELD_WRAPPER}>
-					<input
-						ref={this.inputRef}
-						class={NAMESPACES.INPUT_FIELD}
-						type={this.showPassword ? 'text' : this.type} 
-						placeholder={this.instance.attrs.placeholder || ""}
-						value={this.modelValue}
-						onInput={this.onInput}
-						disabled={this.isDisabled}
-						name={this.componentAttrs['name']}
-						aria-disabled={this.componentAttrs['aria-disabled']}
-					/>
-					{ this.hasLabel && (
-						<label class={NAMESPACES.INPUT_LABEL}
-							for={this.instance.attrs.id || this.componentID}
+					<div class={NAMESPACES.INPUT_FIELD_WRAPPER}>
+						<input
+							type={this.type}
+							ref={this.inputRef}
+							onInput={this.onInput}
+							value={this.modelValue}
+							disabled={this.isDisabled}
+							class={NAMESPACES.INPUT_FIELD}
+							name={this.componentAttrs['name']}
+							placeholder={this.instance.attrs.placeholder || ""}
+							aria-disabled={this.componentAttrs['aria-disabled']}
+						/>
+						{ this.hasLabel && (
+							<label class={NAMESPACES.INPUT_LABEL}
+								for={this.instance.attrs.id || this.componentID}
+							>
+								{this.label}
+							</label>
+						)}
+					</div>
+
+					{/* render if type is password  */}
+					{ this.isPasswordToggle && (
+						<div class={[NAMESPACES.INPUT_PASSWORD_TOGGLE, NAMESPACES.INPUT_ICON]}
+							onClick={this.onTogglePassword}
 						>
-							{this.label}
-						</label>
+							<i><Icon icon={this.showPassword ? "mdi:eye-off" : "mdi:eye"}/></i>
+						</div>
+					)}
+
+					{/* render if clearable == true and value not null  */}
+					{ this.isClearable && (
+						<div class={[NAMESPACES.INPUT_CLEARABLE, NAMESPACES.INPUT_ICON]}
+							onClick={this.onClear}
+						>
+							<i><Icon icon="mdi:close-box"/></i>
+						</div>
+					)}
+
+					{/* render if has append icon  */}
+					{ this.hasAppendIcon && (
+						<div class={[NAMESPACES.INPUT_APPEND_ICON, NAMESPACES.INPUT_ICON]}>
+							<i>
+								{ this.appendIcon 
+									? <Icon icon={this.appendIcon.icon}/>
+									: this.$slots.append?.()
+								}
+							</i>
+						</div>
 					)}
 				</div>
 
-				{/* render if type is password  */}
-				{ this.isPasswordToggle && (
-					<div class={[NAMESPACES.INPUT_PASSWORD_TOGGLE, NAMESPACES.INPUT_ICON]}
-						onClick={this.onTogglePassword}
-					>
-						<i><Icon icon={this.showPassword ? "mdi:eye-off" : "mdi:eye"}/></i>
-					</div>
-				)}
-				
-				
-				{/* render if clearable == true and value not null  */}
-				{ this.isClearable && (
-					<div class={[NAMESPACES.INPUT_CLEARABLE, NAMESPACES.INPUT_ICON]}
-						onClick={this.onClear}
-					>
-						<i><Icon icon="mdi:close-box"/></i>
+				<div class={NAMESPACES.INPUT_HELPER_TEXT}>
+					{ this.hasHelperText && this.helperText }
 				</div>
-				)}
-				
-				
-				{/* render if has append icon  */}
-				{ this.hasAppendIcon && (
-					<div class={[NAMESPACES.INPUT_APPEND_ICON, NAMESPACES.INPUT_ICON]}>
-						<i><Icon icon={this.appendIcon.icon}/></i>
-					</div>
-				)}
-
 			</div>
 		);
 	}

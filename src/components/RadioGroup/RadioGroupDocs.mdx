@@ -1,0 +1,30 @@
+import { Meta, Title, Controls, Story, ArgTypes, Source, Canvas, Primary, Stories } from '@storybook/blocks';
+import * as RadioGroup from './RadioGroup.stories';
+
+<Meta 
+   of={RadioGroup}
+   name="Docs"
+/>
+
+<Title />
+
+The `RadioGroup` component is used to group a set of radio together.
+
+### Import
+To use RadioGroup component, import these sub-components to render
+```ts
+import { Radio } from '@components/Radio/Radio';
+import { RadioGroup } from '@components/RadioGroup/RadioGroup';
+```
+
+### API
+*Note: **Click onto the component name** to view its props and events document*
+| Component | Description |
+| - | - |
+| [`<Radio>`](?path=/docs/forms-radio--docs) | Sub-component used to render radio options **Must be direct child of** `<RadioGroup>` |
+| [`<RadioGroup>`](#api) | Primary component used to wrap the list of radios options |
+
+### Usage
+<Primary />
+<Controls exclude={['default', 'update:modelValue']}/>
+<Stories />

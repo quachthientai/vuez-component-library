@@ -103,8 +103,6 @@ export const Disabled: Story = {
          <Radio label="Option 1" value="One" v-model="picked" v-bind="args" />
          <Radio label="Option 2" value="Two" v-model="picked" v-bind="args" />
          <Radio label="Option 3" value="Three" v-model="picked" v-bind="args" />
-
-         
       `
    }),
    args: {

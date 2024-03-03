@@ -29,11 +29,7 @@ export const Basic: Story = {
 		},
 		template: `
 			Message: {{ msg }}
-			<Input class="mt-3" v-bind="args" v-model="msg" 
-				
-				label="Password"
-				:prependIcon="{icon: 'mdi:email'}"
-				type="password"
+			<Input class="mt-3"  v-bind="args" v-model="msg" 
 				helperText="We’ll never share your details. Read our Privacy Policy."
 				placeholder="Please enter password"
 			/>
