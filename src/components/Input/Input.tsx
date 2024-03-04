@@ -228,7 +228,7 @@ const Input = defineComponent({
 						<div class={[NAMESPACES.INPUT_PREPEND_ICON, NAMESPACES.INPUT_ICON]}>
 							<i>
 								{ this.prependIcon
-									? <Icon icon={this.prependIcon.icon}/>
+									? <Icon icon={this.prependIcon.icon} width="20px" height="20px"/>
 									: this.$slots.prepend?.()
 								}
 								{ this.hasTypeIcon && (

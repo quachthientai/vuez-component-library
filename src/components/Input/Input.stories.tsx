@@ -33,6 +33,21 @@ export const Basic: Story = {
 				helperText="We’ll never share your details. Read our Privacy Policy."
 				placeholder="Please enter password"
 			/>
+
+			<Input class="mt-3"  v-bind="args" v-model="msg" type="email"
+				
+				placeholder="Please enter password"
+			/>
+
+			<Input class="mt-3"  v-bind="args" v-model="msg" type="number"
+				helperText="We’ll never share your details. Read our Privacy Policy."
+				placeholder="Please enter password"
+			/>
+
+			<Input class="mt-3"  v-bind="args" v-model="msg" type="password"
+				helperText="We’ll never share your details. Read our Privacy Policy."
+				placeholder="Please enter password"
+			/>
 		`
 	}),
 };

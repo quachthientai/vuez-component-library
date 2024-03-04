@@ -32,6 +32,7 @@ const vRadioGroupProps = makePropsFactory({
    label: {
       type: String,
       default: undefined,
+		required: true
    },
    /**
     * Used to render the options of the radio group.
@@ -130,7 +131,7 @@ const RadioGroup = defineComponent({
             'role': 'radiogroup',
             'name': hasName ? props.name : componentID,
             'data-disabled': props.disabled,
-            'aria-labelledby': props.label,
+            'aria-labelledby': Helpers.toPascalCase(props.label as string, ' '),
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.RADIO_GROUP, '-'),
          };
       });
@@ -166,7 +167,7 @@ const RadioGroup = defineComponent({
             {...this.componentAttrs}
          >  
             {this.hasLabel && (
-               <label class={NAMESPACES.RADIO_GROUP_LABEL} for={this.componentID}>
+               <label id={Helpers.toPascalCase(this.label, ' ')} class={NAMESPACES.RADIO_GROUP_LABEL} for={this.componentID}>
                   {this.label}
                </label>
             )}

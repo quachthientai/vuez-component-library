@@ -80,7 +80,8 @@ const Checkbox = defineComponent({
          return {
             ...attrs,
             'role': 'checkbox',
-            'aria-checked': checked.value,
+				'tab-index': 0,
+            'aria-checked': props.indeterminate ? 'mixed' : checked.value,
             'name': props.name || componentID,
             'aria-disabled': isDisabled.value,
             'data-disabled': isDisabled.value,

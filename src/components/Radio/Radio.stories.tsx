@@ -41,6 +41,21 @@ const meta = {
             type: { summary: 'string | number | boolean' },
          }
       },
+		DefaultSlots: {
+			name: 'default',
+			description: 'The default slot for label of the radio',
+			table: {
+				category: 'Slots',
+				type: { summary: 'default' }
+			}
+		},
+		updateModelValue: {
+			name: 'update:modelValue',
+			description: 'Event emitted for updating modelValue',
+			table: {
+				category: 'Events',
+			}
+		}
    }
 } satisfies Meta<typeof Radio>;
 

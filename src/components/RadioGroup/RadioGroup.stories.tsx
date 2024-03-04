@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import { Radio } from '../Radio/Radio';
 import { RadioGroup } from './RadioGroup';
 import type { RadioModel } from '../Radio/type';
-import { colorArgType, disabledArgType, labelArgType } from '../../../.storybook/argsTypes';
+import { colorArgType, directionArgType, disabledArgType, labelArgType } from '../../../.storybook/argsTypes';
 import { ref } from 'vue';
 
 const meta = {
@@ -12,6 +12,7 @@ const meta = {
       label: labelArgType(),
       disabled: disabledArgType(),
 		color: colorArgType(),
+		direction: directionArgType(),
       options: {
          control: {
             type: 'object'
@@ -21,18 +22,6 @@ const meta = {
             category: 'Props',
             defaultValue: { summary: '[]' },
             type: { summary: 'RadioModel[]' },
-         }
-      },
-      direction: {
-         options: ['horizontal', 'vertical'],
-         control: {
-            type: 'select',
-         },
-         description: 'The direction of the radio group',
-         table: {
-            category: 'Props',
-            defaultValue: { summary: 'vertical' },
-            type: { summary: "'vertical' | 'horizontal'" },
          }
       },
       modelValue: {
@@ -54,6 +43,21 @@ const meta = {
             type: { summary: 'string' },
          }
       },
+		DefaultSlots: {
+			name: 'default',
+			description: 'The default slot used to render radio in group',
+			table: {
+				category: 'Slots',
+				type: { summary: 'default' }
+			}
+		},
+		updateModelValue: {
+			name: 'update:modelValue',
+			description: 'Event emitted for updating modelValue',
+			table: {
+				category: 'Events',
+			}
+		}
    }
 } satisfies Meta<typeof Radio>;
 
@@ -67,6 +71,28 @@ const radioOptions : RadioModel[] = [
    { label: 'Option 3', value: 'Option 3' },
 ]
 
+// export const Test: Story = {
+// 	render: (args) => ({
+// 		components: { 'Radio': Radio, 'RadioGroup': RadioGroup },
+// 		setup() {
+// 			const picked = ref("Option 1");
+// 			return { picked, args };
+// 		},
+// 		template: `
+// 			<div class="mb-2">
+// 				<span>Picked: </span> {{ picked }}
+// 			</div>
+// 			<RadioGroup v-model="picked">
+// 				<Radio v-for="option in args.options" :label="option.label" :value="option.value"/>
+// 			</RadioGroup>
+// 		`
+// 	}),
+// 	args: {
+// 		options: radioOptions,
+// 		label: 'Radio Group'
+// 	}
+// }
+
 export const Basic: Story = {
    render: (args) => ({
       components: { 'Radio': Radio, 'RadioGroup': RadioGroup },
@@ -79,7 +105,6 @@ export const Basic: Story = {
             <span>Picked: </span> {{ picked }}
          </div>
          <RadioGroup v-bind="args" :label="args.label" v-model="picked" :options="args.options"/>
-         
       `
    }),
    args: {
@@ -125,3 +150,47 @@ export const ColorVariants: Story = {
       options: radioOptions,
    }
 };
+
+export const DirectionVariants: Story = {
+	render: (args) => ({
+		components: { 'Radio': Radio, 'RadioGroup': RadioGroup },
+		setup() {
+			const picked = ref("Option 1");
+			return { picked, args };
+		},
+		template: `
+			<div class="mb-2">
+            <span>Picked: </span> {{ picked }}
+         </div>
+				
+			<div>
+				<RadioGroup v-bind="args" class="mb-3" direction="vertical" :options="args.options" v-model="picked" label="Vertical"/>
+				<RadioGroup v-bind="args" class="mb-3" direction="horizontal" :options="args.options" v-model="picked" label="Horizontal"/>
+			</div>
+		`
+	}),
+	args: {
+		options: radioOptions
+	}
+}
+
+export const Disabled: Story = {
+	render: (args) => ({
+		components: { 'Radio': Radio, 'RadioGroup': RadioGroup },
+		setup() {
+			const picked = ref("Option 1");
+			return { picked, args };
+		},
+		template: `
+			<div class="mb-2">
+            <span>Picked: </span> {{ picked }}
+         </div>
+         <RadioGroup v-bind="args" :label="args.label" v-model="picked" :options="args.options"/>
+		`
+	}),
+   args: {
+      options: radioOptions,
+		label: 'Radio Group',
+		disabled: true
+   }
+}

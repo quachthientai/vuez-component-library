@@ -25,6 +25,7 @@ const vCheckboxGroupProps = makePropsFactory({
    label: {
       type: String,
       default: undefined,
+		required: true,
    },
    options: {
       type: Array as PropType<CheckboxModel[]>,
@@ -94,7 +95,7 @@ const CheckboxGroup = defineComponent({
             'role': 'group',
             'name': hasName ? props.name : componentID,
             'data-disabled': isDisabled || undefined,
-            'aria-labelledby': props.label,
+            'aria-labelledby': Helpers.toPascalCase(props.label as string, ' '),
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.CHECKBOX_GROUP, '-')
          };
       });
@@ -140,7 +141,7 @@ const CheckboxGroup = defineComponent({
             {...this.componentAttrs}
          >
             {this.hasLabel && (
-               <label id={this.label} class={NAMESPACES.CHECKBOX_GROUP_LABEL}>
+               <label id={Helpers.toPascalCase(this.label, ' ')} class={NAMESPACES.CHECKBOX_GROUP_LABEL}>
                   {this.label}
                </label>
             )}

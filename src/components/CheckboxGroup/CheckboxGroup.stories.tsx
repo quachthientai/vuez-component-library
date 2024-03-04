@@ -76,6 +76,8 @@ const checkboxOptions : CheckboxModel[] = [
    { label: 'Cherry', value: "Cherry" },
 ]
 
+
+
 export const Basic: Story = {
    render: (args) => ({
       components: { 'Checkbox': Checkbox, 'CheckboxGroup': CheckboxGroup },
@@ -149,10 +151,29 @@ export const DirectionVariants: Story = {
 				<CheckboxGroup v-bind="args" class="mb-3" direction="vertical" :options="args.options" v-model="checked" label="Fruits (Vertical)"/>
 				<CheckboxGroup v-bind="args" direction="horizontal" :options="args.options" v-model="checked" label="Fruits (Horizontal)"/>
 			</div>
-         
 		`
 	}),
 	args: {
 		options: checkboxOptions,
 	}
+}
+
+export const Disabled: Story = {
+   render: (args) => ({
+      components: { 'Checkbox': Checkbox, 'CheckboxGroup': CheckboxGroup },
+      setup() {
+         const checked = ref(['Apple', 'Banana', 'Cherry']);
+         return { args, checked };
+      },
+      template: `
+         <div class="mb-2">
+            <span>Checked: </span> {{ checked }}
+         </div>
+         <CheckboxGroup v-bind="args" :options="args.options" v-model="checked" label="Fruits"/>
+      `
+   }),
+   args: {
+      options: checkboxOptions,
+		disabled: true
+   }
 }

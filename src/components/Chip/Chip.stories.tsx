@@ -33,7 +33,7 @@ export const Basic: Story = {
 				{{ disabled }}
 				<Button @click="disabled = !disabled">test</Button>
 
-				<Chip icon="mdi:check-circle"  color="primary" @click="(e) => console.log(e)" size="sm" closable content="Biking"/>
+				<Chip icon="mdi:check-circle" :disabled="disabled" color="primary" @click="(e) => console.log(e)" size="sm" closable content="Biking"/>
 				<Chip icon="mdi:check-circle" color="primary" closable content="Biking"/>
 				<Chip icon="mdi:check-circle" size="lg" closable content="Biking"/>
 			</div>

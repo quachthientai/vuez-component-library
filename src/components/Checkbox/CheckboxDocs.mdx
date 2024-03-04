@@ -1,4 +1,4 @@
-import { Meta, Title, Controls, Story, Primary, Canvas, Stories } from '@storybook/blocks';
+import { Meta, Title, Controls, Story, Primary, Canvas, Stories, ArgTypes, Source } from '@storybook/blocks';
 import * as CheckboxStories from './Checkbox.stories';
 
 <Meta
@@ -24,6 +24,38 @@ import { Checkbox } from '@component/Checkbox/Checkbox';
 
 ### Usage
 <Primary />
-<Controls />
+<Controls exclude={['default', 'update:modelValue']}/>
 
 <Stories />
+
+### Events
+<ArgTypes include={'update:modelValue'} />
+
+### Slots
+<ArgTypes include={'default'} />
+<Source code={`
+<template>
+   <Checkbox v-model="checked">
+      Option 
+   </Checkbox>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const checked = ref(true);
+</script>
+`} />
+
+### Accessibility
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Tab | Moves keyboard focus to the checkbox. |
+| Space | Toggle checkbox between checked and unchecked states |
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `checkbox` |
+| aria-checked | `checked state of component` |
+| aria-disabled | `disabled state of component` |
