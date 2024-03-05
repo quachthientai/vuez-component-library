@@ -29,7 +29,7 @@ enum NAMESPACES {
  * TODO implement password toggle logic ✅
  * TODO styling the dot (make it more larger without resize the input) for the password toggle ✅
  * TODO define emit events for the component (update:modelValue, togglePassword, clear) ✅
- * TODO document the component
+ * TODO document the component ✅
  * TODO comment the component
  */
 
@@ -51,17 +51,17 @@ const vInputProps = makePropsFactory({
 	name: {
 		type: String,
 	},
-	floatLabel: {
-		type: Boolean,
-		default: false,
-	},
 	disabled: {
 		type: Boolean,
 		default: false,
 	},
-	hasTypeIcon: {
+	typeIcon: {
 		type: Boolean,
 		default: true,
+	},
+	showPasswordToggle: {
+		type: Boolean,
+		default: false,
 	},
 	type: {
 		type: String,
@@ -134,7 +134,7 @@ const Input = defineComponent({
 		})
 
 		const isPasswordToggle = computed(() => {
-			return props.type === 'password';
+			return props.type === 'password' && props.showPasswordToggle;
 		})
 
 		const type = computed(() => {
@@ -181,14 +181,20 @@ const Input = defineComponent({
 			emit('clear');
 		}
 
-		function onTogglePassword() {
+		function onTogglePassword(e: Event) {
 			showPassword.value = !showPassword.value;
-			emit('togglePassword', showPassword.value);
+			e.stopPropagation();
+			if(showPassword.value) {
+				emit('togglePassword', showPassword.value);
+			}
 		}
 
 		function onInput(e: Event) {
 			const target = e.target as HTMLInputElement;
-			emit('update:modelValue', target.value);
+			e.stopPropagation();
+			if(target.value) {
+				emit('update:modelValue', target.value);
+			}
 		}
 
 		return {
@@ -216,22 +222,22 @@ const Input = defineComponent({
 		const { color, disabled } = this.componentClasses;
 		return (
 			<div class={[
-					NAMESPACES.INPUT,
 					color,
-					disabled
+					disabled,
+					NAMESPACES.INPUT,
 				]}
 				data-vz-component={this.componentAttrs['data-vz-component']}
 			>	
 				<div class={NAMESPACES.INPUT_CONTROL}>
 					{/* render if has prepend icon  */}
-					{ (this.hasPrependIcon || this.hasTypeIcon) && (
+					{ (this.hasPrependIcon || this.typeIcon) && (
 						<div class={[NAMESPACES.INPUT_PREPEND_ICON, NAMESPACES.INPUT_ICON]}>
 							<i>
 								{ this.prependIcon
 									? <Icon icon={this.prependIcon.icon} width="20px" height="20px"/>
 									: this.$slots.prepend?.()
 								}
-								{ this.hasTypeIcon && (
+								{ this.typeIcon && (
 									<Icon icon={this.inputTypeIcon}/>
 								)}
 							</i>
@@ -289,10 +295,12 @@ const Input = defineComponent({
 						</div>
 					)}
 				</div>
-
-				<div class={NAMESPACES.INPUT_HELPER_TEXT}>
-					{ this.hasHelperText && this.helperText }
-				</div>
+				
+				{ this.hasHelperText && (
+					<div class={NAMESPACES.INPUT_HELPER_TEXT}>
+						{ this.helperText }
+					</div>
+				)}
 			</div>
 		);
 	}

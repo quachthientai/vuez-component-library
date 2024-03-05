@@ -27,17 +27,17 @@ export const Basic: Story = {
 		},
 		template: `
 			<div class="max-w-md">
-				<Input class="mt-3"  v-bind="args"  type="email"
-				helperText="We’ll never share your details. Read our Privacy Policy."
-				placeholder="name@gmail.com" label="Email"
-			/>
+				<Input class="mb-3" clearable v-model="msg"  v-bind="args"  type="email"
+					helperText="We’ll never share your details. Read our Privacy Policy."
+					placeholder="name@gmail.com" label="Email"
+				/>
 
-			<Input class="mt-3"  v-bind="args" v-model="msg" type="password"
-				label="Password"
-				placeholder="Please enter password"
-			/>
-			<Checkbox label="Remember me?"/>
-			<Button color="primary" class="mt-2" content="Sign in"/>
+				<Input class="mb-2" v-model="msg" v-bind="args" type="password"
+					label="Password"
+					placeholder="Please enter password"
+				/>
+				<Checkbox label="Remember me?"/>
+				<Button class="mt-3" color="primary" content="Sign in"/>
 			</div>
 			
 
