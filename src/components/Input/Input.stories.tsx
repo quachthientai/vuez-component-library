@@ -68,25 +68,15 @@ export const Basic: Story = {
 		},
 		template: `
 			Message: {{ msg }}
-			<Input class="mt-3"  v-bind="args" v-model="msg" 
-				helperText="We’ll never share your details. Read our Privacy Policy."
-				
-			/>
+			
 
-			<Input class="mt-3"  v-bind="args" v-model="msg" type="email"
-				
+			<Input class="mt-3"  v-bind="args" v-model="msg" type="number" min="3"
+				helperText="We’ll never share your details. Read our Privacy Policy."
+				label="Number"
 				placeholder="Please enter password"
 			/>
 
-			<Input class="mt-3"  v-bind="args" v-model="msg" type="number" min=1
-				helperText="We’ll never share your details. Read our Privacy Policy."
-				placeholder="Please enter password"
-			/>
-
-			<Input class="mt-3"  v-bind="args" v-model="msg" showPasswordToggle type="password"
-				helperText="We’ll never share your details. Read our Privacy Policy."
-				placeholder="Please enter password"
-			/>
+			
 		`
 	}),
 };

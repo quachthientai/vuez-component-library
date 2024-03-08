@@ -15,6 +15,15 @@ const Helpers = {
             .includes(val.toLowerCase());
       }
       return arr.includes(val);
+   },
+   objectFilter<T>(obj: Record<string, T>, predicate: (key: string, value: T) => boolean) : Record<string, T> {
+      const result: Record<string, T> = {};
+      for(const key in obj) {
+         if(predicate(key, obj[key])) {
+            result[key] = obj[key];
+         }
+      }
+      return result;
    }
 }
 

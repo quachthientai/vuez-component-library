@@ -170,6 +170,22 @@ const Input = defineComponent({
 			};
 		});
 
+		const rootAttrs = computed(() => {
+			return {
+				...Helpers.objectFilter(attrs, (key, value) => {
+					return Helpers.isIncluded(['class', 'id'], key);
+				})
+			}
+		})
+		
+		const inputAttrs = computed(() => {
+			return {
+				...Helpers.objectFilter(attrs, (key, value) => {
+					return !Helpers.isIncluded(['class', 'id', 'type'], key);
+				})
+			}
+		})
+
 		// * Methods
 		function inputRef(el: HTMLElement) { 
 			return input.value = el;
@@ -204,6 +220,8 @@ const Input = defineComponent({
 			inputRef,
 			instance,
 			hasLabel,
+			rootAttrs,
+			inputAttrs,
 			isDisabled,
 			isClearable,
 			componentID,
@@ -220,13 +238,17 @@ const Input = defineComponent({
 	},
 	render() {
 		const { color, disabled } = this.componentClasses;
+		console.log(this.rootAttrs);
+		console.log(this.inputAttrs);
 		return (
+			<>
 			<div class={[
 					color,
 					disabled,
 					NAMESPACES.INPUT,
 				]}
-				data-vz-component={this.componentAttrs['data-vz-component']}
+				{...this.rootAttrs}
+				data-vz-component={Helpers.toPascalCase(NAMESPACES.INPUT, '-')}
 			>	
 				<div class={NAMESPACES.INPUT_CONTROL}>
 					{/* render if has prepend icon  */}
@@ -254,6 +276,7 @@ const Input = defineComponent({
 							class={NAMESPACES.INPUT_FIELD}
 							name={this.componentAttrs['name']}
 							placeholder={this.instance.attrs.placeholder || ""}
+							{...this.inputAttrs}
 							aria-disabled={this.componentAttrs['aria-disabled']}
 						/>
 						{ this.hasLabel && (
@@ -302,6 +325,7 @@ const Input = defineComponent({
 					</div>
 				)}
 			</div>
+			</>
 		);
 	}
 });
