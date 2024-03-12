@@ -29,13 +29,12 @@ export const Basic: Story = {
 		},
 		template: `
 			Message: {{ msg }}
-			<Input class="mt-3"  v-bind="args" v-model="msg" 
+			<Input class="mt-3" v-bind="args" v-model="msg" 
 				helperText="We’ll never share your details. Read our Privacy Policy."
 				placeholder="Please enter password"
 			/>
 
 			<Input class="mt-3"  v-bind="args" v-model="msg" type="email"
-				
 				placeholder="Please enter password"
 			/>
 
@@ -50,4 +49,7 @@ export const Basic: Story = {
 			/>
 		`
 	}),
+	args: {
+		hasTypeIcon: false,
+	}
 };

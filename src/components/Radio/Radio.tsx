@@ -115,8 +115,8 @@ const Radio = defineComponent({
          return {
             ...attrs,
             'role': 'radio',
+				'name': props.name,
             'aria-checked': checked.value,
-            'name': props.name,
             'aria-disabled': isDisabled.value,
             'data-disabled': isDisabled.value,
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.RADIO, '-'),

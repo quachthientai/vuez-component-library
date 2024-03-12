@@ -32,7 +32,7 @@ export const Basic: Story = {
 				placeholder="name@gmail.com" label="Email"
 			/>
 
-			<Input class="mt-3"  v-bind="args" v-model="msg" type="password"
+			<Input class="mt-3" hasTypeIcon="false" v-bind="args" v-model="msg" type="password"
 				label="Password"
 				placeholder="Please enter password"
 			/>
