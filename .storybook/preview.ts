@@ -1,7 +1,7 @@
 /** @type { import('@storybook/vue3').Preview } */
 import '../src/assets/scss/main.scss'
 import type { Preview } from '@storybook/vue3'
-import { colorArgType, contentArgType, disabledArgType,hrefArgType } from './argsTypes'
+import { withThemeByClassName, withThemeByDataAttribute } from '@storybook/addon-themes';
 
 const preview: Preview = {
   parameters: {
@@ -12,16 +12,23 @@ const preview: Preview = {
         date: /Date$/i
       }
     },
-    backgrounds: {
-      default: 'light',
-      values: [
-        { name: 'light', value: '#f8fafc' },
-        { name: 'dark', value: '#1e293b' }
-      ]
+    docs: {
+      toc: {
+        headingSelector: 'h3, h4',
+        title: 'Table of Contents'
+      }
     },
-  },
-  // * Global argTypes */
-  
+  },  
 }
+
+export const decorators = [
+  withThemeByClassName({
+    themes: {
+      light: 'light',
+      dark: 'dark',
+    },
+    defaultTheme: 'light',
+  }),
+];
 
 export default preview

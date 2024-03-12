@@ -64,6 +64,7 @@ const Menu = defineComponent({
       const componentAttrs = computed(() => {
          return {
             ...attrs,
+            'tabindex': -1,
             'data-vz-component': Helpers.toPascalCase(NAMESPACE, '-'),
          }
       })

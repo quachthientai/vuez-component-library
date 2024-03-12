@@ -30,7 +30,7 @@ function makeColorProp(colors? : Array<string>, defaultVal? : string) : colorPro
          type: String,
          default: defaultVal,
          validator: (colorVal: string) => {
-            return isIncluded(colors, colorVal)
+            return isIncluded(colors, colorVal.toLowerCase())
          }
       }
    })
@@ -50,5 +50,6 @@ const useColor = (prefix: string, color: string) => {
 
 export {
    useColor,
+   colorProps,
    makeColorProp
 }

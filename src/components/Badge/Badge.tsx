@@ -1,74 +1,134 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
-import { ExtractPropTypes, defineComponent, ref } from "vue";
+import { ExtractPropTypes, computed, defineComponent, ref } from "vue";
 import { makeColorProp, useColor } from "@/composable/color";
+import { Helpers } from "@/utils/helpers";
+
+/**
+ * Namespaces of the badge component.
+ */
+enum NAMESPACES {
+   Badge = 'vz-badge',
+   BadgeContent = 'vz-badge__content',
+}
 
 const vBadgeProps = makePropsFactory({
-   content: String,
-   dot: Boolean,
-   rounded: Boolean,
-   inline: Boolean,
-   overlay: Boolean,
+   /**
+    * The content of the badge.
+    * @type {string}
+    * @default undefined
+    * @name content
+    */
+   content: {
+      type: String,
+      default: undefined
+   },
+   /**
+    * Whether the badge is dot style.
+    * @type {boolean}
+    * @default false
+    * @name dot
+    */
+   dot: {
+      type: Boolean,
+      default: false
+   },
+   /**
+    * Whether the badge is rounded style.
+    * @type {boolean}
+    * @default false
+    * @name rounded
+    */
+   rounded: {
+      type: Boolean,
+      default: false
+   },
+   /**
+    * Whether the badge is inline style.
+    * @type {boolean}
+    * @default false
+    * @name inline
+    */
+   inline: {
+      type: Boolean,
+      default: false
+   },
+   /**
+    * Whether the badge is overlay style.
+    * @type {boolean}
+    * @default false
+    * @name overlay
+    */
+   overlay: {
+      type: Boolean,
+      default: false
+   },
    ...makeColorProp(),
 });
-
-const NAMESPACE = 'vz-badge';
 
 const Badge = defineComponent({
    name: 'Badge',
    props: vBadgeProps,
-   computed: {
-      componentStyles() {
+   inheritAttrs: false,
+   setup(props, { attrs, slots }) {
+      
+      //* Computed properties */
+      const booleanContext = computed(() => {
          return {
-            'badge-dot': this.dot && !this.rounded,
-            'badge-rounded': this.rounded && !this.dot,
-            'badge-inline': this.inline && !this.overlay,
-            'badge-overlay': this.overlay
+            isDot: props.dot && !props.rounded,
+            isRounded: props.rounded && !props.dot,
+            isInline: props.inline && !props.overlay,
+            isOverlay: props.overlay,
+            hasDefaultSlots: !!slots.default,
          }
-      },
-      componentColor() { 
-         return useColor('badge', this.color);
+      });
+
+      const { 
+			isDot, 
+         isInline,
+			isRounded, 
+         isOverlay, 
+         hasDefaultSlots 
+      } = booleanContext.value;
+
+      const componentClasses = computed(() => {
+         return {
+            dot: (isDot && !isRounded) ? `${NAMESPACES.Badge}--dot` : undefined,
+            rounded: (isRounded && !isDot) ? `${NAMESPACES.Badge}--rounded` : undefined,
+            inline: (isInline && !isOverlay) ? `${NAMESPACES.Badge}--inline` : undefined,
+            overlay: isOverlay ? `${NAMESPACES.Badge}--overlay` : undefined,
+            color: useColor(NAMESPACES.Badge, props.color as string)
+         }
+      })
+
+      return {
+         isDot,
+         hasDefaultSlots,
+         componentClasses,
       }
    },
    render() {
+      const { dot, rounded, inline, overlay, color } = this.componentClasses;
       return (
-         <div class={['badge', 
-            this.componentStyles,
-            this.componentColor,
+         <div 
+            {...this.$attrs}
+            data-vz-component={Helpers.toPascalCase(NAMESPACES.Badge, '-')}
+            class={[NAMESPACES.Badge,
+               dot,
+               rounded,
+               inline,
+               overlay,
+               color,
            ]}
          >
-            <div class='badge__content'>
-               <span class={['badge__content-badge']}>
-                  {this.dot ? undefined : this.content}
+            <div class={NAMESPACES.BadgeContent}>
+               <span class={['vz-badge__content-badge']}>
+                  { this.isDot ? undefined : this.content }
+                  { (this.hasDefaultSlots && !this.isDot) && this.$slots.default() }
                </span>
             </div>
          </div>
       );
    },
-   // setup(props, {slots, attrs}) {
-   //    const dot = (props.dot && !props.rounded) ? 'badge-dot' : undefined;
-   //    const rounded = (props.rounded && !props.dot) ? 'badge-rounded' : undefined;
-   //    const inline = (props.inline && !props.overlay) ? 'badge-inline' : undefined;
-   //    const color = useColor('badge', props.color as string);
-   //    const overlay = props.overlay ? 'badge-overlay' : undefined;
-      
-   //    return () => {
-   //       return (
-   //          <div class={['badge', 
-   //             inline, 
-   //             dot, 
-   //             rounded, 
-   //             overlay, 
-   //             color]}
-   //          >
-   //             <div class='badge__content'>
-   //                <span class={['badge__content-badge']}>
-   //                   {dot ? undefined : props.content}
-   //                </span>
-   //             </div>
-   //          </div>
-   //       );
-   //    }
-   // }
 });
 
 type BadgeType = InstanceType<typeof Badge>;

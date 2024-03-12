@@ -1,7 +1,5 @@
 import { makeDimensionProp, 
    useDimension,
-   makeColorProp,
-   useClickOutside
 } from "@/composable/index";
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { ComponentInternalInstance, 
@@ -11,11 +9,8 @@ import { ComponentInternalInstance,
    inject, 
    PropType, 
    ref, 
-   Teleport, 
    watch, 
    Transition,
-   onMounted,
-   nextTick, 
 } from "vue";
 import { Badge } from "../Badge/Badge";
 import { MenuItem } from "./MenuItem/MenuItem";
@@ -51,13 +46,16 @@ const vMenuListProps = makePropsFactory({
    placement: {
       type: String,
       default: 'bottom',
+      validator: (value: string) => {
+         return Helpers.isIncluded(Object.keys(TRANSITION_PLACEMENT), value);
+      }
    },
    offset: {
       type: Number,
       default: 0,
    },
    ...makeDimensionProp(),
-   ...makeColorProp(),
+   // ...makeColorProp(),
 });
 
 const MenuList = defineComponent({
@@ -157,6 +155,7 @@ const MenuList = defineComponent({
                   top: y + 'px',
                   left: x + 'px',
                   position: 'absolute',
+                  zIndex: '1000',
                })
             });
          });
@@ -392,26 +391,62 @@ const MenuList = defineComponent({
                   onFocus={ this.onFocused }
                   onKeydown={ this.handleKeyDown }
                >
-                  {this.$slots.default?.()}  
-                  {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => { 
+                  {this.$slots.default?.()}
+                  {this.hasModel && (this.model as MenuItemModel[])?.map((item, index) => {
                      return (
-                        <MenuItem
-                           {...item}
-                           key={
-                              item.label ? item.label + index.toString() 
-                                 : item.content ? item.content + index.toString() 
-                                 : item.key + index.toString()
+                        <> 
+                           { (item.items && item.items.length > 0) 
+                                 ?  <>
+                                       <MenuItem
+                                          type="header"
+                                          {...item}
+                                          key={
+                                             item.label ? item.label + index.toString() 
+                                                : item.content ? item.content + index.toString() 
+                                                : item.key + index.toString()
+                                          }
+                                       />
+                                       {item.items.map((subItem, subIndex) => {
+                                          return (
+                                             <MenuItem
+                                                {...subItem}
+                                                key={
+                                                   subItem.label ? subItem.label + subIndex.toString() 
+                                                      : subItem.content ? subItem.content + subIndex.toString() 
+                                                      : subItem.key + subIndex.toString()
+                                                }
+                                             >
+                                                {subItem.badge && { badge: () => {
+                                                      return (
+                                                         typeof subItem.badge === 'function' 
+                                                            ? subItem.badge() 
+                                                            : <Badge {...subItem.badge} />
+                                                      )
+                                                   }
+                                                }}
+                                             </MenuItem>
+                                          )
+                                       })}
+                                    </> 
+                                 :  <MenuItem
+                                       {...item}
+                                       key={
+                                          item.label ? item.label + index.toString() 
+                                             : item.content ? item.content + index.toString() 
+                                             : item.key + index.toString()
+                                       }
+                                    >
+                                       {item.badge && { badge: () => {
+                                             return (
+                                                typeof item.badge === 'function' 
+                                                   ? item.badge() 
+                                                   : <Badge {...item.badge} />
+                                             )
+                                          }
+                                       }}
+                                    </MenuItem>
                            }
-                        >
-                           {item.badge && { badge: () => {
-                                 return (
-                                    typeof item.badge === 'function' 
-                                       ? item.badge() 
-                                       : <Badge {...item.badge} />
-                                 )
-                              }
-                           }}
-                        </MenuItem>
+                        </>
                      )
                   })}
                </ul>

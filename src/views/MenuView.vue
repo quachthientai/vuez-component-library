@@ -1,5 +1,5 @@
 <script lang="ts">
-
+import { Input } from '@/components/Input/Input'
 import { MenuList } from '@/components/Menu/MenuList'
 import { Menu } from '@/components/Menu/Menu'
 import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
@@ -18,7 +18,8 @@ export default {
     MenuList,
     MenuButton,
     MenuItem,
-    Badge
+    Badge,
+    Input
   },
   mounted() {
     // console.log(this.$refs.menu.value)
@@ -100,8 +101,8 @@ export default {
 }
 </script>
 <template>
-
-  <Menu :closeOnSelect="false">
+  <Input placeholder="Please enter password"></Input>
+  <!-- <Menu :closeOnSelect="false">
     <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
     <MenuList :model="items"/>
   </Menu>
@@ -126,27 +127,8 @@ export default {
     <MenuButton :icon="{icon: 'mdi-account'}" color="primary"></MenuButton>
     <MenuList :model="items"/>
 
-  </Menu>
-
-  <!-- <Menu>
-    <MenuList class="mt-1" placement="bottom" :model="items" />
-    <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
-      SMALL BUTTON
-    </MenuButton>
-  </Menu>
-
-  <Menu>
-    <MenuButton :icon="{icon: 'mdi-account'}" color="primary">
-      SMALL BUTTON
-    </MenuButton>
-
-    <MenuList placement="left">
-      <MenuItem>Menu item 1</MenuItem>
-      <MenuItem>Menu item 2</MenuItem>
-      <MenuItem>Menu item 3</MenuItem>
-    </MenuList>
-
   </Menu> -->
+
 
 </template>
 

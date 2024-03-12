@@ -40,6 +40,7 @@
 
       & &__icon {
          @include utils-mixin.get-grid-template('prepend');
+         @apply text-[1.3rem]
       }
 
       & &__content {

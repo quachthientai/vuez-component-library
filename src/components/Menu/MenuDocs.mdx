@@ -1,0 +1,177 @@
+import { Meta, Title, Controls, Story, ArgTypes, Source, Canvas } from '@storybook/blocks';
+import * as MenuStories from './Menu.stories';
+
+<Meta 
+   of={MenuStories}
+   name="Docs"
+/>
+
+<Title />
+
+The `Menu` is a accessible component that dropdown a list of choices on a temporary surface. It appears when the user interacts with a `MenuButton`
+
+### Import
+To use Menu component, import these sub-components to rendering menu:
+```ts
+import { Menu } from '@/components/Menu/Menu'
+import { MenuList } from '@/components/Menu/MenuList'
+import { MenuButton } from '@/components/Menu/MenuButton'
+import { MenuItem } from '@/components/Menu/MenuItem/MenuItem'
+```
+
+### API
+*Note: **Click onto the component name** to view its props and events document*
+| Component | Description |
+| - | - |
+| [`<Menu>`](#menu) | Primary Component |
+| [`<MenuList>`](#menu-list) | Sub-component used to render the menu dropdown list, and wrap the `<MenuItem>` component. **Must be direct child of** `<Menu>` |
+| [`<MenuItem>`](#menu-item) | Sub-component used to render the menu item from list. **Must be direct child of** `<MenuList>` |
+| [`<MenuButton>`](?path=/docs/components-button--docs) | Sub-component used to trigger the menu list. **Must be direct child of** `<MenuButton>`  |
+
+
+### Usage
+<Canvas>
+   <Story of={MenuStories.Basic} height="180px"/>   
+</Canvas>
+
+#### **Menu**
+<Controls include={['closeOnBlur','autoSelect','closeOnSelect','tag (MenuTag)']} />
+
+#### **Menu List**
+<Controls include={['model', 'placement', 'offset']}/>
+
+#### **Menu Item**
+<Controls include={['label', 'to', 'content', 'id', 'href', 'divider', 'icon', 'badge', 'type', 'tag (MenuItemTag)', 'action', 'key']}/>
+
+#### **Menu Button**
+*[ Go to Button Docs ](?path=/docs/components-button--docs)*
+
+### Basic
+<Canvas>
+   <Story of={MenuStories.Basic} height="180px"/>   
+</Canvas>
+
+### AutoSelect
+<Canvas>
+   <Story of={MenuStories.AutoSelect} height="180px"/>   
+</Canvas>
+
+### CloseOnSelect
+<Canvas>
+   <Story of={MenuStories.CloseOnSelect} height="180px"/>   
+</Canvas>
+
+### CloseOnBlur
+<Canvas>
+   <Story of={MenuStories.CloseOnBlur} height="180px"/>   
+</Canvas>
+
+### Placement
+<Canvas>
+   <Story of={MenuStories.Placement} height="300px"/>   
+</Canvas>
+
+### Events
+#### **Menu**
+#### **Menu List**
+#### **Menu Item**
+#### **Menu Button**
+
+### Slots
+#### **Menu**
+<ArgTypes include={['Default (MenuDefaultSlots)']} />
+<Source code={`
+<template>
+   <Menu>
+      <MenuButton>Dropdown</MenuButton>
+      <MenuList :model="items"/>
+   </Menu>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const items = ref([ 
+   {content: 'Home', icon: 'mdi:home'}, 
+   {content: 'Account', icon: 'mdi:account'},
+   {content: 'Setting', icon: 'mdi:cog'}, 
+]);
+</script>`} 
+/>
+
+#### **Menu List**
+<ArgTypes include={['Default (MenuListDefaultSlots)']} />
+<Source code={`
+<Menu>
+   <MenuButton>Dropdown</MenuButton>
+   <MenuList>
+      <MenuItem>Home</MenuItem>
+      <MenuItem>Account</MenuItem>
+      <MenuItem>Setting</MenuItem>
+   </MenuList>
+</Menu>`} 
+/>
+
+#### **Menu Item**
+<ArgTypes include={['Default (MenuItemDefaultSlots)', 'Icon (MenuItemIconSlots)', 'Badge (MenuItemBadgeSlots)']} />
+
+<Source code={`
+<MenuItem>
+   <template #icon>
+      <Icon icon="mdi-gear" />
+   </template>
+
+   <template #badge>
+      <Badge content="2" />
+   </template>
+</MenuItem>
+`} 
+/>
+
+#### **Menu Button**
+*[ Go to Button Slots Section ](?path=/docs/components-button--docs#slots)*
+
+### Accessibility
+#### **Screen Reader**
+
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Enter | Activates the button |
+| Space | Activates the button |
+
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `button` |
+| tab-index  | `0` |
+
+### Type
+
+#### **MenuItemModel**
+`MenuItemModel` is a type that used to render the menu item from list. It has the following properties:
+<Source language="typescript" code={
+`type MenuItemModel = {
+   id?: string,
+   content?: string,
+   label?: string,
+   disabled?: boolean,
+   to?: string | RouteLocationRaw,
+   href?: string,
+   divider?: boolean,
+   tag?: string,
+   badge?: BadgePropType | (() => VNode<RendererNode, RendererElement>),
+   icon?: string,
+   items: MenuItemModel[],
+   action?: ((e: Event) => void),
+   key?: string
+}`} />
+
+#### **BadgePropType**
+`BadgePropType` is a type that used to render the badge on menu item. Please see the [Badge](?path=/docs/components-badge--docs) component for more information.
+
+
+
+
+
+

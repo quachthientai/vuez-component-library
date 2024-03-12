@@ -10,8 +10,8 @@
 @tailwind utilities;
 
 @layer base {
-  .btn {
-    .badge-overlay .badge__content-badge {
+  .vz-btn {
+    .vz-badge--overlay .vz-badge__content-badge {
       @include badge-mixins.get-overlay-position(
         badge-variables.$badge-overlay-position, 
         'badge', 
@@ -19,7 +19,7 @@
       );
     }
 
-    .badge-dot.badge-overlay .badge__content-badge {
+    .vz-badge--dot.vz-badge--overlay .vz-badge__content-badge {
       @include badge-mixins.get-overlay-position(
         badge-variables.$badge-overlay-position, 
         'badge-dot', 
@@ -28,9 +28,9 @@
     }
   }
 
-  .btn-icon {
-    &.btn-sm {
-      .badge-overlay .badge__content-badge {
+  .vz-btn--icon {
+    &.vz-btn--sm {
+      .vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge', 
@@ -39,7 +39,7 @@
         );
       }
 
-      .badge-rounded.badge-overlay .badge__content-badge {
+      .vz-badge--rounded.vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge-rounded', 
@@ -48,7 +48,7 @@
         );
       }
 
-      .badge-dot.badge-overlay .badge__content-badge {
+      .vz-badge--dot.vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge-dot', 
@@ -58,8 +58,8 @@
       }
     } 
 
-    &.btn-md {
-      .badge-overlay .badge__content-badge {
+    &.vz-btn--md {
+      .vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge', 
@@ -68,7 +68,7 @@
         );
       }
 
-      .badge-rounded.badge-overlay .badge__content-badge {
+      .vz-badge--rounded.vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge-rounded', 
@@ -77,7 +77,7 @@
         );
       }
 
-      .badge-dot.badge-overlay .badge__content-badge {
+      .vz-badge--dot.vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge-dot', 
@@ -87,8 +87,8 @@
       }
     }
 
-    &.btn-lg {
-      .badge-overlay .badge__content-badge {
+    &.vz-btn--lg {
+      .vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge', 
@@ -97,7 +97,7 @@
         );
       }
 
-      .badge-rounded.badge-overlay .badge__content-badge {
+      .vz-badge--rounded.vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge-rounded', 
@@ -106,7 +106,7 @@
         );
       }
 
-      .badge-dot.badge-overlay .badge__content-badge {
+      .vz-badge--dot.vz-badge--overlay .vz-badge__content-badge {
         @include badge-mixins.get-overlay-position(
           badge-variables.$badge-overlay-position, 
           'badge-dot', 
@@ -117,7 +117,7 @@
     }
   }
 
-  .badge {
+  .vz-badge {
     z-index: 9999;
     line-height: 1;
 
@@ -144,25 +144,23 @@
 
   }
 
-  .badge-inline .badge__content-badge {
+  .vz-badge--inline .vz-badge__content-badge {
     @apply relative;
   }
 
-  .badge-dot .badge__content-badge {
+  .vz-badge--dot .vz-badge__content-badge {
     @apply p-0 h-[9px] rounded-full min-w-0 w-[9px];
   }
 
-  .badge-rounded .badge__content-badge {
+  .vz-badge--rounded .vz-badge__content-badge {
     @apply rounded-full
       h-5 min-w-[20px]
       px-[6px] py-[4px];
   }
-
-  
 }
 
 @each $color in utils-variables.$colors {
-  .badge-#{$color} .badge__content-badge {
+  .vz-badge--#{$color} .vz-badge__content-badge {
     @include utils-mixin.get-color($color);
   }
 }

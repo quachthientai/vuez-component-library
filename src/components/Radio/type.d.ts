@@ -4,23 +4,23 @@
  */
 type RadioModel = {
    /**
-    * The radio id.
+    * The radio label.
     * @type {string}
     * @memberof RadioModel
     */
-   id?: string;
+   label: string;
    /**
     * The radio value.
     * @type {any}
     * @memberof RadioModel
     */
-   value?: any;
+   value: any;
    /**
-    * The radio label.
-    * @type {string}
+    * The radio modelValue.
+    * @type {any}
     * @memberof RadioModel
     */
-   label?: string;
+   modelValue?: any
    /**
     * The radio name.
     * @type {string}
@@ -40,24 +40,11 @@ type RadioModel = {
     */
    checked?: boolean;
    /**
-    * The radio attribute to specify if it is readonly.
-    * @type {boolean}
-    * @memberof RadioModel
-    */
-   readonly?: boolean;
-   /**
-    * The radio attribute to specify if it is in error state.
-    * @type {boolean}
-    * @memberof RadioModel
-    */
-   error?: boolean;
-   /**
     * The radio color
     * @type {string}
     * @memberof RadioModel
     */
    color?: string;
-
 }
 
 export {

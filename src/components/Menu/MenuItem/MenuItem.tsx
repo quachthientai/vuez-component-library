@@ -54,7 +54,10 @@ const vMenuItemProps = makePropsFactory({
     * @default false
     * @name disabled
     */
-   disabled: Boolean,
+   disabled: {
+      type: Boolean,
+      default: false,
+   },
    /**
     * The id for the menu item.
     * @type {string}
@@ -65,7 +68,7 @@ const vMenuItemProps = makePropsFactory({
    /**
     * The href for the menu item.
     * @type {string}
-    * @default false
+    * @default undefined
     * @name href
     */
    href: String,
@@ -75,14 +78,17 @@ const vMenuItemProps = makePropsFactory({
     * @default false
     * @name divider
     */
-   divider: Boolean,
+   divider: {
+      type: Boolean,
+      default: false,
+   },
    /**
     * The icon for the menu item.
-    * @type {MenuItemModelIcon}
+    * @type {string}
     * @default undefined
     * @name icon
     */
-   icon: Object as PropType<MenuItemModelIcon>,
+   icon: String,
    /**
     * The badge for the menu item.
     * @type {BadgePropType | Function(): VNode}
@@ -166,7 +172,7 @@ const MenuItem = defineComponent({
             hasLabel: !!props.label,
             hasRoute: !!props.to,
             hasHref: !!props.href,
-            hasContent: !!(slots.default || props.content || slots.content),
+            hasContent: !!(slots.default || props.content),
             hasIcon: !!(slots.icon || props.icon),
             hasBadge: !!(slots.badge || props.badge),
             hasDivider: !!props.divider,
@@ -274,9 +280,7 @@ const MenuItem = defineComponent({
                   <div class={this.componentClasses['icon']}>
                      { this.icon 
                         ? <Icon 
-                              icon={this.icon.icon} 
-                              width="1.3rem" 
-                              height="1.3rem" 
+                              icon={this.icon} 
                            />
                         : this.$slots.icon?.() 
                      }

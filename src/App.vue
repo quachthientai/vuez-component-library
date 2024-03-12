@@ -1,7 +1,6 @@
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 
-import Radio from './components/Forms/Radio.vue'
 
 export default {
   data() {
@@ -11,12 +10,13 @@ export default {
   },
   components: {
 
-    Radio
+    
   },
   methods: {
     handleClick() {
-      const body = document.getElementsByTagName('body')[0]
-      body.classList.toggle('dark')
+      document.querySelector('html')?.classList.toggle('dark')
+      // const body = document.getElementsByTagName('body')[0]
+      // body.classList.toggle('dark')
     }
   }
 }

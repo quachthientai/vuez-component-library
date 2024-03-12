@@ -1,0 +1,83 @@
+import { Meta, Title, Controls, Story, ArgTypes, Source, Canvas, Primary, Stories } from '@storybook/blocks';
+import * as RadioGroup from './RadioGroup.stories';
+
+<Meta 
+   of={RadioGroup}
+   name="Docs"
+/>
+
+<Title />
+
+The `RadioGroup` component is used to group a set of radio together.
+
+### Import
+To use RadioGroup component, import these sub-components to render
+```ts
+import { Radio } from '@components/Radio/Radio';
+import { RadioGroup } from '@components/RadioGroup/RadioGroup';
+```
+
+### API
+*Note: **Click onto the component name** to view its props and events document*
+| Component | Description |
+| - | - |
+| [`<Radio>`](?path=/docs/forms-radio--docs) | Sub-component used to render radio options **Must be direct child of** `<RadioGroup>` |
+| [`<RadioGroup>`](#api) | Primary component used to wrap the list of radios options |
+
+### Usage
+<Primary />
+<Controls exclude={['default', 'update:modelValue']}/>
+<Stories />
+
+### Events
+<ArgTypes include={'update:modelValue'} />
+
+### Slots
+<ArgTypes include={'default'} />
+<Source code={`
+<template>
+   <RadioGroup v-model="picked">
+      <Radio v-for="option in radioOptions" :label="option.label" :value="option.value"/>
+   </RadioGroup>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const picked = ref("Option 1");
+const radioOptions : RadioModel[] = [
+   { label: 'Option 1', value: 'Option 1' },
+   { label: 'Option 2', value: 'Option 2' },
+   { label: 'Option 3', value: 'Option 3' },
+]
+</script>
+`} />
+
+### Accessibility
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Tab | <ul><li>Moves keyboard focus to the checkbox</li><li>If a radio button is not checked, focus moves to the first radio button in the group.</li></ul> |
+| Space | <ul><li>If the radio button with focus is not checked, changes the state to checked.</li><li>Otherwise, does nothing.</li><li>Note: The state where a radio is not checked only occurs on page load.</li></ul> |
+| <ul><li>Down arrow</li><li>Right arrow</li></ul> | <ul><li>Moves focus to and checks the next radio button in the group.</li><li>If focus is on the last radio button, moves focus to the first radio button.</li><li>The state of the previously checked radio button is changed to unchecked.</li></ul> |
+| <ul><li>Up arrow</li><li>Left arrow</li></ul> | <ul><li>Moves focus to and checks the previous radio button in the group.</li><li>If focus is on the first radio button, moves focus to and checks the last radio button.</li><li>The state of the previously checked radio button is changed to unchecked.</li></ul> |
+
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `radiogroup` |
+| aria-labelledby | `id of label tag as PascalCase` |
+
+### Type
+`RadioModel` is a type that used to render the radio options. It has the following properties:
+<Source language="typescript" code= {
+`type RadioModel = {
+   label: string;
+   value: any;
+   modelValue?: any
+   name?: string;
+   disabled?: boolean;
+   checked?: boolean;
+   color?: string;
+}`
+} />

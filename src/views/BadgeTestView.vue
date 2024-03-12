@@ -28,6 +28,7 @@ export default {
 
 <template>
   <div class="flex">
+    <Badge inline rounded color="danger" content="9" />
     <Button size="md" :elevation="3" class="m-3" color="plain">
       BUTTON
       <Badge inline rounded color="danger" content="9" />

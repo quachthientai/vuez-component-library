@@ -1,10 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { vueRouter } from 'storybook-vue3-router'
-import { Button } from '../components/Button/Button'
-import Home from './Home.vue'
-import About from './About.vue'
-import { colorArgType, contentArgType, disabledArgType, hrefArgType, elevationArgType, sizeArgType, variantArgType, dimensionArgType, iconArgType, routeArgType } from '../../.storybook/argsTypes'
-import routerViewWrapper from './routerViewWrapper.vue';
+import { Button } from './Button'
+import Home from '@/stories/Home.vue'
+import About from '@/stories/About.vue'
+import routerViewWrapper from '@/stories/routerViewWrapper.vue'
+import { Icon } from '@iconify/vue';
+import { 
+  colorArgType, 
+  contentArgType, 
+  disabledArgType, 
+  hrefArgType, 
+  elevationArgType, 
+  sizeArgType, 
+  variantArgType, 
+  dimensionArgType, 
+  iconArgType, 
+  routeArgType 
+} from '../../../.storybook/argsTypes';
+
 
 const customRoutes = [
   {
@@ -42,41 +55,73 @@ const meta = {
     icon: {
       control: {
         type: 'object',
-        description: 'Define button as icon button'
       },
+      description: 'Define button as icon button',
       table: {
         category: 'Props',
+        defaultValue: { summary: 'undefined' },
+        type: { summary: 'IconType' }
       }
     },
     block: {
       control: {
         type: 'boolean',
-        description: 'Whether component is block or not',
       },
+      description: 'Whether component is block or not',
       table: {
         category: 'Props',
+        defaultValue: { summary: 'false' },
+        type: { summary: 'boolean' }
       },
     },
     loading: {
       control: {
         type: 'boolean',
-        description: 'Whether component has loader or not',
       },
+      description: 'Whether component has loader or not',
       table: {
         category: 'Props',
+        defaultValue: { summary: 'false' },
+        type: { summary: 'boolean' }
       },
     },
-    default: {
-      control: {
-        type: 'text',
-        desciption: 'Define component default slot',
-      },
+    iconSlot: {
+      name: 'Icon Slot',
+      description: `Slot for icon button, if you want to use icon button, you must use this slot`,
       table: {
         category: 'Slots',
+        type: { summary: 'icon' }
       },
-    }
+    },
+    prependIconSlot: {
+      name: 'Prepend Icon',
+      description: 'Slot for prepend icon',
+      table: {
+        category: 'Slots',
+        type: { summary: 'prepend' }
+      },
+    },
+    appendIconSlot: {
+      name: 'Append Icon',
+      description: 'Slot for append icon',
+      table: {
+        category: 'Slots',
+        type: { summary: 'append' }
+      },
+    },
+    defaultSlot: {
+      name: 'Default',
+      description: 'Slot for default',
+      table: {
+        category: 'Slots',
+        type: { summary: 'default' }
+      },
+    },
   },
-  decorators: [ vueRouter(customRoutes) ]
+  args: {
+    content: ''
+  },
+  decorators: [ vueRouter(customRoutes) ],
 } satisfies Meta<typeof Button>
 
 export default meta;
@@ -85,14 +130,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   render: (args) => ({
-    components: { Button },
+    components: { 'Button': Button, 'Icon': Icon },
     setup() {
       return { args };
     },
     template: `<Button v-bind="args" />`,
   }),
   args: {
-    content: 'Button',
+    content: 'Button'
   }
 };
 
@@ -111,7 +156,7 @@ export const ColorVariants: Story = {
       <Button v-bind="args" color="info">Info</Button>
       <Button v-bind="args" color="plain">Plain</Button>
     </div>`,
-  })
+  }),
 };
 
 export const SizeVariants: Story = {
@@ -344,7 +389,8 @@ export const LoadingState: Story = {
   args: {
     loading: true
   }
-}
+};
+
 
 
 

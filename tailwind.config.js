@@ -1,20 +1,20 @@
 // const colors = require("tailwindcss/colors");
-const defaultTheme = require("tailwindcss/defaultTheme")
+const defaultTheme = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
-module.exports =  {
+module.exports = {
   darkMode: 'class',
   content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-    "./src/assets/scss/**/*.{vue,js,ts,jsx,tsx,scss}"
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+    './src/assets/scss/**/*.{vue,js,ts,jsx,tsx,scss}'
   ],
   theme: {
     screens: {
-      'xxs': {'max': '300px'},
-      'xs': {'max': '475px'},
+      xxs: { max: '300px' },
+      xs: { max: '475px' },
       ...defaultTheme.screens
     },
-    extend: { 
+    extend: {
       backgroundColor: {
         'ripple-primary': 'rgb(56 189 248 / 0.4)',
         'ripple-secondary': 'rgb(148 163 184 / 0.4)',
@@ -25,39 +25,44 @@ module.exports =  {
         'ripple-plain': 'rgb(222 219 219 / 0.8)'
       },
       boxShadow: {
-        'elevation-1': '0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)',
-        'elevation-2': '0 3px 3px -2px rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 1px 8px 0 rgba(0,0,0,.12)',
-        'elevation-3': '0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12)',
-        'elevation-4': '0 3px 5px -1px rgba(0,0,0,.2),0 5px 8px 0 rgba(0,0,0,.14),0 1px 14px 0 rgba(0,0,0,.12)',
-        'elevation-5': '0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12)'
+        'elevation-1':
+          '0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12)',
+        'elevation-2':
+          '0 3px 3px -2px rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 1px 8px 0 rgba(0,0,0,.12)',
+        'elevation-3':
+          '0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12)',
+        'elevation-4':
+          '0 3px 5px -1px rgba(0,0,0,.2),0 5px 8px 0 rgba(0,0,0,.14),0 1px 14px 0 rgba(0,0,0,.12)',
+        'elevation-5':
+          '0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12)'
       },
       animation: {
-        'ripple' : 'ripple 700ms linear',
-        'tada' : 'tada 1s ease-in-out infinite'
+        ripple: 'ripple 700ms linear',
+        tada: 'tada 1s ease-in-out infinite'
       },
       transitionProperty: {
         'max-height': 'max-height',
-        'height': 'height',
+        height: 'height',
         'border-width': 'border-width'
       },
       keyframes: {
         progress: {
-          '100%' : {right: '100%'},
+          '100%': { right: '100%' }
         },
         ripple: {
-          '100%' : { transform: 'scale(4)', opacity: '0'},
+          '100%': { transform: 'scale(4)', opacity: '0' }
         },
         tada: {
-          '0' : { transform: 'scaleZ(1)'},
-          '10%, 20%' : { transform: 'scaleZ(.95) rotate3d(0,0,1,-10deg)'},
-          '30%, 50%, 70%, 90%' : { transform: 'scaleZ(1) rotate3d(0,0,1,10deg)'},
-          '40%, 60%, 80%' : { transform: 'rotate3d(0,0,1,-10deg)'},
-          'to' : { transform: 'scaleZ(1)'},
+          0: { transform: 'scaleZ(1)' },
+          '10%, 20%': { transform: 'scaleZ(.95) rotate3d(0,0,1,-10deg)' },
+          '30%, 50%, 70%, 90%': { transform: 'scaleZ(1) rotate3d(0,0,1,10deg)' },
+          '40%, 60%, 80%': { transform: 'rotate3d(0,0,1,-10deg)' },
+          to: { transform: 'scaleZ(1)' }
         }
       },
       colors: {
-        'light': '#F8FAFC',
-        'dark': '#1E293B',
+        light: '#F8FAFC',
+        dark: '#1E293B',
         primary: {
           50: '#F0F9FF',
           100: '#E0F2FE',
@@ -68,7 +73,7 @@ module.exports =  {
           600: '#0284C7',
           700: '#0369A1',
           800: '#075985',
-          900: '#0C4A6E',
+          900: '#0C4A6E'
         },
         secondary: {
           50: '#f8fafc',
@@ -80,7 +85,7 @@ module.exports =  {
           600: '#475569',
           700: '#334155',
           800: '#1e293b',
-          900: '#0f172a',
+          900: '#0f172a'
         },
         info: {
           50: '#eff6ff',
@@ -92,9 +97,9 @@ module.exports =  {
           600: '#2563eb',
           700: '#1d4ed8',
           800: '#1e40af',
-          900: '#1e3a8a',
+          900: '#1e3a8a'
         },
-        success: { 
+        success: {
           50: '#F0FDF4',
           100: '#DCFCE7',
           200: '#BBF7D0',
@@ -104,7 +109,7 @@ module.exports =  {
           600: '#16A34A',
           700: '#15803D',
           800: '#166534',
-          900: '#14532D',
+          900: '#14532D'
         },
         warning: {
           50: '#FFFBEB',
@@ -116,7 +121,7 @@ module.exports =  {
           600: '#D97706',
           700: '#B45309',
           800: '#92400E',
-          900: '#78350F',
+          900: '#78350F'
         },
         danger: {
           50: '#FEF2F2',
@@ -128,10 +133,10 @@ module.exports =  {
           600: '#DC2626',
           700: '#B91C1C',
           800: '#991B1B',
-          900: '#7F1D1D',
+          900: '#7F1D1D'
         },
         plain: {
-          50 : '#fafafa',
+          50: '#fafafa',
           100: '#f5f5f5',
           200: '#e5e5e5',
           300: '#d4d4d4',
@@ -140,45 +145,46 @@ module.exports =  {
           600: '#525252',
           700: '#404040',
           800: '#262626',
-          900: '#171717',
+          900: '#171717'
         },
         ...defaultTheme.colors
       },
-      textColor:{
-        'light': '#E2E8F0',
-        'dark': '#000000',
+      textColor: {
+        light: '#E2E8F0',
+        dark: '#000000'
       },
-      fontFamily:{
-        Montserrat:["Montserrat","san-serif"]
-      },  
+      fontFamily: {
+        Montserrat: ['Montserrat', 'san-serif']
+      },
       fontSize: {
-        'h1': '3.5rem',
-        'h2': '2.5rem',
-        'h3': '1.75rem',
-        'h4': '1.625rem',
-        'h5': '1.375rem',
-        'h6': '1.25rem',
+        h1: '3.5rem',
+        h2: '2.5rem',
+        h3: '1.75rem',
+        h4: '1.625rem',
+        h5: '1.375rem',
+        h6: '1.25rem',
         'content-1': '2.16rem',
         'content-2': '1.54rem',
         'content-3': '1.08rem',
         'content-4': '1rem',
         'content-5': '0.85rem',
-        'content-6': '0.77rem',
+        'content-6': '0.77rem'
       }
-    },
+    }
   },
   plugins: [
     require('@tailwindcss/forms'),
-    plugin(function({matchUtilities, theme}) {
-      matchUtilities({
-        elevation: (value) => ({
-          elevationValue : value
-        })
-      },
-      {
-        values: theme('boxShadow')
-      })
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          elevation: (value) => ({
+            elevationValue: value
+          })
+        },
+        {
+          values: theme('boxShadow')
+        }
+      )
     })
-  ],
-};
-
+  ]
+}
