@@ -287,7 +287,7 @@ export const AppendIcon: Story = {
 };
 
 export const PrependIcon: Story = {
-  render: (args) => ({
+	render: (args) => ({
     components: { Button },
     setup() {
       return { args };

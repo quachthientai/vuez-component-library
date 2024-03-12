@@ -13,7 +13,7 @@ enum NAMESPACES {
 }
 
 const vToggleProps = makePropsFactory({
-   modelValue: {
+	modelValue: {
       default: undefined,
    },
    name: {
