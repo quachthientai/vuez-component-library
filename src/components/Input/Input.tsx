@@ -94,7 +94,7 @@ const vInputProps = makePropsFactory({
 const Input = defineComponent({
 	name: 'Input',
 	props: vInputProps,
-	inheritsAttrs: false,
+	inheritAttrs: false,
 	emits: ['update:modelValue', 'togglePassword', 'clear'],
 	setup(props, { slots, emit, attrs }) {
 		const instance = getCurrentInstance();
@@ -109,7 +109,6 @@ const Input = defineComponent({
 		const booleanContext = computed(() => {
 			return {
 				hasLabel: props.label || undefined,
-				isDisabled: props.disabled || undefined,
 				hasHelperText: props.helperText || undefined,
 				hasAppendIcon: !!(slots.append || props.appendIcon),
 				hasPrependIcon: !!(slots.prepend || props.prependIcon),
@@ -147,7 +146,6 @@ const Input = defineComponent({
 
 		const {
 			hasLabel,
-			isDisabled,
 			hasHelperText,
 			hasAppendIcon,
 			hasPrependIcon
@@ -156,35 +154,11 @@ const Input = defineComponent({
 		const componentClasses = computed(() => {
 			return {
 				color: useColor(NAMESPACES.INPUT, props.color as string),
-				disabled: isDisabled && NAMESPACES.INPUT_DISABLED,
+				disabled: props.disabled && NAMESPACES.INPUT_DISABLED,
 			}
 		});
 
-		const componentAttrs = computed(() => {
-			return {
-				...attrs,
-				'name': props.name || componentID,
-				'aria-disabled': isDisabled || undefined,
-				'data-disabled': isDisabled || undefined,
-				'data-vz-component': Helpers.toPascalCase(NAMESPACES.INPUT, '-'),
-			};
-		});
-
-		const rootAttrs = computed(() => {
-			return {
-				...Helpers.objectFilter(attrs, (key, value) => {
-					return Helpers.isIncluded(['class', 'id'], key);
-				})
-			}
-		})
-		
-		const inputAttrs = computed(() => {
-			return {
-				...Helpers.objectFilter(attrs, (key, value) => {
-					return !Helpers.isIncluded(['class', 'id', 'type'], key);
-				})
-			}
-		})
+		const [rootAttrs, inputAttrs] = Helpers.filterInputAttrs(attrs, ['class', 'id', /^data-/]);
 
 		// * Methods
 		function inputRef(el: HTMLElement) { 
@@ -222,7 +196,6 @@ const Input = defineComponent({
 			hasLabel,
 			rootAttrs,
 			inputAttrs,
-			isDisabled,
 			isClearable,
 			componentID,
 			showPassword,
@@ -230,7 +203,6 @@ const Input = defineComponent({
 			hasAppendIcon,
 			inputTypeIcon,
 			hasPrependIcon,
-			componentAttrs,
 			isPasswordToggle,
 			onTogglePassword,
 			componentClasses,
@@ -238,18 +210,18 @@ const Input = defineComponent({
 	},
 	render() {
 		const { color, disabled } = this.componentClasses;
-		console.log(this.rootAttrs);
-		console.log(this.inputAttrs);
+
 		return (
-			<>
 			<div class={[
 					color,
 					disabled,
 					NAMESPACES.INPUT,
 				]}
 				{...this.rootAttrs}
+				data-disabled={this.disabled}
 				data-vz-component={Helpers.toPascalCase(NAMESPACES.INPUT, '-')}
 			>	
+				
 				<div class={NAMESPACES.INPUT_CONTROL}>
 					{/* render if has prepend icon  */}
 					{ (this.hasPrependIcon || this.typeIcon) && (
@@ -270,14 +242,13 @@ const Input = defineComponent({
 						<input
 							type={this.type}
 							ref={this.inputRef}
+							{...this.inputAttrs}
 							onInput={this.onInput}
 							value={this.modelValue}
-							disabled={this.isDisabled}
+							disabled={this.disabled}
+							aria-disabled={this.disabled}
 							class={NAMESPACES.INPUT_FIELD}
-							name={this.componentAttrs['name']}
-							placeholder={this.instance.attrs.placeholder || ""}
-							{...this.inputAttrs}
-							aria-disabled={this.componentAttrs['aria-disabled']}
+							name={this.name || this.componentID}
 						/>
 						{ this.hasLabel && (
 							<label class={NAMESPACES.INPUT_LABEL}
@@ -325,7 +296,6 @@ const Input = defineComponent({
 					</div>
 				)}
 			</div>
-			</>
 		);
 	}
 });

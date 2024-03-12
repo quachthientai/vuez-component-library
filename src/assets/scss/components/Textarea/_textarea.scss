@@ -1,0 +1,107 @@
+@use '../../utilities/utils-variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.vz-textarea {
+   @apply grid rounded-lg;
+   grid-template-areas: 
+      "control"
+      "helper-text";
+   grid-template-rows: auto auto;
+
+   &__control { 
+      @apply grid border border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
+
+      grid-area: control;
+      grid-template-areas: "prepend field clear append";
+      grid-template-columns: min-content minmax(0, 1fr) min-content min-content;
+   };
+
+   &__prepend-icon {
+      grid-area: prepend;
+   }
+
+   &__append-icon {
+      grid-area: append;
+   }
+
+   &__clearable {
+      grid-area: clear;
+      &:hover {
+         @apply cursor-pointer text-dark/80 dark:text-light;
+      }
+   };
+   
+   &__field-wrapper {
+      @apply flex p-1;
+      grid-area: field;
+   };
+
+   &__field {
+      @apply w-full h-full;
+      @apply text-sm text-dark/70 dark:text-light/70 bg-transparent py-0 px-1 border-0 border-transparent;
+
+      &:placeholder-shown:not(:focus) {
+         ~ .vz-textarea__label {
+            @apply scale-100 p-0 -translate-y-1/2 top-1/2 bg-transparent;
+         }
+      }
+
+      &:focus {
+         @apply ring-0 border-transparent;
+      }
+   }
+
+   &__icon {
+      @apply flex px-1 items-center text-xl text-dark/60 dark:text-light/80;
+   }
+
+   &__label {
+      @apply absolute top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0];
+      @apply text-sm text-slate-400 dark:text-slate-300/70;
+      @apply transition-all duration-300;
+      @apply bg-transparent;
+      // @apply transform scale-75 -translate-y-4 top-[1.1rem] z-10 origin-[0] start-[40px];
+   }
+
+   &__helper-text {
+      @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
+      grid-area: helper-text;
+   };
+}
+
+@layer utilities {
+   .vz-textarea {
+      @each $color in utils-variables.$colors {
+         &.vz-textarea--#{$color} {
+            .vz-textarea__control {
+               &:has(*.vz-textarea__field:focus) {
+                  @apply border ring-0 border-#{$color}-500 dark:border-#{$color}-500/90;
+               }
+            }
+         }
+      }
+
+      &:has(&__label) {
+         .vz-textarea__field {
+            @apply pb-0 pt-4 px-2;
+         }
+      }
+   }
+
+   
+
+   .vz-textarea__control:has(*.vz-textarea__icon) {
+      // .vz-textarea__icon {
+      //    &.vz-textarea__prepend-icon {
+      //       @apply ps-3;
+      //    }
+
+      //    &.vz-textarea__append-icon {
+      //       @apply pe-3;
+      //    }
+      // }
+   }
+}
+

@@ -27,7 +27,7 @@ export const Basic: Story = {
 		},
 		template: `
 			<div class="max-w-md">
-				<Input class="mb-3" clearable v-model="msg"  v-bind="args"  type="email"
+				<Input class="mb-3" clearable v-model="msg" v-bind="args" data-test="asd" type="email"
 					helperText="We’ll never share your details. Read our Privacy Policy."
 					placeholder="name@gmail.com" label="Email"
 				/>

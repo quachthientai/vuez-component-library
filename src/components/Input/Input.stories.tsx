@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { Input } from './Input';
+import { Button } from '../Button/Button';
 import {
 	iconArgType,
 	colorArgType,
@@ -60,19 +61,26 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
 	render: (args) => ({
-		components: { Input },
+		components: { 'Input': Input, 'Button': Button },
 		setup() {
 			const msg = ref('');
-			
-			return { args, msg };
+			const disabled = ref(false);
+			return { args, msg, disabled };
 		},
 		template: `
 			Message: {{ msg }}
-			
+			Disabled: {{ disabled }}
+			<Button @click="disabled = !disabled"  class="mt-3" color="primary" content="Toggle disabled"/>
 
-			<Input class="mt-3"  v-bind="args" v-model="msg" type="number" min="3"
+			<Input class="mt-3" :disabled="disabled" :typeIcon="false" clearable v-bind="args"  data-test="asd" v-model="msg" type="email" min="3"
 				helperText="We’ll never share your details. Read our Privacy Policy."
-				label="Number"
+				label="Email"
+				placeholder="Please enter your email"
+			/>
+
+			<Input class="mt-3" :disabled="disabled" label="Number" v-bind="args"  data-test="asd" v-model="msg" type="number" min="3"
+				helperText="We’ll never share your details. Read our Privacy Policy."
+				
 				placeholder="Please enter password"
 			/>
 

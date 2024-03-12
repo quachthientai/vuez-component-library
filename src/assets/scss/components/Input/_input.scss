@@ -12,12 +12,12 @@
     grid-template-rows: auto auto;
 
     &__control {
-      @apply grid p-2 border border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
+      @apply grid border h-[46px] px-2 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
       grid-area: control;
       grid-template-areas: "prepend field show-password-toggle clear append";
       grid-template-columns: min-content minmax(0, 1fr) min-content min-content min-content;
     }
-
+    
     &__field-wrapper {
       grid-area: field;
     }
@@ -40,46 +40,51 @@
 
     &__clearable {
       grid-area: clear;
-      
       &:hover {
         @apply cursor-pointer text-dark/80 dark:text-light;
       }
     }
 
     &__icon {
-      @apply flex px-1 items-center text-xl text-dark/60 dark:text-light/80;;
+      @apply flex px-1 items-center text-xl text-dark/60 dark:text-light/80;
     }
 
     &__label {
       @apply absolute 
         text-sm text-slate-400 dark:text-slate-300/70 
         transition-all duration-300 
-        bg-light dark:bg-dark
-        transform scale-75 -translate-y-4 top-1 px-[.7rem] z-10 origin-[0] start-1;
+        bg-transparent;
+        @apply top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0]; 
+        // @apply scale-75 -translate-y-4 top-[1.1rem] z-10 origin-[0] start-[12px];
     }
 
     &__field {
-      @apply w-full text-sm text-dark/70 dark:text-light/70 h-full bg-transparent border-0 border-transparent py-0 px-1;
+      @apply w-full 
+        text-sm text-dark/70 dark:text-light/70 h-full flex
+        bg-transparent border-0 border-transparent py-0 px-1;
+     
       
       &[type="password"]:not(:placeholder-shown) {
         font-family: Tahoma,sans-serif;
         letter-spacing: 0.125em;
       }
 
-      &before::placeholder {
+      &::placeholder {
         @apply text-slate-400 dark:text-slate-300/70;
       }
 
       &:placeholder-shown:not(:focus) {
         ~ .vz-input__label {
-          @apply scale-100 p-0 -translate-y-1/2 translate-x-[.65rem] top-1/2;
+          // @apply scale-100 p-0 -translate-y-1/2 translate-x-[-1.75rem] start-[40px] top-1/2 bg-transparent;
+          @apply scale-100 p-0 -translate-y-1/2 top-1/2;
         }
       }
 
       &:focus {
         @apply ring-0 border-transparent;
         * .vz-input__label {
-          @apply scale-75 -translate-y-4;
+          
+          
         }
       }
     }
@@ -93,6 +98,7 @@
       :not(.vz-input__helper-text) {
         @apply cursor-not-allowed;
       }
+      
       .vz-input__control {
         @apply bg-slate-200 dark:bg-slate-400/60 opacity-60;
         * * {
@@ -110,7 +116,7 @@
         .vz-input__control {
           &:has(*.vz-input__field:focus) {
             @apply border ring-0 border-#{$color}-500 dark:border-#{$color}-500/90;
-        
+            
             *.vz-input__label {
               @apply text-#{$color}-500 dark:text-#{$color}-500/90;
             }
@@ -123,6 +129,7 @@
     // Show placeholder when input is focused
     &:has(&__label) {
       .vz-input__field {
+        @apply pb-0 pt-3 px-1;
         &::placeholder {
           @apply invisible;
         }
@@ -137,13 +144,11 @@
 
     &:has(&__prepend-icon) {
       .vz-input__field {
-        @apply py-0 px-1;
-        &:placeholder-shown:not(:focus) {
-          ~.vz-input__label {
-            @apply translate-x-[2.2rem];
-          }
+        ~.vz-input__label {
+          @apply translate-x-[1.6rem];
         }
       }
     }
   }
 }
+
