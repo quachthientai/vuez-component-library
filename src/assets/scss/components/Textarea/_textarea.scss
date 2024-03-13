@@ -11,7 +11,7 @@
    grid-template-rows: auto auto;
 
    &__control { 
-      @apply grid border border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
+      @apply grid border p-1 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
 
       grid-area: control;
       grid-template-areas: "prepend field clear append";
@@ -34,13 +34,13 @@
    };
    
    &__field-wrapper {
-      @apply flex p-1;
+      // @apply flex p-1;
       grid-area: field;
    };
 
    &__field {
-      @apply w-full h-full;
-      @apply text-sm text-dark/70 dark:text-light/70 bg-transparent py-0 px-1 border-0 border-transparent;
+      @apply w-full h-full flex;
+      @apply text-sm text-dark/70 dark:text-light/70 bg-transparent p-1 border-0 border-transparent;
 
       &:placeholder-shown:not(:focus) {
          ~ .vz-textarea__label {

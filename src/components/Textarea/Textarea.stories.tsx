@@ -31,6 +31,6 @@ export const Basic: Story = {
 	}),
 	args: {
 		// appendIcon: { icon: 'mdi:mail' },
-		// prependIcon: { icon: 'mdi:mail' },
+		prependIcon: { icon: 'mdi:mail' },
 	}
 };

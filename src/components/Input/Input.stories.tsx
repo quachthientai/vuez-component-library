@@ -73,15 +73,19 @@ export const Basic: Story = {
 			Disabled: {{ disabled }}
 			<Button @click="disabled = !disabled"  class="mt-3" color="primary" content="Toggle disabled"/>
 
-			<Input class="mt-3" :disabled="disabled"  clearable v-bind="args"  data-test="asd" v-model="msg" type="email" min="3"
+			<Input class="mt-3" :disabled="disabled" clearable v-bind="args"  data-test="asd" v-model="msg" type="email" min="3"
 				helperText="We’ll never share your details. Read our Privacy Policy."
 				label="Email"
 				placeholder="Please enter your email"
 			/>
 
-			<Input class="mt-3" :disabled="disabled" label="Text" v-bind="args"  data-test="asd" v-model="msg" type="text" min="3"
+			<Input class="mt-3" :disabled="disabled" label="Text" v-bind="args" data-test="asd" v-model="msg" type="text" min="3"
 				helperText="We’ll never share your details. Read our Privacy Policy."
-				
+				placeholder="Please enter password"
+			/>
+
+			<Input class="mt-3" :disabled="disabled" :typeIcon="false"   data-test="asd" v-model="msg" type="text" 
+				helperText="We’ll never share your details. Read our Privacy Policy."
 				placeholder="Please enter password"
 			/>
 
