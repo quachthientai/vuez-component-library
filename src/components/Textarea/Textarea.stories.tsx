@@ -1,5 +1,7 @@
+// @ts-ignore
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { Textarea } from './Textarea';
+import { Button } from '../Button/Button';
 import {
 	colorArgType,
 } from '../../../.storybook/argsTypes';
@@ -19,18 +21,22 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
 	render: (args) => ({
-		components: { Textarea },
+		components: { 'Textarea': Textarea, 'Button': Button },
 		setup() {
 			const msg = ref('');
-			return { args, msg };
+			const disabled = ref(false);
+			return { args, msg, disabled };
 		},
 		template: `
 			Message: {{ msg }}
-			<Textarea v-model="msg" label="Enter your message" clearable v-bind="args" helperText="This is test helper text"/>
+			Disabled: {{ disabled }}
+			<Button class="mb-3" @click="disabled = !disabled">Toggle Disabled</Button>
+
+			<Textarea v-model="msg" placeholder="testing placeholder" :disabled="disabled" rows="2" label="Enter your message" clearable v-bind="args" helperText="This is test helper text"/>
 		`
 	}),
 	args: {
 		// appendIcon: { icon: 'mdi:mail' },
-		prependIcon: { icon: 'mdi:mail' },
+		
 	}
 };

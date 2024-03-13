@@ -50,18 +50,15 @@
     }
 
     &__label {
-      @apply absolute 
-        text-sm text-slate-400 dark:text-slate-300/70 
-        transition-all duration-300 
-        bg-transparent;
-        @apply top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0]; 
-        // @apply scale-75 -translate-y-4 top-[1.1rem] z-10 origin-[0] start-[12px];
+      @apply absolute top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0];
+      @apply text-sm text-slate-400 dark:text-slate-300/70 bg-transparent;
+      @apply  transition-all duration-300;
     }
 
     &__field {
-      @apply w-full 
-        text-sm text-dark/70 dark:text-light/70 h-full flex
-        bg-transparent border-0 border-transparent py-0 px-1;
+      @apply w-full h-full flex;
+      @apply text-sm text-dark/70 dark:text-light/70; 
+      @apply bg-transparent border-0 border-transparent py-0 px-1;
      
       
       &[type="password"]:not(:placeholder-shown) {
@@ -75,7 +72,6 @@
 
       &:placeholder-shown:not(:focus) {
         ~ .vz-input__label {
-          // @apply scale-100 p-0 -translate-y-1/2 translate-x-[-1.75rem] start-[40px] top-1/2 bg-transparent;
           @apply scale-100 p-0 -translate-y-1/2 top-1/2;
         }
       }
@@ -141,7 +137,6 @@
     &:has(&__prepend-icon) {
       .vz-input__field {
         ~.vz-input__label {
-          // @apply translate-x-[1.6rem];
           @apply translate-x-[1.8rem];
         }
       }

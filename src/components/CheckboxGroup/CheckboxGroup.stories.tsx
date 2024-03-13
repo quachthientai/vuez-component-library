@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { Checkbox } from '@/components/Checkbox/Checkbox';
 import { CheckboxGroup } from '@/components/CheckboxGroup/CheckboxGroup';

@@ -57,7 +57,7 @@ const vInputProps = makePropsFactory({
 	},
 	typeIcon: {
 		type: Boolean,
-		default: true,
+		default: false,
 	},
 	showPasswordToggle: {
 		type: Boolean,
@@ -240,6 +240,7 @@ const Input = defineComponent({
 
 					<div class={NAMESPACES.INPUT_FIELD_WRAPPER}>
 						<input
+							placeholder=""
 							type={this.type}
 							ref={this.inputRef}
 							{...this.inputAttrs}
@@ -279,7 +280,11 @@ const Input = defineComponent({
 
 					{/* render if has append icon  */}
 					{ this.hasAppendIcon && (
-						<div class={[NAMESPACES.INPUT_APPEND_ICON, NAMESPACES.INPUT_ICON]}>
+						<div class={[
+								NAMESPACES.INPUT_APPEND_ICON, 
+								NAMESPACES.INPUT_ICON
+							]}
+						>
 							<i>
 								{ this.appendIcon 
 									? <Icon icon={this.appendIcon.icon}/>

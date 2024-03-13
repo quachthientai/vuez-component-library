@@ -64,13 +64,9 @@ const Textarea = defineComponent({
 	inheritAttrs: false,
 	emits: ['update:modelValue', 'clear'],
 	setup(props, { slots, emit, attrs }) {
+		const instance = getCurrentInstance();
 
 		const componentID = generateComponentId(NAMESPACES.TEXTAREA);
-
-		const booleanContext = computed(() => {
-			return {
-			}
-		});
 
 		const hasHelperText = computed(() => {
 			return props.helperText !== undefined;
@@ -88,15 +84,14 @@ const Textarea = defineComponent({
 			return props.clearable && !props.disabled && props.modelValue !== '';		
 		})
 
-		const {
-		} = booleanContext.value;
-
 		const componentClasses = computed(() => {
 			return {
 				color: useColor(NAMESPACES.TEXTAREA, props.color as string),
 				disabled: props.disabled && NAMESPACES.TEXTAREA_DISABLED,
 			}
 		});
+
+		const [rootAttrs, textareaAttrs] = Helpers.filterInputAttrs(attrs, ['class', 'style']);
 
 		function onClear(e: Event) {
 			e.stopPropagation();
@@ -116,9 +111,12 @@ const Textarea = defineComponent({
 		return {
 			onClear,
 			onInput,
-
+			instance,
+			rootAttrs,
 			isClearable,
+			componentID,
 			hasAppendIcon,
+			textareaAttrs,
 			hasHelperText,
 			hasPrependIcon,
 			componentClasses
@@ -132,6 +130,9 @@ const Textarea = defineComponent({
 					disabled,
 					NAMESPACES.TEXTAREA,
 				]}
+				{...this.rootAttrs}
+				data-disabled={this.disabled}
+				data-vz-component={Helpers.toPascalCase(NAMESPACES.TEXTAREA, '-')}
 			>
 				<div class={NAMESPACES.TEXTAREA_CONTROL}>
 					{ this.hasPrependIcon && (
@@ -150,16 +151,20 @@ const Textarea = defineComponent({
 
 					<div class={NAMESPACES.TEXTAREA_FIELD_WRAPPER}>
 						<textarea
+							placeholder=""
 							onInput={this.onInput}
 							value={this.modelValue}
+							{...this.textareaAttrs}
+							disabled={this.disabled}
+							aria-disabled={this.disabled}
 							class={NAMESPACES.TEXTAREA_FIELD}
-							placeholder=""
+							name={this.name || this.componentID}
 						>
 							{this.$slots.default}
 						</textarea>
 						{ this.label && (
 							<label class={NAMESPACES.TEXTAREA_LABEL}
-								
+								for={this.instance.attrs.id || this.componentID}
 							>
 								{this.label}
 							</label>
