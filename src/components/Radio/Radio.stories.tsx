@@ -41,6 +41,21 @@ const meta = {
             type: { summary: 'string | number | boolean' },
          }
       },
+		DefaultSlots: {
+			name: 'default',
+			description: 'The default slot for label of the radio',
+			table: {
+				category: 'Slots',
+				type: { summary: 'default' }
+			}
+		},
+		updateModelValue: {
+			name: 'update:modelValue',
+			description: 'Event emitted for updating modelValue',
+			table: {
+				category: 'Events',
+			}
+		}
    }
 } satisfies Meta<typeof Radio>;
 
@@ -52,15 +67,15 @@ export const Basic: Story = {
    render: (args) => ({
       components: { Radio },
       setup() {
-         const picked = ref("");
+         const picked = ref("Option 1");
          return { picked, args };
       },
       template: `
          <div class="mb-2">
             <span>Picked: </span> {{ picked }}
          </div>
-         <Radio label="Option 1" value="One" v-model="picked" v-bind="args" />
-         <Radio label="Option 2" value="Two" v-model="picked" v-bind="args" />
+         <Radio label="Option 1" value="Option 1" v-model="picked" v-bind="args" />
+         <Radio label="Option 2" value="Option 2" v-model="picked" v-bind="args" />
       `
    }),
 };

@@ -1,4 +1,3 @@
-// @use '../../utilities/variables';
 @use '../../utilities/utils-variables';
 @tailwind base;
 @tailwind components;
@@ -9,6 +8,15 @@ $disabled: #d9d9d9;
 @layer base {
   .vz-radio {
     @apply inline-block items-center transition-all duration-300 p-1;
+
+    &__input {
+      @apply inline-block outline-none relative cursor-pointer transition-all duration-300  dark:border-slate-300/80 border-slate-400/80 dark:bg-dark;
+    }
+    
+    &__label {
+      @apply mx-2 cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-300;
+    }
+
     &.vz-radio--disabled {
       > * {
         @apply opacity-60 cursor-not-allowed;
@@ -27,37 +35,29 @@ $disabled: #d9d9d9;
       @apply flex-col;
     }
 
-    > label {
-      @apply p-1;
-      flex-basis: 100%;
-      align-items: start;
-      color: inherit;
-      display: inline-flex;
-      font-size: 1rem;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+    &__label {
+      @apply p-1 basis-full items-start text-inherit inline-flex text-base truncate;
     }
   }
 }
 
 
 @layer utilities {
-  .vz-radio__input {
-    @apply inline-block relative cursor-pointer transition-all duration-300 focus:ring-4 focus:ring-offset-0;
+  @each $color in utils-variables.$colors {
+    .vz-radio--#{$color} {
+      > .vz-radio__input {
+        &:checked {
+          @apply dark:bg-#{$color}-500/90 dark:border-#{$color}-500/90 border-#{$color}-500 text-#{$color}-500;
+        }
 
-    @each $color in utils-variables.$colors {
-      &.vz-radio--#{$color} {
-        @apply text-#{$color}-500 border-#{$color}-500 focus:ring-#{$color}-500/40;
+        &:focus:not(:checked) {
+          @apply ring-4 ring-offset-0 ring-slate-500/20 dark:ring-slate-300/30 dark:ring-offset-dark;
+        }
 
-        &.vz-radio--#{$color}:not(:checked) {
-          @apply dark:bg-slate-800/10 bg-light;
+        &:focus:checked {
+          @apply ring-4 ring-offset-0 ring-#{$color}-500/30 dark:ring-offset-dark dark:ring-#{$color}-500/50;
         }
       }
     }
-  }
-
-  .vz-radio__label {
-    @apply mx-2 cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-300;
-  }
+  } 
 }

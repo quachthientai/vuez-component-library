@@ -1,9 +1,9 @@
-import { Meta, Title, Controls, Story, Primary, Canvas } from '@storybook/blocks';
+import { Meta, Title, Controls, Story, Primary, Canvas, Stories, ArgTypes, Source } from '@storybook/blocks';
 import * as RadioStories from './Radio.stories';
 
 <Meta
    of={RadioStories}
-   title="Docs"
+   name="Docs"
 />
 
 <Title />
@@ -19,11 +19,45 @@ import { Radio } from '@component/Radio/Radio';
 *Note: **Click onto the component name** to view its props and events document*
 | Component | Description |
 | - | - |
-| [`<Radio>`](#api) | Sub-component used to render the radio options, wrap by `<RadioGroup>` component. |
-| [`<RadioGroup>`](#api) | Primary component is the component used to render set of user options |
+| [`<Radio>`](#api) | Component used to render the radio options |
+| [`<RadioGroup>`](?path=/docs/forms-radiogroup--docs) | Component used to render set of `Radio` options |
 
 ### Usage
-<Canvas mdxSoure={'asdasd'}>
-   <Story name="Basic" />
-</Canvas>
-{/* <Primary /> */}
+<Primary />
+<Controls exclude={['default', 'update:modelValue']}/>
+
+<Stories />
+
+### Events
+<ArgTypes include={'update:modelValue'} />
+
+### Slots
+<ArgTypes include={'default'} />
+<Source code={`
+<template>
+   <Radio v-model="picked" value="Option 1">
+      Option 1
+   </Radio>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const picked = ref("Option 1");
+</script>
+`} />
+
+### Accessibility
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Tab | <ul><li>Moves keyboard focus to the checkbox</li><li>If a radio button is not checked, focus moves to the first radio button in the group.</li></ul> |
+| Space | <ul><li>If the radio button with focus is not checked, changes the state to checked.</li><li>Otherwise, does nothing.</li><li>Note: The state where a radio is not checked only occurs on page load.</li></ul> |
+| <ul><li>Down arrow</li><li>Right arrow</li></ul> | <ul><li>Moves focus to and checks the next radio button in the group.</li><li>If focus is on the last radio button, moves focus to the first radio button.</li><li>The state of the previously checked radio button is changed to unchecked.</li></ul> |
+| <ul><li>Up arrow</li><li>Left arrow</li></ul> | <ul><li>Moves focus to and checks the previous radio button in the group.</li><li>If focus is on the first radio button, moves focus to and checks the last radio button.</li><li>The state of the previously checked radio button is changed to unchecked.</li></ul> |
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `checkbox` |
+| aria-checked | `checked state of component` |
+| aria-disabled | `disabled state of component` |

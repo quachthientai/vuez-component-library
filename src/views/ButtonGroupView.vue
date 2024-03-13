@@ -1,13 +1,13 @@
 <script>
-import ButtonGroup from '@/components/Button/ButtonGroup.vue'
+// import ButtonGroup from '@/components/Button/ButtonGroup.vue'
 
-import Button from '@/components/Button/Button.vue'
+// import Button from '@/components/Button/Button.vue'
 import Dropdown from '@/components/Dropdown/Dropdown.vue'
 export default {
   name: 'ButtonGroupView',
   components: {
-    ButtonGroup,
-    Button,
+    // ButtonGroup,
+    // Button,
     Dropdown
   }
 }

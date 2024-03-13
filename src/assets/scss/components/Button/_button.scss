@@ -162,3 +162,31 @@
   };
 };
 
+.btn__prepend-icon,
+.btn__append-icon,
+.btn__loader {
+  font-size: (utils-variables.$icon-multiplier * 1.5em);
+}
+
+@layer components {
+  @each $color in utils-variables.$colors {
+    .btn-#{$color} {
+      @include utils-mixin.get-color($color);
+      
+      > .ripple .ripple__effect {
+        @include utils-mixin.get-rgb-ripple-color($color);
+      }
+    }
+    
+    @each $variant in btn-variables.$button-variants {
+      .btn-#{$color}.btn-#{$variant} {
+        @include utils-mixin.get-variant($variant, $color);
+
+        &:not([disabled]):hover {
+          @include utils-mixin.get-hover-color($variant, $color);
+        };
+      
+      }
+    }
+  }
+}

@@ -104,7 +104,7 @@
       @if($color == 'plain') {
          @apply hover:bg-gray-400/70 dark:hover:bg-gray-600;
       } @else {
-         @apply bg-#{$color}-600;
+         @apply hover:bg-#{$color}-600;
       }
    } @else {
       @if $color == 'secondary' {

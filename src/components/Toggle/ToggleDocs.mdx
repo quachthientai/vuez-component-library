@@ -1,0 +1,53 @@
+import { Meta, Title, Controls, Story, Primary, Canvas, Stories, ArgTypes, Source } from '@storybook/blocks';
+import * as ToggleStories from './Toggle.stories';
+
+<Meta
+   of={ToggleStories}
+   name="Docs"
+/>
+
+<Title />
+
+The `Toggle` component is a simple way to toggle between two states.
+
+### Import 
+```ts
+import { Toggle } from '@component/Toggle/Toggle';
+```
+### Usage
+<Primary />
+<Controls exclude={['default', 'update:modelValue']}/>
+
+<Stories />
+
+### Events
+<ArgTypes include={'update:modelValue'} />
+
+### Slots
+<ArgTypes include={'default'} />
+<Source code={`
+<template>
+   <Toggle v-model="checked">
+      Toggle me
+   </Toggle>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const checked = ref(true);
+</script>
+`} />
+
+### Accessibility
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Tab | Moves keyboard focus to the toggle. |
+| Space | Toggle between checked and unchecked states |
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `switch` |
+| aria-checked | `checked state of component` |
+| aria-disabled | `disabled state of component` |

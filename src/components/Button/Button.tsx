@@ -27,22 +27,11 @@ enum NAMESPACES {
    Button = 'vz-btn',
    ButtonContent = 'vz-btn__content',
    ButtonPrepend = 'vz-btn__prepend',
-      ButtonPrependIcon = 'vz-btn__prepend-icon',
+   ButtonPrependIcon = 'vz-btn__prepend-icon',
    ButtonAppend = 'vz-btn__append',
-      ButtonAppendIcon = 'vz-btn__append-icon',
+   ButtonAppendIcon = 'vz-btn__append-icon',
    ButtonLoader = 'vz-btn__loader',
 }
-
-/**
- * TODO inspect the dimension prop 
- * TODO predefined the classes for sub-component ✔
- * TODO create NAMESPACE enum type for component and sub-component classes ✔
- * TODO implement the accessibility ✔
- * TODO comment the code ✔
- * TODO: refactor composable (Dimension) to make it more reusable
- * TODO: button router-link can't use Enter and Space click
- * * See notepad++ for previous version
- */
 
 const vButtonProps = makePropsFactory({
    /**
@@ -185,15 +174,16 @@ const Button = defineComponent({
       });
 
       const {
+			isIcon,
+         isBlock,
          hasHref,
          hasRoute,
+			isDisabled,
          hasContent,
          hasAppendIcon,
          hasPrependIcon,
          hasDefaultSlots,
-         isIcon,
-         isBlock,
-         isDisabled,
+         
       } = booleanContext.value;
    
       const componentAttrs = computed(() => {
@@ -251,78 +241,78 @@ const Button = defineComponent({
    render() {
       const { color, variant, size, loader, elevation, block, icon } = this.componentClasses;
       return (  
-            <DynamicTag
-               v-ripple   
-               {...this.componentAttrs}
-               class={[NAMESPACE,
-                  color,
-                  variant,
-                  size,
-                  loader,
-                  elevation,
-                  block,
-                  icon,
-               ]}
-               disabled={ this.isDisabled ? 'disabled' : undefined }
-               type={
-                  this.hasRoute && !this.isDisabled ? 'router-link'
-                     : this.hasHref ? 'a'
-                     : 'button'
-               }
-               onClick={ this.onButtonClick }
-            >
-               { (this.hasPrependIcon && !this.isIcon) && (
-                  <div class="vz-btn__prepend">
-                     { this.prependIcon
-                        ? <Icon 
-                              class={["vz-btn__prepend-icon", this.prependIcon.color]} 
-                              width={ this.prependIcon.width } 
-                              height={ this.prependIcon.height } 
-                              icon={ this.prependIcon.icon }
-                           />
-                        : this.$slots.prepend?.() }
-                  </div>
-               )}
+			<DynamicTag
+				v-ripple   
+				{...this.componentAttrs}
+				class={[NAMESPACE,
+					color,
+					variant,
+					size,
+					loader,
+					elevation,
+					block,
+					icon
+				]}
+				disabled={ this.isDisabled ? 'disabled' : undefined }
+				type={
+					this.hasRoute && !this.isDisabled ? 'router-link'
+						: this.hasHref ? 'a'
+						: 'button'
+				}
+				onClick={ this.onButtonClick }
+			>
+				{ (this.hasPrependIcon && !this.isIcon) && (
+					<div class="vz-btn__prepend">
+						{ this.prependIcon
+							? <Icon 
+									class={["vz-btn__prepend-icon", this.prependIcon.color]} 
+									width={ this.prependIcon.width } 
+									height={ this.prependIcon.height } 
+									icon={ this.prependIcon.icon }
+								/>
+							: this.$slots.prepend?.() }
+					</div>
+				)}
 
-               { (this.hasContent || this.hasDefaultSlots || this.isIcon) && (
-                  <span class="vz-btn__content">
-                     { (this.isIcon) && (
-                        <div class="flex align-middle">
-                           { this.icon
-                              ? <Icon 
-                                    class={ this.iconProps.color } 
-                                    width={ this.iconProps.width } 
-                                    height={ this.iconProps.height } 
-                                    icon={ this.iconProps.icon }
-                                 />
-                              : this.$slots.icon?.() }
-                        </div>
-                     )}
-                     { (this.hasContent && !this.isIcon) && this.content }
-                     { (this.hasDefaultSlots && !this.isIcon) && this.$slots.default?.() }
-                  </span>
-               )}
+				{ (this.hasContent || this.hasDefaultSlots || this.isIcon) && (
+					<span class="vz-btn__content">
+						{ (this.isIcon) && (
+							<div class="flex align-middle">
+								{ this.icon
+									? <Icon 
+											class={ this.iconProps.color } 
+											width={ this.iconProps.width } 
+											height={ this.iconProps.height } 
+											icon={ this.iconProps.icon }
+										/>
+									: this.$slots.icon?.() }
+							</div>
+						)}
+						{ (this.hasContent && !this.isIcon) && this.content }
+						{ (this.hasDefaultSlots && !this.isIcon) && this.$slots.default?.() }
+					</span>
+				)}
 
-               { (this.hasAppendIcon && !this.isIcon) && (
-                  <div class="vz-btn__append">
-                     { this.appendIcon
-                        ? <Icon 
-                              class={["vz-btn__append-icon", this.appendIcon.color]} 
-                              width={ this.appendIcon.width } 
-                              height={ this.appendIcon.height } 
-                              icon={ this.appendIcon.icon }
-                           />
-                        : this.$slots.append?.() }
-                  </div>
-               )}
+				{ (this.hasAppendIcon && !this.isIcon) && (
+					<div class="vz-btn__append">
+						{ this.appendIcon
+							? <Icon 
+									class={["vz-btn__append-icon", this.appendIcon.color]} 
+									width={ this.appendIcon.width } 
+									height={ this.appendIcon.height } 
+									icon={ this.appendIcon.icon }
+								/>
+							: this.$slots.append?.() }
+					</div>
+				)}
 
-               { this.loading && (
-                  <span class="vz-btn__loader">
-                     <Icon icon="mdi:loading" />
-                  </span>
-               )}
-            </DynamicTag>
-         )
+				{ this.loading && (
+					<span class="vz-btn__loader">
+						<Icon icon="mdi:loading" />
+					</span>
+				)}
+			</DynamicTag>
+		)
    }
 })
 

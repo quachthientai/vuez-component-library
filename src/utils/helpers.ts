@@ -15,6 +15,32 @@ const Helpers = {
             .includes(val.toLowerCase());
       }
       return arr.includes(val);
+   },
+   objectFilter<T>(obj: Record<string, T>, predicate: (key: string, value: T) => boolean) : Record<string, T> {
+      const result: Record<string, T> = {};
+      for(const key in obj) {
+         if(predicate(key, obj[key])) {
+            result[key] = obj[key];
+         }
+      }
+      return result;
+   },
+   filterInputAttrs<T>(obj: Record<string, T>, filterKeys: Array<string | RegExp>) : Array<Record<string, T>> {
+      const rootAttrs: Record<string, T> = Object.create(null);
+      const inputAttrs: Record<string, T> = Object.create(null);
+      for(const key in obj) {
+         if(
+            filterKeys.some((item) => 
+               item instanceof RegExp ? item.test(key) : item === key
+            )
+         ) {
+            rootAttrs[key] = obj[key];
+         } else {
+            inputAttrs[key] = obj[key];
+         }
+      }
+      
+      return [rootAttrs, inputAttrs];
    }
 }
 

@@ -47,6 +47,25 @@ export const placementArgType = (
    }
 })
 
+export const directionArgType = (
+   options = ['horizontal', 'vertical']
+) => ({
+   options,
+   control: {
+      type: 'select',
+      labels: {
+         horizontal: 'Horizontal',
+         vertical: 'Vertical',
+      }
+   },
+   description: 'Define component direction',
+   table: {
+      ...propsTable,
+      defaultValue: { summary: 'vertical' },
+      type: { summary: "'horizontal' | 'vertical'" }
+   }
+})
+
 export const contentArgType = () => ({
    control: {
       type: 'text',

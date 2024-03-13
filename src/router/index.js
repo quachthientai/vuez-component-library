@@ -16,11 +16,11 @@ const routes = [
   //   name: 'button',
   //   component: () => import('@/views/ButtonView.vue')
   // },
-  {
-    path: '/dropdown',
-    name: 'dropdown',
-    component: () => import('@/views/DropDownView.vue')
-  },
+  // {
+  //   path: '/dropdown',
+  //   name: 'dropdown',
+  //   component: () => import('@/views/DropDownView.vue')
+  // },
   {
     path: '/switch',
     name: 'switch',
@@ -31,11 +31,11 @@ const routes = [
     name: 'checkbox',
     component: () => import('@/views/CheckboxView.vue')
   },
-  {
-    path: '/button-group',
-    name: 'button-group',
-    component: () => import('@/views/ButtonGroupView.vue')
-  },
+  // {
+  //   path: '/button-group',
+  //   name: 'button-group',
+  //   component: () => import('@/views/ButtonGroupView.vue')
+  // },
   {
     path: '/radio',
     name: 'radio',

@@ -4,7 +4,6 @@ import { ComponentInternalInstance, computed, defineComponent, getCurrentInstanc
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { Helpers } from "@/utils/helpers";
 import { RadioGroupKey } from "@/constants/injectionKey";
-import { RadioGroup } from "./RadioGroup";
 
 enum NAMESPACES { 
    RADIO = 'vz-radio',
@@ -53,7 +52,6 @@ const vRadioProps = makePropsFactory({
     */
    name: {
       type: String,
-      default: NAMESPACES.RADIO_INPUT,
    },
    /**
     * The disabled state of the radio
@@ -90,7 +88,7 @@ const Radio = defineComponent({
 
       // * Get the current instance */
       const instance = getCurrentInstance();
-
+      
       //* Inject the RadioGroupContext key */
       const RadioGroupContext = inject(RadioGroupKey, null);
       
@@ -103,38 +101,29 @@ const Radio = defineComponent({
         
          return props.value === props.modelValue;
       });
-      
-      const booleanContext = computed(() => {
-         return {
-            isDisabled: RadioGroupContext?.disabled.value || props.disabled,
-         }
-      });
 
-      const {
-         isDisabled,
-      } = booleanContext.value;
+		const isDisabled = computed(() => {
+			if(RadioGroupContext?.disabled.value) {
+				return RadioGroupContext?.disabled.value;
+			}
+			return props.disabled;
+		});
+
+		const color = useColor(NAMESPACES.RADIO, RadioGroupContext?.color.value as string || props.color as string);
 
       const componentAttrs = computed(() => {
          return {
             ...attrs,
+            'role': 'radio',
+				'name': props.name,
             'aria-checked': checked.value,
-            'aria-disabled': isDisabled || undefined,
+            'aria-disabled': isDisabled.value,
+            'data-disabled': isDisabled.value,
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.RADIO, '-'),
-            'data-disabled': isDisabled || undefined,
          }
       });
       
-      const componentClasses = computed(() => {
-         return {
-            color: useColor(NAMESPACES.RADIO, 
-               RadioGroupContext?.color.value as string ||props.color as string
-            ),
-            disabled: isDisabled && NAMESPACES.RADIO_DISABLED,
-         }
-      })
-
-
-      // * Methods *
+      // * Methods * /
       function onChange(e: Event) {
          const target = e.target as HTMLInputElement;
 
@@ -147,8 +136,9 @@ const Radio = defineComponent({
       }
 
       return {
+			color,
+         instance,
          checked,
-         componentClasses,
          componentAttrs,
          componentID,
          isDisabled,
@@ -156,26 +146,29 @@ const Radio = defineComponent({
       }
    },
    render() {
-      const { color, disabled } = this.componentClasses;
-
       return (
-         <div class={[NAMESPACES.RADIO, disabled]}
-            {...this.componentAttrs}
+         <div class={[NAMESPACES.RADIO,
+               this.color,
+               this.isDisabled && NAMESPACES.RADIO_DISABLED,
+            ]}
+            data-vz-component={this.componentAttrs['data-vz-component']}
          >
             <input
-               value={this.value}
-               disabled={this.isDisabled}
-               name={this.name}
-               checked={this.checked} 
-               class={[
-                  NAMESPACES.RADIO_INPUT,
-                  color,
-               ]} 
-               id={this.componentID}       
+               class={NAMESPACES.RADIO_INPUT}
                type="radio"
-               onChange={ this.onChange }
+               value={this.value}
+               checked={this.checked} 
+               onChange={this.onChange}
+               disabled={this.isDisabled}
+               name={this.componentAttrs['name']}
+               role={this.componentAttrs['role']}
+               id={this.instance.attrs.id || this.componentID} 
+               aria-checked={this.componentAttrs['aria-checked']}
+               aria-disabled={this.componentAttrs['aria-disabled']}
             />
-            <label class={NAMESPACES.RADIO_LABEL} for={this.componentID}>
+            <label class={NAMESPACES.RADIO_LABEL} 
+               for={this.instance.attrs.id || this.componentID}
+            >
                {this.label}
             </label>
          </div>

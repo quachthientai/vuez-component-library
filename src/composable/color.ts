@@ -50,5 +50,6 @@ const useColor = (prefix: string, color: string) => {
 
 export {
    useColor,
+   colorProps,
    makeColorProp
 }

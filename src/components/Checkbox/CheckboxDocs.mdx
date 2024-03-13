@@ -1,0 +1,61 @@
+import { Meta, Title, Controls, Story, Primary, Canvas, Stories, ArgTypes, Source } from '@storybook/blocks';
+import * as CheckboxStories from './Checkbox.stories';
+
+<Meta
+   of={CheckboxStories}
+   name="Docs"
+/>
+
+<Title />
+
+The `Checkbox` is a component that allows users to make a binary choice. It is a component that allows users to select one or more options from a set of options.
+
+### Import 
+```ts
+import { Checkbox } from '@component/Checkbox/Checkbox';
+```
+
+### API
+*Note: **Click onto the component name** to view its props and events document*
+| Component | Description |
+| - | - |
+| [`<Checkbox>`]() | Component used to render the input checkbox element |
+| [`<CheckboxGroup>`]() | Component used to render set of `Checkbox` options |
+
+### Usage
+<Primary />
+<Controls exclude={['default', 'update:modelValue']}/>
+
+<Stories />
+
+### Events
+<ArgTypes include={'update:modelValue'} />
+
+### Slots
+<ArgTypes include={'default'} />
+<Source code={`
+<template>
+   <Checkbox v-model="checked">
+      Option 
+   </Checkbox>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const checked = ref(true);
+</script>
+`} />
+
+### Accessibility
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Tab | Moves keyboard focus to the checkbox. |
+| Space | Toggle checkbox between checked and unchecked states |
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `checkbox` |
+| aria-checked | `checked state of component` |
+| aria-disabled | `disabled state of component` |

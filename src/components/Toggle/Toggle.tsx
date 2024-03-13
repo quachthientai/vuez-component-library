@@ -1,6 +1,6 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { makeColorProp, useColor } from "@/composable";
-import { ComponentInternalInstance, computed, defineComponent, getCurrentInstance, inject } from "vue";
+import { computed, defineComponent, getCurrentInstance } from "vue";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { Helpers } from "@/utils/helpers";
 
@@ -9,19 +9,24 @@ enum NAMESPACES {
    TOGGLE_INPUT = 'vz-toggle__input',
    TOGGLE_SLIDER = 'vz-toggle__slider',
    TOGGLE_DISABLED = 'vz-toggle--disabled',
+   TOGGLE_LABEL = 'vz-toggle__label',
 }
 
 const vToggleProps = makePropsFactory({
-   modelValue: {
+	modelValue: {
       default: undefined,
    },
    name: {
       type: String,
-      default: NAMESPACES.TOGGLE,
    },
    disabled: {
       type: Boolean,
       default: false,
+   },
+   label: {
+      type: String,
+      default: undefined,
+		required: true
    },
    ...makeColorProp([
       'primary',
@@ -42,36 +47,34 @@ const Toggle = defineComponent({
       // * Get an unique component ID */ 
       const componentID = generateComponentId(NAMESPACES.TOGGLE);
 
-      const booleanContext = computed(() => {
-         return {
-            isDisabled: props.disabled,
-            isChecked: props.modelValue
-         }
-      })
-
-      const {
-         isDisabled,
-         isChecked,
-      } = booleanContext.value;
+		// * Get the current instance */
+		const instance = getCurrentInstance();
 
       const checked = computed(() => {
+			if(props.modelValue === undefined) return false;
          return props.modelValue;
       })
+
+		const hasLabel = computed(() => {
+			return props.label || slots.default;
+		})
 
       const componentAttrs = computed(() => {
          return {
             ...attrs,
+            'role': 'switch',
             'aria-checked': checked.value,
-            'aria-disabled': isDisabled || undefined,
+            'name': props.name || componentID,
+            'aria-disabled': props.disabled,
+            'data-disabled': props.disabled,
             'data-vz-component': Helpers.toPascalCase(NAMESPACES.TOGGLE, '-'),
-            'data-disabled': isDisabled || undefined,
          }
       })
 
       const componentClasses = computed(() => {
          return {
             color: useColor(NAMESPACES.TOGGLE, props.color as string),
-            disabled: props.disabled ? NAMESPACES.TOGGLE_DISABLED : '',
+            disabled: props.disabled && NAMESPACES.TOGGLE_DISABLED,
          }
       })
 
@@ -82,9 +85,8 @@ const Toggle = defineComponent({
       };
 
       return {
+         hasLabel,
          onChange,
-         isDisabled,
-         isChecked,
          checked,
          componentAttrs,
          componentClasses,
@@ -93,23 +95,33 @@ const Toggle = defineComponent({
    },
    render() {
       const { color, disabled } = this.componentClasses;
+      
       return (
          <label class={[
                NAMESPACES.TOGGLE,
                color,
                disabled
             ]}
+            data-vz-component={this.componentAttrs['data-vz-component']}
          >
-            <input type="checkbox"
-               role="switch"
-               disabled={this.isDisabled}
+            <input 
+					type="checkbox"
+               onChange={this.onChange} 
+               disabled={this.disabled}
+               checked={this.checked}
+					class={NAMESPACES.TOGGLE_INPUT}
+               name={this.componentAttrs['name']}
+               role={this.componentAttrs['role']}
                aria-checked={this.componentAttrs['aria-checked']}
                aria-disabled={this.componentAttrs['aria-disabled']}
-               onChange={this.onChange} 
-               checked={this.checked.value} 
-               class="vz-toggle__input" 
             />
-            <span class="vz-toggle__slider"></span>
+            <div class={NAMESPACES.TOGGLE_SLIDER}></div>
+            { this.hasLabel && (
+               <span class={NAMESPACES.TOGGLE_LABEL}>
+                  { this.label }
+                  { this.$slots.default?.() }
+               </span>
+            )}
          </label>
       )
    }
