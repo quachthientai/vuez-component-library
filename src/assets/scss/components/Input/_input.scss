@@ -1,3 +1,4 @@
+@use '../../utilities/utils-mixin';
 @use '../../utilities/utils-variables';
 @tailwind base;
 @tailwind components;
@@ -14,7 +15,7 @@
     &__control {
       @apply grid border h-[46px] px-2 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
       grid-area: control;
-      grid-template-areas: "prepend field show-password-toggle clear append";
+      grid-template-areas: "prepend field show-password-toggle clear loader append";
       grid-template-columns: min-content minmax(0, 1fr) min-content min-content min-content;
     }
     
@@ -53,6 +54,11 @@
       @apply absolute top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0];
       @apply text-sm text-slate-400 dark:text-slate-300/70 bg-transparent;
       @apply  transition-all duration-300;
+    }
+
+    &__loader {
+      @apply animate-spin;
+      grid-area: loader;
     }
 
     &__field {

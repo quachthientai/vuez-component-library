@@ -5,12 +5,14 @@ import { Icon, addIcon } from "@iconify/vue";
 import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, onMounted, onRenderTriggered, onUpdated } from 'vue';
 import { makeIconProps } from '@/composable/icon';
 import { makeColorProp, useColor } from '@/composable/color';
+import { makeLoaderProp, useLoader } from '@/composable/loader';
 
 enum NAMESPACES {
 	INPUT = 'vz-input',
 	INPUT_ICON = 'vz-input__icon',
 	INPUT_LABEL = 'vz-input__label',
 	INPUT_FIELD = 'vz-input__field',
+	INPUT_LOADER = 'vz-input__loader',
 	INPUT_CONTROL = 'vz-input__control',
 	INPUT_DISABLED = 'vz-input--disabled',
 	INPUT_CLEARABLE = 'vz-input__clearable',
@@ -81,6 +83,7 @@ const vInputProps = makePropsFactory({
     * @name appendIcon | prependIcon
     */
    ...makeIconProps(),
+	...makeLoaderProp(),
 	...makeColorProp([
 		'primary',
 		'secondary',
@@ -153,8 +156,9 @@ const Input = defineComponent({
 
 		const componentClasses = computed(() => {
 			return {
-				color: useColor(NAMESPACES.INPUT, props.color as string),
 				disabled: props.disabled && NAMESPACES.INPUT_DISABLED,
+				color: useColor(NAMESPACES.INPUT, props.color as string),
+				loading: useLoader(NAMESPACES.INPUT, props.loading as boolean),
 			}
 		});
 
@@ -209,11 +213,12 @@ const Input = defineComponent({
 		};
 	},
 	render() {
-		const { color, disabled } = this.componentClasses;
+		const { color, disabled, loading } = this.componentClasses;
 
 		return (
 			<div class={[
 					color,
+					loading,
 					disabled,
 					NAMESPACES.INPUT,
 				]}
@@ -270,12 +275,28 @@ const Input = defineComponent({
 					)}
 
 					{/* render if clearable == true and value not null  */}
-					{ this.isClearable && (
-						<div class={[NAMESPACES.INPUT_CLEARABLE, NAMESPACES.INPUT_ICON]}
-							onClick={this.onClear}
-						>
-							<i><Icon icon="mdi:close-box"/></i>
-						</div>
+					{/* render if loading == true  */}
+					{ (this.isClearable || this.loading) && (
+						<>
+							{this.isClearable && !this.loading && (
+								<div class={[NAMESPACES.INPUT_CLEARABLE,
+										NAMESPACES.INPUT_ICON
+									]}
+									onClick={this.onClear}
+								>
+									<i><Icon icon="mdi:close-box"/></i>
+								</div>
+							)}
+
+							{this.loading && (
+								<div class={[NAMESPACES.INPUT_LOADER,
+										NAMESPACES.INPUT_ICON
+									]}
+								>
+									<i><Icon icon="mdi:loading"/></i>
+								</div>
+							)}
+						</>
 					)}
 
 					{/* render if has append icon  */}

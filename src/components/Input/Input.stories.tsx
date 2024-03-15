@@ -87,6 +87,15 @@ const meta = {
 				type: { summary: 'boolean' },
 			}
 		},
+		loading: {
+			control: 'boolean',
+			description: 'Whether the input is loading',
+			table: {
+				category: 'Props',
+				defaultValue: { summary: 'false' },
+				type: { summary: 'boolean' },
+			}
+		},
 		...iconArgType(),
 		label: labelArgType(),
 		color: colorArgType(),
@@ -114,6 +123,30 @@ export const Basic: Story = {
 	}),
 }
 
+export const ColorVariants: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+				
+			<div>
+				<Input v-model="msg" class="mb-3" label="Primary" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" color="Secondary" label="Secondary" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" color="Info" label="Info" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" color="Success" label="Success" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" color="Warning" label="Warning" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" color="Danger" label="Danger" v-bind="args" placeholder="Type something.."/>
+			</div>
+		`
+	})
+}
+
 export const InputType: Story = {
 	render: (args) => ({
 		components: { Input },
@@ -123,8 +156,144 @@ export const InputType: Story = {
 		},
 		template: `
 			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+				
+			<div>
+				<Input v-model="msg" class="mb-3" label="Text" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" type="password" label="Password" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" type="email" label="Email" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" type="url" label="URL" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" type="tel" label="Telephone" v-bind="args" placeholder="Type something.."/>
+				<Input v-model="msg" class="mb-3" type="number" label="Numeric" v-bind="args" placeholder="Type something.."/>
+			</div>
 		`
-	})
+	}),
+	args: {
+		typeIcon: true,
+	}
+}
+
+export const HelperText: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+			<Input v-model="msg" class="mb-3" label="Primary" v-bind="args" placeholder="Type something.."/>
+		`
+	}),
+	args: {
+		helperText: 'We’ll never share your details. Read our Privacy Policy.'
+	}
+}
+
+export const PrependAndAppendIcon: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('Hey!');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+		`
+	}),
+	args: {
+		helperText: 'We’ll never share your details. Read our Privacy Policy.',
+		prependIcon: {
+			icon: 'mdi-smiley'
+		}, 
+		appendIcon: {
+			icon: 'mdi-send-variant'
+		}
+	}
+}
+
+export const Disabled: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('Hey!');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+		`
+	}),
+	args: {
+		disabled: true
+	}
+}
+
+export const Loading: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('Hey!');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+		`
+	}),
+	args: {
+		loading: true
+	}
+}
+
+export const Clearable: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('Hey!');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+		`
+	}),
+	args: {
+		clearable: true
+	}
+}
+
+export const ShowPasswordToggle: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('Hey!');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+		`
+	}),
+	args: {
+		showPasswordToggle: true,
+		clearable: true,
+		type: 'password'
+	}
 }
 
 export const Test: Story = {
@@ -132,7 +301,7 @@ export const Test: Story = {
 		components: { 'Input': Input, 'Button': Button },
 		setup() {
 			const msg = ref('testing message');
-		
+
 			const disabled = ref(false);
 			return { args, msg, disabled };
 		},
