@@ -12,6 +12,8 @@ enum NAMESPACES {
 	INPUT_ICON = 'vz-input__icon',
 	INPUT_LABEL = 'vz-input__label',
 	INPUT_FIELD = 'vz-input__field',
+	INPUT_SUFFIX = 'vz-input__suffix',
+	INPUT_PREFIX = 'vz-input__prefix',
 	INPUT_LOADER = 'vz-input__loader',
 	INPUT_CONTROL = 'vz-input__control',
 	INPUT_DISABLED = 'vz-input--disabled',
@@ -65,6 +67,14 @@ const vInputProps = makePropsFactory({
 		type: Boolean,
 		default: false,
 	},
+	suffix: {
+		type: String,
+		default: undefined,
+	},
+	prefix: {
+		type: String,
+		default: undefined,
+	},
 	type: {
 		type: String,
 		default: 'text',
@@ -107,6 +117,8 @@ const Input = defineComponent({
 		// * Refs
 		const input = ref<HTMLElement>(null);
 		const showPassword = ref<boolean>(false);
+		
+		const isFocused = ref<boolean>(false);
 
 		// * Computed properties
 		const booleanContext = computed(() => {
@@ -168,7 +180,7 @@ const Input = defineComponent({
 		function inputRef(el: HTMLElement) { 
 			return input.value = el;
 		}
-	
+
 		function onClear(e: Event) {
 			e.stopPropagation();
 			emit('update:modelValue', '');
@@ -191,9 +203,14 @@ const Input = defineComponent({
 			}
 		}
 
+		function onPaste(e: Event) {
+			console.log(e);
+		}
+
 		return {
 			type,
 			onInput,
+			onPaste,
 			onClear,
 			inputRef,
 			instance,
@@ -214,7 +231,7 @@ const Input = defineComponent({
 	},
 	render() {
 		const { color, disabled, loading } = this.componentClasses;
-
+		
 		return (
 			<div class={[
 					color,
@@ -225,6 +242,7 @@ const Input = defineComponent({
 				{...this.rootAttrs}
 				data-disabled={this.disabled}
 				data-vz-component={Helpers.toPascalCase(NAMESPACES.INPUT, '-')}
+				
 			>	
 				
 				<div class={NAMESPACES.INPUT_CONTROL}>
@@ -244,12 +262,14 @@ const Input = defineComponent({
 					)}
 
 					<div class={NAMESPACES.INPUT_FIELD_WRAPPER}>
+						<span class={[NAMESPACES.INPUT_PREFIX, "vz-input__affix"]}>$</span>
 						<input
 							placeholder=""
 							type={this.type}
 							ref={this.inputRef}
 							{...this.inputAttrs}
 							onInput={this.onInput}
+							onPaste={this.onPaste}
 							value={this.modelValue}
 							disabled={this.disabled}
 							aria-disabled={this.disabled}
@@ -263,6 +283,7 @@ const Input = defineComponent({
 								{this.label}
 							</label>
 						)}
+						<span class={[NAMESPACES.INPUT_SUFFIX, "vz-input__affix"]}>@gmail.com</span>
 					</div>
 
 					{/* render if type is password  */}

@@ -20,7 +20,13 @@
     }
     
     &__field-wrapper {
+      @apply flex;
       grid-area: field;
+    }
+
+    &__affix {
+      @apply flex items-center; 
+      @apply text-sm text-slate-400 dark:text-slate-300/70;
     }
     
     &__prepend-icon {
@@ -53,7 +59,7 @@
     &__label {
       @apply absolute top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0];
       @apply text-sm text-slate-400 dark:text-slate-300/70 bg-transparent;
-      @apply  transition-all duration-300;
+      @apply transition-all duration-300;
     }
 
     &__loader {
@@ -126,8 +132,29 @@
     // Hide placeholder when label is present
     // Show placeholder when input is focused
     &:has(&__label) {
+
+      .vz-input__affix {
+        @apply pb-0 pt-3 invisible;
+      }
+
+      .vz-input__prefix {
+        @apply pl-1;
+      }
+
+      .vz-input__suffix {
+        @apply pr-1;
+      }
+
+      &:has(.vz-input__field:focus),
+      &:has(.vz-input__field:not(:placeholder-shown)) {
+        .vz-input__affix {
+          @apply visible;
+        }
+      }
+
       .vz-input__field {
         @apply pb-0 pt-3 px-1;
+
         &::placeholder {
           @apply invisible;
         }
@@ -136,6 +163,7 @@
           &::placeholder {
             @apply visible;
           }
+          
         }
       }
     }
@@ -148,5 +176,7 @@
       }
     }
   }
+
+  
 }
 

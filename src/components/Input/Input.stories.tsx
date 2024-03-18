@@ -96,6 +96,28 @@ const meta = {
 				type: { summary: 'boolean' },
 			}
 		},
+		suffix: {
+			control: {
+				type: 'text'
+			},
+			description: 'The suffix of the input',
+			table: {
+				category: 'Props',
+				defaultValue: { summary: 'undefined' },
+				type: { summary: 'string' },
+			}
+		},
+		prefix: {
+			control: {
+				type: 'text'
+			},
+			description: 'The suffix of the input',
+			table: {
+				category: 'Props',
+				defaultValue: { summary: 'undefined' },
+				type: { summary: 'string' },
+			}
+		},
 		...iconArgType(),
 		label: labelArgType(),
 		color: colorArgType(),
@@ -300,7 +322,7 @@ export const Test: Story = {
 	render: (args) => ({
 		components: { 'Input': Input, 'Button': Button },
 		setup() {
-			const msg = ref('testing message');
+			const msg = ref('');
 
 			const disabled = ref(false);
 			return { args, msg, disabled };
