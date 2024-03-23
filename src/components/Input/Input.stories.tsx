@@ -318,6 +318,23 @@ export const ShowPasswordToggle: Story = {
 	}
 }
 
+export const PrefixAndSuffix: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const amount = ref('10.00');
+			const email = ref('quachthientai');
+
+			return { args, amount, email };
+		},
+		template: `
+			<Input v-model="amount" class="mb-3" v-bind="args" prefix="$" label="Prefix for currency" placeholder="Type something.."/>
+
+			<Input v-model="email" class="mb-3" v-bind="args" suffix="@gmail.com" label="Suffix for email" placeholder="Type something.." type="email"/>
+		`
+	}),
+}
+
 export const Test: Story = {
 	render: (args) => ({
 		components: { 'Input': Input, 'Button': Button },
@@ -335,7 +352,6 @@ export const Test: Story = {
 			<Input class="mt-3" :disabled="disabled" clearable v-bind="args"  data-test="asd" v-model="msg" type="email" min="3"
 				helperText="We’ll never share your details. Read our Privacy Policy."
 				label="Email"
-				
 			/>
 
 			<Input class="mt-3" :disabled="disabled" label="Text" v-bind="args" data-test="asd" v-model="msg" type="text" min="3"
@@ -358,3 +374,18 @@ export const Test: Story = {
 		}
 	}
 };
+
+export const Mask: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3"> Message: {{ msg }}</div>
+
+			<Input v-model="msg" v-bind="args" mask="##-###"/>
+		`
+	})
+}

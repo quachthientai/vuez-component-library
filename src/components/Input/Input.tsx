@@ -2,16 +2,18 @@ import { makePropsFactory } from '@/utils/makePropFactory';
 import { generateComponentId } from '@/utils/ComponentIDGenerator';
 import { Helpers } from '@/utils/helpers';
 import { Icon, addIcon } from "@iconify/vue";
-import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, onMounted, onRenderTriggered, onUpdated } from 'vue';
+import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, onMounted, onRenderTriggered, onUpdated, watch, reactive } from 'vue';
 import { makeIconProps } from '@/composable/icon';
 import { makeColorProp, useColor } from '@/composable/color';
 import { makeLoaderProp, useLoader } from '@/composable/loader';
+import useMask, { makeMaskProp } from '@/composable/useMask';
 
 enum NAMESPACES {
 	INPUT = 'vz-input',
 	INPUT_ICON = 'vz-input__icon',
 	INPUT_LABEL = 'vz-input__label',
 	INPUT_FIELD = 'vz-input__field',
+	INPUT_AFFIX = 'vz-input__affix',
 	INPUT_SUFFIX = 'vz-input__suffix',
 	INPUT_PREFIX = 'vz-input__prefix',
 	INPUT_LOADER = 'vz-input__loader',
@@ -93,6 +95,7 @@ const vInputProps = makePropsFactory({
     * @name appendIcon | prependIcon
     */
    ...makeIconProps(),
+	...makeMaskProp(),
 	...makeLoaderProp(),
 	...makeColorProp([
 		'primary',
@@ -117,8 +120,20 @@ const Input = defineComponent({
 		// * Refs
 		const input = ref<HTMLElement>(null);
 		const showPassword = ref<boolean>(false);
+		const { maskValue, unmaskValue, test } = reactive({
+			maskValue: null as Function | null,
+			unmaskValue: null as Function | null,
+			test: null as Function | null,
+		});
 		
-		const isFocused = ref<boolean>(false);
+		watch(input, (newRef, oldRef) => {
+			if(newRef) {
+				const { maskValue, unmaskValue, test } = useMask(props, newRef);
+				maskValue.value = maskValue;
+				unmaskValue.value = unmaskValue;
+				test.value = test;
+			}
+		});
 
 		// * Computed properties
 		const booleanContext = computed(() => {
@@ -129,6 +144,10 @@ const Input = defineComponent({
 				hasPrependIcon: !!(slots.prepend || props.prependIcon),
 			}
 		});
+
+		const hasAffix = computed(() => {
+			return props.prefix || props.suffix;
+		})
 
 		const inputTypeIcon = computed(() => {
 			switch(props.type) { 
@@ -194,13 +213,26 @@ const Input = defineComponent({
 				emit('togglePassword', showPassword.value);
 			}
 		}
-
+		
 		function onInput(e: Event) {
 			const target = e.target as HTMLInputElement;
+			const charPosition = target.selectionEnd - 1;
+			
+			
+			// console.log('onInput', target.value);
+			// maskValue(target.value, charPosition);
+			// applyMask(target.value.slice(0, charPosition), target);
+			
 			e.stopPropagation();
 			if(target.value) {
 				emit('update:modelValue', target.value);
 			}
+		}
+
+		function onKeyDown(e: Event) {
+			const target = e.target as HTMLInputElement;
+			
+			console.log('onKeyDown',target.value);
 		}
 
 		function onPaste(e: Event) {
@@ -208,12 +240,15 @@ const Input = defineComponent({
 		}
 
 		return {
+			input,
 			type,
 			onInput,
 			onPaste,
 			onClear,
+			onKeyDown,
 			inputRef,
 			instance,
+			hasAffix,
 			hasLabel,
 			rootAttrs,
 			inputAttrs,
@@ -244,7 +279,6 @@ const Input = defineComponent({
 				data-vz-component={Helpers.toPascalCase(NAMESPACES.INPUT, '-')}
 				
 			>	
-				
 				<div class={NAMESPACES.INPUT_CONTROL}>
 					{/* render if has prepend icon  */}
 					{ (this.hasPrependIcon || this.typeIcon) && (
@@ -262,13 +296,22 @@ const Input = defineComponent({
 					)}
 
 					<div class={NAMESPACES.INPUT_FIELD_WRAPPER}>
-						<span class={[NAMESPACES.INPUT_PREFIX, "vz-input__affix"]}>$</span>
+						{ this.hasAffix && this.prefix && (
+							<span class={[NAMESPACES.INPUT_PREFIX,
+									NAMESPACES.INPUT_AFFIX
+								]}
+							>
+								{this.prefix}
+							</span>
+						)}
+
 						<input
 							placeholder=""
 							type={this.type}
 							ref={this.inputRef}
 							{...this.inputAttrs}
 							onInput={this.onInput}
+							onKeydown={this.onKeyDown}
 							onPaste={this.onPaste}
 							value={this.modelValue}
 							disabled={this.disabled}
@@ -283,7 +326,15 @@ const Input = defineComponent({
 								{this.label}
 							</label>
 						)}
-						<span class={[NAMESPACES.INPUT_SUFFIX, "vz-input__affix"]}>@gmail.com</span>
+
+						{ this.hasAffix && this.suffix && (
+							<span class={[NAMESPACES.INPUT_SUFFIX,
+									NAMESPACES.INPUT_AFFIX
+								]}
+							>
+								{this.suffix}
+							</span>
+						)}
 					</div>
 
 					{/* render if type is password  */}
