@@ -45,36 +45,27 @@ export function makeMaskProp() {
 }
 
 export default function (props, inputRef: Ref<HTMLElement | null>) {
-   // const { mask } = props;
-   const el = extractRefHTMLElement(inputRef);
-   // const value = el.value;
-   // const maskPattern = mask.split('');
-   console.log(inputRef);
-   // if(mask) {
-   //    console.log(mask);
-   // }
-
-   function test() : void {
-      console.log('this is test function');
-   }
+   const maskPattern = props.mask.split('');
 
    function maskValue(value, pos) {
       let maskedValue = '';
       let valueIndex = 0;
+      
+      maskPattern.forEach((char) => {
+         const token = TOKENS[char];
+         if (token) {
+            const valueChar = value[valueIndex];
+            if (valueChar !== undefined && token.pattern.test(valueChar)) {
+               maskedValue += token.transform ? token.transform(valueChar) : valueChar;
+               valueIndex++;
+            }
+         } else {
+            maskedValue += char;
+         }
+      });
 
-      // maskPattern.forEach((char) => {
-      //    const token = TOKENS[char];
-      //    if (token) {
-      //       const valueChar = value[valueIndex];
-      //       if (valueChar !== undefined && token.pattern.test(valueChar)) {
-      //          maskedValue += token.transform ? token.transform(valueChar) : valueChar;
-      //          valueIndex++;
-      //       }
-      //    } else {
-      //       maskedValue += char;
-      //    }
-      // });
-
+      
+      return maskedValue;
       // el.value = maskedValue;
    }
 
@@ -83,7 +74,6 @@ export default function (props, inputRef: Ref<HTMLElement | null>) {
    }
 
    return {
-      test,
       maskValue,
       unmaskValue,
    }

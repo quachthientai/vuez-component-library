@@ -119,22 +119,19 @@ const Input = defineComponent({
 
 		// * Refs
 		const input = ref<HTMLElement>(null);
-		const showPassword = ref<boolean>(false);
-		const { maskValue, unmaskValue, test } = reactive({
+		const showPassword = ref<boolean>(false);	
+		const maskit = reactive({
 			maskValue: null as Function | null,
 			unmaskValue: null as Function | null,
 			test: null as Function | null,
 		});
-		
-		watch(input, (newRef, oldRef) => {
-			if(newRef) {
-				const { maskValue, unmaskValue, test } = useMask(props, newRef);
-				maskValue.value = maskValue;
-				unmaskValue.value = unmaskValue;
-				test.value = test;
+
+		onMounted(() => {
+			if (props.mask && input.value) {
+				Object.assign(maskit, useMask(props, input));
 			}
 		});
-
+		
 		// * Computed properties
 		const booleanContext = computed(() => {
 			return {
@@ -216,13 +213,15 @@ const Input = defineComponent({
 		
 		function onInput(e: Event) {
 			const target = e.target as HTMLInputElement;
-			const charPosition = target.selectionEnd - 1;
 			
-			
-			// console.log('onInput', target.value);
-			// maskValue(target.value, charPosition);
-			// applyMask(target.value.slice(0, charPosition), target);
-			
+			// if(props.mask) {
+			// 	const { maskValue, unmaskValue, test } = maskit;
+			// 	const position = target.selectionEnd;
+			// 	const digit = target.value;
+
+			// 	target.value += maskValue(digit, position);
+			// }
+			console.log(target.value);
 			e.stopPropagation();
 			if(target.value) {
 				emit('update:modelValue', target.value);
