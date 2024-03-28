@@ -9,7 +9,7 @@
     @apply grid rounded-lg;
     grid-template-areas: 
       "control"
-      "helper-text";
+      "details";
     grid-template-rows: auto auto;
 
     &__control {
@@ -93,10 +93,22 @@
       }
     }
 
-    &__helper-text {
-      @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
-      grid-area: helper-text;
+    &__details {
+      @apply text-xs flex px-3 pt-1 text-slate-400 dark:text-slate-300/70;
+      grid-area: details;
     }
+
+    &__helper-text {
+      @apply grow shrink basis-auto;
+    }
+
+    &__counter {
+      @apply grow-0 shrink basis-auto;
+    }
+    // &__helper-text {
+    //   @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
+    //   grid-area: helper-text;
+    // }
     
     &--disabled {
       :not(.vz-input__helper-text) {

@@ -12,6 +12,7 @@
 
    &__control { 
       @apply grid border p-1 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
+      
 
       grid-area: control;
       grid-template-areas: "prepend field clear append";
@@ -38,6 +39,7 @@
    };
 
    &__field {
+      min-height: 44px;
       @apply w-full h-full flex;
       @apply text-sm text-dark/70 dark:text-light/70 bg-transparent p-1 border-0 border-transparent;
       
@@ -99,8 +101,11 @@
       }
 
       &:has(&__label) {
+         .vz-textarea__field-wrapper {
+            @apply pt-4;
+         }
          .vz-textarea__field {
-            @apply pb-0 pt-4 px-2;
+            @apply pb-0 pt-0 px-2;
             &::placeholder {
                @apply invisible;
             }

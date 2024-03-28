@@ -32,7 +32,7 @@ export const Basic: Story = {
 			Disabled: {{ disabled }}
 			<Button class="mb-3" @click="disabled = !disabled">Toggle Disabled</Button>
 
-			<Textarea v-model="msg" placeholder="testing placeholder" :disabled="disabled" rows="2" label="Enter your message" clearable v-bind="args" helperText="This is test helper text"/>
+			<Textarea v-model="msg" placeholder="testing placeholder" :disabled="disabled" label="Enter your message" clearable v-bind="args" helperText="This is test helper text"/>
 		`
 	}),
 	args: {

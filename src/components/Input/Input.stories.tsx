@@ -375,6 +375,19 @@ export const Test: Story = {
 	}
 };
 
+export const Counter: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('');
+			return { args, msg };
+		},
+		template: `
+			<Input v-model="msg" v-bind="args" counter helperText="hey" />
+		`
+	}),
+}
+
 export const Mask: Story = {
 	render: (args) => ({
 		components: { Input },
@@ -385,7 +398,7 @@ export const Mask: Story = {
 		template: `
 			<div class="mb-3"> Message: {{ msg }}</div>
 
-			<Input v-model="msg" v-bind="args" mask="##-###"/>
+			<Input v-model="msg" v-bind="args" mask="(###) ###-####"/>
 		`
 	})
 }

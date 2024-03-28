@@ -18,6 +18,8 @@ enum NAMESPACES {
 	INPUT_PREFIX = 'vz-input__prefix',
 	INPUT_LOADER = 'vz-input__loader',
 	INPUT_CONTROL = 'vz-input__control',
+	INPUT_DETAILS = 'vz-input__details',
+	INPUT_COUNTER = 'vz-input__counter',
 	INPUT_DISABLED = 'vz-input--disabled',
 	INPUT_CLEARABLE = 'vz-input__clearable',
 	INPUT_HELPER_TEXT = 'vz-input__helper-text',
@@ -88,6 +90,10 @@ const vInputProps = makePropsFactory({
 		type: String,
 		default: undefined,
 	},
+	counter: {
+		type: Boolean,
+		default: false,
+	},
 	/**
     * Defined the append or prepend icon for the button.
     * @type {IconType}
@@ -114,10 +120,10 @@ const Input = defineComponent({
 	emits: ['update:modelValue', 'togglePassword', 'clear'],
 	setup(props, { slots, emit, attrs }) {
 		const instance = getCurrentInstance();
-
 		const componentID = generateComponentId(NAMESPACES.INPUT);
 
 		// * Refs
+		const charCounter = ref<number>(0);
 		const input = ref<HTMLElement>(null);
 		const showPassword = ref<boolean>(false);	
 		const maskit = reactive({
@@ -139,6 +145,7 @@ const Input = defineComponent({
 				hasHelperText: props.helperText || undefined,
 				hasAppendIcon: !!(slots.append || props.appendIcon),
 				hasPrependIcon: !!(slots.prepend || props.prependIcon),
+				hasCounter: props.counter,
 			}
 		});
 
@@ -177,6 +184,7 @@ const Input = defineComponent({
 
 		const {
 			hasLabel,
+			hasCounter,
 			hasHelperText,
 			hasAppendIcon,
 			hasPrependIcon
@@ -217,21 +225,34 @@ const Input = defineComponent({
 			// if(props.mask) {
 			// 	const { maskValue, unmaskValue, test } = maskit;
 			// 	const position = target.selectionEnd;
-			// 	const digit = target.value;
-
-			// 	target.value += maskValue(digit, position);
+				
+			// 	//target.value += maskValue(digit, position);
+			// 	let mask = maskValue(target.value, position);
+			// 	// console.log('mask',mask);
+				
+			// 	// let unmask = unmaskValue(mask);
+			// 	target.value = mask;
+				
+			// 	// emit('update:modelValue', unmask);
+			// } else {
+			// 	if(target.value) {
+			// 		emit('update:modelValue', target.value);
+			// 	}
 			// }
-			console.log(target.value);
 			e.stopPropagation();
+			if(hasCounter) {
+				charCounter.value = target.value.length;
+			}
 			if(target.value) {
 				emit('update:modelValue', target.value);
-			}
+			}	
+			
 		}
 
 		function onKeyDown(e: Event) {
 			const target = e.target as HTMLInputElement;
 			
-			console.log('onKeyDown',target.value);
+			// console.log('onKeyDown',target.value);
 		}
 
 		function onPaste(e: Event) {
@@ -244,13 +265,15 @@ const Input = defineComponent({
 			onInput,
 			onPaste,
 			onClear,
-			onKeyDown,
 			inputRef,
 			instance,
 			hasAffix,
 			hasLabel,
+			onKeyDown,
 			rootAttrs,
+			hasCounter,
 			inputAttrs,
+			charCounter,
 			isClearable,
 			componentID,
 			showPassword,
@@ -265,7 +288,7 @@ const Input = defineComponent({
 	},
 	render() {
 		const { color, disabled, loading } = this.componentClasses;
-		
+		const maxLength = this.instance.attrs.maxlength;
 		return (
 			<div class={[
 					color,
@@ -276,7 +299,6 @@ const Input = defineComponent({
 				{...this.rootAttrs}
 				data-disabled={this.disabled}
 				data-vz-component={Helpers.toPascalCase(NAMESPACES.INPUT, '-')}
-				
 			>	
 				<div class={NAMESPACES.INPUT_CONTROL}>
 					{/* render if has prepend icon  */}
@@ -310,10 +332,10 @@ const Input = defineComponent({
 							ref={this.inputRef}
 							{...this.inputAttrs}
 							onInput={this.onInput}
-							onKeydown={this.onKeyDown}
 							onPaste={this.onPaste}
 							value={this.modelValue}
 							disabled={this.disabled}
+							onKeydown={this.onKeyDown}
 							aria-disabled={this.disabled}
 							class={NAMESPACES.INPUT_FIELD}
 							name={this.name || this.componentID}
@@ -387,10 +409,20 @@ const Input = defineComponent({
 					)}
 				</div>
 				
-				{ this.hasHelperText && (
-					<div class={NAMESPACES.INPUT_HELPER_TEXT}>
-						{ this.helperText }
+				{ (this.hasHelperText || this.hasCounter) && (
+					<div class={NAMESPACES.INPUT_DETAILS}>
+						{ this.helperText && (
+							<div class={NAMESPACES.INPUT_HELPER_TEXT}>
+								{ this.helperText }
+							</div>
+						)}
+						{ this.hasCounter && (
+							<div class={NAMESPACES.INPUT_COUNTER}>
+								{ maxLength ? `${this.charCounter} / ${maxLength}` : this.charCounter}
+							</div>
+						)}
 					</div>
+					
 				)}
 			</div>
 		);
