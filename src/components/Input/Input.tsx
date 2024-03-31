@@ -32,7 +32,7 @@ enum NAMESPACES {
 /**
  * TODO dynamically prepend icon based on type ✅
  * TODO helper text rendering ✅
- * TODO implement slots logic for (prepend, append, helperText) ✅
+ * TODO implement slots logic for (prepend, append, helperText, prefix, suffix) 
  * TODO implement clearable logic ✅
  * TODO implement password toggle logic ✅
  * TODO styling the dot (make it more larger without resize the input) for the password toggle ✅
@@ -190,6 +190,12 @@ const Input = defineComponent({
 			hasPrependIcon
 		} = booleanContext.value;
 
+		watch(() => props.modelValue, (value) => {
+			if(hasCounter) {
+				charCounter.value = (value as string).length;
+			}
+		})
+
 		const componentClasses = computed(() => {
 			return {
 				disabled: props.disabled && NAMESPACES.INPUT_DISABLED,
@@ -240,13 +246,7 @@ const Input = defineComponent({
 			// 	}
 			// }
 			e.stopPropagation();
-			if(hasCounter) {
-				charCounter.value = target.value.length;
-			}
-			if(target.value) {
-				emit('update:modelValue', target.value);
-			}	
-			
+			emit('update:modelValue', target.value);
 		}
 
 		function onKeyDown(e: Event) {
@@ -260,8 +260,8 @@ const Input = defineComponent({
 		}
 
 		return {
-			input,
 			type,
+			input,
 			onInput,
 			onPaste,
 			onClear,
@@ -411,18 +411,13 @@ const Input = defineComponent({
 				
 				{ (this.hasHelperText || this.hasCounter) && (
 					<div class={NAMESPACES.INPUT_DETAILS}>
-						{ this.helperText && (
-							<div class={NAMESPACES.INPUT_HELPER_TEXT}>
-								{ this.helperText }
-							</div>
-						)}
-						{ this.hasCounter && (
-							<div class={NAMESPACES.INPUT_COUNTER}>
-								{ maxLength ? `${this.charCounter} / ${maxLength}` : this.charCounter}
-							</div>
-						)}
+						<div class={NAMESPACES.INPUT_HELPER_TEXT}>
+							{ this.helperText }
+						</div>
+						<div class={NAMESPACES.INPUT_COUNTER}>
+							{ maxLength ? `${this.charCounter} / ${maxLength}` : this.charCounter }
+						</div>
 					</div>
-					
 				)}
 			</div>
 		);
