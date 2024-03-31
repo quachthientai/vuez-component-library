@@ -1,5 +1,6 @@
 import { ref, Ref, watch } from 'vue';
 import { extractRefHTMLElement } from '@/utils/extractRefHTMLElement';
+import { Helpers } from '@/utils/helpers';
 
 /**
  * TODO: Should let user define length of the mask
@@ -47,30 +48,33 @@ export function makeMaskProp() {
 export default function (props, inputRef: Ref<HTMLElement | null>) {
    const maskPattern = props.mask.split('');
 
-   function maskValue(value, pos) {
+   function maskValue(value: string) {
       let maskedValue = '';
-      let valueIndex = 0;
-      
-      maskPattern.forEach((char) => {
-         const token = TOKENS[char];
-         if (token) {
-            const valueChar = value[valueIndex];
-            if (valueChar !== undefined && token.pattern.test(valueChar)) {
-               maskedValue += token.transform ? token.transform(valueChar) : valueChar;
-               valueIndex++;
-            }
-         } else {
-            maskedValue += char;
-         }
-      });
+      var iMask = 0;
+      var iValue = 0;
 
-      
+      while(iMask < maskPattern.length && iValue < value.length) {
+         let token = maskPattern[iMask];
+         const digit = value[iValue];
+         const pattern = token in TOKENS ? TOKENS[token].pattern : null;
+         
+         if(pattern) {
+            if(pattern.test(digit)) {
+               maskedValue += TOKENS[token].transform ? TOKENS[token].transform(digit) : digit;
+               iMask++;
+            }
+            iValue++;
+         } else {
+            maskedValue += token;
+            iMask++;
+         }
+      }
+
       return maskedValue;
-      // el.value = maskedValue;
    }
 
-   function unmaskValue() {
-
+   function unmaskValue(value: string) {
+      
    }
 
    return {

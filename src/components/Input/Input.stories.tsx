@@ -207,7 +207,12 @@ export const HelperText: Story = {
 			<div class="mb-3">
 				Message: {{ msg }}
 			</div>
-			<Input v-model="msg" class="mb-3" label="Primary" v-bind="args" placeholder="Type something.."/>
+			<Input v-model="msg" 
+				class="mb-3" 
+				label="Primary" 
+				v-bind="args" 
+				placeholder="Type something.."
+			/>
 		`
 	}),
 	args: {
@@ -261,20 +266,23 @@ export const Disabled: Story = {
 
 export const Loading: Story = {
 	render: (args) => ({
-		components: { Input },
+		components: { 'Input': Input, 'Button': Button },
 		setup() {
 			const msg = ref('Hey!');
-			return { args, msg };
+			const load = ref(false);
+			return { args, msg, load };
 		},
 		template: `
 			<div class="mb-3">
 				Message: {{ msg }}
+				Load: {{ load }}
 			</div>
-			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+			<Button @click="load = !load"  class="my-3" color="primary" content="Toggle loading"/>
+			<Input v-model="msg" class="mb-3" v-bind="args" :loading="load"  label="Message" placeholder="Type something.."/>
 		`
 	}),
 	args: {
-		loading: true
+		
 	}
 }
 
@@ -375,6 +383,19 @@ export const Test: Story = {
 	}
 };
 
+export const Counter: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref(null);
+			return { args, msg };
+		},
+		template: `
+			<Input v-model="msg" v-bind="args" counter clearable helperText="hey" />
+		`
+	}),
+}
+
 export const Mask: Story = {
 	render: (args) => ({
 		components: { Input },
@@ -385,7 +406,7 @@ export const Mask: Story = {
 		template: `
 			<div class="mb-3"> Message: {{ msg }}</div>
 
-			<Input v-model="msg" v-bind="args" mask="##-###"/>
+			<Input v-model="msg" v-bind="args" mask="(###) ###-####"/>
 		`
 	})
 }

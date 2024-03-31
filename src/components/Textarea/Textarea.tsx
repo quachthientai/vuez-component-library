@@ -3,16 +3,23 @@ import { generateComponentId } from '@/utils/ComponentIDGenerator';
 import { Helpers } from '@/utils/helpers';
 import { makeColorProp, useColor } from '@/composable/color';
 import { makeIconProps } from '@/composable/icon';
-import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance } from 'vue';
+import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, watch, nextTick, onMounted } from 'vue';
 import { Icon } from '@iconify/vue';
+import { autoUpdate, computePosition } from '@floating-ui/vue';
+
+/**
+ * TODO - Add label, helperText slots
+ * TODO - Add clear event
+ */
 
 enum NAMESPACES {
 	TEXTAREA = 'vz-textarea',
 	TEXTAREA_LABEL = 'vz-textarea__label',
 	TEXTAREA_FIELD = 'vz-textarea__field',
 	TEXTAREA_ICON = 'vz-textarea__icon',
-	
 	TEXTAREA_CONTROL = 'vz-textarea__control',
+	TEXTAREA_DETAILS = 'vz-textarea__details',
+	TEXTAREA_COUNTER = 'vz-textarea__counter',
 	TEXTAREA_DISABLED = 'vz-textarea--disabled',
 	TEXTAREA_CLEARABLE = 'vz-textarea__clearable',
 	TEXTAREA_HELPER_TEXT = 'vz-textarea__helper-text',
@@ -47,6 +54,14 @@ const vTextareaProps = makePropsFactory({
 		type: String,
 		default: undefined,
 	},
+	autoResize: {
+		type: Boolean,
+		default: false,
+	},
+	counter: {
+		type: Boolean,
+		default: false
+	},
 	...makeIconProps(),
 	...makeColorProp([
 		'primary',
@@ -65,11 +80,18 @@ const Textarea = defineComponent({
 	emits: ['update:modelValue', 'clear'],
 	setup(props, { slots, emit, attrs }) {
 		const instance = getCurrentInstance();
-
 		const componentID = generateComponentId(NAMESPACES.TEXTAREA);
 
+		// * Refs
+		const input = ref<HTMLTextAreaElement>(null);
+		const charCounter = ref<number>(0);
+
 		const hasHelperText = computed(() => {
-			return props.helperText !== undefined;
+			return !!(props.helperText || slots.helperText);
+		})
+
+		const hasCounter = computed(() => {
+			return props.counter;
 		})
 
 		const hasAppendIcon = computed(() => {
@@ -91,10 +113,39 @@ const Textarea = defineComponent({
 			}
 		});
 
+		watch(() => props.modelValue, (newValue, oldValue) => {
+			if(hasCounter.value) {
+				charCounter.value = (newValue as string).length;
+			}
+		});
+
+		onMounted(() => {
+			if(props.autoResize) {
+				resize()
+			}
+		})
+
 		const [rootAttrs, textareaAttrs] = Helpers.filterInputAttrs(attrs, ['class', 'style']);
+
+		function inputRef(el: HTMLTextAreaElement) {
+			return input.value = el;
+		}
+
+		function resize() {
+			input.value.style.height = 'auto';
+			input.value.style.height = input.value.scrollHeight + 'px';
+
+			if(parseFloat(input.value.style.height) >= parseFloat(input.value.style.maxHeight)) {
+				input.value.style.overflowY = 'scroll';
+				input.value.style.height = input.value.style.maxHeight;
+			} else {
+				input.value.style.overflow = 'hidden';
+			}
+		}
 
 		function onClear(e: Event) {
 			e.stopPropagation();
+
 			emit('update:modelValue', '');	
 			emit('clear');
 		}
@@ -103,18 +154,23 @@ const Textarea = defineComponent({
 			const target = e.target as HTMLTextAreaElement;
 			e.stopPropagation();
 
-			if(target.value) {
-				emit('update:modelValue', target.value);
+			emit('update:modelValue', target.value);
+
+			if(props.autoResize) {
+				resize();
 			}
 		}
 
 		return {
 			onClear,
 			onInput,
+			inputRef,
 			instance,
 			rootAttrs,
+			hasCounter,
 			isClearable,
 			componentID,
+			charCounter,
 			hasAppendIcon,
 			textareaAttrs,
 			hasHelperText,
@@ -122,8 +178,11 @@ const Textarea = defineComponent({
 			componentClasses
 		};
 	},
+
 	render() {
 		const { color, disabled } = this.componentClasses;
+		const maxLength = this.instance.attrs.maxLength;
+		
 		return (
 			<div class={[
 					color,
@@ -152,6 +211,7 @@ const Textarea = defineComponent({
 					<div class={NAMESPACES.TEXTAREA_FIELD_WRAPPER}>
 						<textarea
 							placeholder=""
+							ref={this.inputRef}
 							onInput={this.onInput}
 							value={this.modelValue}
 							{...this.textareaAttrs}
@@ -162,11 +222,11 @@ const Textarea = defineComponent({
 						>
 							{this.$slots.default}
 						</textarea>
-						{ this.label && (
+						{ (this.label || this.$slots.label) && (
 							<label class={NAMESPACES.TEXTAREA_LABEL}
 								for={this.instance.attrs.id || this.componentID}
 							>
-								{this.label}
+								{this.label || this.$slots.label()}
 							</label>
 						)}
 						
@@ -198,14 +258,17 @@ const Textarea = defineComponent({
 					)}
 				</div>
 				
-				{ this.hasHelperText && (
-					<div class={NAMESPACES.TEXTAREA_HELPER_TEXT}>
-						{ this.helperText }
+				{ (this.hasHelperText || this.hasCounter) && (
+					<div class={NAMESPACES.TEXTAREA_DETAILS}>
+						<div class={NAMESPACES.TEXTAREA_HELPER_TEXT}>
+							{ this.helperText || this.$slots.helperText?.() }
+						</div>
+						<div class={NAMESPACES.TEXTAREA_COUNTER}>
+							{ maxLength ? `${this.charCounter} / ${maxLength}` : this.charCounter}
+						</div>
 					</div>
 				)}
 			</div>
-			
-			
 		);
 	}
 });

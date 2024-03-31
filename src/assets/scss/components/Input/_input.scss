@@ -7,9 +7,9 @@
 @layer base {
   .vz-input {
     @apply grid rounded-lg;
-    grid-template-areas: 
+    grid-template-areas:
       "control"
-      "helper-text";
+      "details";
     grid-template-rows: auto auto;
 
     &__control {
@@ -18,17 +18,17 @@
       grid-template-areas: "prepend field show-password-toggle clear loader append";
       grid-template-columns: min-content minmax(0, 1fr) min-content min-content min-content;
     }
-    
+
     &__field-wrapper {
       @apply flex;
       grid-area: field;
     }
 
     &__affix {
-      @apply flex items-center; 
+      @apply flex items-center;
       @apply text-sm text-slate-400 dark:text-slate-300/70;
     }
-    
+
     &__prepend-icon {
       grid-area: prepend;
     }
@@ -39,16 +39,17 @@
 
     &__show-password-toggle {
       grid-area: show-password-toggle;
-      
+
       &:hover {
-        @apply cursor-pointer text-dark/80 dark:text-light;
+        @apply transition-all duration-300 cursor-pointer text-dark/80 dark:text-light;
       }
     }
 
     &__clearable {
       grid-area: clear;
+      
       &:hover {
-        @apply cursor-pointer text-dark/80 dark:text-light;
+        @apply transition-all duration-300 cursor-pointer text-dark/80 dark:text-light;
       }
     }
 
@@ -69,12 +70,12 @@
 
     &__field {
       @apply w-full h-full flex;
-      @apply text-sm text-dark/70 dark:text-light/70; 
+      @apply text-sm text-dark/70 dark:text-light/70;
       @apply bg-transparent border-0 border-transparent py-0 px-1;
-     
-      
+
+
       &[type="password"]:not(:placeholder-shown) {
-        font-family: Tahoma,sans-serif;
+        font-family: Tahoma, sans-serif;
         letter-spacing: 0.125em;
       }
 
@@ -83,7 +84,7 @@
       }
 
       &:placeholder-shown:not(:focus) {
-        ~ .vz-input__label {
+        ~.vz-input__label {
           @apply scale-100 p-0 -translate-y-1/2 top-1/2;
         }
       }
@@ -93,18 +94,32 @@
       }
     }
 
-    &__helper-text {
-      @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
-      grid-area: helper-text;
+    &__details {
+      @apply text-xs flex px-3 pt-1 text-slate-400 dark:text-slate-300/70;
+      grid-area: details;
     }
-    
+
+    &__helper-text {
+      @apply grow shrink basis-auto;
+    }
+
+    &__counter {
+      @apply grow-0 shrink basis-auto;
+    }
+
+    // &__helper-text {
+    //   @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
+    //   grid-area: helper-text;
+    // }
+
     &--disabled {
       :not(.vz-input__helper-text) {
         @apply cursor-not-allowed;
       }
-      
+
       .vz-input__control {
         @apply bg-slate-200 dark:bg-slate-400/60 opacity-60;
+
         * * {
           @apply cursor-not-allowed;
         }
@@ -120,7 +135,7 @@
         .vz-input__control {
           &:has(*.vz-input__field:focus) {
             @apply border ring-0 border-#{$color}-500 dark:border-#{$color}-500/90;
-            
+
             *.vz-input__label {
               @apply text-#{$color}-500 dark:text-#{$color}-500/90;
             }
@@ -156,18 +171,17 @@
         @apply pb-0 pt-3 px-1;
 
         &::placeholder {
-          @apply invisible;
-        }
-        
-        &:focus {
-          &::placeholder {
-            @apply visible;
+            @apply invisible opacity-0 transition-all ease-linear duration-100;
           }
-          
-        }
+        
+          &:focus {
+            &::placeholder {
+              @apply visible opacity-100;
+            }
+          }
       }
     }
-    
+
     &:has(&__prepend-icon) {
       .vz-input__field {
         ~.vz-input__label {
@@ -177,6 +191,5 @@
     }
   }
 
-  
-}
 
+}
