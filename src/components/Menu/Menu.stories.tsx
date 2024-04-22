@@ -399,3 +399,19 @@ export const Placement: Story = {
    },
 };
 
+export const Test: Story = {
+	render: (args) => ({
+		components: { 'Menu': Menu, 'MenuList': MenuList },
+		setup() {
+			return { args };
+		},
+		template: `
+			<div>
+				<Menu>
+					<MenuList placement="top" :model="args.model"/>
+				</Menu>
+			</div>
+		`
+	})
+}
+
