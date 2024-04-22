@@ -13,14 +13,14 @@
     grid-template-rows: auto auto;
 
     &__control {
-      @apply grid border h-[46px] px-2 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
+      @apply grid border min-h-[46px] px-2 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
       grid-area: control;
       grid-template-areas: "prepend field show-password-toggle clear loader append";
       grid-template-columns: min-content minmax(0, 1fr) min-content min-content min-content;
     }
 
     &__field-wrapper {
-      @apply flex;
+      @apply flex relative;
       grid-area: field;
     }
 
@@ -58,7 +58,7 @@
     }
 
     &__label {
-      @apply absolute top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0];
+      @apply absolute top-3 left-1 -translate-y-1/2 z-10 scale-75 origin-[0];
       @apply text-sm text-slate-400 dark:text-slate-300/70 bg-transparent;
       @apply transition-all duration-300;
     }
@@ -69,7 +69,7 @@
     }
 
     &__field {
-      @apply w-full h-full flex;
+      @apply w-full h-full flex truncate;
       @apply text-sm text-dark/70 dark:text-light/70;
       @apply bg-transparent border-0 border-transparent py-0 px-1;
 
@@ -106,11 +106,6 @@
     &__counter {
       @apply grow-0 shrink basis-auto;
     }
-
-    // &__helper-text {
-    //   @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
-    //   grid-area: helper-text;
-    // }
 
     &--disabled {
       :not(.vz-input__helper-text) {
@@ -171,21 +166,23 @@
         @apply pb-0 pt-3 px-1;
 
         &::placeholder {
-            @apply invisible opacity-0 transition-all ease-linear duration-100;
+          @apply invisible opacity-0 transition-all ease-linear duration-100;
+        }
+      
+        &:focus {
+          &::placeholder {
+            @apply visible opacity-100;
           }
-        
-          &:focus {
-            &::placeholder {
-              @apply visible opacity-100;
-            }
-          }
+        }
       }
     }
+
+   
 
     &:has(&__prepend-icon) {
       .vz-input__field {
         ~.vz-input__label {
-          @apply translate-x-[1.8rem];
+          // @apply translate-x-[1.8rem];
         }
       }
     }

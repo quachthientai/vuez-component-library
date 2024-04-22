@@ -1,0 +1,34 @@
+@use '../../utilities/utils-mixin';
+@use '../../utilities/utils-variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   .vz-select {
+      &__selections {
+         @apply flex items-center flex-wrap gap-x-[3px] gap-y-[5px];
+      }
+   }
+   
+}
+
+@layer utilities {
+   .vz-select {
+      &:has(.vz-select__selections, .vz-input__label){
+         .vz-select__selections {
+            @apply pb-1 pt-[19px];
+         }
+         
+         .vz-input__control {
+            @apply min-h-[50px];
+         }
+         .vz-input__field-wrapper {
+            @apply gap-1 flex-wrap gap-y-1;
+         }
+         .vz-input__field {
+            @apply h-[0px] w-[0px] absolute opacity-0;
+         }
+      }
+   }
+}

@@ -4,6 +4,8 @@ import { Select } from './Select';
 import {
 	colorArgType,
 } from '../../../.storybook/argsTypes';
+import { ref } from 'vue';
+import { CloseOnSelect } from '../Menu/Menu.stories';
 
 const meta = {
 	title: 'Forms/Select',
@@ -21,10 +23,21 @@ export const Basic: Story = {
 	render: (args) => ({
 		components: { Select },
 		setup() {
-			return { args };
+			const val = ref([
+				{content: 'Home', label:'Home', value: 'Home'},
+				{content: 'Account', label:'Account', value: 'Account'}
+			]);
+			// const val = ref({content: 'Home', label:'Home', value: 'Home'})
+			return { args, val };
 		},
 		template: `
-			<Select v-bind="args" />
+			<Select v-bind="args" multiple chips v-model="val" />
 		`
 	}),
+	args: {
+		options: [ {content: 'Home', label:'Home', value: 'Home'},
+			{content: 'Account', label:'Account', value: 'Account'},
+			{content: 'Setting', label:'Setting', value: 'Setting'},
+		]
+	}
 };

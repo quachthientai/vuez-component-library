@@ -1,12 +1,14 @@
 import { makePropsFactory } from '@/utils/makePropFactory';
 import { generateComponentId } from '@/utils/ComponentIDGenerator';
 import { Helpers } from '@/utils/helpers';
-import { Icon, addIcon } from "@iconify/vue";
-import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, onMounted, onRenderTriggered, onUpdated, watch, reactive } from 'vue';
+import { Icon } from "@iconify/vue";
+import { computed, defineComponent, getCurrentInstance, ref, onMounted, watch, reactive, ComponentInternalInstance, inject } from 'vue';
 import { makeIconProps } from '@/composable/icon';
 import { makeColorProp, useColor } from '@/composable/color';
 import { makeLoaderProp, useLoader } from '@/composable/loader';
 import useMask, { makeMaskProp } from '@/composable/useMask';
+import { Chip } from '@/components/Chip/Chip';
+import { SelectKey } from '@/constants/injectionKey';
 
 enum NAMESPACES {
 	INPUT = 'vz-input',
@@ -110,14 +112,24 @@ const vInputProps = makePropsFactory({
 		'info',
 		'warning',
 		'danger',
-	], 'primary'),
+	], 'primary')
 });
 
 const Input = defineComponent({
 	name: 'Input',
 	props: vInputProps,
 	inheritAttrs: false,
-	emits: ['update:modelValue', 'togglePassword', 'clear'],
+	emits: {
+		'update:modelValue': null, 
+		'togglePassword': null, 
+		'clear': null, 
+		'focus': (payload: {
+			originalEvent: FocusEvent,
+			currentInstance: ComponentInternalInstance,
+		}) => {
+			return payload.originalEvent && payload.currentInstance;
+		}
+	},
 	setup(props, { slots, emit, attrs }) {
 		const instance = getCurrentInstance();
 		const componentID = generateComponentId(NAMESPACES.INPUT);
@@ -131,6 +143,8 @@ const Input = defineComponent({
 			unmaskValue: null as Function | null,
 			test: null as Function | null,
 		});
+
+		const SelectContext = inject(SelectKey, null);
 
 		onMounted(() => {
 			if (props.mask && input.value) {
@@ -213,6 +227,8 @@ const Input = defineComponent({
 
 		function onClear(e: Event) {
 			e.stopPropagation();
+					
+
 			emit('update:modelValue', '');
 			emit('clear');
 		}
@@ -259,7 +275,15 @@ const Input = defineComponent({
 			console.log(e);
 		}
 
+		function onFocused(e: FocusEvent) {
+			emit('focus', {
+				originalEvent: e,
+				currentInstance: instance,
+			})
+		}
+
 		return {
+			SelectContext,
 			type,
 			input,
 			onInput,
@@ -270,6 +294,7 @@ const Input = defineComponent({
 			hasAffix,
 			hasLabel,
 			onKeyDown,
+			onFocused,
 			rootAttrs,
 			hasCounter,
 			inputAttrs,
@@ -289,6 +314,7 @@ const Input = defineComponent({
 	render() {
 		const { color, disabled, loading } = this.componentClasses;
 		const maxLength = this.instance.attrs.maxlength;
+
 		return (
 			<div class={[
 					color,
@@ -325,21 +351,23 @@ const Input = defineComponent({
 								{this.prefix}
 							</span>
 						)}
-
+						{this.$slots.default?.()}
 						<input
 							placeholder=""
 							type={this.type}
 							ref={this.inputRef}
 							{...this.inputAttrs}
-							onInput={this.onInput}
 							onPaste={this.onPaste}
+							onInput={this.onInput}
 							value={this.modelValue}
+							onFocus={this.onFocused}
 							disabled={this.disabled}
 							onKeydown={this.onKeyDown}
 							aria-disabled={this.disabled}
 							class={NAMESPACES.INPUT_FIELD}
 							name={this.name || this.componentID}
 						/>
+						
 						{ this.hasLabel && (
 							<label class={NAMESPACES.INPUT_LABEL}
 								for={this.instance.attrs.id || this.componentID}
@@ -429,4 +457,5 @@ type InputType = InstanceType<typeof Input>;
 export {
 	Input,
 	InputType,
+	vInputProps,
 };
