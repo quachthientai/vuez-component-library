@@ -341,6 +341,7 @@ const MenuList = defineComponent({
        * Handles the enter transition.
        */
       function onEnterTransition() {
+			console.log(root.value);
          focusableItems.value = DOM.find(
             root.value, 
             `[role="menuitem"][data-disabled="false"][data-element-type="item"]`
@@ -385,8 +386,8 @@ const MenuList = defineComponent({
          >
             {this.isOpen && (
                <ul class={NAMESPACE}
-                  {...this.componentAttrs}
-                  ref={ this.rootRef }
+						ref={ this.rootRef }
+						{...this.componentAttrs}
                   style={ this.dimension }
                   onFocus={ this.onFocused }
                   onKeydown={ this.handleKeyDown }

@@ -32,7 +32,7 @@
 
       // * Size variants * /
       &.vz-chip--sm {
-         @apply h-[26px] px-2.5;
+         @apply h-[23px] px-2.5;
          > .vz-chip__content {
             @apply text-[.75rem];
          }
@@ -42,7 +42,7 @@
       }
       
       &.vz-chip--md {
-         @apply h-[32px] px-3;
+         @apply h-[29px] px-3;
          > .vz-chip__content {
             @apply text-[.875rem];
          }
@@ -52,7 +52,7 @@
       }
 
       &.vz-chip--lg {
-         @apply h-[38px] px-3.5;
+         @apply h-[35px] px-3.5;
          >.vz-chip__content {
             @apply text-[1rem];
          }

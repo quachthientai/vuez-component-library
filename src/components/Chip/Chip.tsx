@@ -48,12 +48,13 @@ const Chip = defineComponent({
 		}) {
 			return payload.originalEvent && payload.currentInstance;
 		},
-		remove(payload: {
-			originalEvent: Event,
-			currentInstance: ComponentInternalInstance
-		}) {
-			return payload.originalEvent && payload.currentInstance;
-		}
+		'close':null
+		// close(payload: {
+		// 	originalEvent: Event,
+		// 	currentInstance: ComponentInternalInstance
+		// }) {
+		// 	return payload.originalEvent && payload.currentInstance;
+		// }
 	},
 	directives: {
 		'ripple': Ripple
@@ -87,15 +88,19 @@ const Chip = defineComponent({
 			});
 		}
 
-		function onRemove(e: Event) {
+		function onClose(e: Event) {
+			console.log('hey')
 			visible.value = false;
-	
-			emit('remove', {
-				originalEvent: e,
-				currentInstance: instance,
-			});
+			
+			emit('close', e);
+			e.stopPropagation();
+			e.preventDefault();
+			// emit('close', {
+			// 	originalEvent: e,
+			// 	currentInstance: instance,
+			// });
 		}
-
+		
 		return {
 			size,
 			color,
@@ -104,7 +109,7 @@ const Chip = defineComponent({
 			hasContent,
 			isClickable,
 			onClick,
-			onRemove,
+			onClose,
 			componentAttrs,
 		};
 	},
@@ -125,7 +130,7 @@ const Chip = defineComponent({
 					>	
 						{this.hasIcon && (
 							<i class={NAMESPACES.CHIP_ICON}>
-								<Icon  icon={this.icon}/>
+								<Icon icon={this.icon}/>
 							</i>
 						)}
 
@@ -135,7 +140,7 @@ const Chip = defineComponent({
 						
 						{this.closable && (
 							<i class={NAMESPACES.CHIP_CLOSE} 
-								onClick={!this.disabled && this.onRemove}
+								onClick={!this.disabled && this.onClose}
 							>
 								<Icon icon="mdi:close-circle"/>
 							</i>

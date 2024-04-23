@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { vueRouter } from 'storybook-vue3-router';
-
+import { Button } from '@/components/Button/Button';
 import { Menu } from '@/components/Menu/Menu';
 import { MenuButton } from '@/components/Menu/MenuButton';
 import { MenuList } from '@/components/Menu/MenuList';
@@ -9,6 +9,7 @@ import { Badge } from '../Badge/Badge';
 import { Icon } from '@iconify/vue';
 
 import { placementArgType, dimensionArgType, labelArgType, hrefArgType, routeArgType, contentArgType } from '../../../.storybook/argsTypes';
+import { ref } from 'vue';
 
 const meta = {
    title: 'Components/Menu',
@@ -401,17 +402,30 @@ export const Placement: Story = {
 
 export const Test: Story = {
 	render: (args) => ({
-		components: { 'Menu': Menu, 'MenuList': MenuList },
+		components: { 'Menu': Menu, 'MenuList': MenuList, 'MenuItem': MenuItem, 'Button': Button },
 		setup() {
-			return { args };
+			const menu = ref();
+			
+
+			function onMenuToggle(e) {
+				menu.value.show();
+			}
+
+			return { args, menu, onMenuToggle };
 		},
 		template: `
-			<div>
-				<Menu>
-					<MenuList placement="top" :model="args.model"/>
-				</Menu>
-			</div>
-		`
-	})
+			<Button @click="onMenuToggle">
+				dropdown
+			</Button>
+
+			<Menu ref="menu">
+            <MenuList placement="top" :model="args.model"/>
+         </Menu>
+			
+		`,
+	}),
+	args: {
+		...Basic.args
+	}
 }
 

@@ -1,26 +1,41 @@
 import { extractRefHTMLElement } from '@/utils/extractRefHTMLElement';
-import { Ref, nextTick, onMounted, onUnmounted } from 'vue';
+import { ComponentInternalInstance, Ref, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const useClickOutside = (props: {
    refElement: Ref<HTMLElement | null>,
-   callback: () => void 
+   triggerElement: Ref<HTMLElement | null>,
+   callback: (e: Event) => void 
 }) => {
-   const { refElement, callback } = props;
-
+   const { refElement, callback, triggerElement } = props;
+   
    const handleClickOutside = (ev : Event) => {
       const target = ev.target as HTMLElement;
+      const trigger = extractRefHTMLElement(triggerElement);
       const element = extractRefHTMLElement(refElement);
 
-      if(!target || !element) {
-         return;
+      switch(true) {
+         case !target:
+         case !element:
+         case element === target:
+         case target === trigger:
+         case element.contains(target):
+         case trigger.contains(target):
+            break;
+         default: 
+            callback(ev);
       }
+      // if(!target || !element) {
+      //    return;
+      // }
 
-      if(element === target || element.contains(target)) {
-         return;
-      }
+      // if(element === target || target === trigger || trigger.contains(target)) {
+      //    return;
+      // }
       
-      callback();
+      // callback();
    }
+
+   
 
    onMounted(() => {
       document.addEventListener('mousedown', handleClickOutside)

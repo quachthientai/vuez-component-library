@@ -79,6 +79,10 @@ const Menu = defineComponent({
          isOpen.value = true;
       }
 
+		function test() {
+			console.log('hey its menu')
+		}
+
       function hide() {
          if(!isOpen.value) return;
          isOpen.value = false;
@@ -111,12 +115,13 @@ const Menu = defineComponent({
       }
 
       return {
+			show,
+			test,
          rootRef,
          root,
          componentAttrs,
          onBlured,
       }
-      
    },
    render() {
       return (

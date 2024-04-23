@@ -1,6 +1,6 @@
 import { makePropsFactory } from "@/utils/makePropFactory";
 import { makeColorProp, useColor } from "@/composable";
-import { computed, defineComponent, getCurrentInstance, inject } from "vue";
+import { ComponentInternalInstance, computed, defineComponent, getCurrentInstance, inject } from "vue";
 import { generateComponentId } from "@/utils/ComponentIDGenerator";
 import { Helpers } from "@/utils/helpers";
 import { CheckboxGroupKey } from "@/constants/injectionKey";
@@ -26,10 +26,21 @@ const vCheckboxProps = makePropsFactory({
       type: Boolean,
       default: false,
    },
+	binary: {
+		type: Boolean,
+		default: false
+	},
+	trueValue: {
+		type: Boolean,
+		default: true,
+	},
+	falseValue: {
+		type: Boolean,
+		default: false
+	},
    label: {
       type: String,
       default: undefined,
-      required: true
    },
 	indeterminate: {
 		type: Boolean,
@@ -49,7 +60,15 @@ const Checkbox = defineComponent({
    name: 'Checkbox',
    props: vCheckboxProps,
    inheritAttrs: false,
-   emits: ['update:modelValue'],
+   emits: {
+		'update:modelValue' : null,
+		'change': (payload: {
+			originalEvent: Event,
+			currentInstance: ComponentInternalInstance
+		}) => {
+			return payload.originalEvent && payload.currentInstance;
+		}
+	},
    setup(props, { slots, emit, attrs }) {
       // * Get an unique component ID */
       const componentID = generateComponentId(NAMESPACES.CHECKBOX);
@@ -66,7 +85,15 @@ const Checkbox = defineComponent({
             const { value } = CheckboxGroupContext;
             return Helpers.isIncluded(value?.value, props.value as string);
          }
-         return props.modelValue;
+			
+			return props.binary 
+				? props.modelValue === props.trueValue
+				: Helpers.isIncluded(props.modelValue as any[] | any, props.value)
+			// if(props.binary) {
+			// 	return props.modelValue === props.trueValue;
+			// }
+			// debugger;
+         // return Helpers.isIncluded(props.modelValue as any[] | any, props.value);
       });
 
 		const isDisabled = computed(() => {
@@ -74,6 +101,10 @@ const Checkbox = defineComponent({
 				return CheckboxGroupContext.disabled.value;
 			}
 			return props.disabled;
+		})
+
+		const hasLabel = computed(() => {
+			return !!(slots.default || props.label)
 		})
 
       const componentAttrs = computed(() => {
@@ -97,20 +128,37 @@ const Checkbox = defineComponent({
 		})
 
       function onChange(e: Event) {
-         const target = e.target as HTMLInputElement;
+			let value : any = props.value;
+			let newModelValue : any | any[];
+			let modelValue : any | any[] = props.modelValue;
 
-         if(CheckboxGroupContext?.value) {
-            const { onChange } = CheckboxGroupContext;
-            return onChange(props.value as string);
-         }
+         // if(CheckboxGroupContext?.value) {
+         //    const { onChange } = CheckboxGroupContext;
+         //    return onChange(props.value as string);
+         // }
 
-         return emit('update:modelValue', target.checked);
+			if(props.binary) {
+				newModelValue = checked.value 
+					? props.falseValue 
+					: props.trueValue;
+			} else {
+				newModelValue = Helpers.isIncluded(modelValue, value) 
+					? modelValue.filter((item: any) => item !== value)
+					: [...modelValue, value];
+			}
+
+         emit('update:modelValue', newModelValue);
+			emit('change', {
+				originalEvent: e,
+				currentInstance: instance
+			})
       }
 
       return {
          checked,
          onChange,
          instance,
+			hasLabel,
 			isDisabled,
          componentID,
          componentAttrs,
@@ -119,7 +167,6 @@ const Checkbox = defineComponent({
    },
    render() {
 		const { color, disabled } = this.componentClasses;
-		
       return (
          <div class={[
 					color,
@@ -130,6 +177,7 @@ const Checkbox = defineComponent({
          >
             <input class={NAMESPACES.CHECKBOX_INPUT} 
                type="checkbox"
+					value={this.value}
                checked={this.checked}
                onChange={this.onChange}
                disabled={this.isDisabled}
@@ -140,11 +188,14 @@ const Checkbox = defineComponent({
                aria-checked={this.componentAttrs['aria-checked']}
                aria-disabled={this.componentAttrs['aria-disabled']}
             />
-            <label class={NAMESPACES.CHECKBOX_LABEL}
-               for={this.instance.attrs.id || this.componentID}
-            >
-               { this.label || this.$slots.default?.() }
-            </label>
+				{ this.hasLabel && (
+					<label class={NAMESPACES.CHECKBOX_LABEL}
+						for={this.instance.attrs.id || this.componentID}
+					>
+						{ this.label || this.$slots.default?.() }
+					</label>
+				)}
+            
          </div>
       );
    }

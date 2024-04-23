@@ -5,7 +5,7 @@
 
 @layer base {
   .vz-checkbox {
-    @apply inline-block items-center transition-all duration-300 p-1;
+    @apply inline-flex items-center transition-all duration-300 p-1 gap-2;
 
     &.vz-checkbox--disabled {
       > * {
@@ -22,7 +22,7 @@
     }
 
     &__label {
-      @apply mx-2 cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-300;
+      @apply cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-300;
     }
   }
 
