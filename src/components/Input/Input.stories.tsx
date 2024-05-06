@@ -1,5 +1,6 @@
 // @ts-ignore
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { Icon } from "@iconify/vue";
 import { Input } from './Input';
 import { Button } from '../Button/Button';
 import {
@@ -131,7 +132,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
 	render: (args) => ({
-		components: { Input },
+		components: { 'Input': Input, 'Icon': Icon },
 		setup() {
 			const msg = ref('');
 			return { args, msg };
@@ -140,7 +141,9 @@ export const Basic: Story = {
 			<div class="mb-3">
 				Message: {{ msg }}
 			</div>
-			<Input v-model="msg" v-bind="args" placeholder="Type something.."/>
+			<Input v-model="msg" v-bind="args" placeholder="Type something..">
+				
+			</Input>
 		`
 	}),
 }

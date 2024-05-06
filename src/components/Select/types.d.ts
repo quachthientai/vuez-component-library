@@ -13,12 +13,6 @@ export interface SelectInjectionKey {
 
 export type SelectOptionModel = {
    /**
-    * The menu item content.
-    * @type {string}
-    * @memberof MenuItemModel
-    */
-   content?: string;
-   /**
     * The menu item label.
     * @type {string}
     * @memberof MenuItemModel

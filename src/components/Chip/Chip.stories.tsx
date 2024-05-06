@@ -23,17 +23,18 @@ export const Basic: Story = {
 		components: { 'Button': Button, 'Chip': Chip },
 		setup() {
 			const disabled = ref(true);
+			const visible = ref(true);
 			function toggle(e) {
 				disabled.value = !disabled.value;
 			}
-			return { args, disabled, toggle };
+			return { args, disabled, toggle, visible };
 		},
 		template: `
 			<div class="flex gap-3">
 				{{ disabled }}
 				<Button @click="disabled = !disabled">test</Button>
 
-				<Chip icon="mdi:check-circle" :disabled="disabled" color="primary" @click="(e) => console.log(e)" size="sm" closable content="Biking"/>
+				<Chip icon="mdi:check-circle" v-model="visible" :disabled="disabled" color="primary" @click="(e) => console.log(e)" size="sm" closable content="Biking"/>
 				<Chip icon="mdi:check-circle" color="primary" closable content="Biking"/>
 				<Chip icon="mdi:check-circle" size="lg" closable content="Biking"/>
 			</div>

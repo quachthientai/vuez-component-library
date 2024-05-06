@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-// @layer base {
-//    $themes: (
-//       light: (
-//          @apply bg-light text-dark;
-//       ),
-//       dark: (
-//          @apply bg-dark text-light;
-//       )
-//    )
-// }
-
 html[data-mode="light"] {
   @apply bg-light text-dark;
 }

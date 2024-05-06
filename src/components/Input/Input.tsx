@@ -135,7 +135,6 @@ const Input = defineComponent({
 		const componentID = generateComponentId(NAMESPACES.INPUT);
 
 		// * Refs
-		const charCounter = ref<number>(0);
 		const input = ref<HTMLElement>(null);
 		const showPassword = ref<boolean>(false);	
 		const maskit = reactive({
@@ -193,7 +192,13 @@ const Input = defineComponent({
 		})
 
 		const isClearable = computed(() => {
-			return props.clearable && !props.disabled && props.modelValue !== '';
+			return props.clearable && !props.disabled && props.modelValue !== '' ;
+		})
+
+		const charCounter = computed(() => {
+			if(hasCounter && props.modelValue) {
+				return (props.modelValue as any[] | any).length;
+			}
 		})
 
 		const {
@@ -203,12 +208,6 @@ const Input = defineComponent({
 			hasAppendIcon,
 			hasPrependIcon
 		} = booleanContext.value;
-
-		watch(() => props.modelValue, (value) => {
-			if(hasCounter) {
-				charCounter.value = (value as string).length;
-			}
-		})
 
 		const componentClasses = computed(() => {
 			return {
@@ -314,7 +313,6 @@ const Input = defineComponent({
 	render() {
 		const { color, disabled, loading } = this.componentClasses;
 		const maxLength = this.instance.attrs.maxlength;
-
 		return (
 			<div class={[
 					color,
@@ -325,6 +323,7 @@ const Input = defineComponent({
 				{...this.rootAttrs}
 				data-disabled={this.disabled}
 				data-vz-component={Helpers.toPascalCase(NAMESPACES.INPUT, '-')}
+				
 			>	
 				<div class={NAMESPACES.INPUT_CONTROL}>
 					{/* render if has prepend icon  */}
@@ -439,12 +438,16 @@ const Input = defineComponent({
 				
 				{ (this.hasHelperText || this.hasCounter) && (
 					<div class={NAMESPACES.INPUT_DETAILS}>
-						<div class={NAMESPACES.INPUT_HELPER_TEXT}>
-							{ this.helperText }
-						</div>
-						<div class={NAMESPACES.INPUT_COUNTER}>
-							{ maxLength ? `${this.charCounter} / ${maxLength}` : this.charCounter }
-						</div>
+						{this.helperText && (
+							<div class={NAMESPACES.INPUT_HELPER_TEXT}>
+								{ this.helperText }
+							</div>
+						)}
+						{this.counter && (
+							<div class={NAMESPACES.INPUT_COUNTER}>
+								{ maxLength ? `${this.charCounter} / ${maxLength}` : this.charCounter }
+							</div>
+						)}
 					</div>
 				)}
 			</div>

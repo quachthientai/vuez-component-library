@@ -9,6 +9,7 @@
       @apply inline-block min-w-[12.5rem];
 
       &-list {
+         
          @apply w-full overflow-hidden;
          @apply bg-light text-dark dark:bg-slate-700 dark:text-light;
          @apply rounded-md dark:shadow-elevation-4 shadow-elevation-2;

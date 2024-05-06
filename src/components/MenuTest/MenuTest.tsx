@@ -383,7 +383,6 @@ const MenuTest = defineComponent({
 		};
 	},
 	render() {
-		// console.log(this.SelectContext.multiple.value);
 		return (
 			<Teleport to="body">
 				<Transition name={this.transition}

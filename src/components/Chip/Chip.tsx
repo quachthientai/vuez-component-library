@@ -17,6 +17,10 @@ enum NAMESPACES {
 };
 
 const vChipProps = makePropsFactory({
+	modelValue: {
+		type: Boolean,
+		default: true
+	},
 	content: {
 		type: String,
 		default: undefined
@@ -48,13 +52,16 @@ const Chip = defineComponent({
 		}) {
 			return payload.originalEvent && payload.currentInstance;
 		},
-		'close':null
-		// close(payload: {
-		// 	originalEvent: Event,
-		// 	currentInstance: ComponentInternalInstance
-		// }) {
-		// 	return payload.originalEvent && payload.currentInstance;
-		// }
+		'remove': null,
+		'update:modelValue': (payload: Boolean) => {
+			return !payload;
+		},
+		'click:close': (payload: {
+			originalEvent: Event,
+			currentInstance: ComponentInternalInstance
+		}) => {
+			return payload.originalEvent && payload.currentInstance;
+		}
 	},
 	directives: {
 		'ripple': Ripple
@@ -89,16 +96,11 @@ const Chip = defineComponent({
 		}
 
 		function onClose(e: Event) {
-			console.log('hey')
-			visible.value = false;
-			
-			emit('close', e);
 			e.stopPropagation();
 			e.preventDefault();
-			// emit('close', {
-			// 	originalEvent: e,
-			// 	currentInstance: instance,
-			// });
+
+			emit('update:modelValue', false);
+			emit('remove');
 		}
 		
 		return {
@@ -116,7 +118,7 @@ const Chip = defineComponent({
 	render() {
 		return (
 			<>
-				{this.visible && (
+				{this.modelValue && (
 					<div class={[
 							this.color,
 							this.size,

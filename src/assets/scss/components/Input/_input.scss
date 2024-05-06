@@ -100,18 +100,17 @@
     }
 
     &__helper-text {
-      @apply grow shrink basis-auto;
+      @apply mr-auto grow shrink basis-auto;
     }
 
     &__counter {
-      @apply grow-0 shrink basis-auto;
+      @apply ml-auto grow-0 shrink basis-auto;
     }
 
     &--disabled {
       :not(.vz-input__helper-text) {
         @apply cursor-not-allowed;
       }
-
       .vz-input__control {
         @apply bg-slate-200 dark:bg-slate-400/60 opacity-60;
 
@@ -176,9 +175,7 @@
         }
       }
     }
-
-   
-
+    
     &:has(&__prepend-icon) {
       .vz-input__field {
         ~.vz-input__label {

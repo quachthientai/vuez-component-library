@@ -10,16 +10,23 @@ import { SelectKey } from '@/constants/injectionKey';
 import { SelectOptionModel } from '../Select/types';
 import { MenuItemTest } from '@/components/MenuItemTest/MenuItemTest';
 import { makeIconProps } from '@/composable/icon';
-import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref } from 'vue';
+import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, nextTick, h } from 'vue';
 import { makeColorProp } from '@/composable';
+import { Icon } from '@iconify/vue';
 
 enum NAMESPACES {
 	SELECT = 'vz-select',
-	SELECT_CONTROL = 'vz-select__control',
-	SELECT_LABEL = 'vz-select__label',
-	SELECT_FIELD = 'vz-select__field',
-	SELECT_FIELD_WRAPPER = 'vz-select__field-wrapper',
-	SELECT_SELECTION = 'vz-select__selection'
+	SELECT_DISABLED = 'vz-select--disabled',
+	
+	SELECT_SELECTIONS = 'vz-select__selections',
+	SELECT_SELECTION = 'vz-select__selection',
+	SELECT_SELECTION_TEXT = 'vz-select__selection-text',
+	SELECT_SELECTION_CHIPS = 'vz-select__selection-chips',
+	SELECT_SELECTION_MAX_VALUE = 'vz-select__selection-max',
+	
+	SELECT_DROPDOWN_ICON = 'vz-select__dropdown-icon'
+	
+
 };
 
 const vSelectProps = makePropsFactory({
@@ -49,9 +56,21 @@ const vSelectProps = makePropsFactory({
 		type: Boolean,
 		default: false,
 	},
+	counter: {
+		type: Boolean,
+		default: false
+	},
 	options: {
 		type: Array as PropType<SelectOptionModel[]>,
 		default: () => [],
+	},
+	maxSelectedValue: {
+		type: Number,
+		default: 0
+	},
+	closableChips: {
+		type: Boolean,
+		default: false,
 	},
 	chips: {
 		type: Boolean,
@@ -68,6 +87,14 @@ const vSelectProps = makePropsFactory({
 	readonly: {
 		type: Boolean,
 		default: false
+	},
+	selectAllToggle: {
+		type: Boolean,
+		default: false
+	},
+	maxSelectedLabel: {
+		type: String,
+		default: '(+{0} others)'
 	},
 	...makeColorProp([
 		'primary',
@@ -94,7 +121,6 @@ const Select = defineComponent({
 		const menu = ref();
 		const root = ref<HTMLElement>(null);
 		const isOpen = ref<Boolean>(false);
-		// const selectedSingleValue = ref<>
 		
 		const booleanContext = computed(() => {
 			return {
@@ -107,6 +133,12 @@ const Select = defineComponent({
 			hasLabel,
 			hasModel
 		} = booleanContext.value;
+
+		const componentClasses = computed(() => {
+			return {
+				disabled: props.disabled && NAMESPACES.SELECT_DISABLED
+			}
+		})
 
 		const componentAttrs = computed(() => {
 			return {
@@ -131,36 +163,28 @@ const Select = defineComponent({
 
 		function isSelected(option: SelectOptionModel) {
 			if(props.multiple) {
-				return (props.modelValue as any[] || []).some(
-					(modelOption) => modelOption.value === option.value
-				)
-			}
-			return !!option.value;
-		}
-
-		function getOptionValue(modelValue: any[] | any) {
-			if(props.multiple) {
-				return modelValue.map((option: SelectOptionModel) => option.value);
+				return (props.modelValue as any[] || [])
+					.some((modelOption) => modelOption.value === option.value)
 			}
 			
-			return modelValue.value;
+			return (props.modelValue as SelectOptionModel).value === option.value
 		}
 
-		function onOptionSelect(e: Event, option: SelectOptionModel) {
+		function onOptionSelect(e, option: SelectOptionModel) {
 			let newModelValue: any[] | any;
 			const selected = isSelected(option);
-			// e.stopPropagation();
-			// e.preventDefault();
+
 			if(props.multiple) {
-				debugger;
 				newModelValue = selected 
 					? (props.modelValue as any[]).filter((item: any) => item.value !==option.value)
 					: [...(props.modelValue as any[]), option]
 			} else {
 				newModelValue = option
+				menu.value.toggle(e.originalEvent);
 			}
-			
+
 			emit('update:modelValue', newModelValue);
+			
 		}
 
 		function handleFocus(e: Event) {
@@ -190,127 +214,212 @@ const Select = defineComponent({
 			emit('update:modelValue', newModelValue);
 			emit('clear');
 		}
+
+		function onChipClose(e, option) {
+			const newModelValue = (props.modelValue as any[]).filter((item) => item.value !== option);
+			emit('update:modelValue', newModelValue);
+		}
+
+		function onToggleSelectAll(e) {
+			const newModelValue = props.options;
+
+			emit('update:modelValue', newModelValue);
+		}
+
+		function getMaxSelectedLabel(modelValueLength: number) {
+			const pattern : RegExp = /{(.*?)}/;
+
+			const maxSelectedValue : number = props.maxSelectedValue as number;
+			const maxSelectedLabel : string = props.maxSelectedLabel as string;
+
+			if(pattern.test(maxSelectedLabel) && modelValueLength > maxSelectedValue && maxSelectedValue !== undefined) { 
+				return maxSelectedLabel.replace(maxSelectedLabel.match(pattern)[0], String(modelValueLength - maxSelectedValue));
+			}
+		}
+
+		function getSelectedValue(modelValue: any[] | any) {
+			if(props.multiple) {
+				return modelValue.map((option: SelectOptionModel) => option.value);
+			}
+			
+			return modelValue.value;
+		}
+
+		function getMaxSelectedValue(modelValueLength: number) {
+			const maxSelectedValue : number = props.maxSelectedValue as number;
+			const modelValue : any[] = props.modelValue as any[];
+
+			return modelValue.slice(0, maxSelectedValue).map((item) => item.value)
+		}
+
+		//for single selection
+		function getSelectedLabel(modelValue: any) {
+			return getSelectedValue(modelValue);
+		}
+
+		//for multiple selections
+		function getSelectedLabels(modelValue: any[]) {
+			const selectedValue = getSelectedValue(modelValue);
+
+			if((props.maxSelectedValue as number) > 0) {
+				const maxSelectedLabel = getMaxSelectedLabel(modelValue.length);
+				const maxSelectedValue = getMaxSelectedValue(modelValue.length);
+				
+				return [maxSelectedValue, maxSelectedLabel]
+			}
+
+			return selectedValue
+		}
+
 		provide(SelectKey, {
 			chips: toRef(props, 'chips') as Ref<Boolean>,
 			multiple: toRef(props, 'multiple') as Ref<Boolean>,
 			selectedOptions: toRef(props, 'modelValue') as Ref<any>
 		});
-		function chipSelections() {
-			return props.modelValue;
-		}
 
-		const chips = ref(props.modelValue);
-		function onChipClose(e, option: SelectOptionModel) {
-			e.stopPropagation();
-			e.preventDefault();
-			debugger;
-			const newModelValue = (props.modelValue as any[]).filter((item) => item.value !== option.value);
-			debugger;
-			
-			emit('update:modelValue', newModelValue);
-			
-		}
 		return {
-			hasModel,
-			rootRef,
-			hasLabel,
-			handleKeyDown,
 			menu,
-			handleClick,
-			handleFocus,
-			componentID,
+			isOpen,
+			rootRef,
+			hasModel,
+			getSelectedLabels,
+			hasLabel,
 			instance,
 			onToggle,
-			isOpen,
-			componentAttrs,
-			onOptionSelect,
-			getOptionValue,
 			isSelected,
 			onClearable,
+			handleClick,
+			handleFocus,
 			onChipClose,
-			chipSelections,
-			chips
+			componentID,
+			handleKeyDown,
+			componentAttrs,
+			onOptionSelect,
+			getSelectedValue,
+			componentClasses,
+			getSelectedLabel,
+			onToggleSelectAll,
 		};
 	},
 	render() {
-		console.log(this.modelValue);
+		const { disabled } = this.componentClasses;
+		
 		return (
-			<>
-				<div class={NAMESPACES.SELECT}
-					ref={this.rootRef}
-					{...this.componentAttrs}
-					onClick={this.handleClick}
-					onKeydown={this.handleKeyDown}
-				>	
-					<Input readonly 
-						appendIcon={{
-							icon: 'mdi-chevron-down'
-						}}
-						label={this.label}
-						color={this.color}
-						disabled={this.disabled}
-						modelValue={this.getOptionValue(this.modelValue)}
-						onFocus={this.handleFocus}
-						clearable={this.clearable}
-						helperText={this.helperText}
-						onClear={this.onClearable}
-					> 	
-						<div class=" vz-select__selections">
-							
-							{this.modelValue.map((option, index) => {
-								debugger;
-								return (
-									<>	
-										<Chip size="sm" 
-											onClose={(e) => this.onOptionSelect(e, option)}
-											closable 
-											content={option.content}
-										/>
-									
-									</>
-								)
-							})}
-						</div>
-						
-					
-						
-						
-					</Input>
-
-					<MenuTest matchTriggerWidth
-						onShow={this.onToggle}
-						onHide={this.onToggle}
-						ref="menu"
-					>	
-						{ this.hasModel && (this.options as SelectOptionModel[])?.map((option, index) => {
+			<div class={[
+				disabled,
+				NAMESPACES.SELECT
+			]}
+				ref={this.rootRef}
+				{...this.componentAttrs}
+				onClick={this.handleClick}
+				onKeydown={this.handleKeyDown}
+			>	
+				<Input readonly 
+					label={this.label}
+					color={this.color}
+					counter={this.counter}
+					disabled={this.disabled}
+					onClear={this.onClearable}
+					onFocus={this.handleFocus}
+					clearable={this.clearable}
+					helperText={this.helperText}
+					modelValue={this.getSelectedValue(this.modelValue)}
+				> 	
+					{{	
+						default: () => {
 							return (
-								<>
-									<MenuItemTest
-										value={option.value}
-										content={!this.multiple ? option.content : undefined}
-										onClick={(e: Event) => this.onOptionSelect(e, option)}
-									>	
-										{this.multiple && (
-											<Checkbox binary
-												label={option.label}
-												value={option.value} 
-												modelValue={this.isSelected(option)}
-											/>
-										)}
-										
-									</MenuItemTest>
-									{/* {this.multiple ?
-										<MenuItemTest value={option.value} onClick={this.handleItemClick}>
-											<Checkbox label={option.label} value={option.value} />
-										</MenuItemTest>
-										: <MenuItemTest onClick={this.handleItemClick} {...option} />
-									} */}
-								</>
+								<div class={NAMESPACES.SELECT_SELECTIONS}>
+									{ (this.chips && this.multiple) 
+										//chips
+										? <div class={NAMESPACES.SELECT_SELECTION_CHIPS}>
+											{this.getSelectedLabels(this.modelValue).flat().map((labelValue: any, index: number, arr: any[]) => {
+												if(this.maxSelectedValue > 0 && (index + 1 === arr.length)) {
+													return (
+														<div class={[NAMESPACES.SELECT_SELECTION, 
+															NAMESPACES.SELECT_SELECTION_MAX_VALUE
+														]}>{labelValue}</div>
+													)
+												}
+												return (
+													<div class={NAMESPACES.SELECT_SELECTION}>
+														<Chip key={index}
+															size="sm"
+															closable={this.closableChips}
+															modelValue={true}
+															content={labelValue}
+															onRemove={(e) => this.onChipClose(e, labelValue)}
+														/>
+													</div>
+												)
+											})}
+										</div>
+										//comma
+										: <div class={NAMESPACES.SELECT_SELECTION_TEXT}>
+											{ this.multiple 
+												? this.getSelectedLabels(this.modelValue).flat().map((labelValue: any, index: number, arr: any[]) => {
+													return (
+														<div class={[NAMESPACES.SELECT_SELECTION,
+															(this.maxSelectedValue > 0 && (index + 1 === arr.length)) 
+															&& NAMESPACES.SELECT_SELECTION_MAX_VALUE
+														]}>
+															{labelValue}
+														</div>
+													)
+												})
+												: <div class={NAMESPACES.SELECT_SELECTION}>
+													{this.getSelectedLabel(this.modelValue)}
+												</div>
+											}
+										</div>
+									}
+								</div>
 							)
-						})}
-					</MenuTest>
-				</div>
-			</>
+						},
+						append: () => {
+							return (
+								<Icon icon="mdi-chevron-down" 
+									class={[NAMESPACES.SELECT_DROPDOWN_ICON, 
+										this.isOpen && 'rotate-180'
+									]}
+								/>
+							)
+						}
+					}}
+				</Input>
+				<MenuTest ref="menu"
+					matchTriggerWidth
+					onShow={this.onToggle}
+					onHide={this.onToggle}
+				>	
+					{ this.selectAllToggle && (
+						<MenuItemTest type="header">
+							<Checkbox binary 
+								// value={this.allSelected}
+								label="Select All"
+								onChange={this.onToggleSelectAll}
+							/>
+						</MenuItemTest>
+					)}
+					{ this.hasModel && (this.options as SelectOptionModel[])?.map((option) => {
+						return (
+							<MenuItemTest
+								value={option.value}
+								icon={(!this.multiple && this.checkMark && this.isSelected(option)) ? 'mdi-check' : ''}
+								content={!this.multiple ? option.label : undefined}
+								onClick={(e: Event) => this.onOptionSelect(e, option)}
+							>	
+								{this.multiple && (
+									<Checkbox binary
+										label={option.label}
+										value={option.value} 
+										modelValue={this.isSelected(option)}
+									/>
+								)}
+							</MenuItemTest>
+						)
+					})}
+				</MenuTest>
+			</div>
 		);
 	}
 });
