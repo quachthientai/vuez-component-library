@@ -31,6 +31,26 @@ const meta = {
 				type: { summary: 'boolean' }
 			}
 		},
+		helperText: {
+			control: {
+				type: 'text'
+			},
+			description: 'The helper text of select',
+			table: {
+				category: 'Props',
+				defaultValue: { summary: 'undefined' },
+				type: { summary: 'string'}
+			}
+		},
+		counter: {
+			control: 'boolean',
+			description: 'Enable selection counter',
+			table: {
+				category: 'Props',
+				defaultValue: { summary: 'false' },
+				type: { summary: 'boolean' }
+			}
+		},
 		name: {
 			control: {
 				type: 'text'
@@ -96,6 +116,28 @@ const meta = {
             type: { summary: 'boolean' }
          }
 		},
+		maxSelectedLabels: {
+			control: { type: 'number' },
+			description: 'Define the limit number of labels shown',
+			table: {
+				category: "Props",
+				defaultValue: { summary: '0' },
+				type: { summary: 'number' }
+			}
+		},
+		exceedMaxSelectedLabel: {
+			control: { type: 'string' },
+			description: 'Define the label to display after exceedding max selected labels ',
+			table: {
+				category: "Props",
+				defaultValue: { summary: '(+{0} others)'},
+				type: { summary: 'string' }
+			}
+		},
+		limitSelection: {
+			control: { type: 'number' },
+			description: 'Define the limit number of selected'
+		},
 		disabled: disabledArgType(),
 		color: colorArgType(),
 		label: labelArgType(),
@@ -131,7 +173,8 @@ export const Basic: Story = {
 		`
 	}),
 	args: {
-		options: SelectOptions
+		options: SelectOptions,
+
 	}
 };
 
@@ -301,7 +344,7 @@ export const MaxSelectedValue: Story = {
 	args: {
 		options: SelectOptions,
 		multiple: true,
-		maxSelectedValue: 3
+		maxSelectedLabels: 3
 		// label: 'test'
 	}
 };
@@ -327,7 +370,7 @@ export const Counter: Story = {
 	args: {
 		options: SelectOptions,
 		multiple: true,
-		maxSelectedValue: 3,
+		maxSelectedLabels: 3,
 		counter: true,
 
 		// label: 'test'
@@ -355,10 +398,39 @@ export const SelectAllToggle: Story = {
 	args: {
 		options: SelectOptions,
 		multiple: true,
-		maxSelectedValue: 3,
+		maxSelectedLabels: 3,
 		counter: true,
 		selectAllToggle: true
 		// label: 'test'
 	}
 }
+
+export const LimitSelection: Story = {
+	render: (args) => ({
+		components: { Select },
+		setup() {
+			const selected = ref([
+				{label:'Home', value: 'Home'},
+				{label:'Account', value: 'Account'},
+				{label:'Setting', value: 'Setting'},
+			]);
+
+			return { args, selected }
+		},
+		template: `
+			<div class="grid gap-y-5">
+				<Select v-bind="args" label="test" v-model="selected" />
+			</div>
+		`
+	}),
+	args: {
+		options: SelectOptions,
+		multiple: true,
+		maxSelectedLabels: 3,
+		counter: true,
+		limitSelection: 5,
+		helperText: 'Max 5 selections'
+	}
+}
+
 

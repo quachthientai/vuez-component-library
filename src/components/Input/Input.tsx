@@ -444,8 +444,13 @@ const Input = defineComponent({
 							</div>
 						)}
 						{this.counter && (
-							<div class={NAMESPACES.INPUT_COUNTER}>
-								{ maxLength ? `${this.charCounter} / ${maxLength}` : this.charCounter }
+							<div class={NAMESPACES.INPUT_COUNTER}> 
+								{ this.$slots.counter 
+									? this.$slots.counter?.()
+									: maxLength 
+										? `${this.charCounter} / ${maxLength}`
+										: this.charCounter 
+								}
 							</div>
 						)}
 					</div>

@@ -16,6 +16,10 @@
          @apply flex truncate items-center p-1;
       }
 
+      &__selections-items {
+         @apply max-h-[280px] overflow-y-scroll;
+      }
+
       &__selection-text,
       &__selection-chips {
          @apply text-sm truncate text-dark/70 dark:text-light/70;
@@ -60,6 +64,12 @@
       &:has(.vz-input__details) {
          .vz-input__details {
             @apply absolute top-[46px] w-full;
+         }
+      }
+
+      &:has(.vz-input__details):has(.vz-select__selection-chips) {
+         .vz-input__details {
+            @apply top-[52px];
          }
       }
       

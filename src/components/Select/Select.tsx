@@ -10,7 +10,7 @@ import { SelectKey } from '@/constants/injectionKey';
 import { SelectOptionModel } from '../Select/types';
 import { MenuItemTest } from '@/components/MenuItemTest/MenuItemTest';
 import { makeIconProps } from '@/composable/icon';
-import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, nextTick, h } from 'vue';
+import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurrentInstance, ref, nextTick, h, watch } from 'vue';
 import { makeColorProp } from '@/composable';
 import { Icon } from '@iconify/vue';
 
@@ -18,8 +18,12 @@ enum NAMESPACES {
 	SELECT = 'vz-select',
 	SELECT_DISABLED = 'vz-select--disabled',
 	
-	SELECT_SELECTIONS = 'vz-select__selections',
+	SELECT_SELECTIONS_LIST = 'vz-select__selections-list',
+	SELECT_SELECTIONS_ITEMS = 'vz-select__selections-items',
+	SELECT_SELECTIONS_ITEM_SELECT_ALL = 'vz-select__selections-item-all',
+
 	SELECT_SELECTION = 'vz-select__selection',
+	SELECT_SELECTIONS = 'vz-select__selections',
 	SELECT_SELECTION_TEXT = 'vz-select__selection-text',
 	SELECT_SELECTION_CHIPS = 'vz-select__selection-chips',
 	SELECT_SELECTION_MAX_VALUE = 'vz-select__selection-max',
@@ -64,10 +68,6 @@ const vSelectProps = makePropsFactory({
 		type: Array as PropType<SelectOptionModel[]>,
 		default: () => [],
 	},
-	maxSelectedValue: {
-		type: Number,
-		default: 0
-	},
 	closableChips: {
 		type: Boolean,
 		default: false,
@@ -92,9 +92,17 @@ const vSelectProps = makePropsFactory({
 		type: Boolean,
 		default: false
 	},
-	maxSelectedLabel: {
+	exceedMaxSelectedLabel: {
 		type: String,
 		default: '(+{0} others)'
+	},
+	maxSelectedLabels: {
+		type: Number,
+		default: 0
+	},
+	limitSelection: {
+		type: Number,
+		default: 0,
 	},
 	...makeColorProp([
 		'primary',
@@ -149,6 +157,7 @@ const Select = defineComponent({
 			};
 		});
 
+
 		function rootRef(el: HTMLElement) {
 			return root.value = el;
 		};
@@ -170,6 +179,20 @@ const Select = defineComponent({
 			return (props.modelValue as SelectOptionModel).value === option.value
 		}
 
+		function allSelected() {
+			return (props.options as any[]).every((option) => isSelected(option));
+		}
+
+		function isIndeterminate() {
+			return !allSelected() 
+				&& (props.modelValue as any[])
+						.some((option) => isSelected(option));
+		}
+
+		function isLimitSelectionReach(modelValue: SelectOptionModel[]) {
+			return modelValue.length > (props.limitSelection as number);
+		}
+
 		function onOptionSelect(e, option: SelectOptionModel) {
 			let newModelValue: any[] | any;
 			const selected = isSelected(option);
@@ -182,9 +205,12 @@ const Select = defineComponent({
 				newModelValue = option
 				menu.value.toggle(e.originalEvent);
 			}
+			
+			if((props.limitSelection as number) > 0 && isLimitSelectionReach(newModelValue)) {
+				return;
+			}
 
 			emit('update:modelValue', newModelValue);
-			
 		}
 
 		function handleFocus(e: Event) {
@@ -221,19 +247,18 @@ const Select = defineComponent({
 		}
 
 		function onToggleSelectAll(e) {
-			const newModelValue = props.options;
-
+			const newModelValue = allSelected() ? [] : props.options;
 			emit('update:modelValue', newModelValue);
 		}
 
-		function getMaxSelectedLabel(modelValueLength: number) {
+		function getExceedMaxSelectedLabel(modelValueLength: number) {
 			const pattern : RegExp = /{(.*?)}/;
 
-			const maxSelectedValue : number = props.maxSelectedValue as number;
-			const maxSelectedLabel : string = props.maxSelectedLabel as string;
+			const maxSelectedLabels : number = props.maxSelectedLabels as number;
+			const exceedMaxSelectedLabel : string = props.exceedMaxSelectedLabel as string;
 
-			if(pattern.test(maxSelectedLabel) && modelValueLength > maxSelectedValue && maxSelectedValue !== undefined) { 
-				return maxSelectedLabel.replace(maxSelectedLabel.match(pattern)[0], String(modelValueLength - maxSelectedValue));
+			if(pattern.test(exceedMaxSelectedLabel) && modelValueLength > maxSelectedLabels && maxSelectedLabels !== undefined) { 
+				return exceedMaxSelectedLabel.replace(exceedMaxSelectedLabel.match(pattern)[0], String(modelValueLength - maxSelectedLabels));
 			}
 		}
 
@@ -245,27 +270,28 @@ const Select = defineComponent({
 			return modelValue.value;
 		}
 
-		function getMaxSelectedValue(modelValueLength: number) {
-			const maxSelectedValue : number = props.maxSelectedValue as number;
+		function getMaxSelectedLabel(modelValueLength: number) {
+			const maxSelectedLabels : number = props.maxSelectedLabels as number;
 			const modelValue : any[] = props.modelValue as any[];
 
-			return modelValue.slice(0, maxSelectedValue).map((item) => item.value)
+			return modelValue.slice(0, maxSelectedLabels).map((item) => item.value)
 		}
 
 		//for single selection
-		function getSelectedLabel(modelValue: any) {
+		function getLabel(modelValue: any) {
 			return getSelectedValue(modelValue);
 		}
 
 		//for multiple selections
-		function getSelectedLabels(modelValue: any[]) {
+		function getLabels(modelValue: any[]) {
+			debugger;
 			const selectedValue = getSelectedValue(modelValue);
 
-			if((props.maxSelectedValue as number) > 0) {
-				const maxSelectedLabel = getMaxSelectedLabel(modelValue.length);
-				const maxSelectedValue = getMaxSelectedValue(modelValue.length);
+			if((props.maxSelectedLabels as number) > 0) {
+				const exceedMaxSelectedLabel = getExceedMaxSelectedLabel(modelValue.length);
+				const maxSelectedLabels = getMaxSelectedLabel(modelValue.length);
 				
-				return [maxSelectedValue, maxSelectedLabel]
+				return [maxSelectedLabels, exceedMaxSelectedLabel]
 			}
 
 			return selectedValue
@@ -282,7 +308,7 @@ const Select = defineComponent({
 			isOpen,
 			rootRef,
 			hasModel,
-			getSelectedLabels,
+			getLabels,
 			hasLabel,
 			instance,
 			onToggle,
@@ -297,13 +323,15 @@ const Select = defineComponent({
 			onOptionSelect,
 			getSelectedValue,
 			componentClasses,
-			getSelectedLabel,
+			getLabel,
 			onToggleSelectAll,
+			allSelected,
+			isIndeterminate
 		};
 	},
 	render() {
 		const { disabled } = this.componentClasses;
-		
+
 		return (
 			<div class={[
 				disabled,
@@ -317,12 +345,12 @@ const Select = defineComponent({
 				<Input readonly 
 					label={this.label}
 					color={this.color}
-					counter={this.counter}
 					disabled={this.disabled}
 					onClear={this.onClearable}
 					onFocus={this.handleFocus}
 					clearable={this.clearable}
 					helperText={this.helperText}
+					counter={(this.multiple) && this.counter}
 					modelValue={this.getSelectedValue(this.modelValue)}
 				> 	
 					{{	
@@ -331,46 +359,50 @@ const Select = defineComponent({
 								<div class={NAMESPACES.SELECT_SELECTIONS}>
 									{ (this.chips && this.multiple) 
 										//chips
-										? <div class={NAMESPACES.SELECT_SELECTION_CHIPS}>
-											{this.getSelectedLabels(this.modelValue).flat().map((labelValue: any, index: number, arr: any[]) => {
-												if(this.maxSelectedValue > 0 && (index + 1 === arr.length)) {
-													return (
-														<div class={[NAMESPACES.SELECT_SELECTION, 
-															NAMESPACES.SELECT_SELECTION_MAX_VALUE
-														]}>{labelValue}</div>
-													)
-												}
-												return (
-													<div class={NAMESPACES.SELECT_SELECTION}>
-														<Chip key={index}
-															size="sm"
-															closable={this.closableChips}
-															modelValue={true}
-															content={labelValue}
-															onRemove={(e) => this.onChipClose(e, labelValue)}
-														/>
-													</div>
-												)
-											})}
-										</div>
+										? 	<div class={NAMESPACES.SELECT_SELECTION_CHIPS}>
+												{this.getLabels(this.modelValue)
+													.flat()
+													.map((labelValue: any, index: number, arr: any[]) => {
+														if(this.maxSelectedLabels > 0 && (index + 1 === arr.length)) {
+															return (
+																<div class={[NAMESPACES.SELECT_SELECTION, 
+																	NAMESPACES.SELECT_SELECTION_MAX_VALUE
+																]}>{labelValue}</div>
+															)
+														}
+														return (
+															<div class={NAMESPACES.SELECT_SELECTION}>
+																<Chip key={index}
+																	size="sm"
+																	closable={this.closableChips}
+																	modelValue={true}
+																	content={labelValue}
+																	onRemove={(e) => this.onChipClose(e, labelValue)}
+																/>
+															</div>
+														)
+													})}
+											</div>
 										//comma
-										: <div class={NAMESPACES.SELECT_SELECTION_TEXT}>
-											{ this.multiple 
-												? this.getSelectedLabels(this.modelValue).flat().map((labelValue: any, index: number, arr: any[]) => {
-													return (
-														<div class={[NAMESPACES.SELECT_SELECTION,
-															(this.maxSelectedValue > 0 && (index + 1 === arr.length)) 
-															&& NAMESPACES.SELECT_SELECTION_MAX_VALUE
-														]}>
-															{labelValue}
-														</div>
-													)
-												})
-												: <div class={NAMESPACES.SELECT_SELECTION}>
-													{this.getSelectedLabel(this.modelValue)}
-												</div>
-											}
-										</div>
+										: 	<div class={NAMESPACES.SELECT_SELECTION_TEXT}>
+												{ this.multiple 
+													? this.getLabels(this.modelValue)
+														.flat()
+														.map((labelValue: any, index: number, arr: any[]) => {
+															return (
+																<div class={[NAMESPACES.SELECT_SELECTION,
+																	(this.maxSelectedLabels > 0 && (index + 1 === arr.length)) 
+																	&& NAMESPACES.SELECT_SELECTION_MAX_VALUE
+																]}>
+																	{labelValue}
+																</div>
+															)
+														})
+													: <div class={NAMESPACES.SELECT_SELECTION}>
+														{this.getLabel(this.modelValue)}
+													</div>
+												}
+											</div>
 									}
 								</div>
 							)
@@ -383,41 +415,61 @@ const Select = defineComponent({
 									]}
 								/>
 							)
+						},
+						counter: () => {
+							return this.limitSelection > 0 
+								? `${this.modelValue.length} / ${this.limitSelection}`
+								: this.modelValue.length
 						}
 					}}
 				</Input>
 				<MenuTest ref="menu"
+					class={NAMESPACES.SELECT_SELECTIONS_LIST}
 					matchTriggerWidth
 					onShow={this.onToggle}
 					onHide={this.onToggle}
 				>	
-					{ this.selectAllToggle && (
-						<MenuItemTest type="header">
-							<Checkbox binary 
-								// value={this.allSelected}
-								label="Select All"
-								onChange={this.onToggleSelectAll}
-							/>
-						</MenuItemTest>
-					)}
-					{ this.hasModel && (this.options as SelectOptionModel[])?.map((option) => {
-						return (
-							<MenuItemTest
-								value={option.value}
-								icon={(!this.multiple && this.checkMark && this.isSelected(option)) ? 'mdi-check' : ''}
-								content={!this.multiple ? option.label : undefined}
-								onClick={(e: Event) => this.onOptionSelect(e, option)}
-							>	
-								{this.multiple && (
-									<Checkbox binary
-										label={option.label}
-										value={option.value} 
-										modelValue={this.isSelected(option)}
-									/>
-								)}
+					{ (this.selectAllToggle && this.limitSelection === 0) && (
+						<div class={NAMESPACES.SELECT_SELECTIONS_ITEM_SELECT_ALL}>
+							<MenuItemTest divider 
+								type="header" 
+							>
+								<Checkbox binary 
+									label="Select All"
+									modelValue={this.allSelected()}
+									onChange={this.onToggleSelectAll}
+									indeterminate={this.isIndeterminate()}
+								/>
 							</MenuItemTest>
-						)
-					})}
+						</div>
+						
+					)}
+					{ this.hasModel && (
+						<div class={NAMESPACES.SELECT_SELECTIONS_ITEMS}>
+							{ (this.options as SelectOptionModel[])?.map((option: SelectOptionModel) => {
+								return (
+									<MenuItemTest
+										value={option.value}
+										icon={
+											(!this.multiple && this.checkMark && this.isSelected(option))
+												? 'mdi-check' 
+												: ''
+										}
+										content={!this.multiple ? option.label : undefined}
+										onClick={(e: Event) => this.onOptionSelect(e, option)}
+									>	
+										{this.multiple && (
+											<Checkbox binary
+												label={option.label}
+												value={option.value} 
+												modelValue={this.isSelected(option)}
+											/>
+										)}
+									</MenuItemTest>
+								)
+							})}
+						</div>
+					)}
 				</MenuTest>
 			</div>
 		);
