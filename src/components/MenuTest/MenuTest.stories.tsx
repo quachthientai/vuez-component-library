@@ -122,6 +122,7 @@ export const Group: Story = {
 	args: {
 		model: [ 
 			{	content: 'Documents', 
+				icon: 'mdi:plus',
 				items: [
 					{ content: 'New', icon: 'mdi:plus' }, 
 					{ content: 'Search', icon: 'mdi:magnify' }

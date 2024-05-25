@@ -12,6 +12,7 @@ import { SelectKey } from '@/constants/injectionKey';
 
 enum NAMESPACES {
 	INPUT = 'vz-input',
+	INPUT_DENSE = 'vz-input--dense',
 	INPUT_ICON = 'vz-input__icon',
 	INPUT_LABEL = 'vz-input__label',
 	INPUT_FIELD = 'vz-input__field',
@@ -96,6 +97,10 @@ const vInputProps = makePropsFactory({
 		type: Boolean,
 		default: false,
 	},
+	dense: {
+		type: Boolean,
+		default: false,
+	},
 	/**
     * Defined the append or prepend icon for the button.
     * @type {IconType}
@@ -154,11 +159,11 @@ const Input = defineComponent({
 		// * Computed properties
 		const booleanContext = computed(() => {
 			return {
+				hasCounter: props.counter,
 				hasLabel: props.label || undefined,
 				hasHelperText: props.helperText || undefined,
 				hasAppendIcon: !!(slots.append || props.appendIcon),
 				hasPrependIcon: !!(slots.prepend || props.prependIcon),
-				hasCounter: props.counter,
 			}
 		});
 
@@ -211,6 +216,7 @@ const Input = defineComponent({
 
 		const componentClasses = computed(() => {
 			return {
+				dense: props.dense && NAMESPACES.INPUT_DENSE,
 				disabled: props.disabled && NAMESPACES.INPUT_DISABLED,
 				color: useColor(NAMESPACES.INPUT, props.color as string),
 				loading: useLoader(NAMESPACES.INPUT, props.loading as boolean),
@@ -260,13 +266,13 @@ const Input = defineComponent({
 			// 		emit('update:modelValue', target.value);
 			// 	}
 			// }
-			e.stopPropagation();
+			// e.stopPropagation();
 			emit('update:modelValue', target.value);
 		}
 
 		function onKeyDown(e: Event) {
 			const target = e.target as HTMLInputElement;
-			
+			// e.stopPropagation();
 			// console.log('onKeyDown',target.value);
 		}
 
@@ -311,10 +317,11 @@ const Input = defineComponent({
 		};
 	},
 	render() {
-		const { color, disabled, loading } = this.componentClasses;
+		const { dense, color, disabled, loading } = this.componentClasses;
 		const maxLength = this.instance.attrs.maxlength;
 		return (
 			<div class={[
+					dense,
 					color,
 					loading,
 					disabled,
@@ -328,10 +335,13 @@ const Input = defineComponent({
 				<div class={NAMESPACES.INPUT_CONTROL}>
 					{/* render if has prepend icon  */}
 					{ (this.hasPrependIcon || this.typeIcon) && (
-						<div class={[NAMESPACES.INPUT_PREPEND_ICON, NAMESPACES.INPUT_ICON]}>
+						<div class={[
+								NAMESPACES.INPUT_PREPEND_ICON, 
+								NAMESPACES.INPUT_ICON
+							]}>
 							<i>
 								{ this.prependIcon && !this.typeIcon
-									? <Icon icon={this.prependIcon.icon} width="20px" height="20px"/>
+									? <Icon icon={this.prependIcon.icon}/>
 									: this.$slots.prepend?.()
 								}
 								{ this.typeIcon && (

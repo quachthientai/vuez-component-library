@@ -116,6 +116,24 @@ const meta = {
             type: { summary: 'boolean' }
          }
 		},
+		selectAllToggle: {
+			control: 'boolean',
+			description: 'Whether the select option list has select all toggle',
+			table: {
+				category: "Props",
+				defaultValue: { summary: 'false' },
+				type: { summary: 'boolean' }
+			}
+		},
+		selectAllLabel: {
+			control: 'string',
+			description: 'Define the label for select all toggle',
+			table: {
+				category: "Props",
+				defaultValue: { summary: 'Select All' },
+				type: { summary: 'string' }
+			}
+		},
 		maxSelectedLabels: {
 			control: { type: 'number' },
 			description: 'Define the limit number of labels shown',
@@ -130,13 +148,18 @@ const meta = {
 			description: 'Define the label to display after exceedding max selected labels ',
 			table: {
 				category: "Props",
-				defaultValue: { summary: '(+{0} others)'},
+				defaultValue: { summary: '(+{0} others)' },
 				type: { summary: 'string' }
 			}
 		},
 		limitSelection: {
 			control: { type: 'number' },
-			description: 'Define the limit number of selected'
+			description: 'Define the limit number of selected',
+			table: {
+				category: "Props",
+				defaultValue: { summary: '0' },
+				type: { summary: 'number' }
+			}
 		},
 		disabled: disabledArgType(),
 		color: colorArgType(),
@@ -336,9 +359,6 @@ export const MaxSelectedValue: Story = {
 				<Select v-bind="args" label="test" v-model="selected" />
 				<Select v-bind="args" label="test" chips v-model="selected" />
 			</div>
-			
-
-			
 		`
 	}),
 	args: {
@@ -433,4 +453,89 @@ export const LimitSelection: Story = {
 	}
 }
 
+export const Group: Story = {
+	render: (args) => ({
+		components: { Select },
+		setup() {
+			const selected = ref([
+				{label:'Chicago', value: 'Chicago'},
+				{label:'Los Angeles', value: 'Los Angeles'},
+				{label:'New York', value: 'New York'},
+			]);
+
+			return { args, selected }
+		},
+		template: `
+			<Select v-bind="args" v-model="selected" />
+		`
+	}),
+	args: {
+		options: [
+			{label:'USA', value: 'USA', icon:'flagpack:us', items: [
+				{label:'Chicago', value: 'Chicago'},
+				{label:'Los Angeles', value: 'Los Angeles', },
+				{label:'New York', value: 'New York'}
+			]},
+			{label:'Japan', value: 'Japan', icon:'flagpack:jp', items: [
+				{label:'Kyoto', value: 'Kyoto'},
+				{label:'Osaka', value: 'Osaka', },
+				{label:'Yokohama', value: 'Yokohama'}
+			]},
+			{label:'Germany', value: 'Germany', icon: "flagpack:de", items: [
+				{label:'Berlin', value: 'Berlin'},
+				{label:'Munich', value: 'Munich', },
+				{label:'Hamburg', value: 'Hamburg'}
+			]},
+			{label: 'Test', value: 'Test'}
+		],
+		multiple: true,
+		selectAllToggle: true
+	}
+}
+
+export const Filter: Story = {
+	render: (args) => ({
+		components: { Select },
+		setup() {
+			const selected = ref([
+				{label:'Chicago', value: 'Chicago'},
+				{label:'Los Angeles', value: 'Los Angeles'},
+				{label:'New York', value: 'New York'},
+			]);
+
+			const selected2 = ref([
+				{label: 'Test', value: 'Test'},
+				{label: 'Testing2', value: 'Testing2'}
+			])
+			return { args, selected, selected2 }
+		},
+		template: `
+			<Select v-bind="args"  v-model="selected"/>
+		`
+	}),
+	args: {
+		options: [
+			{label:'USA', value: 'USA', icon:'flagpack:us', items: [
+				{label:'Chicago', value: 'Chicago'},
+				{label:'Los Angeles', value: 'Los Angeles', },
+				{label:'New York', value: 'New York'}
+			]},
+			{label:'Japan', value: 'Japan', icon:'flagpack:jp', items: [
+				{label:'Kyoto', value: 'Kyoto'},
+				{label:'Osaka', value: 'Osaka', },
+				{label:'Yokohama', value: 'Yokohama'}
+			]},
+			{label:'Germany', value: 'Germany', icon: "flagpack:de", items: [
+				{label:'Berlin', value: 'Berlin'},
+				{label:'Munich', value: 'Munich',},
+				{label:'Hamburg', value: 'Hamburg'}
+			]},
+			{label: 'Test', value: 'Test'},
+			{label: 'Testing2', value: 'Testing2'}
+		],
+		multiple: true,
+		selectAllToggle: true,
+		filter: true
+	}
+}
 

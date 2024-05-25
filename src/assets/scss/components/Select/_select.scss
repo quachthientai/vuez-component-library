@@ -10,6 +10,10 @@
 
       .vz-input__field {
          @apply h-[0px] w-[0px] absolute opacity-0;
+
+
+         // @apply absolute top-[50px];
+
       }
 
       &__selections {
@@ -17,14 +21,14 @@
       }
 
       &__selections-items {
-         @apply max-h-[280px] overflow-y-scroll;
+         @apply max-h-[280px] overflow-y-auto;
       }
 
       &__selection-text,
       &__selection-chips {
          @apply text-sm truncate text-dark/70 dark:text-light/70;
       }
-      
+
       &__selection-max {
          @apply ml-1;
       }
@@ -45,7 +49,7 @@
 
 @layer utilities {
    .vz-select {
-      &:has(.vz-select__selections-text):has(.vz-input__label){
+      &:has(.vz-select__selections-text):has(.vz-input__label) {
          .vz-select__selections-text {
             @apply pt-3;
          }
@@ -72,20 +76,23 @@
             @apply top-[52px];
          }
       }
-      
-      &:has(.vz-select__selection-text):has(.vz-input__label){
+
+      &:has(.vz-select__selection-text):has(.vz-input__label) {
          .vz-select__selection-text {
             @apply pt-3;
          }
       }
 
-      &:has(.vz-select__selection-chips):has(.vz-input__label){
+      &:has(.vz-select__selection-chips):has(.vz-input__label) {
          .vz-select__selection-chips {
             @apply pt-[19px];
          }
+
          .vz-input__control {
             @apply min-h-[50px];
          }
       }
    }
-};
+}
+
+;

@@ -190,7 +190,8 @@ const MenuTest = defineComponent({
 					break;
 			}
 
-			if(prevent) e.preventDefault();
+			// if(prevent) e.preventDefault();
+			
 		}
 
 		function setFocusItemIndex(index: number) {
@@ -225,7 +226,7 @@ const MenuTest = defineComponent({
          if(foundIndex > -1) {
             setFocusItemIndex(foundIndex);
          }
-         e.preventDefault();
+         // e.preventDefault();
 		}
 
 		function toggle(e: Event) {
@@ -301,7 +302,7 @@ const MenuTest = defineComponent({
                   top: y + 'px',
                   left: x + 'px',
                   position: 'absolute',
-                  zIndex: '1000',
+                  // zIndex: '1000',
                })
             });
          });
