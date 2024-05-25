@@ -7,65 +7,57 @@
 @layer base {
    .vz-menu-item {
       @include utils-mixin.get-grid-append-prepend-setup;
+      @apply relative px-4 outline-none overflow-hidden;
+      @apply items-center align-middle w-full grid gap-2 min-h-[40px];
+      @apply text-sm text-gray-600 dark:text-gray-200;
+      @apply ease-linear duration-300;
       grid-template-columns: max-content 1fr auto;
-      align-items: center;
-      @apply 
-         text-sm relative px-4 
-         outline-none
-         overflow-hidden
-         
-         ease-linear duration-150
-         text-gray-600 dark:text-gray-200 
-         align-middle min-h-[40px] w-full 
-         cursor-pointer grid gap-2;
-
 
       > .ripple .ripple__effect {
          @include utils-mixin.get-rgb-ripple-color('plain');
       }
-
-      &:not([data-disabled="true"], [data-element-type="header"]):hover,{
-         @include utils-mixin.get-hover-color('text', 'plain');
+      
+      &--disabled {
+         @apply opacity-60 cursor-not-allowed;
       }
 
-      &:not([data-disabled="true"], [data-element-type="header"]):focus-visible, 
-      &:not([data-disabled="true"], [data-element-type="header"]):focus, {
-         @include utils-mixin.get-focus-color('text', 'plain');
-      }
-
-
-      & ~ &--disabled {
-         @apply opacity-50 cursor-not-allowed;
-      }
-
-      & &__icon {
+      &__icon {
          @include utils-mixin.get-grid-template('prepend');
          @apply text-[1.3rem]
       }
 
-      & &__content {
+      &__content {
          @include utils-mixin.get-grid-template('content');
          @apply overflow-hidden truncate;
       }
 
-      & &__badge {
+      &__badge {
          @include utils-mixin.get-grid-template('append');
          @apply overflow-hidden;
       }
-   }
 
-   .vz-menu-item.vz-menu-item-header {
-      @apply min-h-[40px];
-      .vz-menu-item__content {
-         @apply font-bold;        
+      &__header {
+         @apply font-bold;
       }
-      &:hover {
-         @apply cursor-default;
+
+      &__divider {
+         @apply bg-gray-200 dark:bg-slate-500 h-[1px] border-none;
       }
    }
 
-   // .vz-menu-item.vz-menu-item--disabled {
-   //    @apply opacity-50 cursor-not-allowed;
-   // }
+   @layer utilities {
+      .vz-menu-item {
+         &:not([data-disabled="true"], [data-menu-item-type="header"]):hover {
+            @include utils-mixin.get-hover-color('text', 'plain');
+            @apply cursor-pointer;
+         }
+         &:not([data-disabled="true"], [data-menu-item-type="header"]):focus-visible,
+         &:not([data-disabled="true"], [data-menu-item-type="header"]):focus {
+            @include utils-mixin.get-focus-color('text', 'plain');
+         }
+         
+      }
+   }
+
 }
 

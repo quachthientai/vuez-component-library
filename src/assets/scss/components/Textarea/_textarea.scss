@@ -7,12 +7,11 @@
    @apply grid rounded-lg;
    grid-template-areas: 
       "control"
-      "helper-text";
+      "details";
    grid-template-rows: auto auto;
 
    &__control { 
       @apply grid border p-1 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
-
       grid-area: control;
       grid-template-areas: "prepend field clear append";
       grid-template-columns: min-content minmax(0, 1fr) min-content min-content;
@@ -38,9 +37,14 @@
    };
 
    &__field {
+      min-height: 44px;
       @apply w-full h-full flex;
       @apply text-sm text-dark/70 dark:text-light/70 bg-transparent p-1 border-0 border-transparent;
       
+      &::placeholder {
+         @apply text-slate-400 dark:text-slate-300/70;
+      }
+
       &:placeholder-shown:not(:focus) {
          ~ .vz-textarea__label {
             @apply scale-100 p-0 -translate-y-1/2 top-1/2 bg-transparent;
@@ -50,6 +54,11 @@
       &:focus {
          @apply ring-0 border-transparent;
       }
+   }
+
+   &__details {
+      @apply text-xs flex px-3 pt-1 text-slate-400 dark:text-slate-300/70;
+      grid-area: details;
    }
 
    &__icon {
@@ -64,9 +73,12 @@
    }
 
    &__helper-text {
-      @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
-      grid-area: helper-text;
+      @apply grow shrink basis-auto;
    };
+
+   &__counter {
+      @apply grow-0 shrink basis-auto;
+   }
 
    &--disabled {
       :not(.vz-textarea__helper-text) {
@@ -99,15 +111,19 @@
       }
 
       &:has(&__label) {
+         .vz-textarea__field-wrapper {
+            @apply pt-4;
+         }
          .vz-textarea__field {
-            @apply pb-0 pt-4 px-2;
+            @apply pb-0 pt-0 px-2;
+            
             &::placeholder {
-               @apply invisible;
+               @apply invisible opacity-0 transition-all ease-linear duration-100;
             }
 
             &:focus {
                &::placeholder {
-                  @apply visible;
+                  @apply visible opacity-100;
                }
             }
          }

@@ -1,0 +1,70 @@
+import { Meta, Title, Controls, Story, Primary, Canvas, Stories, ArgTypes, Source } from '@storybook/blocks';
+import * as TextareaStories from './Textarea.stories'; 
+
+<Meta
+   of={TextareaStories}
+   name="Docs"
+/>
+
+<Title />
+
+The `Textarea` is a component that allows users to enter large amounts of textual data.
+
+### Import
+```ts
+import { Textarea } from '@component/Textarea/Textarea';
+```
+
+
+### Usage
+<Primary />
+<Controls exclude={['prepend', 'append', 'helper-text', 'label', 'update:modelValue', 'clear:modelValue']} />
+<Stories />
+
+### Events
+<ArgTypes include={['update:modelValue', 'clear:modelValue']} />
+
+### Slots
+<ArgTypes include={['append', 'prepend', 'helper-text', 'label']}/>
+<Source code={`
+// * Append slot * //
+<Textarea>
+   <template #appendIcon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Textarea>
+
+// * Prepend slot * //
+<Textarea>
+   <template #prependIcon>
+      <Icon icon="mdi-gear" />
+   </template>
+</Textarea>
+
+// * Helper text slot * //
+<Textarea>
+   <template #helperText>
+      This is helper text
+   </template>
+</Textarea>
+
+// * Label slot * //
+<Textarea>
+   <template #label>
+      Email
+   </template>
+</Textarea>
+`} />
+
+### Accessibility
+#### **Keyboard Support**
+| Key   | Function |
+| :---- | :----    |
+| Tab | Moves keyboard focus to the textarea. |
+| Space | Toggle between checked and unchecked states |
+#### **Role, Property, State, and Tabindex Attributes**
+Attribute | Value |
+| :---- | :----    |
+| role  | `switch` |
+| aria-checked | `checked state of component` |
+| aria-disabled | `disabled state of component` |

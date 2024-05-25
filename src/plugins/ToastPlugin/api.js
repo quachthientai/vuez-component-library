@@ -2,7 +2,6 @@ import Toast from '@/components/Toast/Toast.vue'
 import { createShadowComponent } from '../render'
 import { eventBus } from '@/utils/eventBus'
 
-
 const defaultOption = {
   type: 'default',
   text: "Hello I'm toast!",
@@ -14,7 +13,6 @@ const defaultOption = {
 }
 
 export const useToast = {
-  
   /**
    * Shows a toast message with the given message and options.
    * @param {string} message - The message to display in the toast.
@@ -29,7 +27,7 @@ export const useToast = {
     } catch (e) {
       console.error(e)
     }
-    
+
     let vOption = option
       ? Object.assign({}, defaultOption, { text: message }, option)
       : Object.assign({}, defaultOption, { text: message })

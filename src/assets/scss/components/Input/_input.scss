@@ -1,3 +1,4 @@
+@use '../../utilities/utils-mixin';
 @use '../../utilities/utils-variables';
 @tailwind base;
 @tailwind components;
@@ -6,22 +7,28 @@
 @layer base {
   .vz-input {
     @apply grid rounded-lg;
-    grid-template-areas: 
+    grid-template-areas:
       "control"
-      "helper-text";
+      "details";
     grid-template-rows: auto auto;
 
     &__control {
-      @apply grid border h-[46px] px-2 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
+      @apply grid border min-h-[46px] px-2 border-slate-300 dark:border-slate-400/80 rounded-lg relative transition-all duration-300;
       grid-area: control;
-      grid-template-areas: "prepend field show-password-toggle clear append";
+      grid-template-areas: "prepend field show-password-toggle clear loader append";
       grid-template-columns: min-content minmax(0, 1fr) min-content min-content min-content;
     }
-    
+
     &__field-wrapper {
+      @apply flex relative;
       grid-area: field;
     }
-    
+
+    &__affix {
+      @apply flex items-center;
+      @apply text-sm text-slate-400 dark:text-slate-300/70;
+    }
+
     &__prepend-icon {
       grid-area: prepend;
     }
@@ -32,16 +39,17 @@
 
     &__show-password-toggle {
       grid-area: show-password-toggle;
-      
+
       &:hover {
-        @apply cursor-pointer text-dark/80 dark:text-light;
+        @apply transition-all duration-300 cursor-pointer text-dark/80 dark:text-light;
       }
     }
 
     &__clearable {
       grid-area: clear;
+      
       &:hover {
-        @apply cursor-pointer text-dark/80 dark:text-light;
+        @apply transition-all duration-300 cursor-pointer text-dark/80 dark:text-light;
       }
     }
 
@@ -50,19 +58,24 @@
     }
 
     &__label {
-      @apply absolute top-3 left-3 -translate-y-1/2 z-10 scale-75 origin-[0];
+      @apply absolute top-3 left-1 -translate-y-1/2 z-10 scale-75 origin-[0];
       @apply text-sm text-slate-400 dark:text-slate-300/70 bg-transparent;
-      @apply  transition-all duration-300;
+      @apply transition-all duration-300;
+    }
+
+    &__loader {
+      @apply animate-spin;
+      grid-area: loader;
     }
 
     &__field {
-      @apply w-full h-full flex;
-      @apply text-sm text-dark/70 dark:text-light/70; 
+      @apply w-full h-full flex truncate;
+      @apply text-sm text-dark/70 dark:text-light/70;
       @apply bg-transparent border-0 border-transparent py-0 px-1;
-     
-      
+
+
       &[type="password"]:not(:placeholder-shown) {
-        font-family: Tahoma,sans-serif;
+        font-family: Tahoma, sans-serif;
         letter-spacing: 0.125em;
       }
 
@@ -71,7 +84,7 @@
       }
 
       &:placeholder-shown:not(:focus) {
-        ~ .vz-input__label {
+        ~.vz-input__label {
           @apply scale-100 p-0 -translate-y-1/2 top-1/2;
         }
       }
@@ -81,21 +94,43 @@
       }
     }
 
-    &__helper-text {
-      @apply text-xs px-3 pt-1 flex items-end overflow-hidden text-slate-400 dark:text-slate-300/70;
-      grid-area: helper-text;
+    &__details {
+      @apply text-xs flex px-3 pt-1 text-slate-400 dark:text-slate-300/70;
+      grid-area: details;
     }
-    
+
+    &__helper-text {
+      @apply mr-auto grow shrink basis-auto;
+    }
+
+    &__counter {
+      @apply ml-auto grow-0 shrink basis-auto;
+    }
+
     &--disabled {
       :not(.vz-input__helper-text) {
         @apply cursor-not-allowed;
       }
-      
       .vz-input__control {
         @apply bg-slate-200 dark:bg-slate-400/60 opacity-60;
+
         * * {
           @apply cursor-not-allowed;
         }
+      }
+    }
+
+    &--dense {
+      .vz-input__control {
+        @apply min-h-[40px] rounded-md;
+      }
+
+      .vz-input__field, .vz-input__label, .vz-input__affix, .vz-input__details {
+        @apply text-xs;
+      }
+
+      .vz-input__icon {
+        @apply text-lg;
       }
     }
   }
@@ -108,7 +143,7 @@
         .vz-input__control {
           &:has(*.vz-input__field:focus) {
             @apply border ring-0 border-#{$color}-500 dark:border-#{$color}-500/90;
-            
+
             *.vz-input__label {
               @apply text-#{$color}-500 dark:text-#{$color}-500/90;
             }
@@ -120,27 +155,49 @@
     // Hide placeholder when label is present
     // Show placeholder when input is focused
     &:has(&__label) {
+
+      .vz-input__affix {
+        @apply pb-0 pt-3 invisible;
+      }
+
+      .vz-input__prefix {
+        @apply pl-1;
+      }
+
+      .vz-input__suffix {
+        @apply pr-1;
+      }
+
+      &:has(.vz-input__field:focus),
+      &:has(.vz-input__field:not(:placeholder-shown)) {
+        .vz-input__affix {
+          @apply visible;
+        }
+      }
+
       .vz-input__field {
         @apply pb-0 pt-3 px-1;
+
         &::placeholder {
-          @apply invisible;
+          @apply invisible opacity-0 transition-all ease-linear duration-100;
         }
-        
+      
         &:focus {
           &::placeholder {
-            @apply visible;
+            @apply visible opacity-100;
           }
         }
       }
     }
-    
+
     &:has(&__prepend-icon) {
       .vz-input__field {
         ~.vz-input__label {
-          @apply translate-x-[1.8rem];
+          // @apply translate-x-[1.8rem];
         }
       }
     }
   }
-}
 
+
+}

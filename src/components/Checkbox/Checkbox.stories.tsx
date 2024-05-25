@@ -11,6 +11,17 @@ const meta = {
 		label: labelArgType(),
 		color: colorArgType(),
 		disabled: disabledArgType(),
+		binary:{
+			control: {
+				type: 'boolean'
+			},
+			description: 'Allow to select a boolean value instead of multiple value',
+			table: {
+				category: 'Props',
+				defaultValue: { summary: 'false' },
+				type: { summary: 'boolean' }
+			}
+		},
 		indeterminate: {
 			control: {
 				type: 'boolean'
@@ -76,13 +87,16 @@ export const Basic: Story = {
 		components: { Checkbox },
 		setup() {
 			const checked = ref(true);
-			return { args, checked };
+
+			const selected = ref(['Orange'])
+			return { args, checked, selected };
 		},
 		template: `
-			<div class="mb-2">
-				<span>Checked: </span> {{ checked }}
+			<div class="mb-2 flex flex-col gap-2">
+				<span>Selected: {{ selected }}</span> 
+				<span>Checked: {{ checked }}</span> 
 			</div>
-			<Checkbox v-bind="args" v-model="checked"/>
+			<Checkbox v-bind="args" value="Orange"  v-model="selected"/>
 		`
 	}),
 	args: {
@@ -95,23 +109,35 @@ export const ColorVariants: Story = {
       components: { Checkbox },
       setup() {
          const checked = ref(true);
-         return { args, checked }; 
+			const selectedCategories = ref([]);
+         return { args, checked, selectedCategories }; 
       },
       template: `
          <div class="mb-2">
-            <span>Checked: </span> {{ checked }}
+            <span>Selected: </span> {{ selectedCategories }}
          </div>
 
 			<div class="flex flex-col">
-				<Checkbox v-bind="args" label="Checkbox 1" v-model="checked"/>
-				<Checkbox v-bind="args" label="Checkbox 2" v-model="checked" color="secondary"/>
-				<Checkbox v-bind="args" label="Checkbox 3" v-model="checked" color="success"/>
-				<Checkbox v-bind="args" label="Checkbox 4" v-model="checked" color="warning"/>
-				<Checkbox v-bind="args" label="Checkbox 5" v-model="checked" color="danger"/>
-				<Checkbox v-bind="args" label="Checkbox 6" v-model="checked" color="info"/>
+				<Checkbox v-for="item of args.categories" 
+					:label="item.label" 
+					:color="item.color"
+					:value="item.value"
+					v-model="selectedCategories"
+				/>
+				
 			</div>
       `
-   })
+   }),
+	args: {
+		categories: [
+			{ label: 'Primary', value: 'primary', color: 'primary' },
+			{ label: 'Secondary', value: 'secondary', color: 'secondary' },
+			{ label: 'Success', value: 'success', color: 'success' },
+			{ label: 'Warning', value: 'warning', color: 'warning' },
+			{ label: 'Danger', value: 'danger', color: 'danger' },
+			{ label: 'Info', value: 'info', color: 'info' },
+		]
+	}
 }
 
 export const Disabled: Story = {
@@ -125,7 +151,7 @@ export const Disabled: Story = {
 			<div class="mb-2">
             <span>Checked: </span> {{ checked }}
          </div>
-			<Checkbox  v-bind="args" label="Checkbox 1" v-model="checked"/>
+			<Checkbox  v-bind="args" binary label="Checkbox 1" v-model="checked"/>
 		`
 	}),
 	args: {
@@ -144,7 +170,7 @@ export const Indeterminate: Story = {
 			<div class="mb-2">
 				<span>Checked: </span> {{ checked }}
 			</div>
-			<Checkbox v-bind="args" v-model="checked"/>
+			<Checkbox v-bind="args" binary v-model="checked"/>
 		`
 	}),
 	args: {

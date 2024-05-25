@@ -1,0 +1,98 @@
+@use '../../utilities/utils-mixin';
+@use '../../utilities/utils-variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+   .vz-select {
+      @apply select-none relative;
+
+      .vz-input__field {
+         @apply h-[0px] w-[0px] absolute opacity-0;
+
+
+         // @apply absolute top-[50px];
+
+      }
+
+      &__selections {
+         @apply flex truncate items-center p-1;
+      }
+
+      &__selections-items {
+         @apply max-h-[280px] overflow-y-auto;
+      }
+
+      &__selection-text,
+      &__selection-chips {
+         @apply text-sm truncate text-dark/70 dark:text-light/70;
+      }
+
+      &__selection-max {
+         @apply ml-1;
+      }
+
+      &__selection {
+         @apply inline-block;
+      }
+
+      &--disabled {
+         @apply w-full cursor-not-allowed pointer-events-none;
+      }
+
+      &__dropdown-icon {
+         @apply transition-all duration-300;
+      }
+   }
+}
+
+@layer utilities {
+   .vz-select {
+      &:has(.vz-select__selections-text):has(.vz-input__label) {
+         .vz-select__selections-text {
+            @apply pt-3;
+         }
+      }
+
+      &__selection {
+         &:not(:first-child):not(.vz-select__selection-max):not(:has(.vz-chip)):before {
+            content: ", ";
+         }
+
+         &:not(:first-child):has(.vz-chip) {
+            @apply ml-1;
+         }
+      }
+
+      &:has(.vz-input__details) {
+         .vz-input__details {
+            @apply absolute top-[46px] w-full;
+         }
+      }
+
+      &:has(.vz-input__details):has(.vz-select__selection-chips) {
+         .vz-input__details {
+            @apply top-[52px];
+         }
+      }
+
+      &:has(.vz-select__selection-text):has(.vz-input__label) {
+         .vz-select__selection-text {
+            @apply pt-3;
+         }
+      }
+
+      &:has(.vz-select__selection-chips):has(.vz-input__label) {
+         .vz-select__selection-chips {
+            @apply pt-[19px];
+         }
+
+         .vz-input__control {
+            @apply min-h-[50px];
+         }
+      }
+   }
+}
+
+;

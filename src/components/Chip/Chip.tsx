@@ -17,6 +17,10 @@ enum NAMESPACES {
 };
 
 const vChipProps = makePropsFactory({
+	modelValue: {
+		type: Boolean,
+		default: true
+	},
 	content: {
 		type: String,
 		default: undefined
@@ -48,10 +52,14 @@ const Chip = defineComponent({
 		}) {
 			return payload.originalEvent && payload.currentInstance;
 		},
-		remove(payload: {
+		'remove': null,
+		'update:modelValue': (payload: Boolean) => {
+			return !payload;
+		},
+		'click:close': (payload: {
 			originalEvent: Event,
 			currentInstance: ComponentInternalInstance
-		}) {
+		}) => {
 			return payload.originalEvent && payload.currentInstance;
 		}
 	},
@@ -87,15 +95,14 @@ const Chip = defineComponent({
 			});
 		}
 
-		function onRemove(e: Event) {
-			visible.value = false;
-	
-			emit('remove', {
-				originalEvent: e,
-				currentInstance: instance,
-			});
-		}
+		function onClose(e: Event) {
+			e.stopPropagation();
+			e.preventDefault();
 
+			emit('update:modelValue', false);
+			emit('remove');
+		}
+		
 		return {
 			size,
 			color,
@@ -104,14 +111,14 @@ const Chip = defineComponent({
 			hasContent,
 			isClickable,
 			onClick,
-			onRemove,
+			onClose,
 			componentAttrs,
 		};
 	},
 	render() {
 		return (
 			<>
-				{this.visible && (
+				{this.modelValue && (
 					<div class={[
 							this.color,
 							this.size,
@@ -125,7 +132,7 @@ const Chip = defineComponent({
 					>	
 						{this.hasIcon && (
 							<i class={NAMESPACES.CHIP_ICON}>
-								<Icon  icon={this.icon}/>
+								<Icon icon={this.icon}/>
 							</i>
 						)}
 
@@ -135,7 +142,7 @@ const Chip = defineComponent({
 						
 						{this.closable && (
 							<i class={NAMESPACES.CHIP_CLOSE} 
-								onClick={!this.disabled && this.onRemove}
+								onClick={!this.disabled && this.onClose}
 							>
 								<Icon icon="mdi:close-circle"/>
 							</i>
