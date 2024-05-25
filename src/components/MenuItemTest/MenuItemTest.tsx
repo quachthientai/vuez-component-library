@@ -171,6 +171,7 @@ const MenuItemTest = defineComponent({
 		}) => {
 			return payload.originalEvent && payload.currentInstance;
 		},
+		'focus': null
 	},
 	directives: {
 		'ripple': Ripple
@@ -242,6 +243,10 @@ const MenuItemTest = defineComponent({
 			});
 		}
 
+		function handleFocus(e: Event) {
+			emit('focus', e);
+		}
+
 		return {
          componentAttrs,
          componentClasses,
@@ -253,6 +258,8 @@ const MenuItemTest = defineComponent({
          hasLabel,
          hasRoute,
          onItemClick,
+
+			handleFocus
       }
 	},
 	render() {
@@ -266,6 +273,8 @@ const MenuItemTest = defineComponent({
 							: this.tag
 					}
 					v-ripple={this.type === 'item' && !this.disabled}
+					id={generateComponentId('vz-menu-item')}
+					onFocus={(e: Event) => this.handleFocus(e)}
 					onClick={
 						!this.disabled && this.type === 'item'
 							? (e: Event) => {

@@ -141,9 +141,7 @@ export const Basic: Story = {
 			<div class="mb-3">
 				Message: {{ msg }}
 			</div>
-			<Input v-model="msg" v-bind="args" placeholder="Type something..">
-				
-			</Input>
+			<Input v-model="msg" v-bind="args" placeholder="Type something.." />
 		`
 	}),
 }
@@ -212,6 +210,7 @@ export const HelperText: Story = {
 			</div>
 			<Input v-model="msg" 
 				class="mb-3" 
+				
 				label="Primary" 
 				v-bind="args" 
 				placeholder="Type something.."
@@ -234,7 +233,7 @@ export const PrependAndAppendIcon: Story = {
 			<div class="mb-3">
 				Message: {{ msg }}
 			</div>
-			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+			<Input v-model="msg"  class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
 		`
 	}),
 	args: {
@@ -281,7 +280,7 @@ export const Loading: Story = {
 				Load: {{ load }}
 			</div>
 			<Button @click="load = !load"  class="my-3" color="primary" content="Toggle loading"/>
-			<Input v-model="msg" class="mb-3" v-bind="args" :loading="load"  label="Message" placeholder="Type something.."/>
+			<Input v-model="msg"  class="mb-3" v-bind="args" :loading="load"  label="Message" placeholder="Type something.."/>
 		`
 	}),
 	args: {
@@ -394,7 +393,7 @@ export const Counter: Story = {
 			return { args, msg };
 		},
 		template: `
-			<Input v-model="msg" v-bind="args" counter clearable helperText="hey" />
+			<Input v-model="msg"  v-bind="args" counter clearable helperText="hey" />
 		`
 	}),
 }
@@ -412,4 +411,31 @@ export const Mask: Story = {
 			<Input v-model="msg" v-bind="args" mask="(###) ###-####"/>
 		`
 	})
+}
+
+export const Dense: Story = {
+	render: (args) => ({
+		components: { Input },
+		setup() {
+			const msg = ref('Hey!');
+			return { args, msg };
+		},
+		template: `
+			<div class="mb-3">
+				Message: {{ msg }}
+			</div>
+			<Input v-model="msg" class="mb-3" v-bind="args"  label="Message" placeholder="Type something.."/>
+
+			<Input v-model="msg" class="mb-3" v-bind="args" :dense="true" label="Message" placeholder="Type something.."/>
+		`
+	}),
+	args: {
+		helperText: 'We’ll never share your details. Read our Privacy Policy.',
+		prependIcon: {
+			icon: 'mdi-smiley'
+		}, 
+		appendIcon: {
+			icon: 'mdi-send-variant'
+		}
+	}
 }

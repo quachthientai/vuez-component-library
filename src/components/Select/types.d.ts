@@ -19,6 +19,11 @@ export type SelectOptionModel = {
     */
    label?: string;
    value?: any;
+   //add-on
+   icon?: string;
+   disabled?: boolean,
+   items?: SelectOptionModel[]
+   //end
    key?: string;
    [key: string]: any;
 }

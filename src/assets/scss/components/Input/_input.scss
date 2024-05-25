@@ -119,6 +119,20 @@
         }
       }
     }
+
+    &--dense {
+      .vz-input__control {
+        @apply min-h-[40px] rounded-md;
+      }
+
+      .vz-input__field, .vz-input__label, .vz-input__affix, .vz-input__details {
+        @apply text-xs;
+      }
+
+      .vz-input__icon {
+        @apply text-lg;
+      }
+    }
   }
 }
 
@@ -175,7 +189,7 @@
         }
       }
     }
-    
+
     &:has(&__prepend-icon) {
       .vz-input__field {
         ~.vz-input__label {
