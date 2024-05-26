@@ -151,6 +151,10 @@ const vMenuItemProps = makePropsFactory({
 	modelValue: {
 		default: undefined,
 	},
+	readonly: {
+		type: Boolean,
+		default: false,
+	},
    /**
     * The key for the menu item.
     * @type {string}
@@ -272,11 +276,11 @@ const MenuItemTest = defineComponent({
 							: this.hasHref ? 'a'
 							: this.tag
 					}
-					v-ripple={this.type === 'item' && !this.disabled}
+					v-ripple={this.type === 'item' && !this.disabled && !this.readonly}
 					id={generateComponentId('vz-menu-item')}
 					onFocus={(e: Event) => this.handleFocus(e)}
 					onClick={
-						!this.disabled && this.type === 'item'
+						!this.disabled && this.type === 'item' && !this.readonly
 							? (e: Event) => {
 								this.action
 									? this.onItemClick(e, this.action)

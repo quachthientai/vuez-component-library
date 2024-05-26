@@ -14,6 +14,10 @@ import { computed, defineComponent, type PropType, provide, Ref, toRef, getCurre
 import { makeColorProp } from '@/composable';
 import { Icon } from '@iconify/vue';
 
+/**
+ * TODO: should add readonly prop for menu item to prevent click?
+ */
+
 enum NAMESPACES {
 	SELECT = 'vz-select',
 	SELECT_DISABLED = 'vz-select--disabled',
@@ -608,7 +612,7 @@ const Select = defineComponent({
 							}) }
 
 							{ (this.optionsList.length === 0) &&
-								<MenuItemTest content={this.emptyFilterLabel}></MenuItemTest>
+								<MenuItemTest readonly content={this.emptyFilterLabel}></MenuItemTest>
 							}
 						</div>
 					)}
