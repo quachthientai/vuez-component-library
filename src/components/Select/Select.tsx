@@ -21,6 +21,7 @@ enum NAMESPACES {
 	SELECT_SELECTIONS_LIST = 'vz-select__selections-list',
 	SELECT_SELECTIONS_ITEMS = 'vz-select__selections-items',
 	SELECT_SELECTIONS_ITEM_SELECT_ALL = 'vz-select__selections-item-all',
+	SELECT_SELECTIONS_ITEM_FILTER = 'vz-select__selections-item-filter',
 
 	SELECT_SELECTION = 'vz-select__selection',
 	SELECT_SELECTIONS = 'vz-select__selections',
@@ -112,6 +113,10 @@ const vSelectProps = makePropsFactory({
 		type: Boolean,
 		default: false,
 	},
+	emptyFilterLabel: {
+		type: String,
+		default: 'No result found' 
+	},
 	...makeColorProp([
 		'primary',
 		'secondary',
@@ -139,15 +144,10 @@ const Select = defineComponent({
 
 		const root = ref<HTMLElement>(null);
 		const isOpen = ref<Boolean>(false);
+		
+		const filterValue = ref<String>(null);
 
-		const filterText = ref('');
-		const filterValue = ref<SelectOptionModel[]>(null);
-		// const refOptions = ref<SelectOptionModel[]>(props.options as SelectOptionModel[])
-		const refOptions = computed(() => {
-			return props.options
-		})
 
-		//test
 		const listItem = ref<HTMLElement>(null);
 		const listItemID = ref<String>("");
 		
@@ -169,6 +169,20 @@ const Select = defineComponent({
 			}
 		})
 
+		const optionsList = computed(() => {
+			const options = props.options;
+			
+			if(filterValue.value) {
+				const filteredArr = (props.options as SelectOptionModel[])
+					.flatMap((option) => option.items ? option.items : option)
+					.filter((option) => option.value.toLowerCase().indexOf(filterValue.value.toLowerCase()) > -1);
+				
+				return getFilteredOptionsList(filteredArr);
+			}
+			
+			return options
+		})
+
 		const componentAttrs = computed(() => {
 			return {
 				...attrs,
@@ -177,11 +191,7 @@ const Select = defineComponent({
 				'aria-expanded': isOpen.value
 			};
 		});
-
-		watch(filterValue, (newVal, oldVal) => {
-			applyFilter(newVal);
-		})
-
+		
 		function rootRef(el: HTMLElement) {
 			return root.value = el;
 		};
@@ -219,21 +229,26 @@ const Select = defineComponent({
 			return modelValue.length > (props.limitSelection as number);
 		}
 
-		function applyFilter(filterArr: SelectOptionModel[]) {
-			let newRenderOptionsList = null;
-
-			return refOptions.value.map((option) => {
+		function getFilteredOptionsList(filterArr: SelectOptionModel[]) {
+			return (props.options as SelectOptionModel[]).reduce(function(result, option) {
 				if(option.items && option.items.length > 0) {
 					const filteredItems = option.items.filter((item) => {
 						return filterArr.some((filterItem) => filterItem.value === item.value)
 					})
+
 					if(filteredItems.length > 0) {
-						return {...option, items: filteredItems}
+						result.push({...option, items: filteredItems})
 					}
+
 				} else {
-					return filterArr.find((item) => item.value === option.value)
+					filterArr.find((filterItem) => {
+						if(filterItem.value === option.value) {
+							result.push({option})
+						}
+					})
 				}
-			})
+				return result;
+			}, [])
 		}
 
 		function isSubOption(modelValue: SelectOptionModel[], option: SelectOptionModel) : boolean {
@@ -361,13 +376,14 @@ const Select = defineComponent({
 			return selectedValue
 		}
 
+		/**
+		 * TODO: event should be emit as OnFilterChange
+		 */
 		function onFilterInput(e: Event) {
 			const target = e.target as HTMLInputElement;
-			const value = target.value.toLowerCase();
+			const value = target.value;
 
-			return filterValue.value = (props.options as SelectOptionModel[])
-				.flatMap((option) => option.items ? option.items : option)
-				.filter((option) => option.value.toLowerCase().indexOf(value) > -1);
+			return filterValue.value = value;
 		}
 
 		provide(SelectKey, {
@@ -406,14 +422,16 @@ const Select = defineComponent({
 			listItemID,
 			
 			onFilterInput,
-			refOptions,
+
+			optionsList,
+			filterValue,
 		};
 	},
 	render() {
 		const { disabled } = this.componentClasses;
 		const testAppend = {icon: "mdi:magnify"};
 
-		console.log(this.refOptions);
+		// console.log(this.optionsList.length);
 		return (
 			<div class={[
 				disabled,
@@ -511,45 +529,53 @@ const Select = defineComponent({
 					onShow={this.onToggle}
 					onHide={this.onToggle}
 				>	
-					{ (this.selectAllToggle && this.limitSelection === 0) && (
-						<div class={NAMESPACES.SELECT_SELECTIONS_ITEM_SELECT_ALL}>
+					{ ((this.selectAllToggle && this.limitSelection === 0) || (this.filter)) && (
+						<div class={[
+								this.filter && NAMESPACES.SELECT_SELECTIONS_ITEM_FILTER,
+								this.selectAllToggle && NAMESPACES.SELECT_SELECTIONS_ITEM_SELECT_ALL
+							]}
+						>
 							<MenuItemTest 
 								divider={!this.filter}
 								type="header" 
 							>
 								<Checkbox binary 
+									label={!this.filter ? this.selectAllLabel : undefined}
 									modelValue={this.allSelected()}
 									onChange={this.onToggleSelectAll}
 									indeterminate={this.isIndeterminate()}
 								/>
+								{this.filter && (
+									<Input dense
+										appendIcon={testAppend}
+										onInput={this.onFilterInput}
+										modelValue={this.filterValue}
+										onKeydown={(e: Event) => { e.stopPropagation() }}
+									></Input>
+								)}
 								
-								<Input dense
-									// modelValue={this.filterModelValue}
-									appendIcon={testAppend}
-									onInput={this.onFilterInput}
-									onKeydown={(e: Event) => { e.stopPropagation() }}
-									// onChange={(e) => {console.log(e)}}
-								></Input>
 							</MenuItemTest>
 						</div>
 					)}
 					{ this.hasModel && (
 						<div class={NAMESPACES.SELECT_SELECTIONS_ITEMS}>
-							{ (this.refOptions as SelectOptionModel[])?.map((option: SelectOptionModel, index: number) => {
+							{ this.optionsList.map((option: SelectOptionModel, index: number) => {
+								if(option === undefined) {
+									return;
+								}
 								const hasSubItems = option.items && option.items.length > 0;
-								
 								return (
 									<>
 										<MenuItemTest
+											icon={option.icon}
 											key={'test' + index}
 											value={option.value}
-											content={(!this.multiple || hasSubItems) && option.label}
 											type={hasSubItems && 'header'}
-											icon={option.icon}
 											onClick={ !hasSubItems 
 												? (e: Event) => this.onOptionSelect(e, option)
 												: undefined
 											}
+											content={(!this.multiple || hasSubItems) && option.label}
 										>
 											{(this.multiple && !hasSubItems) && (
 												<Checkbox binary 
@@ -579,7 +605,11 @@ const Select = defineComponent({
 										}))}
 									</>
 								)
-							})}
+							}) }
+
+							{ (this.optionsList.length === 0) &&
+								<MenuItemTest content={this.emptyFilterLabel}></MenuItemTest>
+							}
 						</div>
 					)}
 				</MenuTest>

@@ -93,6 +93,16 @@
          }
       }
    }
-}
 
-;
+   .vz-select__selections-list {
+      &:has(.vz-select__selections-item-filter) {
+         .vz-menu-item__header {
+            @apply py-1;
+         }
+         .vz-input__control {
+            @apply min-h-[36px];
+         }
+      }
+   }
+};
+
